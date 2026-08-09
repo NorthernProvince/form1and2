@@ -1050,89 +1050,18 @@
     let completedSubjects = new Set();
     let allSubjects = Object.keys(subjectData);
     let totalQuestionsAnswered = 0;
-    let tableColumns = null;
 
     // ============ SUPABASE FUNCTIONS ============
-    async function detectTableSchema() {
+    // Simple function to create a user - only sends username and password
+    async function createUser(username, password) {
         try {
-            // Try to get column info from the table
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/users?limit=1`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                if (data.length > 0) {
-                    tableColumns = Object.keys(data[0]);
-                    console.log('📊 Detected columns:', tableColumns);
-                    return tableColumns;
-                } else {
-                    // Table is empty, try to get column info from a different method
-                    // We'll assume standard columns
-                    tableColumns = ['id', 'username', 'password', 'created_at', 'is_premium'];
-                    console.log('📊 Using default columns:', tableColumns);
-                    return tableColumns;
-                }
-            } else {
-                // Table might not exist or error
-                console.warn('Could not detect table schema, using defaults');
-                tableColumns = ['id', 'username', 'password', 'created_at', 'is_premium'];
-                return tableColumns;
-            }
-        } catch (error) {
-            console.warn('Error detecting schema:', error);
-            tableColumns = ['id', 'username', 'password', 'created_at', 'is_premium'];
-            return tableColumns;
-        }
-    }
-
-    // First, let's try to create the table if it doesn't exist
-    async function ensureTableExists() {
-        try {
-            // Try to select from the table to see if it exists
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/users?limit=1`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                console.log('✅ Users table exists');
-                return true;
-            } else if (response.status === 404) {
-                console.log('⚠️ Users table not found, will try to create it');
-                // Table doesn't exist, we'll create it via the API
-                // Note: You may need to create it manually in the Supabase dashboard
-                return false;
-            }
-            return response.ok;
-        } catch (error) {
-            console.error('Error checking table:', error);
-            return false;
-        }
-    }
-
-    async function saveUserToDB(username, password) {
-        try {
-            // Ensure we have column info
-            if (!tableColumns) {
-                await detectTableSchema();
-            }
+            // Simple payload with just username and password
+            const payload = {
+                username: username,
+                password: password
+            };
             
-            // Build payload with only columns that exist
-            const payload = { username, password };
-            
-            // Add optional columns if they exist in the table
-            if (tableColumns && tableColumns.includes('created_at')) {
-                payload.created_at = new Date().toISOString();
-            }
-            if (tableColumns && tableColumns.includes('is_premium')) {
-                payload.is_premium = true;
-            }
-            
-            console.log('📤 Sending payload:', payload);
+            console.log('📤 Creating user with:', payload);
             
             const response = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
                 method: 'POST',
@@ -1147,15 +1076,15 @@
             
             if (response.ok) {
                 const data = await response.json();
-                console.log('✅ User created:', data);
+                console.log('✅ User created successfully:', data);
                 return data[0];
             } else {
                 const errorText = await response.text();
                 console.error('❌ Supabase error:', response.status, errorText);
-                throw new Error(`Server error: ${response.status}`);
+                throw new Error(`Server error: ${response.status} - ${errorText}`);
             }
         } catch (error) {
-            console.error('❌ Save error:', error);
+            console.error('❌ Create user error:', error);
             throw error;
         }
     }
@@ -1180,13 +1109,27 @@
         return null;
     }
 
+    async function checkUserExists(username) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&select=username`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data.length > 0;
+            }
+        } catch (error) {
+            console.error('Check user error:', error);
+        }
+        return false;
+    }
+
     // ============ INIT ============
-    async function init() {
+    function init() {
         checkAuth();
-        
-        // Detect table schema
-        await detectTableSchema();
-        await ensureTableExists();
         
         const mainContent = document.getElementById('mainContent');
         mainContent.addEventListener('scroll', () => {
@@ -1252,8 +1195,7 @@
                 currentUser = { 
                     username: user.username, 
                     password: user.password,
-                    id: user.id,
-                    is_premium: user.is_premium !== undefined ? user.is_premium : true
+                    id: user.id
                 };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
@@ -1262,15 +1204,8 @@
                 renderSubjects();
                 updateProgress();
             } else {
-                // Check if user exists
-                const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&select=username`, {
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`
-                    }
-                });
-                const checkData = await checkResponse.json();
-                if (checkData.length > 0) {
+                const exists = await checkUserExists(username);
+                if (exists) {
                     showToast('Invalid password. Please try again.', 'error');
                 } else {
                     showToast('Account not found. Please create one via Premium.', 'error');
@@ -1503,32 +1438,22 @@
 
         try {
             // Check if username exists
-            const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&select=username`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            
-            if (checkResponse.ok) {
-                const checkData = await checkResponse.json();
-                if (checkData.length > 0) {
-                    showToast('Username already exists. Please choose another.', 'error');
-                    paymentBtn.disabled = false;
-                    paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
-                    return;
-                }
+            const exists = await checkUserExists(username);
+            if (exists) {
+                showToast('Username already exists. Please choose another.', 'error');
+                paymentBtn.disabled = false;
+                paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
+                return;
             }
 
-            // Try to save the user
-            const newUser = await saveUserToDB(username, password);
+            // Create the user
+            const newUser = await createUser(username, password);
             
             if (newUser) {
                 currentUser = { 
                     username: newUser.username, 
                     password: newUser.password,
-                    id: newUser.id,
-                    is_premium: newUser.is_premium !== undefined ? newUser.is_premium : true
+                    id: newUser.id
                 };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
@@ -1538,7 +1463,7 @@
                 renderSubjects();
                 updateProgress();
             } else {
-                throw new Error('Failed to create account');
+                throw new Error('Failed to create account - no user returned');
             }
         } catch (error) {
             console.error('Payment error:', error);
