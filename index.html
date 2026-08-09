@@ -336,7 +336,6 @@
             transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* ===== PREMIUM POPUP ===== */
         .premium-overlay {
             position: fixed;
             inset: 0;
@@ -1052,18 +1051,22 @@
     let totalQuestionsAnswered = 0;
 
     // ============ SUPABASE FUNCTIONS ============
-    // Simple function to create a user - only sends username and password
+    // Using the existing 'users' table with correct column mapping
+    const TABLE_NAME = 'users';
+
     async function createUser(username, password) {
         try {
-            // Simple payload with just username and password
+            // Match the existing table structure
             const payload = {
                 username: username,
-                password: password
+                password: password,
+                instance_id: null,  // Can be null
+                auth: 'email'       // Default auth method
             };
             
-            console.log('📤 Creating user with:', payload);
+            console.log('📤 Creating user in users table:', payload);
             
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}`, {
                 method: 'POST',
                 headers: {
                     'apikey': SUPABASE_KEY,
@@ -1081,7 +1084,7 @@
             } else {
                 const errorText = await response.text();
                 console.error('❌ Supabase error:', response.status, errorText);
-                throw new Error(`Server error: ${response.status} - ${errorText}`);
+                throw new Error(`Server error: ${response.status}`);
             }
         } catch (error) {
             console.error('❌ Create user error:', error);
@@ -1091,7 +1094,7 @@
 
     async function authenticateUser(username, password) {
         try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&select=*`, {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?username=eq.${encodeURIComponent(username)}&select=*`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
                     'Authorization': `Bearer ${SUPABASE_KEY}`
@@ -1111,7 +1114,7 @@
 
     async function checkUserExists(username) {
         try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&select=username`, {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?username=eq.${encodeURIComponent(username)}&select=username`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
                     'Authorization': `Bearer ${SUPABASE_KEY}`
@@ -1142,7 +1145,9 @@
         });
         
         console.log('🇿🇲 Zambia Quiz Pro ready!');
-        console.log('💾 Connected to Supabase:', SUPABASE_URL);
+        console.log('💾 Supabase URL:', SUPABASE_URL);
+        console.log('📊 Using table:', TABLE_NAME);
+        console.log('📋 Table columns: id, instance_id, username, password, auth');
     }
 
     // ============ AUTH ============
