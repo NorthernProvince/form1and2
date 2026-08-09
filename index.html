@@ -584,6 +584,29 @@
         .btn-secondary:active {
             transform: scale(0.96);
         }
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-whatsapp:active {
+            transform: scale(0.96);
+        }
+        .btn-whatsapp:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
         .input-field {
             background: rgba(255,255,255,0.06);
             border: 2px solid rgba(255,255,255,0.08);
@@ -715,11 +738,6 @@
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .btn-primary.error {
-            background: rgba(239,68,68,0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239,68,68,0.3);
-        }
         .skeleton {
             background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
             background-size: 200% 100%;
@@ -746,7 +764,6 @@
         .teacher-login-btn:active {
             transform: scale(0.95);
         }
-        /* Free trial banner */
         .free-trial-banner {
             background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(251,191,36,0.10));
             border: 1px solid rgba(16,185,129,0.2);
@@ -775,6 +792,320 @@
         .free-trial-banner .free-count.locked {
             background: rgba(239,68,68,0.2);
             color: #ef4444;
+        }
+        
+        /* Teacher Dashboard Styles */
+        .teacher-dashboard {
+            background: rgba(15, 22, 41, 0.95);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .teacher-dashboard h2 {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .teacher-dashboard h2 i {
+            color: #fbbf24;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .form-group .input-field {
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .form-group .input-field:focus {
+            border-color: #fbbf24;
+            background: rgba(255,255,255,0.08);
+        }
+        .form-group .input-field::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        .form-group select {
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 10px 14px;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+        .form-group select:focus {
+            border-color: #fbbf24;
+            background: rgba(255,255,255,0.08);
+        }
+        .form-group select option {
+            background: #1a1f3a;
+            color: white;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .options-grid .input-field {
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+        .btn-teacher {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f1629;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-teacher:active {
+            transform: scale(0.96);
+        }
+        .btn-teacher:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-teacher-secondary {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-teacher-secondary:active {
+            transform: scale(0.96);
+        }
+        .btn-danger {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.3);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .btn-danger:active {
+            transform: scale(0.96);
+        }
+        .question-list {
+            margin-top: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .question-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .question-list::-webkit-scrollbar-thumb {
+            background: rgba(251,191,36,0.3);
+            border-radius: 10px;
+        }
+        .question-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .question-item .q-text {
+            color: white;
+            font-size: 12px;
+            flex: 1;
+        }
+        .question-item .q-options {
+            color: rgba(255,255,255,0.4);
+            font-size: 10px;
+            margin-top: 2px;
+        }
+        .question-item .q-delete {
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .question-item .q-delete:active {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+        }
+        .subject-tabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+        .subject-tabs::-webkit-scrollbar {
+            height: 2px;
+        }
+        .subject-tabs::-webkit-scrollbar-thumb {
+            background: rgba(251,191,36,0.3);
+            border-radius: 10px;
+        }
+        .subject-tab {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 6px 14px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        .subject-tab.active {
+            background: rgba(251,191,36,0.15);
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+        .subject-tab:active {
+            transform: scale(0.95);
+        }
+        .badge-count {
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-size: 9px;
+            color: rgba(255,255,255,0.4);
+            margin-left: 4px;
+        }
+        .users-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .users-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .users-list::-webkit-scrollbar-thumb {
+            background: rgba(251,191,36,0.3);
+            border-radius: 10px;
+        }
+        .user-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-item .user-info {
+            color: white;
+            font-size: 12px;
+        }
+        .user-item .user-info .username {
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        .user-item .user-info .user-pass {
+            color: rgba(255,255,255,0.4);
+            font-size: 11px;
+            margin-left: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .user-item .user-info .user-date {
+            color: rgba(255,255,255,0.3);
+            font-size: 10px;
+            margin-left: 8px;
+        }
+        .user-item .user-delete {
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .user-item .user-delete:active {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+        }
+        .search-box {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: white;
+            font-size: 12px;
+            width: 100%;
+            outline: none;
+            margin-bottom: 8px;
+        }
+        .search-box:focus {
+            border-color: #fbbf24;
+        }
+        .search-box::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        .stats-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-card .stat-number {
+            color: #fbbf24;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .stat-card .stat-label {
+            color: rgba(255,255,255,0.4);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -863,7 +1194,6 @@
 
         <!-- SUBJECTS VIEW -->
         <div class="view" id="subjectsView">
-            <!-- Free Trial Banner -->
             <div class="free-trial-banner" id="freeTrialBanner">
                 <div class="free-text">
                     <i class="fas fa-gift text-gold"></i>
@@ -938,39 +1268,37 @@
 
         <!-- TEACHER DASHBOARD VIEW -->
         <div class="view" id="teacherView">
-            <div class="teacher-dashboard" style="background:rgba(15,22,41,0.95);border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,0.08);">
+            <div class="teacher-dashboard">
                 <div class="flex items-center justify-between mb-3">
-                    <h2 style="color:white;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;"><i class="fas fa-chalkboard-teacher" style="color:#fbbf24;"></i> Teacher Dashboard</h2>
-                    <button onclick="logoutTeacher()" style="background:rgba(239,68,68,0.2);color:#ef4444;border:1px solid rgba(239,68,68,0.3);padding:4px 12px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;">
+                    <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h2>
+                    <button onclick="logoutTeacher()" class="btn-danger" style="padding:4px 12px;font-size:11px;">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </div>
                 
-                <!-- Stats -->
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
-                    <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
-                        <div style="color:#fbbf24;font-size:20px;font-weight:700;" id="statStudents">0</div>
-                        <div style="color:rgba(255,255,255,0.4);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;">Students</div>
+                <div class="stats-box">
+                    <div class="stat-card">
+                        <div class="stat-number" id="statStudents">0</div>
+                        <div class="stat-label">Students</div>
                     </div>
-                    <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
-                        <div style="color:#fbbf24;font-size:20px;font-weight:700;" id="statSubjects">0</div>
-                        <div style="color:rgba(255,255,255,0.4);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;">Subjects</div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statSubjects">0</div>
+                        <div class="stat-label">Subjects</div>
                     </div>
-                    <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
-                        <div style="color:#fbbf24;font-size:20px;font-weight:700;" id="statQuestions">0</div>
-                        <div style="color:rgba(255,255,255,0.4);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;">Questions</div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statQuestions">0</div>
+                        <div class="stat-label">Questions</div>
                     </div>
                 </div>
                 
-                <!-- Tabs -->
                 <div style="display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;">
-                    <button class="subject-tab active" onclick="switchTeacherTab('students')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 14px;color:rgba(255,255,255,0.6);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.3s;">
+                    <button class="subject-tab active" onclick="switchTeacherTab('students')">
                         <i class="fas fa-users"></i> Students
                     </button>
-                    <button class="subject-tab" onclick="switchTeacherTab('subjects')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 14px;color:rgba(255,255,255,0.6);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.3s;">
+                    <button class="subject-tab" onclick="switchTeacherTab('subjects')">
                         <i class="fas fa-book"></i> Subjects
                     </button>
-                    <button class="subject-tab" onclick="switchTeacherTab('questions')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 14px;color:rgba(255,255,255,0.6);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.3s;">
+                    <button class="subject-tab" onclick="switchTeacherTab('questions')">
                         <i class="fas fa-question-circle"></i> Questions
                     </button>
                 </div>
@@ -1123,8 +1451,8 @@
 
             <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:10px;margin-bottom:12px;">
                 <p style="color:rgba(255,255,255,0.7);font-size:12px;">
-                    <i class="fas fa-check-circle" style="color:#10b981;"></i>
-                    After payment, you'll receive a <strong style="color:#fbbf24;">username &amp; password</strong> to login and continue learning!
+                    <i class="fas fa-info-circle" style="color:#fbbf24;"></i>
+                    After payment, <strong>send a WhatsApp message</strong> with your desired username &amp; password. The teacher will create your account.
                 </p>
             </div>
 
@@ -1178,13 +1506,16 @@
                 <div class="name">Chaiwa Justine</div>
             </div>
 
-            <p class="payment-instruction">
-                After payment, send <strong>username &amp; password</strong> request via SMS/WhatsApp to <strong>0971 130 511</strong>
+            <p class="payment-instruction" style="color:rgba(255,255,255,0.6);font-size:12px;margin-bottom:12px;">
+                <i class="fas fa-whatsapp" style="color:#25D366;"></i>
+                Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
             </p>
 
-            <button onclick="simulatePayment()" class="btn-primary" id="paymentBtn">
-                <i class="fas fa-check-circle"></i> I've Made Payment
+            <!-- WhatsApp Button -->
+            <button onclick="openWhatsApp()" class="btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Send WhatsApp Message
             </button>
+
             <button onclick="closePremiumPopup()" class="btn-secondary">
                 <i class="fas fa-times"></i> Close
             </button>
@@ -1220,7 +1551,6 @@
     let currentTeacherTab = 'students';
     let selectedSubjectId = null;
     let allUsers = [];
-    let isLocked = false;
 
     // ============ SUPABASE FUNCTIONS ============
     const USERS_TABLE = 'app_users';
@@ -1445,6 +1775,18 @@
         }
     }
 
+    // ============ WHATSAPP FUNCTION ============
+    function openWhatsApp() {
+        const phoneNumber = '0966011066';
+        const message = 'Hello, I have paid K10 for Zambia Quiz Premium. Please create my account.\n\nDesired Username: (Enter your username here)\nDesired Password: (Enter your password here)\n\nThank you!';
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        window.open(url, '_blank');
+        
+        // Show a toast with instructions
+        showToast('📱 Opening WhatsApp... Send your desired username & password', 'info');
+    }
+
     // ============ INIT ============
     async function init() {
         checkAuth();
@@ -1464,8 +1806,9 @@
         await loadUsers();
         
         console.log('🇿🇲 Zambia Quiz Pro loaded!');
-        console.log('📚 Free trial: 3 questions available');
-        console.log('👨‍🏫 Click teacher icon to manage');
+        console.log('🎯 Free trial: 3 questions available');
+        console.log('👨‍🏫 Click teacher icon to manage students');
+        console.log('📱 WhatsApp: 0966 011 066 for payments');
     }
 
     async function loadSubjects() {
@@ -1479,7 +1822,6 @@
                 updateQuestionSubjectSelect();
                 document.getElementById('statSubjects').textContent = subjects.length;
                 
-                // Count total questions
                 let totalQ = 0;
                 for (const subject of subjects) {
                     const qs = await fetchQuestions(subject.id);
@@ -1514,7 +1856,6 @@
             return;
         }
         freeQuestionsRemaining = 3;
-        isLocked = false;
         showView('subjectsView');
         renderSubjects();
         updateFreeTrialUI();
@@ -1550,15 +1891,6 @@
             updateFreeTrialUI();
             return true;
         }
-        return false;
-    }
-
-    function checkFreeTrial() {
-        if (currentUser) return true;
-        if (freeQuestionsRemaining > 0) return true;
-        
-        // Show premium popup
-        showPremiumPopup();
         return false;
     }
 
@@ -1621,7 +1953,7 @@
                 if (exists) {
                     showToast('Invalid password. Please try again.', 'error');
                 } else {
-                    showToast('Account not found. Please contact your teacher.', 'error');
+                    showToast('Account not found. Please pay K10 and WhatsApp 0966 011 066.', 'error');
                 }
             }
         } catch (error) {
@@ -1790,18 +2122,12 @@
                 
                 if (!currentUser) {
                     if (freeQuestionsRemaining > 0) {
-                        // Allow free trial
                         await startQuiz(subject.id, subject.name);
                         return;
                     } else {
                         showPremiumPopup();
                         return;
                     }
-                }
-                
-                if (totalQuestionsAnswered >= 3 && !currentUser) {
-                    showPremiumPopup();
-                    return;
                 }
                 
                 await startQuiz(subject.id, subject.name);
@@ -1823,7 +2149,6 @@
 
     // ============ QUIZ ============
     async function startQuiz(subjectId, subjectName) {
-        // Check if user has free trial or is logged in
         if (!currentUser && !useFreeQuestion()) {
             showPremiumPopup();
             return;
@@ -2233,7 +2558,6 @@
                 document.getElementById('optionD').value = '';
                 await loadQuestionsForTeacher();
                 updateTeacherSubjects();
-                // Update question count
                 let totalQ = 0;
                 for (const subject of allSubjects) {
                     const qs = await fetchQuestions(subject.id);
@@ -2282,10 +2606,6 @@
     // ============ PREMIUM POPUP ============
     function showPremiumPopup() {
         document.getElementById('premiumOverlay').classList.add('active');
-        const paymentBtn = document.getElementById('paymentBtn');
-        paymentBtn.disabled = false;
-        paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
-        paymentBtn.className = 'btn-primary';
     }
 
     function closePremiumPopup() {
@@ -2307,56 +2627,6 @@
         });
     }
 
-    async function simulatePayment() {
-        const username = prompt('Enter your desired username:');
-        if (!username) return;
-        const password = prompt('Enter your desired password:');
-        if (!password) return;
-        if (username.length < 3 || password.length < 3) {
-            showToast('Username and password must be at least 3 characters', 'error');
-            return;
-        }
-
-        const paymentBtn = document.getElementById('paymentBtn');
-        paymentBtn.disabled = true;
-        paymentBtn.innerHTML = '<span class="spinner"></span> Creating account...';
-
-        try {
-            const exists = await checkUserExists(username);
-            if (exists) {
-                showToast('Username already exists. Please choose another.', 'error');
-                paymentBtn.disabled = false;
-                paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
-                return;
-            }
-
-            const newUser = await createUser(username, password);
-            if (newUser) {
-                currentUser = { username: newUser.username, password: newUser.password, id: newUser.id };
-                localStorage.setItem('quizUser', JSON.stringify(currentUser));
-                updateUserUI();
-                document.getElementById('freeTrialBanner').style.display = 'none';
-                closePremiumPopup();
-                showToast(`✅ Payment confirmed! Account created!`, 'success');
-                showToast(`👤 Username: ${username} | 🔑 Password: ${password}`, 'success');
-                showView('subjectsView');
-                renderSubjects();
-                updateProgress();
-                // Refresh users list for teacher
-                await loadUsers();
-            } else {
-                throw new Error('Failed to create account');
-            }
-        } catch (error) {
-            console.error('Payment error:', error);
-            showToast('Error creating account. Please try again.', 'error');
-            paymentBtn.disabled = false;
-            paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
-        } finally {
-            paymentBtn.disabled = false;
-        }
-    }
-
     // ============ TOAST ============
     function showToast(message, type = 'info') {
         const toast = document.getElementById('toast');
@@ -2371,7 +2641,7 @@
 
     // ============ HELP & USER MENU ============
     function showHelp() { 
-        showToast('📚 Select a subject to start learning!', 'info'); 
+        showToast('📚 Try 3 free questions! After that, pay K10 via Mobile Money.', 'info'); 
     }
     function toggleUserMenu() {
         if (currentUser && confirm(`Logged in as ${currentUser.username}\nLogout?`)) logout();
@@ -2400,7 +2670,7 @@
     window.showPremiumPopup = showPremiumPopup;
     window.closePremiumPopup = closePremiumPopup;
     window.copyNumber = copyNumber;
-    window.simulatePayment = simulatePayment;
+    window.openWhatsApp = openWhatsApp;
     window.showHelp = showHelp;
     window.toggleUserMenu = toggleUserMenu;
     window.navigateTo = navigateTo;
@@ -2433,7 +2703,8 @@
     console.log('🇿🇲 Zambia Quiz Pro loaded!');
     console.log('🎯 Free trial: 3 questions available');
     console.log('👨‍🏫 Click teacher icon to manage students');
-    console.log('🔑 Default teacher: teacher / teacher123');
+    console.log('📱 WhatsApp: 0966 011 066 for payments');
+    console.log('💳 Mobile Money: 0971 130 511, 0958 882 550, 0763 209 826');
 </script>
 </body>
 </html>
