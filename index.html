@@ -716,6 +716,18 @@
         .btn-primary.error:active {
             transform: scale(0.96);
         }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 12px;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
     </style>
 </head>
 <body>
@@ -774,14 +786,20 @@
             <div class="flex items-center justify-between mb-4">
                 <div>
                     <h2 class="text-white text-xl font-bold">My Subjects</h2>
-                    <p class="text-white/40 text-sm" id="progressText">0 of 7 completed</p>
+                    <p class="text-white/40 text-sm" id="progressText">0 of 0 completed</p>
                 </div>
                 <span class="badge badge-gold"><i class="fas fa-star"></i> Premium</span>
             </div>
             <div class="progress-track mb-4">
                 <div class="progress-fill" id="progressBar" style="width:0%"></div>
             </div>
-            <div class="subject-grid" id="subjectGrid"></div>
+            <div class="subject-grid" id="subjectGrid">
+                <!-- Loading skeletons -->
+                <div class="skeleton" style="height:120px;"></div>
+                <div class="skeleton" style="height:120px;"></div>
+                <div class="skeleton" style="height:120px;"></div>
+                <div class="skeleton" style="height:120px;"></div>
+            </div>
         </div>
 
         <!-- QUIZ VIEW -->
@@ -944,101 +962,6 @@
     const SUPABASE_URL = "https://hezvrkzlszzpbqyicfiq.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlenZya3psc3p6cGJxeWljZmlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYyOTg2NTQsImV4cCI6MjEwMTg3NDY1NH0.ajMtxXmLBrS5rR06cDOzWTeMX-7tZlL-yT-HBBmE4A8";
 
-    // ============ DATA ============
-    const subjectData = {
-        'mathematics': {
-            name: 'Mathematics',
-            icon: 'fa-calculator',
-            color: 'from-blue-500 to-blue-600',
-            bgColor: 'bg-blue-500/20',
-            questions: [
-                { question: 'What is 5 + 3?', options: ['5', '8', '10', '15'], correct: 1 },
-                { question: 'What is 12 × 12?', options: ['124', '144', '134', '154'], correct: 1 },
-                { question: 'What is the square root of 81?', options: ['7', '8', '9', '10'], correct: 2 },
-                { question: 'What is 25 ÷ 5?', options: ['3', '4', '5', '6'], correct: 2 },
-                { question: 'What is 2³?', options: ['4', '6', '8', '10'], correct: 2 }
-            ]
-        },
-        'english': {
-            name: 'English',
-            icon: 'fa-book-open',
-            color: 'from-green-500 to-emerald-600',
-            bgColor: 'bg-green-500/20',
-            questions: [
-                { question: 'What is the plural of "child"?', options: ['Childs', 'Children', 'Childrens', 'Childes'], correct: 1 },
-                { question: 'What is the past tense of "go"?', options: ['Goed', 'Went', 'Gone', 'Going'], correct: 1 },
-                { question: 'Which is a noun?', options: ['Run', 'Beautiful', 'Happiness', 'Quickly'], correct: 2 },
-                { question: 'What is the opposite of "hot"?', options: ['Warm', 'Cold', 'Cool', 'Freezing'], correct: 1 },
-                { question: 'What is the synonym of "happy"?', options: ['Sad', 'Joyful', 'Angry', 'Tired'], correct: 1 }
-            ]
-        },
-        'science': {
-            name: 'Science',
-            icon: 'fa-flask',
-            color: 'from-purple-500 to-violet-600',
-            bgColor: 'bg-purple-500/20',
-            questions: [
-                { question: 'What is the chemical symbol for water?', options: ['H₂O', 'CO₂', 'NaCl', 'HCl'], correct: 0 },
-                { question: 'What is the largest organ in the human body?', options: ['Liver', 'Brain', 'Skin', 'Heart'], correct: 2 },
-                { question: 'What planet is known as the Red Planet?', options: ['Venus', 'Mars', 'Jupiter', 'Saturn'], correct: 1 },
-                { question: 'What is the process by which plants make food?', options: ['Respiration', 'Photosynthesis', 'Fermentation', 'Digestion'], correct: 1 },
-                { question: 'What is the boiling point of water in Celsius?', options: ['50°C', '100°C', '150°C', '200°C'], correct: 1 }
-            ]
-        },
-        'social_studies': {
-            name: 'Social Studies',
-            icon: 'fa-globe-africa',
-            color: 'from-red-500 to-rose-600',
-            bgColor: 'bg-red-500/20',
-            questions: [
-                { question: 'What is the capital of Zambia?', options: ['Lusaka', 'Ndola', 'Kitwe', 'Livingstone'], correct: 0 },
-                { question: 'How many provinces does Zambia have?', options: ['8', '10', '12', '14'], correct: 1 },
-                { question: 'When did Zambia gain independence?', options: ['1964', '1965', '1966', '1967'], correct: 0 },
-                { question: 'What is the currency of Zambia?', options: ['Dollar', 'Kwacha', 'Pound', 'Rand'], correct: 1 },
-                { question: 'What is the largest ethnic group in Zambia?', options: ['Bemba', 'Tonga', 'Lozi', 'Nyanja'], correct: 0 }
-            ]
-        },
-        'ict': {
-            name: 'ICT',
-            icon: 'fa-laptop-code',
-            color: 'from-cyan-500 to-teal-600',
-            bgColor: 'bg-cyan-500/20',
-            questions: [
-                { question: 'What does CPU stand for?', options: ['Central Processing Unit', 'Computer Personal Unit', 'Central Program Unit', 'Core Processing Unit'], correct: 0 },
-                { question: 'What is the full form of RAM?', options: ['Random Access Memory', 'Read Access Memory', 'Run Access Memory', 'Random Active Memory'], correct: 0 },
-                { question: 'What is the most common operating system?', options: ['Windows', 'Linux', 'MacOS', 'Android'], correct: 0 },
-                { question: 'What is the internet?', options: ['A network of networks', 'A single computer', 'A software program', 'A web browser'], correct: 0 },
-                { question: 'What is a virus in computing?', options: ['A hardware component', 'A malicious program', 'An input device', 'A storage device'], correct: 1 }
-            ]
-        },
-        'religious_education': {
-            name: 'Religious Education',
-            icon: 'fa-church',
-            color: 'from-orange-500 to-amber-600',
-            bgColor: 'bg-orange-500/20',
-            questions: [
-                { question: 'What is the holy book of Christianity?', options: ['Quran', 'Bible', 'Torah', 'Vedas'], correct: 1 },
-                { question: 'What is the main religion in Zambia?', options: ['Christianity', 'Islam', 'Hinduism', 'Traditional'], correct: 0 },
-                { question: 'What is the Golden Rule?', options: ['Treat others as you want to be treated', 'Eye for an eye', 'Survival of the fittest', 'Do unto others before they do unto you'], correct: 0 },
-                { question: 'Which is the oldest religion?', options: ['Hinduism', 'Buddhism', 'Judaism', 'Christianity'], correct: 2 },
-                { question: 'What is the place of worship for Muslims?', options: ['Church', 'Mosque', 'Temple', 'Synagogue'], correct: 1 }
-            ]
-        },
-        'creative_arts': {
-            name: 'Creative Arts',
-            icon: 'fa-palette',
-            color: 'from-pink-500 to-rose-600',
-            bgColor: 'bg-pink-500/20',
-            questions: [
-                { question: 'What are the primary colors?', options: ['Red, Blue, Green', 'Red, Blue, Yellow', 'Red, Green, Yellow', 'Blue, Green, Yellow'], correct: 1 },
-                { question: 'Who painted the Mona Lisa?', options: ['Michelangelo', 'Leonardo da Vinci', 'Raphael', 'Donatello'], correct: 1 },
-                { question: 'What is the most common instrument in Zambia?', options: ['Guitar', 'Drums', 'Piano', 'Trumpet'], correct: 1 },
-                { question: 'What is the art of paper folding called?', options: ['Origami', 'Calligraphy', 'Sculpture', 'Mosaic'], correct: 0 },
-                { question: 'What is the term for a group of singers?', options: ['Band', 'Choir', 'Orchestra', 'Duet'], correct: 1 }
-            ]
-        }
-    };
-
     // ============ STATE ============
     let currentUser = null;
     let currentSubject = null;
@@ -1047,23 +970,20 @@
     let score = 0;
     let answered = false;
     let completedSubjects = new Set();
-    let allSubjects = Object.keys(subjectData);
+    let allSubjects = [];
     let totalQuestionsAnswered = 0;
+    let subjectsLoaded = false;
 
-    // ============ SUPABASE FUNCTIONS - USING app_users TABLE ============
-    const TABLE_NAME = 'app_users';
+    // ============ SUPABASE FUNCTIONS ============
+    const USERS_TABLE = 'app_users';
+    const SUBJECTS_TABLE = 'subjects';
+    const QUESTIONS_TABLE = 'questions';
 
+    // --- User Functions ---
     async function createUser(username, password) {
         try {
-            const payload = {
-                username: username,
-                password: password,
-                is_premium: true
-            };
-            
-            console.log('📤 Creating user in public.app_users:', payload);
-            
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}`, {
+            const payload = { username, password, is_premium: true };
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}`, {
                 method: 'POST',
                 headers: {
                     'apikey': SUPABASE_KEY,
@@ -1073,25 +993,22 @@
                 },
                 body: JSON.stringify(payload)
             });
-            
             if (response.ok) {
                 const data = await response.json();
-                console.log('✅ User created successfully:', data);
                 return data[0];
             } else {
                 const errorText = await response.text();
-                console.error('❌ Supabase error:', response.status, errorText);
                 throw new Error(`Server error: ${response.status} - ${errorText}`);
             }
         } catch (error) {
-            console.error('❌ Create user error:', error);
+            console.error('Create user error:', error);
             throw error;
         }
     }
 
     async function authenticateUser(username, password) {
         try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?username=eq.${encodeURIComponent(username)}&select=*`, {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=*`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
                     'Authorization': `Bearer ${SUPABASE_KEY}`
@@ -1111,7 +1028,7 @@
 
     async function checkUserExists(username) {
         try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}?username=eq.${encodeURIComponent(username)}&select=username`, {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=username`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
                     'Authorization': `Bearer ${SUPABASE_KEY}`
@@ -1127,8 +1044,43 @@
         return false;
     }
 
+    // --- Subject & Question Functions ---
+    async function fetchSubjects() {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?select=*&order=name.asc`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error('Fetch subjects error:', error);
+        }
+        return [];
+    }
+
+    async function fetchQuestions(subjectId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?subject_id=eq.${subjectId}&select=*`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error('Fetch questions error:', error);
+        }
+        return [];
+    }
+
     // ============ INIT ============
-    function init() {
+    async function init() {
         checkAuth();
         
         const mainContent = document.getElementById('mainContent');
@@ -1141,11 +1093,30 @@
             }
         });
         
-        console.log('🇿🇲 Zambia Quiz Pro ready!');
+        // Load subjects from database
+        await loadSubjects();
+        
+        console.log('🇿🇲 Zambia Quiz Pro loaded!');
         console.log('💾 Supabase URL:', SUPABASE_URL);
-        console.log('📊 Using table: public.' + TABLE_NAME);
-        console.log('📋 Columns: id, username, password, created_at, is_premium');
-        console.log('💡 Open your Supabase Dashboard to see the data!');
+        console.log('📊 Tables: app_users, subjects, questions');
+    }
+
+    async function loadSubjects() {
+        try {
+            const subjects = await fetchSubjects();
+            if (subjects && subjects.length > 0) {
+                allSubjects = subjects;
+                subjectsLoaded = true;
+                renderSubjects();
+                updateProgress();
+                console.log('✅ Loaded', subjects.length, 'subjects from database');
+            } else {
+                showToast('No subjects found in database. Please add some.', 'error');
+            }
+        } catch (error) {
+            console.error('Error loading subjects:', error);
+            showToast('Error loading subjects. Please refresh.', 'error');
+        }
     }
 
     // ============ AUTH ============
@@ -1156,8 +1127,6 @@
                 currentUser = JSON.parse(userData);
                 updateUserUI();
                 showView('subjectsView');
-                renderSubjects();
-                updateProgress();
             } catch (e) {
                 localStorage.removeItem('quizUser');
                 showView('loginView');
@@ -1195,11 +1164,7 @@
         try {
             const user = await authenticateUser(username, password);
             if (user) {
-                currentUser = { 
-                    username: user.username, 
-                    password: user.password,
-                    id: user.id
-                };
+                currentUser = { username: user.username, password: user.password, id: user.id };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
                 showToast(`Welcome back, ${username}!`, 'success');
@@ -1264,9 +1229,14 @@
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
-        allSubjects.forEach(id => {
-            const subject = subjectData[id];
-            const isCompleted = completedSubjects.has(id);
+        
+        if (!allSubjects || allSubjects.length === 0) {
+            grid.innerHTML = `<div class="glass-card p-6 col-span-2 text-center text-white/60">No subjects available. Please add subjects to the database.</div>`;
+            return;
+        }
+        
+        allSubjects.forEach(subject => {
+            const isCompleted = completedSubjects.has(subject.id);
             const card = document.createElement('div');
             card.className = `subject-card ${isCompleted ? 'border-green-500/30' : ''}`;
             card.style.background = isCompleted ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.05)';
@@ -1275,11 +1245,20 @@
                     <i class="fas ${subject.icon} text-white"></i>
                 </div>
                 <div class="subject-name">${subject.name}</div>
-                <div class="subject-count">${subject.questions.length} questions</div>
+                <div class="subject-count">Loading questions...</div>
                 ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
                 ${!isCompleted && currentUser ? `<div class="text-white/20 text-xs mt-1"><i class="fas fa-play"></i> Start</div>` : ''}
             `;
-            card.onclick = () => {
+            
+            // Load question count
+            fetchQuestions(subject.id).then(questions => {
+                const countEl = card.querySelector('.subject-count');
+                if (countEl) {
+                    countEl.textContent = `${questions.length} questions`;
+                }
+            });
+            
+            card.onclick = async () => {
                 if (!currentUser) {
                     showToast('Please login first', 'error');
                     showView('loginView');
@@ -1293,8 +1272,9 @@
                     showPremiumPopup();
                     return;
                 }
-                startQuiz(id);
+                await startQuiz(subject.id, subject.name);
             };
+            
             grid.appendChild(card);
         });
     }
@@ -1303,22 +1283,34 @@
         const total = allSubjects.length;
         const completed = completedSubjects.size;
         document.getElementById('progressText').textContent = `${completed} of ${total} completed`;
-        document.getElementById('progressBar').style.width = `${(completed / total) * 100}%`;
+        document.getElementById('progressBar').style.width = total > 0 ? `${(completed / total) * 100}%` : '0%';
         if (completed === total && total > 0) {
             setTimeout(() => showCertificate(), 500);
         }
     }
 
     // ============ QUIZ ============
-    function startQuiz(subjectId) {
-        currentSubject = subjectId;
-        currentQuestions = subjectData[subjectId].questions;
-        currentIndex = 0;
-        score = 0;
-        answered = false;
-        document.getElementById('quizSubjectTitle').textContent = subjectData[subjectId].name;
-        showView('quizView');
-        renderQuestion();
+    async function startQuiz(subjectId, subjectName) {
+        try {
+            const questions = await fetchQuestions(subjectId);
+            if (!questions || questions.length === 0) {
+                showToast('No questions available for this subject.', 'error');
+                return;
+            }
+            
+            currentSubject = subjectId;
+            currentQuestions = questions;
+            currentIndex = 0;
+            score = 0;
+            answered = false;
+            
+            document.getElementById('quizSubjectTitle').textContent = subjectName;
+            showView('quizView');
+            renderQuestion();
+        } catch (error) {
+            console.error('Error starting quiz:', error);
+            showToast('Error loading questions. Please try again.', 'error');
+        }
     }
 
     function renderQuestion() {
@@ -1326,19 +1318,22 @@
             completedSubjects.add(currentSubject);
             totalQuestionsAnswered += currentQuestions.length;
             updateProgress();
-            showToast(`🎉 Completed ${subjectData[currentSubject].name}!`, 'success');
+            showToast(`🎉 Completed ${document.getElementById('quizSubjectTitle').textContent}!`, 'success');
             goToSubjects();
             return;
         }
+        
         const q = currentQuestions[currentIndex];
         document.getElementById('questionText').textContent = q.question;
         document.getElementById('qNum').textContent = currentIndex + 1;
         document.getElementById('questionCounter').textContent = `${currentIndex + 1}/${currentQuestions.length}`;
         document.getElementById('scoreDisplay').textContent = score;
+        
         const container = document.getElementById('optionsContainer');
         container.innerHTML = '';
         answered = false;
         document.getElementById('nextBtn').disabled = true;
+        
         const letters = ['A', 'B', 'C', 'D'];
         q.options.forEach((option, idx) => {
             const btn = document.createElement('button');
@@ -1353,19 +1348,23 @@
     function selectOption(index) {
         if (answered) return;
         answered = true;
+        
         const q = currentQuestions[currentIndex];
         const options = document.querySelectorAll('.option-btn');
-        const isCorrect = index === q.correct;
+        const isCorrect = index === q.correct_answer;
+        
         if (isCorrect) {
             score++;
             document.getElementById('scoreDisplay').textContent = score;
         }
+        
         options.forEach((btn, idx) => {
             btn.classList.add('disabled');
-            if (idx === q.correct) btn.classList.add('correct');
+            if (idx === q.correct_answer) btn.classList.add('correct');
             else if (idx === index && !isCorrect) btn.classList.add('wrong');
             if (idx === index) btn.classList.add('selected');
         });
+        
         totalQuestionsAnswered++;
         document.getElementById('nextBtn').disabled = false;
     }
@@ -1382,8 +1381,8 @@
         if (currentUser) {
             document.getElementById('certUsername').textContent = currentUser.username;
             document.getElementById('certDate').textContent = new Date().toLocaleDateString();
-            const totalQ = allSubjects.reduce((sum, id) => sum + subjectData[id].questions.length, 0);
-            document.getElementById('certScore').textContent = `${Math.round((score / totalQ) * 100)}%`;
+            const totalQ = allSubjects.reduce((sum, subject) => sum + subject.question_count || 5, 0);
+            document.getElementById('certScore').textContent = `${Math.round((score / (totalQ || 1)) * 100)}%`;
         }
         if (typeof confetti !== 'undefined') {
             confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
@@ -1440,7 +1439,6 @@
         retryBtn.style.display = 'none';
 
         try {
-            // Check if username exists
             const exists = await checkUserExists(username);
             if (exists) {
                 showToast('Username already exists. Please choose another.', 'error');
@@ -1449,15 +1447,9 @@
                 return;
             }
 
-            // Create the user
             const newUser = await createUser(username, password);
-            
             if (newUser) {
-                currentUser = { 
-                    username: newUser.username, 
-                    password: newUser.password,
-                    id: newUser.id
-                };
+                currentUser = { username: newUser.username, password: newUser.password, id: newUser.id };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
                 closePremiumPopup();
@@ -1466,7 +1458,7 @@
                 renderSubjects();
                 updateProgress();
             } else {
-                throw new Error('Failed to create account - no user returned');
+                throw new Error('Failed to create account');
             }
         } catch (error) {
             console.error('Payment error:', error);
@@ -1500,8 +1492,12 @@
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.shiftKey && e.key === 'T') {
             const pass = prompt('Enter teacher password:');
-            if (pass === 'teacher123') showToast('👨‍🏫 Teacher mode activated!', 'success');
-            else if (pass !== null) showToast('Incorrect password', 'error');
+            if (pass === 'teacher123') {
+                showToast('👨‍🏫 Teacher mode activated!', 'success');
+                alert('👨‍🏫 Teacher Mode\n\nTo add questions, go to your Supabase Dashboard:\n1. Table Editor → subjects\n2. Add new subjects\n3. Table Editor → questions\n4. Add questions with subject_id\n\nOr use the SQL Editor to insert bulk questions.');
+            } else if (pass !== null) {
+                showToast('Incorrect password', 'error');
+            }
         }
     });
 
@@ -1538,7 +1534,7 @@
     window.showToast = showToast;
 
     console.log('🇿🇲 Zambia Quiz Pro loaded!');
-    console.log('📚 Subjects:', allSubjects.join(', '));
+    console.log('📚 Subjects loaded from database');
     console.log('🔑 Teacher: Ctrl+Shift+T');
 </script>
 </body>
