@@ -261,6 +261,23 @@
         .subject-card.locked .subject-count {
             filter: blur(2px);
         }
+        .subject-card.free {
+            border: 2px solid rgba(16,185,129,0.3);
+            position: relative;
+        }
+        .subject-card.free::before {
+            content: '🎯 FREE';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 9px;
+            font-weight: 700;
+            color: #10b981;
+            background: rgba(16,185,129,0.15);
+            padding: 2px 10px;
+            border-radius: 10px;
+            z-index: 5;
+        }
         .option-btn {
             background: rgba(255,255,255,0.06);
             border: 2px solid rgba(255,255,255,0.08);
@@ -1197,7 +1214,7 @@
             <div class="free-trial-banner" id="freeTrialBanner">
                 <div class="free-text">
                     <i class="fas fa-gift text-gold"></i>
-                    <strong>Free Trial:</strong> <span id="freeTrialText">3 questions remaining</span>
+                    <strong>Free Trial:</strong> <span id="freeTrialText">Try ICT for free!</span>
                 </div>
                 <div class="free-count" id="freeTrialCount">3</div>
             </div>
@@ -1511,7 +1528,6 @@
                 Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
             </p>
 
-            <!-- WhatsApp Button -->
             <button onclick="openWhatsApp()" class="btn-whatsapp">
                 <i class="fab fa-whatsapp"></i> Send WhatsApp Message
             </button>
@@ -1551,6 +1567,7 @@
     let currentTeacherTab = 'students';
     let selectedSubjectId = null;
     let allUsers = [];
+    const FREE_SUBJECT = 'ICT'; // Only this subject has free questions
 
     // ============ SUPABASE FUNCTIONS ============
     const USERS_TABLE = 'app_users';
@@ -1782,8 +1799,6 @@
         const encodedMessage = encodeURIComponent(message);
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(url, '_blank');
-        
-        // Show a toast with instructions
         showToast('📱 Opening WhatsApp... Send your desired username & password', 'info');
     }
 
@@ -1806,7 +1821,7 @@
         await loadUsers();
         
         console.log('🇿🇲 Zambia Quiz Pro loaded!');
-        console.log('🎯 Free trial: 3 questions available');
+        console.log('🎯 Free trial: 3 questions in ICT only');
         console.log('👨‍🏫 Click teacher icon to manage students');
         console.log('📱 WhatsApp: 0966 011 066 for payments');
     }
@@ -1859,7 +1874,7 @@
         showView('subjectsView');
         renderSubjects();
         updateFreeTrialUI();
-        showToast('🎯 Try 3 free questions!', 'success');
+        showToast('🎯 Try 3 free questions in ICT!', 'success');
     }
 
     function updateFreeTrialUI() {
@@ -1876,19 +1891,30 @@
         if (freeQuestionsRemaining > 0) {
             count.textContent = freeQuestionsRemaining;
             count.className = 'free-count';
-            text.textContent = `${freeQuestionsRemaining} question${freeQuestionsRemaining > 1 ? 's' : ''} remaining`;
+            text.textContent = `${freeQuestionsRemaining} question${freeQuestionsRemaining > 1 ? 's' : ''} remaining in ICT`;
         } else {
             count.textContent = '0';
             count.className = 'free-count locked';
-            text.textContent = 'Trial expired - Upgrade to continue!';
+            text.textContent = 'Trial expired - Pay K10 to continue!';
         }
     }
 
     function useFreeQuestion() {
         if (currentUser) return true;
-        if (freeQuestionsRemaining > 0) {
+        // Only allow free questions if the current subject is ICT and we have questions left
+        const subjectName = document.getElementById('quizSubjectTitle').textContent;
+        if (subjectName === FREE_SUBJECT && freeQuestionsRemaining > 0) {
             freeQuestionsRemaining--;
             updateFreeTrialUI();
+            return true;
+        }
+        return false;
+    }
+
+    function canAccessSubject(subjectName) {
+        if (currentUser) return true;
+        // Only ICT is free for trial
+        if (subjectName === FREE_SUBJECT && freeQuestionsRemaining > 0) {
             return true;
         }
         return false;
@@ -1953,7 +1979,7 @@
                 if (exists) {
                     showToast('Invalid password. Please try again.', 'error');
                 } else {
-                    showToast('Account not found. Please pay K10 and WhatsApp 0966 011 066.', 'error');
+                    showToast('Account not found. Pay K10 and WhatsApp 0966 011 066.', 'error');
                 }
             }
         } catch (error) {
@@ -2082,15 +2108,19 @@
             return;
         }
         
-        const hasFreeTrial = !currentUser && freeQuestionsRemaining > 0;
-        
         allSubjects.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
+            const isFreeSubject = subject.name === FREE_SUBJECT;
+            const hasFreeTrial = !currentUser && isFreeSubject && freeQuestionsRemaining > 0;
             const isLocked = !currentUser && !hasFreeTrial && !isCompleted;
             
             const card = document.createElement('div');
-            card.className = `subject-card ${isCompleted ? 'border-green-500/30' : ''} ${isLocked ? 'locked' : ''}`;
+            let cardClass = `subject-card ${isCompleted ? 'border-green-500/30' : ''}`;
+            if (isLocked && !isCompleted) cardClass += ' locked';
+            if (isFreeSubject && !currentUser && !isCompleted) cardClass += ' free';
+            card.className = cardClass;
             card.style.background = isCompleted ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.05)';
+            
             card.innerHTML = `
                 <div class="icon-wrapper bg-gradient-to-br ${subject.color}">
                     <i class="fas ${subject.icon} text-white"></i>
@@ -2098,8 +2128,9 @@
                 <div class="subject-name">${subject.name}</div>
                 <div class="subject-count">Loading...</div>
                 ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
-                ${!isCompleted && !currentUser && freeQuestionsRemaining === 0 ? `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#ef4444;background:rgba(239,68,68,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 Locked</div>` : ''}
-                ${!isCompleted && !currentUser && freeQuestionsRemaining > 0 ? `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#10b981;background:rgba(16,185,129,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 Free</div>` : ''}
+                ${!isCompleted && isLocked ? `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#ef4444;background:rgba(239,68,68,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 Locked</div>` : ''}
+                ${!isCompleted && !currentUser && isFreeSubject && freeQuestionsRemaining > 0 ? `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#10b981;background:rgba(16,185,129,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 ${freeQuestionsRemaining} left</div>` : ''}
+                ${isFreeSubject && !currentUser && !isCompleted && freeQuestionsRemaining === 0 ? `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#fbbf24;background:rgba(251,191,36,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">💎 Pay K10</div>` : ''}
             `;
             
             fetchQuestions(subject.id).then(questions => {
@@ -2120,14 +2151,15 @@
                     return;
                 }
                 
-                if (!currentUser) {
-                    if (freeQuestionsRemaining > 0) {
-                        await startQuiz(subject.id, subject.name);
-                        return;
-                    } else {
-                        showPremiumPopup();
-                        return;
-                    }
+                if (!currentUser && !isFreeSubject) {
+                    showToast('💎 Only ICT is available for free trial. Pay K10 to unlock all subjects!', 'error');
+                    setTimeout(() => showPremiumPopup(), 1000);
+                    return;
+                }
+                
+                if (!currentUser && isFreeSubject && freeQuestionsRemaining === 0) {
+                    showPremiumPopup();
+                    return;
                 }
                 
                 await startQuiz(subject.id, subject.name);
@@ -2149,9 +2181,18 @@
 
     // ============ QUIZ ============
     async function startQuiz(subjectId, subjectName) {
-        if (!currentUser && !useFreeQuestion()) {
-            showPremiumPopup();
+        // Check if user can access this subject
+        if (!currentUser && subjectName !== FREE_SUBJECT) {
+            showToast('💎 Only ICT is free. Pay K10 to unlock all subjects!', 'error');
+            setTimeout(() => showPremiumPopup(), 1000);
             return;
+        }
+        
+        if (!currentUser && subjectName === FREE_SUBJECT) {
+            if (!useFreeQuestion()) {
+                showPremiumPopup();
+                return;
+            }
         }
         
         try {
@@ -2181,7 +2222,14 @@
             completedSubjects.add(currentSubject);
             totalQuestionsAnswered += currentQuestions.length;
             updateProgress();
-            showToast(`🎉 Completed ${document.getElementById('quizSubjectTitle').textContent}!`, 'success');
+            const subjectName = document.getElementById('quizSubjectTitle').textContent;
+            showToast(`🎉 Completed ${subjectName}!`, 'success');
+            
+            // If free trial is done, show premium popup
+            if (!currentUser && freeQuestionsRemaining === 0) {
+                setTimeout(() => showPremiumPopup(), 1000);
+            }
+            
             goToSubjects();
             return;
         }
@@ -2398,10 +2446,11 @@
         allSubjects.forEach(subject => {
             const div = document.createElement('div');
             div.style.cssText = 'background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;';
+            const isFree = subject.name === FREE_SUBJECT;
             div.innerHTML = `
                 <div>
-                    <div style="color:white;font-size:12px;"><i class="fas ${subject.icon}" style="color:#fbbf24;"></i> ${subject.name}</div>
-                    <div style="color:rgba(255,255,255,0.4);font-size:10px;">${subject.color}</div>
+                    <div style="color:white;font-size:12px;"><i class="fas ${subject.icon}" style="color:#fbbf24;"></i> ${subject.name} ${isFree ? '🎯' : ''}</div>
+                    <div style="color:rgba(255,255,255,0.4);font-size:10px;">${subject.color} ${isFree ? '(Free Trial)' : ''}</div>
                 </div>
                 <div onclick="deleteSubject('${subject.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
@@ -2641,7 +2690,7 @@
 
     // ============ HELP & USER MENU ============
     function showHelp() { 
-        showToast('📚 Try 3 free questions! After that, pay K10 via Mobile Money.', 'info'); 
+        showToast('🎯 Try 3 free questions in ICT! Pay K10 to unlock all subjects.', 'info'); 
     }
     function toggleUserMenu() {
         if (currentUser && confirm(`Logged in as ${currentUser.username}\nLogout?`)) logout();
@@ -2701,7 +2750,7 @@
     window.startFreeTrial = startFreeTrial;
 
     console.log('🇿🇲 Zambia Quiz Pro loaded!');
-    console.log('🎯 Free trial: 3 questions available');
+    console.log('🎯 Free trial: 3 questions in ICT only');
     console.log('👨‍🏫 Click teacher icon to manage students');
     console.log('📱 WhatsApp: 0966 011 066 for payments');
     console.log('💳 Mobile Money: 0971 130 511, 0958 882 550, 0763 209 826');
