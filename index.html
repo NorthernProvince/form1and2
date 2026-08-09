@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
-        /* ===== ALL STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -335,209 +334,6 @@
             background: linear-gradient(90deg, #fbbf24, #f59e0b);
             border-radius: 4px;
             transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* ===== TEACHER DASHBOARD STYLES ===== */
-        .teacher-dashboard {
-            background: rgba(15, 22, 41, 0.95);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .teacher-dashboard h2 {
-            color: white;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .teacher-dashboard h2 i {
-            color: #fbbf24;
-        }
-        .form-group {
-            margin-bottom: 14px;
-        }
-        .form-group label {
-            color: rgba(255,255,255,0.6);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .form-group .input-field {
-            background: rgba(255,255,255,0.06);
-            border: 2px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: white;
-            font-size: 15px;
-            width: 100%;
-            transition: all 0.3s;
-            outline: none;
-        }
-        .form-group .input-field:focus {
-            border-color: #fbbf24;
-            background: rgba(255,255,255,0.08);
-        }
-        .form-group .input-field::placeholder {
-            color: rgba(255,255,255,0.3);
-        }
-        .form-group select {
-            background: rgba(255,255,255,0.06);
-            border: 2px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: white;
-            font-size: 15px;
-            width: 100%;
-            transition: all 0.3s;
-            outline: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-        }
-        .form-group select:focus {
-            border-color: #fbbf24;
-            background: rgba(255,255,255,0.08);
-        }
-        .form-group select option {
-            background: #1a1f3a;
-            color: white;
-        }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .options-grid .input-field {
-            font-size: 14px;
-        }
-        .btn-teacher {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #0f1629;
-            font-weight: 700;
-            padding: 14px;
-            border-radius: 12px;
-            border: none;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .btn-teacher:active {
-            transform: scale(0.96);
-        }
-        .btn-teacher:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .btn-danger {
-            background: rgba(239,68,68,0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239,68,68,0.3);
-            padding: 10px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .btn-danger:active {
-            transform: scale(0.96);
-        }
-        .question-list {
-            margin-top: 16px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .question-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        .question-list::-webkit-scrollbar-thumb {
-            background: rgba(251,191,36,0.3);
-            border-radius: 10px;
-        }
-        .question-item {
-            background: rgba(255,255,255,0.04);
-            border-radius: 10px;
-            padding: 12px 14px;
-            margin-bottom: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .question-item .q-text {
-            color: white;
-            font-size: 13px;
-            flex: 1;
-        }
-        .question-item .q-options {
-            color: rgba(255,255,255,0.4);
-            font-size: 11px;
-            margin-top: 2px;
-        }
-        .question-item .q-delete {
-            color: rgba(255,255,255,0.3);
-            cursor: pointer;
-            padding: 6px 10px;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-        .question-item .q-delete:active {
-            background: rgba(239,68,68,0.2);
-            color: #ef4444;
-        }
-        .subject-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-            margin-bottom: 16px;
-        }
-        .subject-tabs::-webkit-scrollbar {
-            height: 3px;
-        }
-        .subject-tabs::-webkit-scrollbar-thumb {
-            background: rgba(251,191,36,0.3);
-            border-radius: 10px;
-        }
-        .subject-tab {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 8px 16px;
-            color: rgba(255,255,255,0.6);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s;
-        }
-        .subject-tab.active {
-            background: rgba(251,191,36,0.15);
-            border-color: #fbbf24;
-            color: #fbbf24;
-        }
-        .subject-tab:active {
-            transform: scale(0.95);
-        }
-        .badge-count {
-            background: rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 2px 8px;
-            font-size: 10px;
-            color: rgba(255,255,255,0.4);
-            margin-left: 6px;
         }
 
         .premium-overlay {
@@ -868,7 +664,6 @@
             .premium-title { font-size: 22px; }
             .price-tag { font-size: 40px; }
             .premium-card { padding: 20px 16px 16px; }
-            .options-grid { grid-template-columns: 1fr; }
         }
 
         @media (min-width: 431px) {
@@ -932,6 +727,294 @@
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
         }
+
+        /* Teacher Dashboard Styles */
+        .teacher-dashboard {
+            background: rgba(15, 22, 41, 0.95);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .teacher-dashboard h2 {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .teacher-dashboard h2 i {
+            color: #fbbf24;
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .form-group .input-field {
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 15px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .form-group .input-field:focus {
+            border-color: #fbbf24;
+            background: rgba(255,255,255,0.08);
+        }
+        .form-group .input-field::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        .form-group select {
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 15px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+        .form-group select:focus {
+            border-color: #fbbf24;
+            background: rgba(255,255,255,0.08);
+        }
+        .form-group select option {
+            background: #1a1f3a;
+            color: white;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .options-grid .input-field {
+            font-size: 14px;
+        }
+        .btn-teacher {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f1629;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-teacher:active {
+            transform: scale(0.96);
+        }
+        .btn-teacher:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-teacher-secondary {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-teacher-secondary:active {
+            transform: scale(0.96);
+        }
+        .btn-danger {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.3);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .btn-danger:active {
+            transform: scale(0.96);
+        }
+        .question-list {
+            margin-top: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .question-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .question-list::-webkit-scrollbar-thumb {
+            background: rgba(251,191,36,0.3);
+            border-radius: 10px;
+        }
+        .question-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .question-item .q-text {
+            color: white;
+            font-size: 13px;
+            flex: 1;
+        }
+        .question-item .q-options {
+            color: rgba(255,255,255,0.4);
+            font-size: 11px;
+            margin-top: 2px;
+        }
+        .question-item .q-delete {
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .question-item .q-delete:active {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+        }
+        .subject-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+        .subject-tabs::-webkit-scrollbar {
+            height: 3px;
+        }
+        .subject-tabs::-webkit-scrollbar-thumb {
+            background: rgba(251,191,36,0.3);
+            border-radius: 10px;
+        }
+        .subject-tab {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 8px 16px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        .subject-tab.active {
+            background: rgba(251,191,36,0.15);
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+        .subject-tab:active {
+            transform: scale(0.95);
+        }
+        .badge-count {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            margin-left: 6px;
+        }
+
+        .users-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .users-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .users-list::-webkit-scrollbar-thumb {
+            background: rgba(251,191,36,0.3);
+            border-radius: 10px;
+        }
+        .user-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-bottom: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-item .user-info {
+            color: white;
+            font-size: 13px;
+        }
+        .user-item .user-info .username {
+            font-weight: 600;
+        }
+        .user-item .user-info .user-date {
+            color: rgba(255,255,255,0.3);
+            font-size: 11px;
+            margin-left: 8px;
+        }
+        .user-item .user-delete {
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .user-item .user-delete:active {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+        }
+
+        .teacher-login-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.4);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .teacher-login-btn:active {
+            transform: scale(0.95);
+        }
+        .teacher-login-btn:hover {
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.7);
+        }
     </style>
 </head>
 <body>
@@ -945,6 +1028,9 @@
         </div>
         <div class="header-actions">
             <button class="header-btn" onclick="showHelp()"><i class="fas fa-question-circle"></i></button>
+            <button class="teacher-login-btn" onclick="showTeacherLogin()">
+                <i class="fas fa-chalkboard-teacher"></i> Teacher
+            </button>
             <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()" style="display:none;">
                 <span id="avatarText">U</span>
             </div>
@@ -981,6 +1067,35 @@
                             <span class="text-gold font-semibold cursor-pointer" onclick="showPremiumPopup()">Get Membership</span>
                         </p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEACHER LOGIN VIEW -->
+        <div class="view" id="teacherLoginView">
+            <div class="glass-card p-6" style="margin-top:20px;">
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-gold rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-yellow-500/20">
+                        <i class="fas fa-chalkboard-teacher text-3xl text-[#0f1629]"></i>
+                    </div>
+                    <h2 class="text-white text-2xl font-bold">Teacher Login</h2>
+                    <p class="text-white/40 text-sm mt-1">Manage subjects, questions &amp; students</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-white/60 text-xs font-semibold uppercase tracking-wider">Teacher Username</label>
+                        <input id="teacherUsername" type="text" placeholder="Enter teacher username" class="input-field mt-1" />
+                    </div>
+                    <div>
+                        <label class="text-white/60 text-xs font-semibold uppercase tracking-wider">Teacher Password</label>
+                        <input id="teacherPassword" type="password" placeholder="Enter teacher password" class="input-field mt-1" />
+                    </div>
+                    <button onclick="teacherLogin()" class="btn-primary mt-2" id="teacherLoginBtn">
+                        <i class="fas fa-sign-in-alt"></i> Teacher Sign In
+                    </button>
+                    <button onclick="showView('loginView')" class="btn-secondary mt-2">
+                        <i class="fas fa-arrow-left"></i> Back to Student Login
+                    </button>
                 </div>
             </div>
         </div>
@@ -1054,88 +1169,150 @@
         <!-- TEACHER DASHBOARD VIEW -->
         <div class="view" id="teacherView">
             <div class="teacher-dashboard">
-                <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h2>
+                    <button onclick="logoutTeacher()" class="btn-danger" style="padding:6px 14px;font-size:12px;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
                 
-                <!-- Subject Tabs -->
-                <div class="subject-tabs" id="subjectTabs">
-                    <button class="subject-tab active" data-subject="new" onclick="switchSubjectTab('new')">
-                        <i class="fas fa-plus"></i> New Subject
+                <!-- Tabs -->
+                <div class="flex gap-2 mb-4 overflow-x-auto" style="padding-bottom:4px;">
+                    <button class="subject-tab active" onclick="switchTeacherTab('subjects')">
+                        <i class="fas fa-book"></i> Subjects
                     </button>
-                    <!-- Subjects will be loaded here -->
-                </div>
-
-                <!-- Add Subject Form -->
-                <div id="newSubjectForm" class="mb-4">
-                    <div class="form-group">
-                        <label>Subject Name</label>
-                        <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" />
-                    </div>
-                    <div class="form-group">
-                        <label>Icon (Font Awesome class)</label>
-                        <div class="flex gap-2">
-                            <input id="subjectIcon" type="text" placeholder="e.g., fa-atom" class="input-field" style="flex:1;" />
-                            <button onclick="pickIcon()" class="btn-secondary" style="width:auto;padding:12px 20px;margin-top:0;">
-                                <i class="fas fa-icons"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Color (Tailwind gradient)</label>
-                        <input id="subjectColor" type="text" placeholder="e.g., from-indigo-500 to-purple-600" class="input-field" />
-                    </div>
-                    <button onclick="addSubject()" class="btn-teacher">
-                        <i class="fas fa-plus-circle"></i> Add Subject
+                    <button class="subject-tab" onclick="switchTeacherTab('questions')">
+                        <i class="fas fa-question-circle"></i> Questions
+                    </button>
+                    <button class="subject-tab" onclick="switchTeacherTab('students')">
+                        <i class="fas fa-users"></i> Students
                     </button>
                 </div>
 
-                <!-- Add Question Form -->
-                <div id="questionForm" style="display:none;">
+                <!-- SUBJECTS TAB -->
+                <div id="teacherSubjectsTab">
                     <div class="flex items-center justify-between mb-3">
-                        <h3 class="text-white font-bold text-lg">
-                            <i class="fas fa-question-circle text-gold"></i> 
-                            Add Question to: <span id="selectedSubjectName" class="text-gold">Mathematics</span>
-                        </h3>
-                        <button onclick="switchSubjectTab('new')" class="text-white/40 hover:text-white text-sm">
-                            <i class="fas fa-times"></i>
+                        <h3 class="text-white font-semibold text-sm"><i class="fas fa-list text-gold"></i> Manage Subjects</h3>
+                        <button onclick="showAddSubjectForm()" class="btn-teacher-secondary" style="width:auto;padding:6px 14px;font-size:12px;">
+                            <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Question</label>
-                        <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" />
+                    <div id="subjectList" class="question-list">
+                        <!-- Subjects loaded here -->
                     </div>
-                    <div class="form-group">
-                        <label>Options (A, B, C, D)</label>
-                        <div class="options-grid">
-                            <input id="optionA" type="text" placeholder="Option A" class="input-field" />
-                            <input id="optionB" type="text" placeholder="Option B" class="input-field" />
-                            <input id="optionC" type="text" placeholder="Option C" class="input-field" />
-                            <input id="optionD" type="text" placeholder="Option D" class="input-field" />
+
+                    <!-- Add Subject Form (hidden by default) -->
+                    <div id="addSubjectForm" style="display:none;" class="mt-3 p-4 glass-card">
+                        <h4 class="text-white font-semibold text-sm mb-3"><i class="fas fa-plus-circle text-gold"></i> New Subject</h4>
+                        <div class="form-group">
+                            <label>Subject Name</label>
+                            <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" />
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Font Awesome class)</label>
+                            <div class="flex gap-2">
+                                <input id="subjectIcon" type="text" placeholder="e.g., fa-atom" class="input-field" style="flex:1;" />
+                                <button onclick="pickIcon()" class="btn-secondary" style="width:auto;padding:12px 16px;margin-top:0;">
+                                    <i class="fas fa-random"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Color (Tailwind gradient)</label>
+                            <input id="subjectColor" type="text" placeholder="e.g., from-indigo-500 to-purple-600" class="input-field" />
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="addSubject()" class="btn-teacher" style="flex:1;">
+                                <i class="fas fa-save"></i> Save
+                            </button>
+                            <button onclick="hideAddSubjectForm()" class="btn-secondary" style="width:auto;padding:12px 20px;">
+                                Cancel
+                            </button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Correct Answer</label>
-                        <select id="correctAnswer" class="input-field">
-                            <option value="0">A</option>
-                            <option value="1">B</option>
-                            <option value="2">C</option>
-                            <option value="3">D</option>
-                        </select>
-                    </div>
-                    <button onclick="addQuestion()" class="btn-teacher">
-                        <i class="fas fa-save"></i> Add Question
-                    </button>
                 </div>
 
-                <!-- Question List -->
-                <div id="questionListContainer" style="display:none;">
-                    <div class="flex items-center justify-between mt-4 mb-2">
-                        <h3 class="text-white font-semibold text-sm">
-                            <i class="fas fa-list text-gold"></i> Questions
-                            <span id="questionCount" class="badge-count">0</span>
-                        </h3>
+                <!-- QUESTIONS TAB -->
+                <div id="teacherQuestionsTab" style="display:none;">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-white font-semibold text-sm"><i class="fas fa-list text-gold"></i> Manage Questions</h3>
                     </div>
-                    <div id="questionList" class="question-list"></div>
+                    
+                    <!-- Select Subject -->
+                    <div class="form-group">
+                        <label>Select Subject</label>
+                        <select id="questionSubjectSelect" class="input-field" onchange="loadQuestionsForTeacher()">
+                            <option value="">-- Select a subject --</option>
+                        </select>
+                    </div>
+
+                    <!-- Add Question Form -->
+                    <div id="addQuestionForm" class="mt-3 p-4 glass-card">
+                        <h4 class="text-white font-semibold text-sm mb-3"><i class="fas fa-plus-circle text-gold"></i> Add Question</h4>
+                        <div class="form-group">
+                            <label>Question</label>
+                            <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" />
+                        </div>
+                        <div class="form-group">
+                            <label>Options (A, B, C, D)</label>
+                            <div class="options-grid">
+                                <input id="optionA" type="text" placeholder="Option A" class="input-field" />
+                                <input id="optionB" type="text" placeholder="Option B" class="input-field" />
+                                <input id="optionC" type="text" placeholder="Option C" class="input-field" />
+                                <input id="optionD" type="text" placeholder="Option D" class="input-field" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Correct Answer</label>
+                            <select id="correctAnswer" class="input-field">
+                                <option value="0">A</option>
+                                <option value="1">B</option>
+                                <option value="2">C</option>
+                                <option value="3">D</option>
+                            </select>
+                        </div>
+                        <button onclick="addQuestionTeacher()" class="btn-teacher">
+                            <i class="fas fa-save"></i> Add Question
+                        </button>
+                    </div>
+
+                    <!-- Question List -->
+                    <div id="teacherQuestionList" class="question-list mt-3"></div>
+                </div>
+
+                <!-- STUDENTS TAB -->
+                <div id="teacherStudentsTab" style="display:none;">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-white font-semibold text-sm"><i class="fas fa-users text-gold"></i> Registered Students</h3>
+                        <button onclick="showAddStudentForm()" class="btn-teacher-secondary" style="width:auto;padding:6px 14px;font-size:12px;">
+                            <i class="fas fa-user-plus"></i> Add Student
+                        </button>
+                    </div>
+
+                    <!-- Add Student Form -->
+                    <div id="addStudentForm" style="display:none;" class="mt-3 p-4 glass-card">
+                        <h4 class="text-white font-semibold text-sm mb-3"><i class="fas fa-user-plus text-gold"></i> Create Student Account</h4>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input id="studentUsername" type="text" placeholder="Enter username" class="input-field" />
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input id="studentPassword" type="text" placeholder="Enter password" class="input-field" />
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="addStudent()" class="btn-teacher" style="flex:1;">
+                                <i class="fas fa-save"></i> Create Account
+                            </button>
+                            <button onclick="hideAddStudentForm()" class="btn-secondary" style="width:auto;padding:12px 20px;">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Student List -->
+                    <div id="studentList" class="users-list mt-3"></div>
                 </div>
             </div>
         </div>
@@ -1264,9 +1441,9 @@
     let completedSubjects = new Set();
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
-    let subjectsLoaded = false;
-    let currentSubjectId = null;
-    let isTeacherMode = false;
+    let isTeacherLoggedIn = false;
+    let currentTeacherTab = 'subjects';
+    let selectedSubjectId = null;
 
     // ============ SUPABASE FUNCTIONS ============
     const USERS_TABLE = 'app_users';
@@ -1338,6 +1515,39 @@
         return false;
     }
 
+    async function fetchAllUsers() {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?select=*&order=created_at.desc`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error('Fetch users error:', error);
+        }
+        return [];
+    }
+
+    async function deleteUser(userId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?id=eq.${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            return response.ok;
+        } catch (error) {
+            console.error('Delete user error:', error);
+            return false;
+        }
+    }
+
     // --- Subject Functions ---
     async function fetchSubjects() {
         try {
@@ -1391,13 +1601,11 @@
                     'Authorization': `Bearer ${SUPABASE_KEY}`
                 }
             });
-            if (response.ok) {
-                return true;
-            }
+            return response.ok;
         } catch (error) {
             console.error('Delete subject error:', error);
+            return false;
         }
-        return false;
     }
 
     // --- Question Functions ---
@@ -1453,13 +1661,11 @@
                     'Authorization': `Bearer ${SUPABASE_KEY}`
                 }
             });
-            if (response.ok) {
-                return true;
-            }
+            return response.ok;
         } catch (error) {
             console.error('Delete question error:', error);
+            return false;
         }
-        return false;
     }
 
     // ============ INIT ============
@@ -1481,7 +1687,7 @@
         console.log('🇿🇲 Zambia Quiz Pro loaded!');
         console.log('💾 Supabase URL:', SUPABASE_URL);
         console.log('📊 Tables: app_users, subjects, questions');
-        console.log('🔑 Teacher mode: Ctrl+Shift+T');
+        console.log('👨‍🏫 Teacher: Click "Teacher" button in header');
     }
 
     async function loadSubjects() {
@@ -1489,13 +1695,12 @@
             const subjects = await fetchSubjects();
             if (subjects && subjects.length > 0) {
                 allSubjects = subjects;
-                subjectsLoaded = true;
                 renderSubjects();
                 updateProgress();
-                updateTeacherTabs();
+                updateTeacherSubjects();
+                updateQuestionSubjectSelect();
                 console.log('✅ Loaded', subjects.length, 'subjects from database');
             } else {
-                showToast('No subjects found. Teachers can add subjects.', 'info');
                 allSubjects = [];
                 renderSubjects();
             }
@@ -1578,14 +1783,76 @@
         currentUser = null;
         document.getElementById('userAvatar').style.display = 'none';
         document.getElementById('navLogout').style.display = 'none';
-        if (isTeacherMode) {
-            isTeacherMode = false;
+        if (isTeacherLoggedIn) {
+            isTeacherLoggedIn = false;
             document.getElementById('teacherView').classList.remove('active');
         }
         showView('loginView');
         document.getElementById('loginUsername').value = '';
         document.getElementById('loginPassword').value = '';
         showToast('Logged out successfully', 'info');
+    }
+
+    // ============ TEACHER LOGIN ============
+    function showTeacherLogin() {
+        if (isTeacherLoggedIn) {
+            showView('teacherView');
+            updateTeacherDashboard();
+            return;
+        }
+        showView('teacherLoginView');
+        document.getElementById('teacherUsername').value = '';
+        document.getElementById('teacherPassword').value = '';
+    }
+
+    async function teacherLogin() {
+        const username = document.getElementById('teacherUsername').value.trim();
+        const password = document.getElementById('teacherPassword').value.trim();
+        const loginBtn = document.getElementById('teacherLoginBtn');
+        
+        if (!username || !password) {
+            showToast('Please enter teacher credentials', 'error');
+            return;
+        }
+
+        // Check if teacher exists in the database with role = 'teacher'
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=*`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.length > 0 && data[0].password === password && data[0].role === 'teacher') {
+                    isTeacherLoggedIn = true;
+                    showToast('👨‍🏫 Welcome Teacher!', 'success');
+                    showView('teacherView');
+                    updateTeacherDashboard();
+                    return;
+                }
+            }
+        } catch (error) {
+            console.error('Teacher login error:', error);
+        }
+
+        // Default teacher account (fallback)
+        if (username === 'teacher' && password === 'teacher123') {
+            isTeacherLoggedIn = true;
+            showToast('👨‍🏫 Welcome Teacher!', 'success');
+            showView('teacherView');
+            updateTeacherDashboard();
+            return;
+        }
+
+        showToast('Invalid teacher credentials', 'error');
+    }
+
+    function logoutTeacher() {
+        isTeacherLoggedIn = false;
+        showView('loginView');
+        showToast('Logged out of teacher mode', 'info');
     }
 
     // ============ VIEW MANAGEMENT ============
@@ -1599,10 +1866,6 @@
     function navigateTo(viewId) {
         if (viewId === 'subjectsView' && !currentUser) {
             showView('loginView');
-            return;
-        }
-        if (viewId === 'teacherView' && !isTeacherMode) {
-            showToast('Teacher mode not activated. Press Ctrl+Shift+T', 'error');
             return;
         }
         showView(viewId);
@@ -1626,8 +1889,7 @@
         
         if (!allSubjects || allSubjects.length === 0) {
             grid.innerHTML = `<div class="glass-card p-6 col-span-2 text-center text-white/60">
-                No subjects available. 
-                ${isTeacherMode ? 'Use the Teacher Dashboard to add subjects.' : 'Please contact your teacher.'}
+                No subjects available. Please contact your teacher.
             </div>`;
             return;
         }
@@ -1787,107 +2049,65 @@
     }
 
     // ============ TEACHER DASHBOARD ============
-    function showTeacherDashboard() {
-        isTeacherMode = true;
-        showView('teacherView');
-        updateTeacherTabs();
-        // Show the question form by default if there are subjects
-        if (allSubjects.length > 0) {
-            switchSubjectTab(allSubjects[0].id);
-        } else {
-            switchSubjectTab('new');
-        }
-        showToast('👨‍🏫 Teacher Mode Activated!', 'success');
-    }
-
-    function updateTeacherTabs() {
-        const tabsContainer = document.getElementById('subjectTabs');
-        // Keep the "New Subject" tab
-        let tabsHTML = `<button class="subject-tab active" data-subject="new" onclick="switchSubjectTab('new')">
-            <i class="fas fa-plus"></i> New Subject
-        </button>`;
-        
-        allSubjects.forEach(subject => {
-            tabsHTML += `<button class="subject-tab" data-subject="${subject.id}" onclick="switchSubjectTab('${subject.id}')">
-                <i class="fas ${subject.icon}"></i> ${subject.name}
-                <span class="badge-count" id="qcount-${subject.id}">0</span>
-            </button>`;
-        });
-        
-        tabsContainer.innerHTML = tabsHTML;
-        
-        // Load question counts
-        allSubjects.forEach(subject => {
-            fetchQuestions(subject.id).then(questions => {
-                const badge = document.getElementById(`qcount-${subject.id}`);
-                if (badge) badge.textContent = questions.length;
-            });
-        });
-    }
-
-    function switchSubjectTab(subjectId) {
-        // Update active tab
-        document.querySelectorAll('.subject-tab').forEach(tab => {
-            tab.classList.remove('active');
-            if (tab.dataset.subject === String(subjectId)) {
-                tab.classList.add('active');
+    function switchTeacherTab(tab) {
+        currentTeacherTab = tab;
+        document.querySelectorAll('#teacherView .subject-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('#teacherView .subject-tab').forEach(t => {
+            if (t.textContent.trim().toLowerCase().includes(tab)) {
+                t.classList.add('active');
             }
         });
         
-        if (subjectId === 'new') {
-            document.getElementById('newSubjectForm').style.display = 'block';
-            document.getElementById('questionForm').style.display = 'none';
-            document.getElementById('questionListContainer').style.display = 'none';
+        document.getElementById('teacherSubjectsTab').style.display = tab === 'subjects' ? 'block' : 'none';
+        document.getElementById('teacherQuestionsTab').style.display = tab === 'questions' ? 'block' : 'none';
+        document.getElementById('teacherStudentsTab').style.display = tab === 'students' ? 'block' : 'none';
+        
+        if (tab === 'subjects') updateTeacherSubjects();
+        if (tab === 'questions') loadQuestionsForTeacher();
+        if (tab === 'students') loadStudents();
+    }
+
+    function updateTeacherDashboard() {
+        updateTeacherSubjects();
+        updateQuestionSubjectSelect();
+        loadStudents();
+    }
+
+    // --- Subject Management ---
+    function updateTeacherSubjects() {
+        const list = document.getElementById('subjectList');
+        if (!allSubjects || allSubjects.length === 0) {
+            list.innerHTML = '<div class="text-white/40 text-center py-4">No subjects yet. Add one!</div>';
             return;
         }
         
-        // Find the subject
-        const subject = allSubjects.find(s => s.id === subjectId);
-        if (!subject) return;
-        
-        currentSubjectId = subjectId;
-        document.getElementById('selectedSubjectName').textContent = subject.name;
-        document.getElementById('newSubjectForm').style.display = 'none';
-        document.getElementById('questionForm').style.display = 'block';
-        document.getElementById('questionListContainer').style.display = 'block';
-        
-        // Load questions for this subject
-        loadQuestionsForSubject(subjectId);
+        list.innerHTML = '';
+        allSubjects.forEach(subject => {
+            const div = document.createElement('div');
+            div.className = 'question-item';
+            div.innerHTML = `
+                <div>
+                    <div class="q-text"><i class="fas ${subject.icon} text-gold"></i> ${subject.name}</div>
+                    <div class="q-options">Color: ${subject.color}</div>
+                </div>
+                <div class="q-delete" onclick="deleteSubject('${subject.id}')">
+                    <i class="fas fa-trash"></i>
+                </div>
+            `;
+            list.appendChild(div);
+        });
     }
 
-    async function loadQuestionsForSubject(subjectId) {
-        const list = document.getElementById('questionList');
-        list.innerHTML = '<div class="text-white/40 text-center py-4"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
-        
-        try {
-            const questions = await fetchQuestions(subjectId);
-            const countEl = document.getElementById('questionCount');
-            if (countEl) countEl.textContent = questions.length;
-            
-            if (questions.length === 0) {
-                list.innerHTML = '<div class="text-white/40 text-center py-4">No questions yet. Add one above!</div>';
-                return;
-            }
-            
-            list.innerHTML = '';
-            questions.forEach((q, idx) => {
-                const div = document.createElement('div');
-                div.className = 'question-item';
-                div.innerHTML = `
-                    <div>
-                        <div class="q-text">${idx + 1}. ${q.question}</div>
-                        <div class="q-options">${q.options.join(' | ')}</div>
-                    </div>
-                    <div class="q-delete" onclick="deleteQuestion('${q.id}')">
-                        <i class="fas fa-trash"></i>
-                    </div>
-                `;
-                list.appendChild(div);
-            });
-        } catch (error) {
-            console.error('Error loading questions:', error);
-            list.innerHTML = '<div class="text-white/40 text-center py-4">Error loading questions.</div>';
-        }
+    function showAddSubjectForm() {
+        document.getElementById('addSubjectForm').style.display = 'block';
+        document.getElementById('subjectName').focus();
+    }
+
+    function hideAddSubjectForm() {
+        document.getElementById('addSubjectForm').style.display = 'none';
+        document.getElementById('subjectName').value = '';
+        document.getElementById('subjectIcon').value = '';
+        document.getElementById('subjectColor').value = '';
     }
 
     async function addSubject() {
@@ -1902,29 +2122,91 @@
         
         const btn = event.target;
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Adding...';
+        btn.innerHTML = '<span class="spinner"></span> Saving...';
         
         try {
             const newSubject = await addSubjectToDB(name, icon, color);
             if (newSubject) {
                 showToast(`✅ Subject "${name}" added!`, 'success');
-                document.getElementById('subjectName').value = '';
-                document.getElementById('subjectIcon').value = '';
-                document.getElementById('subjectColor').value = '';
+                hideAddSubjectForm();
                 await loadSubjects();
-                updateTeacherTabs();
-                // Switch to the new subject tab
-                setTimeout(() => switchSubjectTab(newSubject.id), 300);
+                updateTeacherSubjects();
+                updateQuestionSubjectSelect();
             }
         } catch (error) {
             showToast('Error adding subject. Please try again.', 'error');
         }
         
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-plus-circle"></i> Add Subject';
+        btn.innerHTML = '<i class="fas fa-save"></i> Save';
     }
 
-    async function addQuestion() {
+    async function deleteSubject(subjectId) {
+        if (!confirm('Delete this subject and all its questions?')) return;
+        
+        try {
+            const success = await deleteSubjectFromDB(subjectId);
+            if (success) {
+                showToast('Subject deleted', 'info');
+                await loadSubjects();
+                updateTeacherSubjects();
+                updateQuestionSubjectSelect();
+            }
+        } catch (error) {
+            showToast('Error deleting subject', 'error');
+        }
+    }
+
+    // --- Question Management ---
+    function updateQuestionSubjectSelect() {
+        const select = document.getElementById('questionSubjectSelect');
+        select.innerHTML = '<option value="">-- Select a subject --</option>';
+        allSubjects.forEach(subject => {
+            select.innerHTML += `<option value="${subject.id}">${subject.name}</option>`;
+        });
+    }
+
+    async function loadQuestionsForTeacher() {
+        const subjectId = document.getElementById('questionSubjectSelect').value;
+        if (!subjectId) {
+            document.getElementById('teacherQuestionList').innerHTML = '<div class="text-white/40 text-center py-4">Select a subject to see questions</div>';
+            return;
+        }
+        
+        selectedSubjectId = subjectId;
+        const list = document.getElementById('teacherQuestionList');
+        list.innerHTML = '<div class="text-white/40 text-center py-4"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        
+        try {
+            const questions = await fetchQuestions(subjectId);
+            if (questions.length === 0) {
+                list.innerHTML = '<div class="text-white/40 text-center py-4">No questions yet. Add one above!</div>';
+                return;
+            }
+            
+            list.innerHTML = '';
+            questions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `
+                    <div>
+                        <div class="q-text">${idx + 1}. ${q.question}</div>
+                        <div class="q-options">${q.options.join(' | ')}</div>
+                    </div>
+                    <div class="q-delete" onclick="deleteQuestionTeacher('${q.id}')">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        } catch (error) {
+            console.error('Error loading questions:', error);
+            list.innerHTML = '<div class="text-white/40 text-center py-4">Error loading questions.</div>';
+        }
+    }
+
+    async function addQuestionTeacher() {
+        const subjectId = document.getElementById('questionSubjectSelect').value;
         const question = document.getElementById('questionTextInput').value.trim();
         const optionA = document.getElementById('optionA').value.trim();
         const optionB = document.getElementById('optionB').value.trim();
@@ -1932,16 +2214,16 @@
         const optionD = document.getElementById('optionD').value.trim();
         const correctAnswer = parseInt(document.getElementById('correctAnswer').value);
         
+        if (!subjectId) {
+            showToast('Please select a subject', 'error');
+            return;
+        }
         if (!question) {
             showToast('Please enter a question', 'error');
             return;
         }
         if (!optionA || !optionB || !optionC || !optionD) {
             showToast('Please fill in all 4 options', 'error');
-            return;
-        }
-        if (!currentSubjectId) {
-            showToast('Please select a subject first', 'error');
             return;
         }
         
@@ -1951,7 +2233,7 @@
         btn.innerHTML = '<span class="spinner"></span> Adding...';
         
         try {
-            const newQuestion = await addQuestionToDB(currentSubjectId, question, options, correctAnswer);
+            const newQuestion = await addQuestionToDB(subjectId, question, options, correctAnswer);
             if (newQuestion) {
                 showToast('✅ Question added!', 'success');
                 document.getElementById('questionTextInput').value = '';
@@ -1959,15 +2241,9 @@
                 document.getElementById('optionB').value = '';
                 document.getElementById('optionC').value = '';
                 document.getElementById('optionD').value = '';
-                await loadQuestionsForSubject(currentSubjectId);
-                updateTeacherTabs();
-                // Update subject count
-                const subject = allSubjects.find(s => s.id === currentSubjectId);
-                if (subject) {
-                    const count = await fetchQuestions(currentSubjectId);
-                    const badge = document.getElementById(`qcount-${currentSubjectId}`);
-                    if (badge) badge.textContent = count.length;
-                }
+                await loadQuestionsForTeacher();
+                // Update question count on subjects
+                updateTeacherSubjects();
             }
         } catch (error) {
             showToast('Error adding question. Please try again.', 'error');
@@ -1977,24 +2253,120 @@
         btn.innerHTML = '<i class="fas fa-save"></i> Add Question';
     }
 
-    async function deleteQuestion(questionId) {
+    async function deleteQuestionTeacher(questionId) {
         if (!confirm('Delete this question?')) return;
         
         try {
             const success = await deleteQuestionFromDB(questionId);
             if (success) {
                 showToast('Question deleted', 'info');
-                await loadQuestionsForSubject(currentSubjectId);
-                updateTeacherTabs();
-                const subject = allSubjects.find(s => s.id === currentSubjectId);
-                if (subject) {
-                    const count = await fetchQuestions(currentSubjectId);
-                    const badge = document.getElementById(`qcount-${currentSubjectId}`);
-                    if (badge) badge.textContent = count.length;
-                }
+                await loadQuestionsForTeacher();
+                updateTeacherSubjects();
             }
         } catch (error) {
             showToast('Error deleting question', 'error');
+        }
+    }
+
+    // --- Student Management ---
+    function showAddStudentForm() {
+        document.getElementById('addStudentForm').style.display = 'block';
+        document.getElementById('studentUsername').focus();
+    }
+
+    function hideAddStudentForm() {
+        document.getElementById('addStudentForm').style.display = 'none';
+        document.getElementById('studentUsername').value = '';
+        document.getElementById('studentPassword').value = '';
+    }
+
+    async function addStudent() {
+        const username = document.getElementById('studentUsername').value.trim();
+        const password = document.getElementById('studentPassword').value.trim();
+        
+        if (!username || !password) {
+            showToast('Please enter username and password', 'error');
+            return;
+        }
+        if (username.length < 3 || password.length < 3) {
+            showToast('Username and password must be at least 3 characters', 'error');
+            return;
+        }
+        
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Creating...';
+        
+        try {
+            const exists = await checkUserExists(username);
+            if (exists) {
+                showToast('Username already exists', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Create Account';
+                return;
+            }
+            
+            const newUser = await createUser(username, password);
+            if (newUser) {
+                showToast(`✅ Student "${username}" created!`, 'success');
+                hideAddStudentForm();
+                await loadStudents();
+            }
+        } catch (error) {
+            showToast('Error creating student account', 'error');
+        }
+        
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Create Account';
+    }
+
+    async function loadStudents() {
+        const list = document.getElementById('studentList');
+        list.innerHTML = '<div class="text-white/40 text-center py-4"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        
+        try {
+            const users = await fetchAllUsers();
+            // Filter out teacher accounts (if any)
+            const students = users.filter(u => u.role !== 'teacher');
+            
+            if (students.length === 0) {
+                list.innerHTML = '<div class="text-white/40 text-center py-4">No students registered yet.</div>';
+                return;
+            }
+            
+            list.innerHTML = '';
+            students.forEach(user => {
+                const div = document.createElement('div');
+                div.className = 'user-item';
+                const date = new Date(user.created_at).toLocaleDateString();
+                div.innerHTML = `
+                    <div class="user-info">
+                        <span class="username">${user.username}</span>
+                        <span class="user-date">Joined: ${date}</span>
+                    </div>
+                    <div class="user-delete" onclick="deleteStudent('${user.id}')">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        } catch (error) {
+            console.error('Error loading students:', error);
+            list.innerHTML = '<div class="text-white/40 text-center py-4">Error loading students.</div>';
+        }
+    }
+
+    async function deleteStudent(userId) {
+        if (!confirm('Delete this student account?')) return;
+        
+        try {
+            const success = await deleteUser(userId);
+            if (success) {
+                showToast('Student deleted', 'info');
+                await loadStudents();
+            }
+        } catch (error) {
+            showToast('Error deleting student', 'error');
         }
     }
 
@@ -2101,24 +2473,11 @@
 
     // ============ HELP & USER MENU ============
     function showHelp() { 
-        showToast('📚 Select a subject to start learning! | Teacher: Ctrl+Shift+T', 'info'); 
+        showToast('📚 Select a subject to start learning!', 'info'); 
     }
     function toggleUserMenu() {
         if (currentUser && confirm(`Logged in as ${currentUser.username}\nLogout?`)) logout();
     }
-
-    // ============ TEACHER MODE (Ctrl+Shift+T) ============
-    document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.shiftKey && e.key === 'T') {
-            e.preventDefault();
-            const pass = prompt('👨‍🏫 Enter Teacher Password:');
-            if (pass === 'teacher123') {
-                showTeacherDashboard();
-            } else if (pass !== null) {
-                showToast('Incorrect password', 'error');
-            }
-        }
-    });
 
     // ============ SWIPE TO GO BACK ============
     let touchStartX = 0;
@@ -2128,16 +2487,13 @@
         if (dx > 80) {
             const activeView = document.querySelector('.view.active');
             if (activeView && activeView.id === 'quizView') goToSubjects();
-            if (activeView && activeView.id === 'teacherView') {
-                showView('subjectsView');
-            }
         }
     });
 
     // ============ INIT ============
     document.addEventListener('DOMContentLoaded', init);
 
-    // Expose
+    // Expose functions
     window.login = login;
     window.logout = logout;
     window.goToSubjects = goToSubjects;
@@ -2154,16 +2510,29 @@
     window.renderSubjects = renderSubjects;
     window.updateProgress = updateProgress;
     window.showToast = showToast;
+    window.showTeacherLogin = showTeacherLogin;
+    window.teacherLogin = teacherLogin;
+    window.logoutTeacher = logoutTeacher;
+    window.switchTeacherTab = switchTeacherTab;
+    window.showAddSubjectForm = showAddSubjectForm;
+    window.hideAddSubjectForm = hideAddSubjectForm;
     window.addSubject = addSubject;
-    window.addQuestion = addQuestion;
-    window.deleteQuestion = deleteQuestion;
-    window.switchSubjectTab = switchSubjectTab;
+    window.deleteSubject = deleteSubject;
+    window.updateTeacherSubjects = updateTeacherSubjects;
+    window.loadQuestionsForTeacher = loadQuestionsForTeacher;
+    window.addQuestionTeacher = addQuestionTeacher;
+    window.deleteQuestionTeacher = deleteQuestionTeacher;
+    window.updateQuestionSubjectSelect = updateQuestionSubjectSelect;
+    window.showAddStudentForm = showAddStudentForm;
+    window.hideAddStudentForm = hideAddStudentForm;
+    window.addStudent = addStudent;
+    window.loadStudents = loadStudents;
+    window.deleteStudent = deleteStudent;
     window.pickIcon = pickIcon;
-    window.showTeacherDashboard = showTeacherDashboard;
 
     console.log('🇿🇲 Zambia Quiz Pro loaded!');
-    console.log('📚 Subjects loaded from database');
-    console.log('🔑 Teacher mode: Ctrl+Shift+T (password: teacher123)');
+    console.log('👨‍🏫 Click "Teacher" button in header to login');
+    console.log('🔑 Default teacher: teacher / teacher123');
 </script>
 </body>
 </html>
