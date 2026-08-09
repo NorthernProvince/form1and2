@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
+        /* ===== ALL STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -334,6 +335,209 @@
             background: linear-gradient(90deg, #fbbf24, #f59e0b);
             border-radius: 4px;
             transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ===== TEACHER DASHBOARD STYLES ===== */
+        .teacher-dashboard {
+            background: rgba(15, 22, 41, 0.95);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .teacher-dashboard h2 {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .teacher-dashboard h2 i {
+            color: #fbbf24;
+        }
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .form-group .input-field {
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 15px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .form-group .input-field:focus {
+            border-color: #fbbf24;
+            background: rgba(255,255,255,0.08);
+        }
+        .form-group .input-field::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+        .form-group select {
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 15px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+        .form-group select:focus {
+            border-color: #fbbf24;
+            background: rgba(255,255,255,0.08);
+        }
+        .form-group select option {
+            background: #1a1f3a;
+            color: white;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .options-grid .input-field {
+            font-size: 14px;
+        }
+        .btn-teacher {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0f1629;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-teacher:active {
+            transform: scale(0.96);
+        }
+        .btn-teacher:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-danger {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.3);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .btn-danger:active {
+            transform: scale(0.96);
+        }
+        .question-list {
+            margin-top: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .question-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .question-list::-webkit-scrollbar-thumb {
+            background: rgba(251,191,36,0.3);
+            border-radius: 10px;
+        }
+        .question-item {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .question-item .q-text {
+            color: white;
+            font-size: 13px;
+            flex: 1;
+        }
+        .question-item .q-options {
+            color: rgba(255,255,255,0.4);
+            font-size: 11px;
+            margin-top: 2px;
+        }
+        .question-item .q-delete {
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .question-item .q-delete:active {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+        }
+        .subject-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+        .subject-tabs::-webkit-scrollbar {
+            height: 3px;
+        }
+        .subject-tabs::-webkit-scrollbar-thumb {
+            background: rgba(251,191,36,0.3);
+            border-radius: 10px;
+        }
+        .subject-tab {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 8px 16px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        .subject-tab.active {
+            background: rgba(251,191,36,0.15);
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+        .subject-tab:active {
+            transform: scale(0.95);
+        }
+        .badge-count {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            margin-left: 6px;
         }
 
         .premium-overlay {
@@ -664,6 +868,7 @@
             .premium-title { font-size: 22px; }
             .price-tag { font-size: 40px; }
             .premium-card { padding: 20px 16px 16px; }
+            .options-grid { grid-template-columns: 1fr; }
         }
 
         @media (min-width: 431px) {
@@ -717,7 +922,6 @@
             transform: scale(0.96);
         }
 
-        /* Loading skeleton */
         .skeleton {
             background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
             background-size: 200% 100%;
@@ -794,7 +998,6 @@
                 <div class="progress-fill" id="progressBar" style="width:0%"></div>
             </div>
             <div class="subject-grid" id="subjectGrid">
-                <!-- Loading skeletons -->
                 <div class="skeleton" style="height:120px;"></div>
                 <div class="skeleton" style="height:120px;"></div>
                 <div class="skeleton" style="height:120px;"></div>
@@ -844,6 +1047,95 @@
                         <button onclick="window.print()" class="btn-primary flex-1"><i class="fas fa-print"></i> Print</button>
                         <button onclick="goToSubjects()" class="btn-secondary flex-1"><i class="fas fa-home"></i> Home</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEACHER DASHBOARD VIEW -->
+        <div class="view" id="teacherView">
+            <div class="teacher-dashboard">
+                <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h2>
+                
+                <!-- Subject Tabs -->
+                <div class="subject-tabs" id="subjectTabs">
+                    <button class="subject-tab active" data-subject="new" onclick="switchSubjectTab('new')">
+                        <i class="fas fa-plus"></i> New Subject
+                    </button>
+                    <!-- Subjects will be loaded here -->
+                </div>
+
+                <!-- Add Subject Form -->
+                <div id="newSubjectForm" class="mb-4">
+                    <div class="form-group">
+                        <label>Subject Name</label>
+                        <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" />
+                    </div>
+                    <div class="form-group">
+                        <label>Icon (Font Awesome class)</label>
+                        <div class="flex gap-2">
+                            <input id="subjectIcon" type="text" placeholder="e.g., fa-atom" class="input-field" style="flex:1;" />
+                            <button onclick="pickIcon()" class="btn-secondary" style="width:auto;padding:12px 20px;margin-top:0;">
+                                <i class="fas fa-icons"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Color (Tailwind gradient)</label>
+                        <input id="subjectColor" type="text" placeholder="e.g., from-indigo-500 to-purple-600" class="input-field" />
+                    </div>
+                    <button onclick="addSubject()" class="btn-teacher">
+                        <i class="fas fa-plus-circle"></i> Add Subject
+                    </button>
+                </div>
+
+                <!-- Add Question Form -->
+                <div id="questionForm" style="display:none;">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-white font-bold text-lg">
+                            <i class="fas fa-question-circle text-gold"></i> 
+                            Add Question to: <span id="selectedSubjectName" class="text-gold">Mathematics</span>
+                        </h3>
+                        <button onclick="switchSubjectTab('new')" class="text-white/40 hover:text-white text-sm">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Question</label>
+                        <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" />
+                    </div>
+                    <div class="form-group">
+                        <label>Options (A, B, C, D)</label>
+                        <div class="options-grid">
+                            <input id="optionA" type="text" placeholder="Option A" class="input-field" />
+                            <input id="optionB" type="text" placeholder="Option B" class="input-field" />
+                            <input id="optionC" type="text" placeholder="Option C" class="input-field" />
+                            <input id="optionD" type="text" placeholder="Option D" class="input-field" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Correct Answer</label>
+                        <select id="correctAnswer" class="input-field">
+                            <option value="0">A</option>
+                            <option value="1">B</option>
+                            <option value="2">C</option>
+                            <option value="3">D</option>
+                        </select>
+                    </div>
+                    <button onclick="addQuestion()" class="btn-teacher">
+                        <i class="fas fa-save"></i> Add Question
+                    </button>
+                </div>
+
+                <!-- Question List -->
+                <div id="questionListContainer" style="display:none;">
+                    <div class="flex items-center justify-between mt-4 mb-2">
+                        <h3 class="text-white font-semibold text-sm">
+                            <i class="fas fa-list text-gold"></i> Questions
+                            <span id="questionCount" class="badge-count">0</span>
+                        </h3>
+                    </div>
+                    <div id="questionList" class="question-list"></div>
                 </div>
             </div>
         </div>
@@ -973,6 +1265,8 @@
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
     let subjectsLoaded = false;
+    let currentSubjectId = null;
+    let isTeacherMode = false;
 
     // ============ SUPABASE FUNCTIONS ============
     const USERS_TABLE = 'app_users';
@@ -1044,7 +1338,7 @@
         return false;
     }
 
-    // --- Subject & Question Functions ---
+    // --- Subject Functions ---
     async function fetchSubjects() {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?select=*&order=name.asc`, {
@@ -1062,6 +1356,51 @@
         return [];
     }
 
+    async function addSubjectToDB(name, icon, color) {
+        try {
+            const payload = { name, icon, color };
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data[0];
+            } else {
+                const errorText = await response.text();
+                throw new Error(`Server error: ${response.status} - ${errorText}`);
+            }
+        } catch (error) {
+            console.error('Add subject error:', error);
+            throw error;
+        }
+    }
+
+    async function deleteSubjectFromDB(subjectId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?id=eq.${subjectId}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return true;
+            }
+        } catch (error) {
+            console.error('Delete subject error:', error);
+        }
+        return false;
+    }
+
+    // --- Question Functions ---
     async function fetchQuestions(subjectId) {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?subject_id=eq.${subjectId}&select=*`, {
@@ -1079,6 +1418,50 @@
         return [];
     }
 
+    async function addQuestionToDB(subjectId, question, options, correct_answer) {
+        try {
+            const payload = { subject_id: subjectId, question, options, correct_answer };
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data[0];
+            } else {
+                const errorText = await response.text();
+                throw new Error(`Server error: ${response.status} - ${errorText}`);
+            }
+        } catch (error) {
+            console.error('Add question error:', error);
+            throw error;
+        }
+    }
+
+    async function deleteQuestionFromDB(questionId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?id=eq.${questionId}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return true;
+            }
+        } catch (error) {
+            console.error('Delete question error:', error);
+        }
+        return false;
+    }
+
     // ============ INIT ============
     async function init() {
         checkAuth();
@@ -1093,12 +1476,12 @@
             }
         });
         
-        // Load subjects from database
         await loadSubjects();
         
         console.log('🇿🇲 Zambia Quiz Pro loaded!');
         console.log('💾 Supabase URL:', SUPABASE_URL);
         console.log('📊 Tables: app_users, subjects, questions');
+        console.log('🔑 Teacher mode: Ctrl+Shift+T');
     }
 
     async function loadSubjects() {
@@ -1109,9 +1492,12 @@
                 subjectsLoaded = true;
                 renderSubjects();
                 updateProgress();
+                updateTeacherTabs();
                 console.log('✅ Loaded', subjects.length, 'subjects from database');
             } else {
-                showToast('No subjects found in database. Please add some.', 'error');
+                showToast('No subjects found. Teachers can add subjects.', 'info');
+                allSubjects = [];
+                renderSubjects();
             }
         } catch (error) {
             console.error('Error loading subjects:', error);
@@ -1192,6 +1578,10 @@
         currentUser = null;
         document.getElementById('userAvatar').style.display = 'none';
         document.getElementById('navLogout').style.display = 'none';
+        if (isTeacherMode) {
+            isTeacherMode = false;
+            document.getElementById('teacherView').classList.remove('active');
+        }
         showView('loginView');
         document.getElementById('loginUsername').value = '';
         document.getElementById('loginPassword').value = '';
@@ -1209,6 +1599,10 @@
     function navigateTo(viewId) {
         if (viewId === 'subjectsView' && !currentUser) {
             showView('loginView');
+            return;
+        }
+        if (viewId === 'teacherView' && !isTeacherMode) {
+            showToast('Teacher mode not activated. Press Ctrl+Shift+T', 'error');
             return;
         }
         showView(viewId);
@@ -1231,7 +1625,10 @@
         grid.innerHTML = '';
         
         if (!allSubjects || allSubjects.length === 0) {
-            grid.innerHTML = `<div class="glass-card p-6 col-span-2 text-center text-white/60">No subjects available. Please add subjects to the database.</div>`;
+            grid.innerHTML = `<div class="glass-card p-6 col-span-2 text-center text-white/60">
+                No subjects available. 
+                ${isTeacherMode ? 'Use the Teacher Dashboard to add subjects.' : 'Please contact your teacher.'}
+            </div>`;
             return;
         }
         
@@ -1250,7 +1647,6 @@
                 ${!isCompleted && currentUser ? `<div class="text-white/20 text-xs mt-1"><i class="fas fa-play"></i> Start</div>` : ''}
             `;
             
-            // Load question count
             fetchQuestions(subject.id).then(questions => {
                 const countEl = card.querySelector('.subject-count');
                 if (countEl) {
@@ -1381,13 +1777,234 @@
         if (currentUser) {
             document.getElementById('certUsername').textContent = currentUser.username;
             document.getElementById('certDate').textContent = new Date().toLocaleDateString();
-            const totalQ = allSubjects.reduce((sum, subject) => sum + subject.question_count || 5, 0);
+            const totalQ = allSubjects.reduce((sum, subject) => sum + 5, 0);
             document.getElementById('certScore').textContent = `${Math.round((score / (totalQ || 1)) * 100)}%`;
         }
         if (typeof confetti !== 'undefined') {
             confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
             setTimeout(() => confetti({ particleCount: 100, spread: 60, origin: { y: 0.4 } }), 300);
         }
+    }
+
+    // ============ TEACHER DASHBOARD ============
+    function showTeacherDashboard() {
+        isTeacherMode = true;
+        showView('teacherView');
+        updateTeacherTabs();
+        // Show the question form by default if there are subjects
+        if (allSubjects.length > 0) {
+            switchSubjectTab(allSubjects[0].id);
+        } else {
+            switchSubjectTab('new');
+        }
+        showToast('👨‍🏫 Teacher Mode Activated!', 'success');
+    }
+
+    function updateTeacherTabs() {
+        const tabsContainer = document.getElementById('subjectTabs');
+        // Keep the "New Subject" tab
+        let tabsHTML = `<button class="subject-tab active" data-subject="new" onclick="switchSubjectTab('new')">
+            <i class="fas fa-plus"></i> New Subject
+        </button>`;
+        
+        allSubjects.forEach(subject => {
+            tabsHTML += `<button class="subject-tab" data-subject="${subject.id}" onclick="switchSubjectTab('${subject.id}')">
+                <i class="fas ${subject.icon}"></i> ${subject.name}
+                <span class="badge-count" id="qcount-${subject.id}">0</span>
+            </button>`;
+        });
+        
+        tabsContainer.innerHTML = tabsHTML;
+        
+        // Load question counts
+        allSubjects.forEach(subject => {
+            fetchQuestions(subject.id).then(questions => {
+                const badge = document.getElementById(`qcount-${subject.id}`);
+                if (badge) badge.textContent = questions.length;
+            });
+        });
+    }
+
+    function switchSubjectTab(subjectId) {
+        // Update active tab
+        document.querySelectorAll('.subject-tab').forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.dataset.subject === String(subjectId)) {
+                tab.classList.add('active');
+            }
+        });
+        
+        if (subjectId === 'new') {
+            document.getElementById('newSubjectForm').style.display = 'block';
+            document.getElementById('questionForm').style.display = 'none';
+            document.getElementById('questionListContainer').style.display = 'none';
+            return;
+        }
+        
+        // Find the subject
+        const subject = allSubjects.find(s => s.id === subjectId);
+        if (!subject) return;
+        
+        currentSubjectId = subjectId;
+        document.getElementById('selectedSubjectName').textContent = subject.name;
+        document.getElementById('newSubjectForm').style.display = 'none';
+        document.getElementById('questionForm').style.display = 'block';
+        document.getElementById('questionListContainer').style.display = 'block';
+        
+        // Load questions for this subject
+        loadQuestionsForSubject(subjectId);
+    }
+
+    async function loadQuestionsForSubject(subjectId) {
+        const list = document.getElementById('questionList');
+        list.innerHTML = '<div class="text-white/40 text-center py-4"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        
+        try {
+            const questions = await fetchQuestions(subjectId);
+            const countEl = document.getElementById('questionCount');
+            if (countEl) countEl.textContent = questions.length;
+            
+            if (questions.length === 0) {
+                list.innerHTML = '<div class="text-white/40 text-center py-4">No questions yet. Add one above!</div>';
+                return;
+            }
+            
+            list.innerHTML = '';
+            questions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `
+                    <div>
+                        <div class="q-text">${idx + 1}. ${q.question}</div>
+                        <div class="q-options">${q.options.join(' | ')}</div>
+                    </div>
+                    <div class="q-delete" onclick="deleteQuestion('${q.id}')">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        } catch (error) {
+            console.error('Error loading questions:', error);
+            list.innerHTML = '<div class="text-white/40 text-center py-4">Error loading questions.</div>';
+        }
+    }
+
+    async function addSubject() {
+        const name = document.getElementById('subjectName').value.trim();
+        const icon = document.getElementById('subjectIcon').value.trim() || 'fa-book';
+        const color = document.getElementById('subjectColor').value.trim() || 'from-blue-500 to-blue-600';
+        
+        if (!name) {
+            showToast('Please enter a subject name', 'error');
+            return;
+        }
+        
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Adding...';
+        
+        try {
+            const newSubject = await addSubjectToDB(name, icon, color);
+            if (newSubject) {
+                showToast(`✅ Subject "${name}" added!`, 'success');
+                document.getElementById('subjectName').value = '';
+                document.getElementById('subjectIcon').value = '';
+                document.getElementById('subjectColor').value = '';
+                await loadSubjects();
+                updateTeacherTabs();
+                // Switch to the new subject tab
+                setTimeout(() => switchSubjectTab(newSubject.id), 300);
+            }
+        } catch (error) {
+            showToast('Error adding subject. Please try again.', 'error');
+        }
+        
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-plus-circle"></i> Add Subject';
+    }
+
+    async function addQuestion() {
+        const question = document.getElementById('questionTextInput').value.trim();
+        const optionA = document.getElementById('optionA').value.trim();
+        const optionB = document.getElementById('optionB').value.trim();
+        const optionC = document.getElementById('optionC').value.trim();
+        const optionD = document.getElementById('optionD').value.trim();
+        const correctAnswer = parseInt(document.getElementById('correctAnswer').value);
+        
+        if (!question) {
+            showToast('Please enter a question', 'error');
+            return;
+        }
+        if (!optionA || !optionB || !optionC || !optionD) {
+            showToast('Please fill in all 4 options', 'error');
+            return;
+        }
+        if (!currentSubjectId) {
+            showToast('Please select a subject first', 'error');
+            return;
+        }
+        
+        const options = [optionA, optionB, optionC, optionD];
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Adding...';
+        
+        try {
+            const newQuestion = await addQuestionToDB(currentSubjectId, question, options, correctAnswer);
+            if (newQuestion) {
+                showToast('✅ Question added!', 'success');
+                document.getElementById('questionTextInput').value = '';
+                document.getElementById('optionA').value = '';
+                document.getElementById('optionB').value = '';
+                document.getElementById('optionC').value = '';
+                document.getElementById('optionD').value = '';
+                await loadQuestionsForSubject(currentSubjectId);
+                updateTeacherTabs();
+                // Update subject count
+                const subject = allSubjects.find(s => s.id === currentSubjectId);
+                if (subject) {
+                    const count = await fetchQuestions(currentSubjectId);
+                    const badge = document.getElementById(`qcount-${currentSubjectId}`);
+                    if (badge) badge.textContent = count.length;
+                }
+            }
+        } catch (error) {
+            showToast('Error adding question. Please try again.', 'error');
+        }
+        
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Add Question';
+    }
+
+    async function deleteQuestion(questionId) {
+        if (!confirm('Delete this question?')) return;
+        
+        try {
+            const success = await deleteQuestionFromDB(questionId);
+            if (success) {
+                showToast('Question deleted', 'info');
+                await loadQuestionsForSubject(currentSubjectId);
+                updateTeacherTabs();
+                const subject = allSubjects.find(s => s.id === currentSubjectId);
+                if (subject) {
+                    const count = await fetchQuestions(currentSubjectId);
+                    const badge = document.getElementById(`qcount-${currentSubjectId}`);
+                    if (badge) badge.textContent = count.length;
+                }
+            }
+        } catch (error) {
+            showToast('Error deleting question', 'error');
+        }
+    }
+
+    function pickIcon() {
+        const icons = ['fa-atom', 'fa-flask', 'fa-calculator', 'fa-book-open', 'fa-globe-africa', 
+                       'fa-laptop-code', 'fa-church', 'fa-palette', 'fa-music', 'fa-robot',
+                       'fa-dna', 'fa-earth-africa', 'fa-microscope', 'fa-pencil', 'fa-ruler'];
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        document.getElementById('subjectIcon').value = randomIcon;
+        showToast(`🎨 Icon set to: ${randomIcon}`, 'info');
     }
 
     // ============ PREMIUM POPUP ============
@@ -1483,18 +2100,20 @@
     }
 
     // ============ HELP & USER MENU ============
-    function showHelp() { showToast('📚 Select a subject to start learning!', 'info'); }
+    function showHelp() { 
+        showToast('📚 Select a subject to start learning! | Teacher: Ctrl+Shift+T', 'info'); 
+    }
     function toggleUserMenu() {
         if (currentUser && confirm(`Logged in as ${currentUser.username}\nLogout?`)) logout();
     }
 
-    // ============ TEACHER MODE ============
+    // ============ TEACHER MODE (Ctrl+Shift+T) ============
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.shiftKey && e.key === 'T') {
-            const pass = prompt('Enter teacher password:');
+            e.preventDefault();
+            const pass = prompt('👨‍🏫 Enter Teacher Password:');
             if (pass === 'teacher123') {
-                showToast('👨‍🏫 Teacher mode activated!', 'success');
-                alert('👨‍🏫 Teacher Mode\n\nTo add questions, go to your Supabase Dashboard:\n1. Table Editor → subjects\n2. Add new subjects\n3. Table Editor → questions\n4. Add questions with subject_id\n\nOr use the SQL Editor to insert bulk questions.');
+                showTeacherDashboard();
             } else if (pass !== null) {
                 showToast('Incorrect password', 'error');
             }
@@ -1509,6 +2128,9 @@
         if (dx > 80) {
             const activeView = document.querySelector('.view.active');
             if (activeView && activeView.id === 'quizView') goToSubjects();
+            if (activeView && activeView.id === 'teacherView') {
+                showView('subjectsView');
+            }
         }
     });
 
@@ -1532,10 +2154,16 @@
     window.renderSubjects = renderSubjects;
     window.updateProgress = updateProgress;
     window.showToast = showToast;
+    window.addSubject = addSubject;
+    window.addQuestion = addQuestion;
+    window.deleteQuestion = deleteQuestion;
+    window.switchSubjectTab = switchSubjectTab;
+    window.pickIcon = pickIcon;
+    window.showTeacherDashboard = showTeacherDashboard;
 
     console.log('🇿🇲 Zambia Quiz Pro loaded!');
     console.log('📚 Subjects loaded from database');
-    console.log('🔑 Teacher: Ctrl+Shift+T');
+    console.log('🔑 Teacher mode: Ctrl+Shift+T (password: teacher123)');
 </script>
 </body>
 </html>
