@@ -1050,21 +1050,18 @@
     let allSubjects = Object.keys(subjectData);
     let totalQuestionsAnswered = 0;
 
-    // ============ SUPABASE FUNCTIONS ============
-    // Using the existing 'users' table with correct column mapping
-    const TABLE_NAME = 'users';
+    // ============ SUPABASE FUNCTIONS - USING app_users TABLE ============
+    const TABLE_NAME = 'app_users';
 
     async function createUser(username, password) {
         try {
-            // Match the existing table structure
             const payload = {
                 username: username,
                 password: password,
-                instance_id: null,  // Can be null
-                auth: 'email'       // Default auth method
+                is_premium: true
             };
             
-            console.log('📤 Creating user in users table:', payload);
+            console.log('📤 Creating user in public.app_users:', payload);
             
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}`, {
                 method: 'POST',
@@ -1084,7 +1081,7 @@
             } else {
                 const errorText = await response.text();
                 console.error('❌ Supabase error:', response.status, errorText);
-                throw new Error(`Server error: ${response.status}`);
+                throw new Error(`Server error: ${response.status} - ${errorText}`);
             }
         } catch (error) {
             console.error('❌ Create user error:', error);
@@ -1146,8 +1143,8 @@
         
         console.log('🇿🇲 Zambia Quiz Pro ready!');
         console.log('💾 Supabase URL:', SUPABASE_URL);
-        console.log('📊 Using table:', TABLE_NAME);
-        console.log('📋 Table columns: id, instance_id, username, password, auth');
+        console.log('📊 Using table: public.' + TABLE_NAME);
+        console.log('📋 Columns: id, username, password, created_at, is_premium');
     }
 
     // ============ AUTH ============
