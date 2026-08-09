@@ -1050,11 +1050,12 @@
     let completedSubjects = new Set();
     let allSubjects = Object.keys(subjectData);
     let totalQuestionsAnswered = 0;
+    let tableColumns = null;
 
     // ============ SUPABASE FUNCTIONS ============
-    // Try to detect column names from existing table
     async function detectTableSchema() {
         try {
+            // Try to get column info from the table
             const response = await fetch(`${SUPABASE_URL}/rest/v1/users?limit=1`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
@@ -1064,35 +1065,74 @@
             if (response.ok) {
                 const data = await response.json();
                 if (data.length > 0) {
-                    const columns = Object.keys(data[0]);
-                    console.log('📊 Detected columns:', columns);
-                    return columns;
+                    tableColumns = Object.keys(data[0]);
+                    console.log('📊 Detected columns:', tableColumns);
+                    return tableColumns;
+                } else {
+                    // Table is empty, try to get column info from a different method
+                    // We'll assume standard columns
+                    tableColumns = ['id', 'username', 'password', 'created_at', 'is_premium'];
+                    console.log('📊 Using default columns:', tableColumns);
+                    return tableColumns;
                 }
+            } else {
+                // Table might not exist or error
+                console.warn('Could not detect table schema, using defaults');
+                tableColumns = ['id', 'username', 'password', 'created_at', 'is_premium'];
+                return tableColumns;
             }
         } catch (error) {
-            console.log('Could not detect schema:', error);
+            console.warn('Error detecting schema:', error);
+            tableColumns = ['id', 'username', 'password', 'created_at', 'is_premium'];
+            return tableColumns;
         }
-        return null;
+    }
+
+    // First, let's try to create the table if it doesn't exist
+    async function ensureTableExists() {
+        try {
+            // Try to select from the table to see if it exists
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/users?limit=1`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                console.log('✅ Users table exists');
+                return true;
+            } else if (response.status === 404) {
+                console.log('⚠️ Users table not found, will try to create it');
+                // Table doesn't exist, we'll create it via the API
+                // Note: You may need to create it manually in the Supabase dashboard
+                return false;
+            }
+            return response.ok;
+        } catch (error) {
+            console.error('Error checking table:', error);
+            return false;
+        }
     }
 
     async function saveUserToDB(username, password) {
         try {
-            // First, try to detect the table structure
-            const columns = await detectTableSchema();
+            // Ensure we have column info
+            if (!tableColumns) {
+                await detectTableSchema();
+            }
             
-            // Build the payload based on detected columns
-            const payload = {
-                username: username,
-                password: password
-            };
+            // Build payload with only columns that exist
+            const payload = { username, password };
             
-            // Check if 'created_at' column exists, add if it does
-            if (columns && columns.includes('created_at')) {
+            // Add optional columns if they exist in the table
+            if (tableColumns && tableColumns.includes('created_at')) {
                 payload.created_at = new Date().toISOString();
             }
-            if (columns && columns.includes('is_premium')) {
+            if (tableColumns && tableColumns.includes('is_premium')) {
                 payload.is_premium = true;
             }
+            
+            console.log('📤 Sending payload:', payload);
             
             const response = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
                 method: 'POST',
@@ -1107,14 +1147,15 @@
             
             if (response.ok) {
                 const data = await response.json();
+                console.log('✅ User created:', data);
                 return data[0];
             } else {
                 const errorText = await response.text();
-                console.error('Supabase save error:', response.status, errorText);
-                throw new Error(`Supabase error: ${response.status}`);
+                console.error('❌ Supabase error:', response.status, errorText);
+                throw new Error(`Server error: ${response.status}`);
             }
         } catch (error) {
-            console.error('Supabase save error:', error);
+            console.error('❌ Save error:', error);
             throw error;
         }
     }
@@ -1134,16 +1175,18 @@
                 }
             }
         } catch (error) {
-            console.error('Supabase auth error:', error);
+            console.error('Auth error:', error);
         }
         return null;
     }
 
     // ============ INIT ============
-    function init() {
+    async function init() {
         checkAuth();
-        // Detect schema on startup
-        detectTableSchema();
+        
+        // Detect table schema
+        await detectTableSchema();
+        await ensureTableExists();
         
         const mainContent = document.getElementById('mainContent');
         mainContent.addEventListener('scroll', () => {
@@ -1154,6 +1197,9 @@
                 fab.style.display = 'none';
             }
         });
+        
+        console.log('🇿🇲 Zambia Quiz Pro ready!');
+        console.log('💾 Connected to Supabase:', SUPABASE_URL);
     }
 
     // ============ AUTH ============
@@ -1216,6 +1262,7 @@
                 renderSubjects();
                 updateProgress();
             } else {
+                // Check if user exists
                 const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&select=username`, {
                     headers: {
                         'apikey': SUPABASE_KEY,
@@ -1462,15 +1509,20 @@
                     'Authorization': `Bearer ${SUPABASE_KEY}`
                 }
             });
-            const checkData = await checkResponse.json();
-            if (checkData.length > 0) {
-                showToast('Username already exists. Please choose another.', 'error');
-                paymentBtn.disabled = false;
-                paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
-                return;
+            
+            if (checkResponse.ok) {
+                const checkData = await checkResponse.json();
+                if (checkData.length > 0) {
+                    showToast('Username already exists. Please choose another.', 'error');
+                    paymentBtn.disabled = false;
+                    paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
+                    return;
+                }
             }
 
+            // Try to save the user
             const newUser = await saveUserToDB(username, password);
+            
             if (newUser) {
                 currentUser = { 
                     username: newUser.username, 
@@ -1486,7 +1538,7 @@
                 renderSubjects();
                 updateProgress();
             } else {
-                throw new Error('Unknown error from Supabase');
+                throw new Error('Failed to create account');
             }
         } catch (error) {
             console.error('Payment error:', error);
@@ -1560,8 +1612,6 @@
     console.log('🇿🇲 Zambia Quiz Pro loaded!');
     console.log('📚 Subjects:', allSubjects.join(', '));
     console.log('🔑 Teacher: Ctrl+Shift+T');
-    console.log('💾 Supabase:', SUPABASE_URL);
-    console.log('📊 Detecting table schema...');
 </script>
 </body>
 </html>
