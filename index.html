@@ -74,7 +74,7 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .header-btn {
             width: 34px;
@@ -242,6 +242,25 @@
             color: white;
             box-shadow: 0 4px 12px rgba(16,185,129,0.4);
         }
+        .subject-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+            position: relative;
+        }
+        .subject-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            z-index: 10;
+        }
+        .subject-card.locked .icon-wrapper,
+        .subject-card.locked .subject-name,
+        .subject-card.locked .subject-count {
+            filter: blur(2px);
+        }
         .option-btn {
             background: rgba(255,255,255,0.06);
             border: 2px solid rgba(255,255,255,0.08);
@@ -337,9 +356,9 @@
         .premium-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             z-index: 200;
             display: none;
             align-items: center;
@@ -359,7 +378,7 @@
         .premium-card {
             background: linear-gradient(145deg, #1a1f3a, #0f1629);
             border-radius: 24px;
-            padding: 24px 20px 20px;
+            padding: 28px 20px 24px;
             width: 100%;
             max-width: 380px;
             border: 1px solid rgba(255,255,255,0.08);
@@ -381,14 +400,14 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .premium-icon-wrapper {
-            width: 64px;
-            height: 64px;
+            width: 72px;
+            height: 72px;
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 32px;
             margin: 0 auto 10px;
             box-shadow: 0 6px 30px rgba(251,191,36,0.3);
         }
@@ -404,10 +423,10 @@
             margin-top: 2px;
         }
         .price-container {
-            margin: 10px 0 12px;
+            margin: 12px 0 14px;
         }
         .price-tag {
-            font-size: 40px;
+            font-size: 44px;
             font-weight: 800;
             color: #fbbf24;
             line-height: 1;
@@ -496,7 +515,7 @@
             background: rgba(251,191,36,0.08);
             border: 1px solid rgba(251,191,36,0.15);
             border-radius: 10px;
-            padding: 8px;
+            padding: 10px;
             margin: 10px 0 12px;
         }
         .account-name-box .label {
@@ -598,6 +617,10 @@
             background: rgba(251,191,36,0.2);
             color: #fbbf24;
         }
+        .badge-free {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
         .subject-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -650,8 +673,8 @@
             .option-btn { padding: 10px 12px; font-size: 12px; }
             .payment-number { font-size: 13px; }
             .premium-title { font-size: 20px; }
-            .price-tag { font-size: 36px; }
-            .premium-card { padding: 16px 14px 14px; }
+            .price-tag { font-size: 38px; }
+            .premium-card { padding: 18px 14px 16px; }
         }
         @media (min-width: 431px) {
             .app-container {
@@ -697,9 +720,6 @@
             color: #ef4444;
             border: 1px solid rgba(239,68,68,0.3);
         }
-        .btn-primary.error:active {
-            transform: scale(0.96);
-        }
         .skeleton {
             background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
             background-size: 200% 100%;
@@ -710,285 +730,13 @@
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
         }
-        /* Teacher Dashboard Styles */
-        .teacher-dashboard {
-            background: rgba(15, 22, 41, 0.95);
-            border-radius: 14px;
-            padding: 16px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .teacher-dashboard h2 {
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .teacher-dashboard h2 i {
-            color: #fbbf24;
-        }
-        .form-group {
-            margin-bottom: 10px;
-        }
-        .form-group label {
-            color: rgba(255,255,255,0.6);
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .form-group .input-field {
-            background: rgba(255,255,255,0.06);
-            border: 2px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 10px 14px;
-            color: white;
-            font-size: 14px;
-            width: 100%;
-            transition: all 0.3s;
-            outline: none;
-        }
-        .form-group .input-field:focus {
-            border-color: #fbbf24;
-            background: rgba(255,255,255,0.08);
-        }
-        .form-group .input-field::placeholder {
-            color: rgba(255,255,255,0.3);
-        }
-        .form-group select {
-            background: rgba(255,255,255,0.06);
-            border: 2px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 10px 14px;
-            color: white;
-            font-size: 14px;
-            width: 100%;
-            transition: all 0.3s;
-            outline: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-        }
-        .form-group select:focus {
-            border-color: #fbbf24;
-            background: rgba(255,255,255,0.08);
-        }
-        .form-group select option {
-            background: #1a1f3a;
-            color: white;
-        }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        .options-grid .input-field {
-            font-size: 13px;
-            padding: 8px 12px;
-        }
-        .btn-teacher {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #0f1629;
-            font-weight: 700;
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-teacher:active {
-            transform: scale(0.96);
-        }
-        .btn-teacher:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .btn-teacher-secondary {
-            background: rgba(255,255,255,0.08);
-            color: white;
-            font-weight: 600;
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-teacher-secondary:active {
-            transform: scale(0.96);
-        }
-        .btn-danger {
-            background: rgba(239,68,68,0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239,68,68,0.3);
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .btn-danger:active {
-            transform: scale(0.96);
-        }
-        .question-list {
-            margin-top: 12px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-        .question-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        .question-list::-webkit-scrollbar-thumb {
-            background: rgba(251,191,36,0.3);
-            border-radius: 10px;
-        }
-        .question-item {
-            background: rgba(255,255,255,0.04);
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin-bottom: 6px;
-            border: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .question-item .q-text {
-            color: white;
-            font-size: 12px;
-            flex: 1;
-        }
-        .question-item .q-options {
-            color: rgba(255,255,255,0.4);
-            font-size: 10px;
-            margin-top: 2px;
-        }
-        .question-item .q-delete {
-            color: rgba(255,255,255,0.3);
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        .question-item .q-delete:active {
-            background: rgba(239,68,68,0.2);
-            color: #ef4444;
-        }
-        .subject-tabs {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            margin-bottom: 12px;
-        }
-        .subject-tabs::-webkit-scrollbar {
-            height: 2px;
-        }
-        .subject-tabs::-webkit-scrollbar-thumb {
-            background: rgba(251,191,36,0.3);
-            border-radius: 10px;
-        }
-        .subject-tab {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            padding: 6px 14px;
-            color: rgba(255,255,255,0.6);
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s;
-        }
-        .subject-tab.active {
-            background: rgba(251,191,36,0.15);
-            border-color: #fbbf24;
-            color: #fbbf24;
-        }
-        .subject-tab:active {
-            transform: scale(0.95);
-        }
-        .badge-count {
-            background: rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 1px 6px;
-            font-size: 9px;
-            color: rgba(255,255,255,0.4);
-            margin-left: 4px;
-        }
-        .users-list {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .users-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        .users-list::-webkit-scrollbar-thumb {
-            background: rgba(251,191,36,0.3);
-            border-radius: 10px;
-        }
-        .user-item {
-            background: rgba(255,255,255,0.04);
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin-bottom: 4px;
-            border: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .user-item .user-info {
-            color: white;
-            font-size: 12px;
-        }
-        .user-item .user-info .username {
-            font-weight: 600;
-            color: #fbbf24;
-        }
-        .user-item .user-info .user-pass {
-            color: rgba(255,255,255,0.4);
-            font-size: 11px;
-            margin-left: 8px;
-            font-family: 'Courier New', monospace;
-        }
-        .user-item .user-info .user-date {
-            color: rgba(255,255,255,0.3);
-            font-size: 10px;
-            margin-left: 8px;
-        }
-        .user-item .user-delete {
-            color: rgba(255,255,255,0.3);
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        .user-item .user-delete:active {
-            background: rgba(239,68,68,0.2);
-            color: #ef4444;
-        }
         .teacher-login-btn {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.08);
             color: rgba(255,255,255,0.4);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
@@ -998,50 +746,35 @@
         .teacher-login-btn:active {
             transform: scale(0.95);
         }
-        .teacher-login-btn:hover {
-            background: rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.7);
-        }
-        .search-box {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: white;
-            font-size: 12px;
-            width: 100%;
-            outline: none;
-            margin-bottom: 8px;
-        }
-        .search-box:focus {
-            border-color: #fbbf24;
-        }
-        .search-box::placeholder {
-            color: rgba(255,255,255,0.3);
-        }
-        .stats-box {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        .stat-card {
-            background: rgba(255,255,255,0.04);
+        /* Free trial banner */
+        .free-trial-banner {
+            background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(251,191,36,0.10));
+            border: 1px solid rgba(16,185,129,0.2);
             border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.05);
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        .stat-card .stat-number {
-            color: #fbbf24;
-            font-size: 22px;
+        .free-trial-banner .free-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+        }
+        .free-trial-banner .free-text strong {
+            color: #10b981;
+        }
+        .free-trial-banner .free-count {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 700;
         }
-        .stat-card .stat-label {
-            color: rgba(255,255,255,0.4);
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .free-trial-banner .free-count.locked {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
         }
     </style>
 </head>
@@ -1057,7 +790,7 @@
         <div class="header-actions">
             <button class="header-btn" onclick="showHelp()"><i class="fas fa-question-circle"></i></button>
             <button class="teacher-login-btn" onclick="showTeacherLogin()">
-                <i class="fas fa-chalkboard-teacher"></i> Teacher
+                <i class="fas fa-chalkboard-teacher"></i>
             </button>
             <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()" style="display:none;">
                 <span id="avatarText">U</span>
@@ -1091,8 +824,8 @@
                     </button>
                     <div class="text-center mt-3">
                         <p class="text-white/40 text-xs">
-                            New here? 
-                            <span class="text-gold font-semibold cursor-pointer" onclick="showPremiumPopup()">Get Membership</span>
+                            No account? 
+                            <span class="text-gold font-semibold cursor-pointer" onclick="startFreeTrial()">Try 3 Free Questions</span>
                         </p>
                     </div>
                 </div>
@@ -1122,7 +855,7 @@
                         <i class="fas fa-sign-in-alt"></i> Teacher Sign In
                     </button>
                     <button onclick="showView('loginView')" class="btn-secondary mt-2">
-                        <i class="fas fa-arrow-left"></i> Back to Student Login
+                        <i class="fas fa-arrow-left"></i> Back
                     </button>
                 </div>
             </div>
@@ -1130,6 +863,15 @@
 
         <!-- SUBJECTS VIEW -->
         <div class="view" id="subjectsView">
+            <!-- Free Trial Banner -->
+            <div class="free-trial-banner" id="freeTrialBanner">
+                <div class="free-text">
+                    <i class="fas fa-gift text-gold"></i>
+                    <strong>Free Trial:</strong> <span id="freeTrialText">3 questions remaining</span>
+                </div>
+                <div class="free-count" id="freeTrialCount">3</div>
+            </div>
+
             <div class="flex items-center justify-between mb-3">
                 <div>
                     <h2 class="text-white text-lg font-bold">My Subjects</h2>
@@ -1196,163 +938,151 @@
 
         <!-- TEACHER DASHBOARD VIEW -->
         <div class="view" id="teacherView">
-            <div class="teacher-dashboard">
+            <div class="teacher-dashboard" style="background:rgba(15,22,41,0.95);border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,0.08);">
                 <div class="flex items-center justify-between mb-3">
-                    <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h2>
-                    <button onclick="logoutTeacher()" class="btn-danger" style="padding:4px 12px;font-size:11px;">
+                    <h2 style="color:white;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;"><i class="fas fa-chalkboard-teacher" style="color:#fbbf24;"></i> Teacher Dashboard</h2>
+                    <button onclick="logoutTeacher()" style="background:rgba(239,68,68,0.2);color:#ef4444;border:1px solid rgba(239,68,68,0.3);padding:4px 12px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </div>
                 
                 <!-- Stats -->
-                <div class="stats-box">
-                    <div class="stat-card">
-                        <div class="stat-number" id="statStudents">0</div>
-                        <div class="stat-label">Students</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+                    <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                        <div style="color:#fbbf24;font-size:20px;font-weight:700;" id="statStudents">0</div>
+                        <div style="color:rgba(255,255,255,0.4);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;">Students</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statSubjects">0</div>
-                        <div class="stat-label">Subjects</div>
+                    <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                        <div style="color:#fbbf24;font-size:20px;font-weight:700;" id="statSubjects">0</div>
+                        <div style="color:rgba(255,255,255,0.4);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;">Subjects</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:10px;text-align:center;border:1px solid rgba(255,255,255,0.05);">
+                        <div style="color:#fbbf24;font-size:20px;font-weight:700;" id="statQuestions">0</div>
+                        <div style="color:rgba(255,255,255,0.4);font-size:9px;text-transform:uppercase;letter-spacing:0.5px;">Questions</div>
                     </div>
                 </div>
                 
                 <!-- Tabs -->
-                <div class="flex gap-1 mb-3 overflow-x-auto" style="padding-bottom:4px;">
-                    <button class="subject-tab active" onclick="switchTeacherTab('students')">
+                <div style="display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;">
+                    <button class="subject-tab active" onclick="switchTeacherTab('students')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 14px;color:rgba(255,255,255,0.6);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.3s;">
                         <i class="fas fa-users"></i> Students
                     </button>
-                    <button class="subject-tab" onclick="switchTeacherTab('subjects')">
+                    <button class="subject-tab" onclick="switchTeacherTab('subjects')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 14px;color:rgba(255,255,255,0.6);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.3s;">
                         <i class="fas fa-book"></i> Subjects
                     </button>
-                    <button class="subject-tab" onclick="switchTeacherTab('questions')">
+                    <button class="subject-tab" onclick="switchTeacherTab('questions')" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 14px;color:rgba(255,255,255,0.6);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.3s;">
                         <i class="fas fa-question-circle"></i> Questions
                     </button>
                 </div>
 
                 <!-- STUDENTS TAB -->
                 <div id="teacherStudentsTab">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-white font-semibold text-sm"><i class="fas fa-users text-gold"></i> Student Accounts</h3>
-                        <button onclick="showAddStudentForm()" class="btn-teacher-secondary" style="padding:4px 12px;font-size:11px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                        <h3 style="color:white;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#fbbf24;"></i> Student Accounts</h3>
+                        <button onclick="showAddStudentForm()" style="background:rgba(255,255,255,0.08);color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);font-size:11px;cursor:pointer;">
                             <i class="fas fa-user-plus"></i> Add
                         </button>
                     </div>
-
-                    <!-- Add Student Form -->
-                    <div id="addStudentForm" style="display:none;" class="mb-3 p-3 glass-card">
-                        <h4 class="text-white font-semibold text-xs mb-2"><i class="fas fa-user-plus text-gold"></i> Create Student Account</h4>
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input id="studentUsername" type="text" placeholder="Enter username" class="input-field" />
+                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.06);border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
+                        <h4 style="color:white;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#fbbf24;"></i> Create Student Account</h4>
+                        <div style="margin-bottom:8px;">
+                            <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
+                            <input id="studentUsername" type="text" placeholder="Enter username" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;color:white;font-size:13px;width:100%;outline:none;" />
                         </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input id="studentPassword" type="text" placeholder="Enter password" class="input-field" />
+                        <div style="margin-bottom:8px;">
+                            <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
+                            <input id="studentPassword" type="text" placeholder="Enter password" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;color:white;font-size:13px;width:100%;outline:none;" />
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="addStudent()" class="btn-teacher" style="flex:1;padding:8px;">
+                        <div style="display:flex;gap:8px;">
+                            <button onclick="addStudent()" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f1629;font-weight:700;padding:8px;border-radius:8px;border:none;font-size:13px;cursor:pointer;flex:1;">
                                 <i class="fas fa-save"></i> Create
                             </button>
-                            <button onclick="hideAddStudentForm()" class="btn-secondary" style="width:auto;padding:8px 16px;margin-top:0;font-size:12px;">
+                            <button onclick="hideAddStudentForm()" style="background:rgba(255,255,255,0.08);color:white;font-weight:600;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);font-size:13px;cursor:pointer;">
                                 Cancel
                             </button>
                         </div>
                     </div>
-
-                    <!-- Search -->
-                    <input id="studentSearch" type="text" placeholder="🔍 Search students..." class="search-box" oninput="filterStudents()" />
-
-                    <!-- Student List -->
-                    <div id="studentList" class="users-list"></div>
+                    <input id="studentSearch" type="text" placeholder="🔍 Search students..." oninput="filterStudents()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 12px;color:white;font-size:12px;width:100%;outline:none;margin-bottom:8px;" />
+                    <div id="studentList" style="max-height:250px;overflow-y:auto;"></div>
                 </div>
 
                 <!-- SUBJECTS TAB -->
                 <div id="teacherSubjectsTab" style="display:none;">
-                    <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-white font-semibold text-sm"><i class="fas fa-list text-gold"></i> Subjects</h3>
-                        <button onclick="showAddSubjectForm()" class="btn-teacher-secondary" style="padding:4px 12px;font-size:11px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                        <h3 style="color:white;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#fbbf24;"></i> Subjects</h3>
+                        <button onclick="showAddSubjectForm()" style="background:rgba(255,255,255,0.08);color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);font-size:11px;cursor:pointer;">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
-
-                    <!-- Add Subject Form -->
-                    <div id="addSubjectForm" style="display:none;" class="mb-3 p-3 glass-card">
-                        <h4 class="text-white font-semibold text-xs mb-2"><i class="fas fa-plus-circle text-gold"></i> New Subject</h4>
-                        <div class="form-group">
-                            <label>Subject Name</label>
-                            <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" />
+                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.06);border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
+                        <h4 style="color:white;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#fbbf24;"></i> New Subject</h4>
+                        <div style="margin-bottom:8px;">
+                            <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
+                            <input id="subjectName" type="text" placeholder="e.g., Physics" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;color:white;font-size:13px;width:100%;outline:none;" />
                         </div>
-                        <div class="form-group">
-                            <label>Icon</label>
-                            <div class="flex gap-2">
-                                <input id="subjectIcon" type="text" placeholder="fa-atom" class="input-field" style="flex:1;" />
-                                <button onclick="pickIcon()" class="btn-secondary" style="width:auto;padding:8px 12px;margin-top:0;font-size:12px;">
+                        <div style="margin-bottom:8px;">
+                            <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
+                            <div style="display:flex;gap:8px;">
+                                <input id="subjectIcon" type="text" placeholder="fa-atom" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;color:white;font-size:13px;flex:1;outline:none;" />
+                                <button onclick="pickIcon()" style="background:rgba(255,255,255,0.08);color:white;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);font-size:12px;cursor:pointer;">
                                     <i class="fas fa-random"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Color</label>
-                            <input id="subjectColor" type="text" placeholder="from-indigo-500 to-purple-600" class="input-field" />
+                        <div style="margin-bottom:8px;">
+                            <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
+                            <input id="subjectColor" type="text" placeholder="from-indigo-500 to-purple-600" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;color:white;font-size:13px;width:100%;outline:none;" />
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="addSubject()" class="btn-teacher" style="flex:1;padding:8px;">
+                        <div style="display:flex;gap:8px;">
+                            <button onclick="addSubject()" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f1629;font-weight:700;padding:8px;border-radius:8px;border:none;font-size:13px;cursor:pointer;flex:1;">
                                 <i class="fas fa-save"></i> Save
                             </button>
-                            <button onclick="hideAddSubjectForm()" class="btn-secondary" style="width:auto;padding:8px 16px;margin-top:0;font-size:12px;">
+                            <button onclick="hideAddSubjectForm()" style="background:rgba(255,255,255,0.08);color:white;font-weight:600;padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);font-size:13px;cursor:pointer;">
                                 Cancel
                             </button>
                         </div>
                     </div>
-
-                    <!-- Subject List -->
-                    <div id="subjectList" class="question-list"></div>
+                    <div id="subjectList" style="max-height:250px;overflow-y:auto;"></div>
                 </div>
 
                 <!-- QUESTIONS TAB -->
                 <div id="teacherQuestionsTab" style="display:none;">
-                    <h3 class="text-white font-semibold text-sm mb-2"><i class="fas fa-list text-gold"></i> Manage Questions</h3>
-                    
-                    <!-- Select Subject -->
-                    <div class="form-group">
-                        <label>Select Subject</label>
-                        <select id="questionSubjectSelect" class="input-field" onchange="loadQuestionsForTeacher()">
+                    <h3 style="color:white;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#fbbf24;"></i> Manage Questions</h3>
+                    <div style="margin-bottom:8px;">
+                        <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
+                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;color:white;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
-
-                    <!-- Add Question Form -->
-                    <div class="mb-3 p-3 glass-card">
-                        <h4 class="text-white font-semibold text-xs mb-2"><i class="fas fa-plus-circle text-gold"></i> Add Question</h4>
-                        <div class="form-group">
-                            <label>Question</label>
-                            <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" />
+                    <div style="margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.06);border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
+                        <h4 style="color:white;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#fbbf24;"></i> Add Question</h4>
+                        <div style="margin-bottom:8px;">
+                            <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
+                            <input id="questionTextInput" type="text" placeholder="Enter your question..." style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;color:white;font-size:13px;width:100%;outline:none;" />
                         </div>
-                        <div class="form-group">
-                            <label>Options</label>
-                            <div class="options-grid">
-                                <input id="optionA" type="text" placeholder="A" class="input-field" />
-                                <input id="optionB" type="text" placeholder="B" class="input-field" />
-                                <input id="optionC" type="text" placeholder="C" class="input-field" />
-                                <input id="optionD" type="text" placeholder="D" class="input-field" />
+                        <div style="margin-bottom:8px;">
+                            <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                                <input id="optionA" type="text" placeholder="A" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 10px;color:white;font-size:12px;outline:none;" />
+                                <input id="optionB" type="text" placeholder="B" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 10px;color:white;font-size:12px;outline:none;" />
+                                <input id="optionC" type="text" placeholder="C" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 10px;color:white;font-size:12px;outline:none;" />
+                                <input id="optionD" type="text" placeholder="D" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 10px;color:white;font-size:12px;outline:none;" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Correct Answer</label>
-                            <select id="correctAnswer" class="input-field">
+                        <div style="margin-bottom:8px;">
+                            <label style="color:rgba(255,255,255,0.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
+                            <select id="correctAnswer" style="background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;color:white;font-size:13px;width:100%;outline:none;appearance:none;">
                                 <option value="0">A</option>
                                 <option value="1">B</option>
                                 <option value="2">C</option>
                                 <option value="3">D</option>
                             </select>
                         </div>
-                        <button onclick="addQuestionTeacher()" class="btn-teacher" style="padding:8px;">
+                        <button onclick="addQuestionTeacher()" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f1629;font-weight:700;padding:8px;border-radius:8px;border:none;font-size:13px;cursor:pointer;width:100%;">
                             <i class="fas fa-save"></i> Add Question
                         </button>
                     </div>
-
-                    <!-- Question List -->
-                    <div id="teacherQuestionList" class="question-list"></div>
+                    <div id="teacherQuestionList" style="max-height:200px;overflow-y:auto;"></div>
                 </div>
             </div>
         </div>
@@ -1383,12 +1113,19 @@
             <div class="premium-icon-wrapper">
                 <i class="fas fa-crown"></i>
             </div>
-            <h3 class="premium-title">Premium Membership</h3>
-            <p class="premium-subtitle">Unlock all subjects &amp; get your certificate</p>
+            <h3 class="premium-title">Unlock Full Access! 🎓</h3>
+            <p class="premium-subtitle">You've completed your free trial!</p>
             
             <div class="price-container">
                 <span class="price-tag">K10</span>
                 <p class="price-label">One-time payment · Lifetime access</p>
+            </div>
+
+            <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:10px;margin-bottom:12px;">
+                <p style="color:rgba(255,255,255,0.7);font-size:12px;">
+                    <i class="fas fa-check-circle" style="color:#10b981;"></i>
+                    After payment, you'll receive a <strong style="color:#fbbf24;">username &amp; password</strong> to login and continue learning!
+                </p>
             </div>
 
             <div class="payment-grid">
@@ -1442,14 +1179,11 @@
             </div>
 
             <p class="payment-instruction">
-                After payment, send username &amp; password request via SMS/WhatsApp to <strong>0971 130 511</strong>
+                After payment, send <strong>username &amp; password</strong> request via SMS/WhatsApp to <strong>0971 130 511</strong>
             </p>
 
             <button onclick="simulatePayment()" class="btn-primary" id="paymentBtn">
                 <i class="fas fa-check-circle"></i> I've Made Payment
-            </button>
-            <button onclick="simulatePayment()" class="btn-primary error mt-2" id="retryBtn" style="display:none;">
-                <i class="fas fa-redo"></i> Try Again
             </button>
             <button onclick="closePremiumPopup()" class="btn-secondary">
                 <i class="fas fa-times"></i> Close
@@ -1481,10 +1215,12 @@
     let completedSubjects = new Set();
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
+    let freeQuestionsRemaining = 3;
     let isTeacherLoggedIn = false;
     let currentTeacherTab = 'students';
     let selectedSubjectId = null;
     let allUsers = [];
+    let isLocked = false;
 
     // ============ SUPABASE FUNCTIONS ============
     const USERS_TABLE = 'app_users';
@@ -1712,6 +1448,7 @@
     // ============ INIT ============
     async function init() {
         checkAuth();
+        updateFreeTrialUI();
         
         const mainContent = document.getElementById('mainContent');
         mainContent.addEventListener('scroll', () => {
@@ -1727,8 +1464,8 @@
         await loadUsers();
         
         console.log('🇿🇲 Zambia Quiz Pro loaded!');
-        console.log('💾 Supabase URL:', SUPABASE_URL);
-        console.log('👨‍🏫 Click "Teacher" button to manage students');
+        console.log('📚 Free trial: 3 questions available');
+        console.log('👨‍🏫 Click teacher icon to manage');
     }
 
     async function loadSubjects() {
@@ -1741,6 +1478,14 @@
                 updateTeacherSubjects();
                 updateQuestionSubjectSelect();
                 document.getElementById('statSubjects').textContent = subjects.length;
+                
+                // Count total questions
+                let totalQ = 0;
+                for (const subject of subjects) {
+                    const qs = await fetchQuestions(subject.id);
+                    totalQ += qs.length;
+                }
+                document.getElementById('statQuestions').textContent = totalQ;
             } else {
                 allSubjects = [];
                 renderSubjects();
@@ -1762,6 +1507,61 @@
         }
     }
 
+    // ============ FREE TRIAL ============
+    function startFreeTrial() {
+        if (currentUser) {
+            showToast('You already have an account! Please login.', 'info');
+            return;
+        }
+        freeQuestionsRemaining = 3;
+        isLocked = false;
+        showView('subjectsView');
+        renderSubjects();
+        updateFreeTrialUI();
+        showToast('🎯 Try 3 free questions!', 'success');
+    }
+
+    function updateFreeTrialUI() {
+        const banner = document.getElementById('freeTrialBanner');
+        const count = document.getElementById('freeTrialCount');
+        const text = document.getElementById('freeTrialText');
+        
+        if (currentUser) {
+            banner.style.display = 'none';
+            return;
+        }
+        
+        banner.style.display = 'flex';
+        if (freeQuestionsRemaining > 0) {
+            count.textContent = freeQuestionsRemaining;
+            count.className = 'free-count';
+            text.textContent = `${freeQuestionsRemaining} question${freeQuestionsRemaining > 1 ? 's' : ''} remaining`;
+        } else {
+            count.textContent = '0';
+            count.className = 'free-count locked';
+            text.textContent = 'Trial expired - Upgrade to continue!';
+        }
+    }
+
+    function useFreeQuestion() {
+        if (currentUser) return true;
+        if (freeQuestionsRemaining > 0) {
+            freeQuestionsRemaining--;
+            updateFreeTrialUI();
+            return true;
+        }
+        return false;
+    }
+
+    function checkFreeTrial() {
+        if (currentUser) return true;
+        if (freeQuestionsRemaining > 0) return true;
+        
+        // Show premium popup
+        showPremiumPopup();
+        return false;
+    }
+
     // ============ AUTH ============
     function checkAuth() {
         const userData = localStorage.getItem('quizUser');
@@ -1770,6 +1570,7 @@
                 currentUser = JSON.parse(userData);
                 updateUserUI();
                 showView('subjectsView');
+                document.getElementById('freeTrialBanner').style.display = 'none';
             } catch (e) {
                 localStorage.removeItem('quizUser');
                 showView('loginView');
@@ -1810,6 +1611,7 @@
                 currentUser = { username: user.username, password: user.password, id: user.id };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
+                document.getElementById('freeTrialBanner').style.display = 'none';
                 showToast(`Welcome back, ${username}!`, 'success');
                 showView('subjectsView');
                 renderSubjects();
@@ -1842,6 +1644,8 @@
         showView('loginView');
         document.getElementById('loginUsername').value = '';
         document.getElementById('loginPassword').value = '';
+        freeQuestionsRemaining = 3;
+        updateFreeTrialUI();
         showToast('Logged out successfully', 'info');
     }
 
@@ -1913,6 +1717,10 @@
 
     function navigateTo(viewId) {
         if (viewId === 'subjectsView' && !currentUser) {
+            if (freeQuestionsRemaining > 0) {
+                showView('subjectsView');
+                return;
+            }
             showView('loginView');
             return;
         }
@@ -1942,10 +1750,14 @@
             return;
         }
         
+        const hasFreeTrial = !currentUser && freeQuestionsRemaining > 0;
+        
         allSubjects.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
+            const isLocked = !currentUser && !hasFreeTrial && !isCompleted;
+            
             const card = document.createElement('div');
-            card.className = `subject-card ${isCompleted ? 'border-green-500/30' : ''}`;
+            card.className = `subject-card ${isCompleted ? 'border-green-500/30' : ''} ${isLocked ? 'locked' : ''}`;
             card.style.background = isCompleted ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.05)';
             card.innerHTML = `
                 <div class="icon-wrapper bg-gradient-to-br ${subject.color}">
@@ -1954,6 +1766,8 @@
                 <div class="subject-name">${subject.name}</div>
                 <div class="subject-count">Loading...</div>
                 ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
+                ${!isCompleted && !currentUser && freeQuestionsRemaining === 0 ? `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#ef4444;background:rgba(239,68,68,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 Locked</div>` : ''}
+                ${!isCompleted && !currentUser && freeQuestionsRemaining > 0 ? `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#10b981;background:rgba(16,185,129,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 Free</div>` : ''}
             `;
             
             fetchQuestions(subject.id).then(questions => {
@@ -1964,19 +1778,32 @@
             });
             
             card.onclick = async () => {
-                if (!currentUser) {
-                    showToast('Please login first', 'error');
-                    showView('loginView');
-                    return;
-                }
                 if (isCompleted) {
                     showToast('✅ You already completed this subject!', 'info');
                     return;
                 }
-                if (totalQuestionsAnswered >= 3 && !isCompleted) {
+                
+                if (isLocked) {
                     showPremiumPopup();
                     return;
                 }
+                
+                if (!currentUser) {
+                    if (freeQuestionsRemaining > 0) {
+                        // Allow free trial
+                        await startQuiz(subject.id, subject.name);
+                        return;
+                    } else {
+                        showPremiumPopup();
+                        return;
+                    }
+                }
+                
+                if (totalQuestionsAnswered >= 3 && !currentUser) {
+                    showPremiumPopup();
+                    return;
+                }
+                
                 await startQuiz(subject.id, subject.name);
             };
             
@@ -1996,6 +1823,12 @@
 
     // ============ QUIZ ============
     async function startQuiz(subjectId, subjectName) {
+        // Check if user has free trial or is logged in
+        if (!currentUser && !useFreeQuestion()) {
+            showPremiumPopup();
+            return;
+        }
+        
         try {
             const questions = await fetchQuestions(subjectId);
             if (!questions || questions.length === 0) {
@@ -2132,22 +1965,22 @@
         );
         
         if (filtered.length === 0) {
-            list.innerHTML = `<div class="text-white/40 text-center py-4 text-sm">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
+            list.innerHTML = `<div style="color:rgba(255,255,255,0.4);text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
             return;
         }
         
         list.innerHTML = '';
         filtered.forEach(user => {
             const div = document.createElement('div');
-            div.className = 'user-item';
+            div.style.cssText = 'background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;';
             const date = new Date(user.created_at).toLocaleDateString();
             div.innerHTML = `
-                <div class="user-info">
-                    <span class="username">${user.username}</span>
-                    <span class="user-pass">🔑 ${user.password}</span>
-                    <span class="user-date">📅 ${date}</span>
+                <div style="color:white;font-size:12px;">
+                    <span style="font-weight:600;color:#fbbf24;">${user.username}</span>
+                    <span style="color:rgba(255,255,255,0.4);font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
+                    <span style="color:rgba(255,255,255,0.3);font-size:10px;margin-left:8px;">📅 ${date}</span>
                 </div>
-                <div class="user-delete" onclick="deleteStudent('${user.id}')">
+                <div onclick="deleteStudent('${user.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
                 </div>
             `;
@@ -2232,20 +2065,20 @@
     function updateTeacherSubjects() {
         const list = document.getElementById('subjectList');
         if (!allSubjects || allSubjects.length === 0) {
-            list.innerHTML = '<div class="text-white/40 text-center py-4 text-sm">No subjects yet. Add one!</div>';
+            list.innerHTML = '<div style="color:rgba(255,255,255,0.4);text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
             return;
         }
         
         list.innerHTML = '';
         allSubjects.forEach(subject => {
             const div = document.createElement('div');
-            div.className = 'question-item';
+            div.style.cssText = 'background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;';
             div.innerHTML = `
                 <div>
-                    <div class="q-text"><i class="fas ${subject.icon} text-gold"></i> ${subject.name}</div>
-                    <div class="q-options">${subject.color}</div>
+                    <div style="color:white;font-size:12px;"><i class="fas ${subject.icon}" style="color:#fbbf24;"></i> ${subject.name}</div>
+                    <div style="color:rgba(255,255,255,0.4);font-size:10px;">${subject.color}</div>
                 </div>
-                <div class="q-delete" onclick="deleteSubject('${subject.id}')">
+                <div onclick="deleteSubject('${subject.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
                 </div>
             `;
@@ -2326,31 +2159,31 @@
     async function loadQuestionsForTeacher() {
         const subjectId = document.getElementById('questionSubjectSelect').value;
         if (!subjectId) {
-            document.getElementById('teacherQuestionList').innerHTML = '<div class="text-white/40 text-center py-4 text-sm">Select a subject to see questions</div>';
+            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:rgba(255,255,255,0.4);text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
             return;
         }
         
         selectedSubjectId = subjectId;
         const list = document.getElementById('teacherQuestionList');
-        list.innerHTML = '<div class="text-white/40 text-center py-4 text-sm"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        list.innerHTML = '<div style="color:rgba(255,255,255,0.4);text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
         
         try {
             const questions = await fetchQuestions(subjectId);
             if (questions.length === 0) {
-                list.innerHTML = '<div class="text-white/40 text-center py-4 text-sm">No questions yet. Add one above!</div>';
+                list.innerHTML = '<div style="color:rgba(255,255,255,0.4);text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
                 return;
             }
             
             list.innerHTML = '';
             questions.forEach((q, idx) => {
                 const div = document.createElement('div');
-                div.className = 'question-item';
+                div.style.cssText = 'background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;';
                 div.innerHTML = `
                     <div>
-                        <div class="q-text">${idx + 1}. ${q.question}</div>
-                        <div class="q-options">${q.options.join(' | ')}</div>
+                        <div style="color:white;font-size:12px;">${idx + 1}. ${q.question}</div>
+                        <div style="color:rgba(255,255,255,0.4);font-size:10px;">${q.options.join(' | ')}</div>
                     </div>
-                    <div class="q-delete" onclick="deleteQuestionTeacher('${q.id}')">
+                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;">
                         <i class="fas fa-trash"></i>
                     </div>
                 `;
@@ -2358,7 +2191,7 @@
             });
         } catch (error) {
             console.error('Error loading questions:', error);
-            list.innerHTML = '<div class="text-white/40 text-center py-4 text-sm">Error loading questions.</div>';
+            list.innerHTML = '<div style="color:rgba(255,255,255,0.4);text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
         }
     }
 
@@ -2400,6 +2233,13 @@
                 document.getElementById('optionD').value = '';
                 await loadQuestionsForTeacher();
                 updateTeacherSubjects();
+                // Update question count
+                let totalQ = 0;
+                for (const subject of allSubjects) {
+                    const qs = await fetchQuestions(subject.id);
+                    totalQ += qs.length;
+                }
+                document.getElementById('statQuestions').textContent = totalQ;
             }
         } catch (error) {
             showToast('Error adding question. Please try again.', 'error');
@@ -2418,6 +2258,12 @@
                 showToast('Question deleted', 'info');
                 await loadQuestionsForTeacher();
                 updateTeacherSubjects();
+                let totalQ = 0;
+                for (const subject of allSubjects) {
+                    const qs = await fetchQuestions(subject.id);
+                    totalQ += qs.length;
+                }
+                document.getElementById('statQuestions').textContent = totalQ;
             }
         } catch (error) {
             showToast('Error deleting question', 'error');
@@ -2437,9 +2283,6 @@
     function showPremiumPopup() {
         document.getElementById('premiumOverlay').classList.add('active');
         const paymentBtn = document.getElementById('paymentBtn');
-        const retryBtn = document.getElementById('retryBtn');
-        paymentBtn.style.display = 'flex';
-        retryBtn.style.display = 'none';
         paymentBtn.disabled = false;
         paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
         paymentBtn.className = 'btn-primary';
@@ -2475,11 +2318,8 @@
         }
 
         const paymentBtn = document.getElementById('paymentBtn');
-        const retryBtn = document.getElementById('retryBtn');
-        
         paymentBtn.disabled = true;
         paymentBtn.innerHTML = '<span class="spinner"></span> Creating account...';
-        retryBtn.style.display = 'none';
 
         try {
             const exists = await checkUserExists(username);
@@ -2495,19 +2335,23 @@
                 currentUser = { username: newUser.username, password: newUser.password, id: newUser.id };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
+                document.getElementById('freeTrialBanner').style.display = 'none';
                 closePremiumPopup();
-                showToast('✅ Payment confirmed! Account created!', 'success');
+                showToast(`✅ Payment confirmed! Account created!`, 'success');
+                showToast(`👤 Username: ${username} | 🔑 Password: ${password}`, 'success');
                 showView('subjectsView');
                 renderSubjects();
                 updateProgress();
+                // Refresh users list for teacher
+                await loadUsers();
             } else {
                 throw new Error('Failed to create account');
             }
         } catch (error) {
             console.error('Payment error:', error);
-            paymentBtn.style.display = 'none';
-            retryBtn.style.display = 'flex';
             showToast('Error creating account. Please try again.', 'error');
+            paymentBtn.disabled = false;
+            paymentBtn.innerHTML = '<i class="fas fa-check-circle"></i> I\'ve Made Payment';
         } finally {
             paymentBtn.disabled = false;
         }
@@ -2522,7 +2366,7 @@
                                'rgba(0,0,0,0.9)';
         toast.classList.add('show');
         clearTimeout(toast._timeout);
-        toast._timeout = setTimeout(() => toast.classList.remove('show'), 3000);
+        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
     }
 
     // ============ HELP & USER MENU ============
@@ -2584,9 +2428,11 @@
     window.deleteStudent = deleteStudent;
     window.filterStudents = filterStudents;
     window.pickIcon = pickIcon;
+    window.startFreeTrial = startFreeTrial;
 
     console.log('🇿🇲 Zambia Quiz Pro loaded!');
-    console.log('👨‍🏫 Click "Teacher" button in header');
+    console.log('🎯 Free trial: 3 questions available');
+    console.log('👨‍🏫 Click teacher icon to manage students');
     console.log('🔑 Default teacher: teacher / teacher123');
 </script>
 </body>
