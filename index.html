@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
-        /* ... (all styles remain unchanged from previous version) ... */
         * {
             margin: 0;
             padding: 0;
@@ -337,7 +336,7 @@
             transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* ===== PREMIUM POPUP - IMPROVED ALIGNMENT & FIT ===== */
+        /* ===== PREMIUM POPUP ===== */
         .premium-overlay {
             position: fixed;
             inset: 0;
@@ -710,7 +709,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Error state for payment button */
         .btn-primary.error {
             background: rgba(239,68,68,0.2);
             color: #ef4444;
@@ -868,7 +866,6 @@
             </div>
 
             <div class="payment-grid">
-                <!-- MTN 1 -->
                 <div class="payment-row" onclick="copyNumber('0971130511')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(251,191,36,0.2);color:#fbbf24;">
@@ -883,7 +880,6 @@
                         <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
-                <!-- MTN 2 -->
                 <div class="payment-row" onclick="copyNumber('0958882550')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(52,211,153,0.2);color:#34d399;">
@@ -898,7 +894,6 @@
                         <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
-                <!-- Zamtel -->
                 <div class="payment-row" onclick="copyNumber('0763209826')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(251,146,60,0.2);color:#fb923c;">
@@ -924,11 +919,9 @@
                 After payment, send username &amp; password request via SMS/WhatsApp to <strong>0971 130 511</strong>
             </p>
 
-            <!-- Payment button with error state handling -->
             <button onclick="simulatePayment()" class="btn-primary" id="paymentBtn">
                 <i class="fas fa-check-circle"></i> I've Made Payment
             </button>
-            <!-- Retry button (hidden by default, shown on error) -->
             <button onclick="simulatePayment()" class="btn-primary error mt-2" id="retryBtn" style="display:none;">
                 <i class="fas fa-redo"></i> Try Again
             </button>
@@ -1059,8 +1052,48 @@
     let totalQuestionsAnswered = 0;
 
     // ============ SUPABASE FUNCTIONS ============
+    // Try to detect column names from existing table
+    async function detectTableSchema() {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/users?limit=1`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.length > 0) {
+                    const columns = Object.keys(data[0]);
+                    console.log('📊 Detected columns:', columns);
+                    return columns;
+                }
+            }
+        } catch (error) {
+            console.log('Could not detect schema:', error);
+        }
+        return null;
+    }
+
     async function saveUserToDB(username, password) {
         try {
+            // First, try to detect the table structure
+            const columns = await detectTableSchema();
+            
+            // Build the payload based on detected columns
+            const payload = {
+                username: username,
+                password: password
+            };
+            
+            // Check if 'created_at' column exists, add if it does
+            if (columns && columns.includes('created_at')) {
+                payload.created_at = new Date().toISOString();
+            }
+            if (columns && columns.includes('is_premium')) {
+                payload.is_premium = true;
+            }
+            
             const response = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
                 method: 'POST',
                 headers: {
@@ -1069,20 +1102,16 @@
                     'Content-Type': 'application/json',
                     'Prefer': 'return=representation'
                 },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                    created_at: new Date().toISOString(),
-                    is_premium: true
-                })
+                body: JSON.stringify(payload)
             });
+            
             if (response.ok) {
                 const data = await response.json();
                 return data[0];
             } else {
                 const errorText = await response.text();
                 console.error('Supabase save error:', response.status, errorText);
-                throw new Error(`Supabase error: ${response.status} - ${errorText}`);
+                throw new Error(`Supabase error: ${response.status}`);
             }
         } catch (error) {
             console.error('Supabase save error:', error);
@@ -1113,6 +1142,9 @@
     // ============ INIT ============
     function init() {
         checkAuth();
+        // Detect schema on startup
+        detectTableSchema();
+        
         const mainContent = document.getElementById('mainContent');
         mainContent.addEventListener('scroll', () => {
             const fab = document.getElementById('fab');
@@ -1175,7 +1207,7 @@
                     username: user.username, 
                     password: user.password,
                     id: user.id,
-                    is_premium: user.is_premium || true
+                    is_premium: user.is_premium !== undefined ? user.is_premium : true
                 };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
@@ -1184,7 +1216,6 @@
                 renderSubjects();
                 updateProgress();
             } else {
-                // Check if user exists
                 const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&select=username`, {
                     headers: {
                         'apikey': SUPABASE_KEY,
@@ -1378,7 +1409,6 @@
     // ============ PREMIUM POPUP ============
     function showPremiumPopup() {
         document.getElementById('premiumOverlay').classList.add('active');
-        // Reset button states
         const paymentBtn = document.getElementById('paymentBtn');
         const retryBtn = document.getElementById('retryBtn');
         paymentBtn.style.display = 'flex';
@@ -1420,13 +1450,12 @@
         const paymentBtn = document.getElementById('paymentBtn');
         const retryBtn = document.getElementById('retryBtn');
         
-        // Disable buttons and show spinner
         paymentBtn.disabled = true;
         paymentBtn.innerHTML = '<span class="spinner"></span> Creating account...';
         retryBtn.style.display = 'none';
 
         try {
-            // Check if username already exists in Supabase
+            // Check if username exists
             const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&select=username`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
@@ -1441,15 +1470,13 @@
                 return;
             }
 
-            // Try to save to Supabase
             const newUser = await saveUserToDB(username, password);
             if (newUser) {
-                // Success
                 currentUser = { 
                     username: newUser.username, 
                     password: newUser.password,
                     id: newUser.id,
-                    is_premium: true
+                    is_premium: newUser.is_premium !== undefined ? newUser.is_premium : true
                 };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
@@ -1459,12 +1486,10 @@
                 renderSubjects();
                 updateProgress();
             } else {
-                // Supabase returned null (shouldn't happen if error is thrown)
                 throw new Error('Unknown error from Supabase');
             }
         } catch (error) {
-            console.error('Payment/account creation error:', error);
-            // Show error state with retry button
+            console.error('Payment error:', error);
             paymentBtn.style.display = 'none';
             retryBtn.style.display = 'flex';
             showToast('Error creating account. Please try again.', 'error');
@@ -1536,6 +1561,7 @@
     console.log('📚 Subjects:', allSubjects.join(', '));
     console.log('🔑 Teacher: Ctrl+Shift+T');
     console.log('💾 Supabase:', SUPABASE_URL);
+    console.log('📊 Detecting table schema...');
 </script>
 </body>
 </html>
