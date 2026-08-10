@@ -34,12 +34,12 @@
         .view.active { display:block; }
         @keyframes fadeSlideUp { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
         .glass-card { background:rgba(255,255,255,0.06); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.08); border-radius:14px; }
-        .subject-card { background:rgba(255,255,255,0.05); border-radius:14px; padding:14px; transition:all 0.3s cubic-bezier(0.16,1,0.3,1); cursor:pointer; border:1px solid rgba(255,255,255,0.06); position:relative; overflow:hidden; }
+        .subject-card { background:rgba(255,255,255,0.05); border-radius:14px; padding:16px 14px 14px; transition:all 0.3s cubic-bezier(0.16,1,0.3,1); cursor:pointer; border:1px solid rgba(255,255,255,0.06); position:relative; overflow:hidden; min-height:130px; display:flex; flex-direction:column; }
         .subject-card:active { transform:scale(0.96); }
-        .subject-card .icon-wrapper { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:8px; }
-        .subject-card .subject-name { color:white; font-weight:600; font-size:13px; }
-        .subject-card .subject-count { color:rgba(255,255,255,0.4); font-size:10px; }
-        .subject-card .check-mark { position:absolute; top:10px; right:10px; width:22px; height:22px; background:#10b981; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; color:white; box-shadow:0 4px 12px rgba(16,185,129,0.4); }
+        .subject-card .icon-wrapper { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:10px; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+        .subject-card .subject-name { color:white; font-weight:700; font-size:14px; line-height:1.2; margin-bottom:2px; }
+        .subject-card .subject-count { color:rgba(255,255,255,0.35); font-size:10px; font-weight:500; }
+        .subject-card .check-mark { position:absolute; top:10px; right:10px; width:24px; height:24px; background:#10b981; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; color:white; box-shadow:0 4px 12px rgba(16,185,129,0.4); }
         .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
         .option-btn { background:rgba(255,255,255,0.06); border:2px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 14px; color:rgba(255,255,255,0.9); font-size:13px; font-weight:500; transition:all 0.2s; cursor:pointer; width:100%; text-align:left; display:flex; align-items:center; gap:10px; }
         .option-btn .option-letter { width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:rgba(255,255,255,0.5); flex-shrink:0; }
@@ -66,8 +66,8 @@
         .certificate-card { background:linear-gradient(145deg,#f8fafc,#e2e8f0); border-radius:20px; padding:28px 20px; border:3px solid #d4af37; position:relative; overflow:hidden; }
         .certificate-card::before { content:''; position:absolute; inset:6px; border:2px dashed rgba(212,175,55,0.3); border-radius:16px; pointer-events:none; }
         .free-trial-banner { display:none !important; }
-        .subject-card .mark-done-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.4); color:#10b981; font-size:9px; font-weight:700; padding:3px 12px; border-radius:12px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; }
-        .subject-card .mark-done-btn:hover { background:rgba(16,185,129,0.3); }
+        .subject-card .mark-done-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10b981; font-size:9px; font-weight:700; padding:4px 12px; border-radius:12px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; backdrop-filter:blur(4px); }
+        .subject-card .mark-done-btn:hover { background:rgba(16,185,129,0.25); }
         .subject-card .mark-done-btn:active { transform:scale(0.95); }
         .subject-card.completed .mark-done-btn { display:none; }
         .subject-card .mark-done-btn i { margin-right:4px; }
@@ -123,6 +123,11 @@
         .register-toggle { color:#fbbf24; font-weight:600; cursor:pointer; transition:all 0.2s; }
         .register-toggle:hover { text-decoration:underline; }
         .auth-switch { text-align:center; margin-top:12px; color:rgba(255,255,255,0.4); font-size:13px; }
+        .skeleton { background:linear-gradient(90deg,rgba(255,255,255,0.05) 25%,rgba(255,255,255,0.1) 50%,rgba(255,255,255,0.05) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:14px; }
+        @keyframes shimmer { 0%{background-position:-200% 0;} 100%{background-position:200% 0;} }
+        .badge { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:16px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+        .badge-gold { background:rgba(251,191,36,0.2); color:#fbbf24; }
+        @media (max-width:430px) { .subject-grid { gap:8px; } .subject-card { padding:12px 10px 10px; min-height:120px; } .subject-card .icon-wrapper { width:40px; height:40px; font-size:18px; } .subject-card .subject-name { font-size:13px; } .question-text { font-size:15px; } .option-btn { padding:10px 12px; font-size:12px; } }
     </style>
 </head>
 <body>
@@ -205,7 +210,7 @@
                 <span class="badge badge-gold"><i class="fas fa-star"></i> Free</span>
             </div>
             <div class="progress-track mb-3"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
-            <div class="subject-grid" id="subjectGrid"><div class="skeleton" style="height:110px;"></div><div class="skeleton" style="height:110px;"></div></div>
+            <div class="subject-grid" id="subjectGrid"><div class="skeleton" style="height:120px;"></div><div class="skeleton" style="height:120px;"></div></div>
         </div>
 
         <!-- QUIZ VIEW -->
@@ -457,11 +462,9 @@
         btn.innerHTML = '<span class="spinner"></span> Processing...';
         
         try {
-            // Check if user exists
             const exists = await checkUserExists(username);
             
             if (exists) {
-                // Try to login
                 const user = await authenticateUser(username, password);
                 if (user) {
                     currentUser = { username: user.username, password: user.password, id: user.id };
@@ -471,7 +474,6 @@
                     showView('subjectsView');
                     renderSubjects();
                     updateProgress();
-                    // Load user's completed subjects
                     const key = `completed_${currentUser.id}`;
                     const stored = JSON.parse(localStorage.getItem(key) || '[]');
                     stored.forEach(id => completedSubjects.add(id));
@@ -479,9 +481,7 @@
                     showToast('Invalid password. Please try again.', 'error');
                 }
             } else {
-                // Create new account
                 if (!isRegisterMode) {
-                    // If not in register mode, switch to it
                     isRegisterMode = true;
                     toggleAuthMode();
                     btn.disabled = false;
@@ -499,7 +499,6 @@
                     showView('subjectsView');
                     renderSubjects();
                     updateProgress();
-                    // Reset to login mode for next time
                     isRegisterMode = false;
                     toggleAuthMode();
                 } else {
@@ -597,7 +596,6 @@
             isTeacherLoggedIn = false;
         }
         showView('loginView');
-        // Reset to login mode
         isRegisterMode = false;
         toggleAuthMode();
         showToast('Logged out successfully', 'info');
@@ -690,15 +688,92 @@
     function filterProgress(){ renderProgress(); }
     function toggleProgressDetail(id){ const el=document.getElementById(`detail-${id}`); if(el)el.classList.toggle('show'); }
 
+    // ============ ICON MAP ============
+    const subjectIconMap = {
+        'mathematics': 'fa-calculator',
+        'math': 'fa-calculator',
+        'english': 'fa-book-open',
+        'language': 'fa-language',
+        'science': 'fa-flask',
+        'biology': 'fa-dna',
+        'physics': 'fa-atom',
+        'chemistry': 'fa-vial',
+        'history': 'fa-landmark',
+        'geography': 'fa-globe-africa',
+        'civic': 'fa-gavel',
+        'civics': 'fa-gavel',
+        'social': 'fa-users',
+        'social studies': 'fa-users',
+        'ict': 'fa-laptop-code',
+        'computer': 'fa-desktop',
+        'technology': 'fa-microchip',
+        'arts': 'fa-palette',
+        'music': 'fa-music',
+        'physical': 'fa-running',
+        'pe': 'fa-running',
+        'religion': 'fa-church',
+        'religious': 'fa-pray',
+        'business': 'fa-chart-line',
+        'economics': 'fa-coins',
+        'accounting': 'fa-calculator',
+        'literature': 'fa-book',
+        'writing': 'fa-pen-fancy',
+        'grammar': 'fa-spell-check'
+    };
+
+    function getSubjectIcon(name) {
+        const lower = name.toLowerCase().trim();
+        for (const [key, icon] of Object.entries(subjectIconMap)) {
+            if (lower.includes(key)) return icon;
+        }
+        return 'fa-book';
+    }
+
+    function getSubjectColor(name) {
+        const colors = [
+            'from-blue-500 to-blue-600',
+            'from-purple-500 to-purple-600',
+            'from-green-500 to-green-600',
+            'from-red-500 to-red-600',
+            'from-yellow-500 to-yellow-600',
+            'from-pink-500 to-pink-600',
+            'from-indigo-500 to-indigo-600',
+            'from-orange-500 to-orange-600',
+            'from-teal-500 to-teal-600',
+            'from-cyan-500 to-cyan-600',
+            'from-rose-500 to-rose-600',
+            'from-amber-500 to-amber-600'
+        ];
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+            hash = (hash + name.charCodeAt(i) * 31) % colors.length;
+        }
+        return colors[hash];
+    }
+
     // ============ LOAD DATA ============
     async function loadSubjects(){
         const subjects=await fetchSubjects();
-        if(subjects&&subjects.length>0){ allSubjects=subjects; } else { allSubjects=[]; }
+        if(subjects&&subjects.length>0){ 
+            // Ensure each subject has an icon and color
+            allSubjects = subjects.map(sub => {
+                if (!sub.icon || sub.icon === 'fa-book' || sub.icon === '') {
+                    sub.icon = getSubjectIcon(sub.name);
+                }
+                if (!sub.color || sub.color === '') {
+                    sub.color = getSubjectColor(sub.name);
+                }
+                return sub;
+            });
+        } else { 
+            allSubjects = [];
+        }
         renderSubjects(); updateProgress(); updateTeacherSubjects(); updateQuestionSubjectSelect(); updateUploadSubjectSelect();
         document.getElementById('statSubjects').textContent=allSubjects.length;
         let totalQ=0; for(const s of allSubjects){ const qs=await fetchQuestions(s.id); totalQ+=qs.length; }
         document.getElementById('statQuestions').textContent=totalQ;
     }
+
     async function loadUsers(){
         const users=await fetchAllUsers();
         allUsers=users.filter(u=>u.role!=='teacher');
@@ -713,11 +788,13 @@
         if(!allSubjects||allSubjects.length===0){ grid.innerHTML='<div class="glass-card p-4 col-span-2 text-center text-white/60 text-sm">No subjects available.</div>'; return; }
         allSubjects.forEach(subject=>{
             const isCompleted=completedSubjects.has(subject.id);
+            const icon = subject.icon || getSubjectIcon(subject.name);
+            const color = subject.color || getSubjectColor(subject.name);
             const card=document.createElement('div');
             card.className=`subject-card ${isCompleted?'completed':''}`;
             card.style.background=isCompleted?'rgba(16,185,129,0.1)':'rgba(255,255,255,0.05)';
             card.innerHTML=`
-                <div class="icon-wrapper bg-gradient-to-br ${subject.color}"><i class="fas ${subject.icon} text-white"></i></div>
+                <div class="icon-wrapper bg-gradient-to-br ${color}"><i class="fas ${icon} text-white"></i></div>
                 <div class="subject-name">${subject.name}</div>
                 <div class="subject-count">Loading...</div>
                 ${isCompleted?`<div class="check-mark"><i class="fas fa-check"></i></div>`:''}
@@ -897,9 +974,10 @@
         if(!allSubjects||allSubjects.length===0){ list.innerHTML='<div style="color:rgba(255,255,255,0.4);text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>'; return; }
         list.innerHTML='';
         allSubjects.forEach(sub=>{
+            const icon = sub.icon || getSubjectIcon(sub.name);
             const div=document.createElement('div');
             div.style.cssText='background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;';
-            div.innerHTML=`<div><div style="color:white;font-size:12px;"><i class="fas ${sub.icon}" style="color:#fbbf24;"></i> ${sub.name}</div><div style="color:rgba(255,255,255,0.4);font-size:10px;">${sub.color}</div></div><div onclick="deleteSubject('${sub.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;"><i class="fas fa-trash"></i></div>`;
+            div.innerHTML=`<div><div style="color:white;font-size:12px;"><i class="fas ${icon}" style="color:#fbbf24;"></i> ${sub.name}</div><div style="color:rgba(255,255,255,0.4);font-size:10px;">${sub.color}</div></div><div onclick="deleteSubject('${sub.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;"><i class="fas fa-trash"></i></div>`;
             list.appendChild(div);
         });
     }
@@ -907,8 +985,10 @@
     function hideAddSubjectForm(){ document.getElementById('addSubjectForm').style.display='none'; document.getElementById('subjectName').value=''; document.getElementById('subjectIcon').value=''; document.getElementById('subjectColor').value=''; }
     async function addSubject(){
         const name=document.getElementById('subjectName').value.trim();
-        const icon=document.getElementById('subjectIcon').value.trim()||'fa-book';
-        const color=document.getElementById('subjectColor').value.trim()||'from-blue-500 to-blue-600';
+        let icon=document.getElementById('subjectIcon').value.trim();
+        if (!icon || icon === '') icon = getSubjectIcon(name);
+        let color=document.getElementById('subjectColor').value.trim();
+        if (!color || color === '') color = getSubjectColor(name);
         if(!name)return showToast('Enter subject name','error');
         const btn=event.target; btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Saving...';
         try{ const ns=await addSubjectToDB(name,icon,color); if(ns){ showToast(`✅ "${name}" added!`,'success'); hideAddSubjectForm(); await loadSubjects(); updateTeacherSubjects(); updateQuestionSubjectSelect(); updateUploadSubjectSelect(); document.getElementById('statSubjects').textContent=allSubjects.length; } }catch(e){ showToast('Error adding subject','error'); }
@@ -941,7 +1021,7 @@
         btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> Add Question';
     }
     async function deleteQuestionTeacher(id){ if(!confirm('Delete this question?'))return; try{ const ok=await deleteQuestionFromDB(id); if(ok){ showToast('Question deleted','info'); await loadQuestionsForTeacher(); let totalQ=0; for(const s of allSubjects){ const qs=await fetchQuestions(s.id); totalQ+=qs.length; } document.getElementById('statQuestions').textContent=totalQ; } }catch(e){} }
-    function pickIcon(){ const icons=['fa-atom','fa-flask','fa-calculator','fa-book-open','fa-globe-africa','fa-laptop-code','fa-church','fa-palette','fa-music','fa-robot','fa-dna','fa-earth-africa','fa-microscope','fa-pencil','fa-ruler']; document.getElementById('subjectIcon').value=icons[Math.floor(Math.random()*icons.length)]; }
+    function pickIcon(){ const icons=['fa-atom','fa-flask','fa-calculator','fa-book-open','fa-globe-africa','fa-laptop-code','fa-church','fa-palette','fa-music','fa-robot','fa-dna','fa-earth-africa','fa-microscope','fa-pencil','fa-ruler','fa-vial','fa-gavel','fa-landmark','fa-running','fa-chart-line','fa-coins','fa-pen-fancy']; document.getElementById('subjectIcon').value=icons[Math.floor(Math.random()*icons.length)]; showToast('🎨 Icon set!','info'); }
 
     // ============ BULK UPLOAD ============
     function downloadTemplate(){
@@ -1033,7 +1113,6 @@
     }
     document.addEventListener('DOMContentLoaded', init);
 
-    // Check auth on load
     function checkAuth() {
         const data = localStorage.getItem('quizUser');
         if (data) {
@@ -1050,7 +1129,7 @@
         }
     }
 
-    // Expose functions globally
+    // ============ EXPOSE FUNCTIONS ============
     window.loginOrRegister = loginOrRegister;
     window.toggleAuthMode = toggleAuthMode;
     window.logout = logout;
@@ -1091,6 +1170,8 @@
     window.toggleProgressDetail = toggleProgressDetail;
     window.saveProgress = saveProgress;
     window.markSubjectComplete = markSubjectComplete;
+    window.getSubjectIcon = getSubjectIcon;
+    window.getSubjectColor = getSubjectColor;
 </script>
 </body>
 </html>
