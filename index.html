@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
+        /* ... (all styles remain the same as before) ... */
         * {
             margin: 0;
             padding: 0;
@@ -243,7 +244,7 @@
             box-shadow: 0 4px 12px rgba(16,185,129,0.4);
         }
         .subject-card.locked {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
             position: relative;
         }
@@ -278,12 +279,12 @@
             border-radius: 10px;
             z-index: 5;
         }
-        .subject-card.completed-free {
+        .subject-card.free-done {
             border: 2px solid rgba(251,191,36,0.3);
             position: relative;
         }
-        .subject-card.completed-free::before {
-            content: '✅ Trial Done';
+        .subject-card.free-done::before {
+            content: '✅ Done';
             position: absolute;
             top: 8px;
             left: 8px;
@@ -827,6 +828,7 @@
             background: rgba(239,68,68,0.2);
             color: #ef4444;
         }
+        
         .teacher-dashboard {
             background: rgba(15, 22, 41, 0.95);
             border-radius: 14px;
@@ -1301,7 +1303,7 @@
                     <div class="text-center mt-3">
                         <p class="text-white/40 text-xs">
                             No account? 
-                            <span class="text-gold font-semibold cursor-pointer" onclick="startFreeTrial()">Try 3 Free Questions</span>
+                            <span class="text-gold font-semibold cursor-pointer" onclick="startFreeTrial()">Try 8 Free Questions</span>
                         </p>
                     </div>
                 </div>
@@ -1342,9 +1344,9 @@
             <div class="free-trial-banner" id="freeTrialBanner">
                 <div class="free-text">
                     <i class="fas fa-gift text-gold"></i>
-                    <strong>Free Trial:</strong> <span id="freeTrialText">Try ICT for free!</span>
+                    <strong>Free Trial:</strong> <span id="freeTrialText">8 questions (Q6-9 in ICT & Math)</span>
                 </div>
-                <div class="free-count" id="freeTrialCount">3</div>
+                <div class="free-count" id="freeTrialCount">8</div>
             </div>
             <div class="flex items-center justify-between mb-3">
                 <div>
@@ -1371,11 +1373,11 @@
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
                 <span class="text-white/40 text-xs" id="quizSubjectTitle">ICT</span>
-                <span class="text-white/40 text-xs" id="questionCounter">1/5</span>
+                <span class="text-white/40 text-xs" id="questionCounter">6/8</span>
             </div>
             <div class="question-card">
                 <div class="flex items-center justify-between">
-                    <span class="question-number">Question <span id="qNum">1</span></span>
+                    <span class="question-number">Question <span id="qNum">6</span></span>
                     <span class="badge badge-gold"><i class="fas fa-star"></i> <span id="scoreDisplay">0</span></span>
                 </div>
                 <p class="question-text" id="questionText">Loading question...</p>
@@ -1448,6 +1450,7 @@
                     </button>
                 </div>
 
+                <!-- STUDENTS TAB -->
                 <div id="teacherStudentsTab">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                         <h3 style="color:white;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#fbbf24;"></i> Student Accounts</h3>
@@ -1478,6 +1481,7 @@
                     <div id="studentList" style="max-height:250px;overflow-y:auto;"></div>
                 </div>
 
+                <!-- SUBJECTS TAB -->
                 <div id="teacherSubjectsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                         <h3 style="color:white;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#fbbf24;"></i> Subjects</h3>
@@ -1516,6 +1520,7 @@
                     <div id="subjectList" style="max-height:250px;overflow-y:auto;"></div>
                 </div>
 
+                <!-- QUESTIONS TAB -->
                 <div id="teacherQuestionsTab" style="display:none;">
                     <h3 style="color:white;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#fbbf24;"></i> Manage Questions</h3>
                     <div style="margin-bottom:8px;">
@@ -1630,7 +1635,7 @@
             <p class="premium-subtitle" id="premiumSubtitle">You've completed your free trial!</p>
             <div class="trial-complete-banner" id="trialCompleteBanner">
                 <div class="trial-title">🎯 Free Trial Complete!</div>
-                <div class="trial-text">You've answered 3 questions in ICT. Pay K10 to unlock all subjects and get your certificate!</div>
+                <div class="trial-text">You've answered 8 free questions (Q6-9 in ICT & Math). Pay K10 to unlock all subjects and get your certificate!</div>
             </div>
             <div class="price-container">
                 <span class="price-tag">K10</span>
@@ -1712,19 +1717,344 @@
     let completedSubjects = new Set();
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
-    let freeQuestionsRemaining = 3;
+    let freeQuestionsRemaining = 8;
     let freeTrialUsed = false;
     let isTeacherLoggedIn = false;
     let currentTeacherTab = 'students';
     let selectedSubjectId = null;
     let allUsers = [];
     let uploadedData = [];
-    const FREE_SUBJECT = 'ICT';
+    const FREE_SUBJECTS = ['ICT', 'Mathematics'];
+    const FREE_QUESTION_IDS = [6, 7, 8, 9];
     const USERS_TABLE = 'app_users';
     const SUBJECTS_TABLE = 'subjects';
     const QUESTIONS_TABLE = 'questions';
 
-    // ============ USER FUNCTIONS ============
+    // ============ WHATSAPP FUNCTION ============
+    function openWhatsApp() {
+        const phoneNumber = '0966011066';
+        const message = 'Hello, I have paid K10 for Zambia Quiz Premium. Please create my account.\n\nDesired Username: (Enter your username here)\nDesired Password: (Enter your password here)\n\nThank you!';
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        window.open(url, '_blank');
+        showToast('📱 Opening WhatsApp... Send your desired username & password', 'info');
+    }
+
+    // ============ FREE TRIAL FUNCTIONS ============
+    function startFreeTrial() {
+        if (currentUser) {
+            showToast('You already have an account! Please login.', 'info');
+            return;
+        }
+        if (freeTrialUsed) {
+            showToast('You already used your free trial! Pay K10 to continue.', 'error');
+            showPremiumPopup();
+            return;
+        }
+        freeQuestionsRemaining = 8;
+        showView('subjectsView');
+        renderSubjects();
+        updateFreeTrialUI();
+        showToast('🎯 Try 8 free questions (Q6-9 in ICT & Math)!', 'success');
+    }
+
+    function updateFreeTrialUI() {
+        const banner = document.getElementById('freeTrialBanner');
+        const count = document.getElementById('freeTrialCount');
+        const text = document.getElementById('freeTrialText');
+        if (currentUser) {
+            banner.style.display = 'none';
+            return;
+        }
+        if (freeTrialUsed) {
+            banner.style.display = 'flex';
+            count.textContent = '0';
+            count.className = 'free-count locked';
+            text.textContent = 'Trial used - Pay K10 to continue!';
+            return;
+        }
+        banner.style.display = 'flex';
+        if (freeQuestionsRemaining > 0) {
+            count.textContent = freeQuestionsRemaining;
+            count.className = 'free-count';
+            text.textContent = `${freeQuestionsRemaining} question${freeQuestionsRemaining > 1 ? 's' : ''} remaining (Q6-9 in ICT & Math)`;
+        } else {
+            count.textContent = '0';
+            count.className = 'free-count locked';
+            text.textContent = 'Trial expired - Pay K10 to continue!';
+        }
+    }
+
+    function useFreeQuestion(subjectName, questionId) {
+        if (currentUser) return true;
+        if (freeTrialUsed) return false;
+        // Only allow Q6, Q7, Q8, Q9 in ICT and Mathematics
+        const isFreeSubject = FREE_SUBJECTS.includes(subjectName);
+        const isFreeQuestion = FREE_QUESTION_IDS.includes(questionId);
+        if (isFreeSubject && isFreeQuestion && freeQuestionsRemaining > 0) {
+            freeQuestionsRemaining--;
+            updateFreeTrialUI();
+            if (freeQuestionsRemaining === 0) {
+                freeTrialUsed = true;
+                setTimeout(() => {
+                    showPremiumPopup();
+                    showToast('🎯 Free trial complete! Pay K10 to unlock all subjects!', 'info');
+                }, 800);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    // ============ PREMIUM POPUP FUNCTIONS ============
+    function showPremiumPopup() {
+        document.getElementById('premiumOverlay').classList.add('active');
+    }
+
+    function closePremiumPopup() {
+        document.getElementById('premiumOverlay').classList.remove('active');
+    }
+
+    function copyNumber(number) {
+        const formatted = number.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+        navigator.clipboard?.writeText(number).then(() => {
+            showToast(`📱 ${formatted} copied!`, 'success');
+        }).catch(() => {
+            const input = document.createElement('input');
+            input.value = number;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            showToast(`📱 ${formatted} copied!`, 'success');
+        });
+    }
+
+    // ============ TOAST ============
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
+                               type === 'success' ? 'rgba(16,185,129,0.95)' : 
+                               'rgba(0,0,0,0.9)';
+        toast.classList.add('show');
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    // ============ HELP ============
+    function showHelp() { 
+        showToast('🎯 Try 8 free questions (Q6-9 in ICT & Math)! Pay K10 to unlock all subjects.', 'info'); 
+    }
+
+    // ============ SWIPE TO GO BACK ============
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (dx > 80) {
+            const activeView = document.querySelector('.view.active');
+            if (activeView && activeView.id === 'quizView') goToSubjects();
+        }
+    });
+
+    // ============ START ============
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize the app
+        init();
+    });
+
+    // ============ INIT ============
+    async function init() {
+        checkAuth();
+        updateFreeTrialUI();
+        const mainContent = document.getElementById('mainContent');
+        mainContent.addEventListener('scroll', () => {
+            const fab = document.getElementById('fab');
+            if (mainContent.scrollTop > 200) {
+                fab.style.display = 'flex';
+            } else {
+                fab.style.display = 'none';
+            }
+        });
+        await loadSubjects();
+        await loadUsers();
+        console.log('🇿🇲 Zambia Quiz Pro loaded!');
+        console.log('🎯 Free trial: 8 questions (Q6-9 in ICT & Mathematics)');
+        console.log('📱 WhatsApp: 0966 011 066 for payments');
+        console.log('💳 Mobile Money: 0971 130 511, 0958 882 550, 0763 209 826');
+    }
+
+    // ============ AUTH ============
+    function checkAuth() {
+        const userData = localStorage.getItem('quizUser');
+        if (userData) {
+            try {
+                currentUser = JSON.parse(userData);
+                updateUserUI();
+                showView('subjectsView');
+                document.getElementById('freeTrialBanner').style.display = 'none';
+            } catch (e) {
+                localStorage.removeItem('quizUser');
+                showView('loginView');
+            }
+        } else {
+            showView('loginView');
+        }
+    }
+
+    function updateUserUI() {
+        if (currentUser) {
+            document.getElementById('avatarText').textContent = currentUser.username.charAt(0).toUpperCase();
+            document.getElementById('userAvatar').style.display = 'flex';
+            document.getElementById('navLogout').style.display = 'flex';
+        }
+    }
+
+    async function login() {
+        const username = document.getElementById('loginUsername').value.trim();
+        const password = document.getElementById('loginPassword').value.trim();
+        const loginBtn = document.getElementById('loginBtn');
+        if (!username || !password) {
+            showToast('Please enter username and password', 'error');
+            return;
+        }
+        if (username.length < 3 || password.length < 3) {
+            showToast('Username and password must be at least 3 characters', 'error');
+            return;
+        }
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = '<span class="spinner"></span> Signing in...';
+        try {
+            const user = await authenticateUser(username, password);
+            if (user) {
+                currentUser = { username: user.username, password: user.password, id: user.id };
+                localStorage.setItem('quizUser', JSON.stringify(currentUser));
+                updateUserUI();
+                document.getElementById('freeTrialBanner').style.display = 'none';
+                showToast(`Welcome back, ${username}!`, 'success');
+                showView('subjectsView');
+                renderSubjects();
+                updateProgress();
+            } else {
+                const exists = await checkUserExists(username);
+                if (exists) {
+                    showToast('Invalid password. Please try again.', 'error');
+                } else {
+                    showToast('Account not found. Pay K10 and WhatsApp 0966 011 066.', 'error');
+                }
+            }
+        } catch (error) {
+            showToast('Login error. Please try again.', 'error');
+        }
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Sign In';
+    }
+
+    function logout() {
+        localStorage.removeItem('quizUser');
+        currentUser = null;
+        document.getElementById('userAvatar').style.display = 'none';
+        document.getElementById('navLogout').style.display = 'none';
+        if (isTeacherLoggedIn) {
+            isTeacherLoggedIn = false;
+            document.getElementById('teacherView').classList.remove('active');
+        }
+        showView('loginView');
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+        freeQuestionsRemaining = 8;
+        freeTrialUsed = false;
+        updateFreeTrialUI();
+        showToast('Logged out successfully', 'info');
+    }
+
+    // ============ TEACHER FUNCTIONS ============
+    function showTeacherLogin() {
+        if (isTeacherLoggedIn) {
+            showView('teacherView');
+            updateTeacherDashboard();
+            return;
+        }
+        showView('teacherLoginView');
+    }
+
+    async function teacherLogin() {
+        const username = document.getElementById('teacherUsername').value.trim();
+        const password = document.getElementById('teacherPassword').value.trim();
+        const loginBtn = document.getElementById('teacherLoginBtn');
+        if (!username || !password) {
+            showToast('Please enter teacher credentials', 'error');
+            return;
+        }
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=*`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.length > 0 && data[0].password === password && data[0].role === 'teacher') {
+                    isTeacherLoggedIn = true;
+                    showToast('👨‍🏫 Welcome Teacher!', 'success');
+                    showView('teacherView');
+                    updateTeacherDashboard();
+                    return;
+                }
+            }
+        } catch (error) {
+            console.error('Teacher login error:', error);
+        }
+        if (username === 'teacher' && password === 'teacher123') {
+            isTeacherLoggedIn = true;
+            showToast('👨‍🏫 Welcome Teacher!', 'success');
+            showView('teacherView');
+            updateTeacherDashboard();
+            return;
+        }
+        showToast('Invalid teacher credentials', 'error');
+    }
+
+    function logoutTeacher() {
+        isTeacherLoggedIn = false;
+        showView('loginView');
+        showToast('Logged out of teacher mode', 'info');
+    }
+
+    // ============ VIEW MANAGEMENT ============
+    function showView(viewId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelector(`.nav-item[data-view="${viewId}"]`)?.classList.add('active');
+    }
+
+    function navigateTo(viewId) {
+        if (viewId === 'subjectsView' && !currentUser) {
+            if (freeQuestionsRemaining > 0 || !freeTrialUsed) {
+                showView('subjectsView');
+                return;
+            }
+            showView('loginView');
+            return;
+        }
+        showView(viewId);
+    }
+
+    function goToSubjects() {
+        document.getElementById('premiumOverlay').classList.remove('active');
+        showView('subjectsView');
+        renderSubjects();
+        updateProgress();
+    }
+
+    function scrollToTop() {
+        document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ============ SUPABASE FUNCTIONS ============
     async function createUser(username, password) {
         try {
             const payload = { username, password, role: 'student', is_premium: true };
@@ -1822,7 +2152,6 @@
         }
     }
 
-    // ============ SUBJECT FUNCTIONS ============
     async function fetchSubjects() {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?select=*&order=name.asc`, {
@@ -1882,7 +2211,6 @@
         }
     }
 
-    // ============ QUESTION FUNCTIONS ============
     async function fetchQuestions(subjectId) {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?subject_id=eq.${subjectId}&select=*`, {
@@ -1942,37 +2270,7 @@
         }
     }
 
-    // ============ WHATSAPP FUNCTION ============
-    function openWhatsApp() {
-        const phoneNumber = '0966011066';
-        const message = 'Hello, I have paid K10 for Zambia Quiz Premium. Please create my account.\n\nDesired Username: (Enter your username here)\nDesired Password: (Enter your password here)\n\nThank you!';
-        const encodedMessage = encodeURIComponent(message);
-        const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-        window.open(url, '_blank');
-        showToast('📱 Opening WhatsApp... Send your desired username & password', 'info');
-    }
-
-    // ============ INIT ============
-    async function init() {
-        checkAuth();
-        updateFreeTrialUI();
-        const mainContent = document.getElementById('mainContent');
-        mainContent.addEventListener('scroll', () => {
-            const fab = document.getElementById('fab');
-            if (mainContent.scrollTop > 200) {
-                fab.style.display = 'flex';
-            } else {
-                fab.style.display = 'none';
-            }
-        });
-        await loadSubjects();
-        await loadUsers();
-        console.log('🇿🇲 Zambia Quiz Pro loaded!');
-        console.log('📤 Bulk Upload: Upload CSV files with questions');
-        console.log('🎯 Free trial: 3 questions in ICT only');
-        console.log('📱 WhatsApp: 0966 011 066 for payments');
-    }
-
+    // ============ LOAD SUBJECTS & USERS ============
     async function loadSubjects() {
         try {
             const subjects = await fetchSubjects();
@@ -2011,240 +2309,7 @@
         }
     }
 
-    // ============ FREE TRIAL ============
-    function startFreeTrial() {
-        if (currentUser) {
-            showToast('You already have an account! Please login.', 'info');
-            return;
-        }
-        if (freeTrialUsed) {
-            showToast('You already used your free trial! Pay K10 to continue.', 'error');
-            showPremiumPopup();
-            return;
-        }
-        freeQuestionsRemaining = 3;
-        showView('subjectsView');
-        renderSubjects();
-        updateFreeTrialUI();
-        showToast('🎯 Try 3 free questions in ICT!', 'success');
-    }
-
-    function updateFreeTrialUI() {
-        const banner = document.getElementById('freeTrialBanner');
-        const count = document.getElementById('freeTrialCount');
-        const text = document.getElementById('freeTrialText');
-        if (currentUser) {
-            banner.style.display = 'none';
-            return;
-        }
-        if (freeTrialUsed) {
-            banner.style.display = 'flex';
-            count.textContent = '0';
-            count.className = 'free-count locked';
-            text.textContent = 'Trial used - Pay K10 to continue!';
-            return;
-        }
-        banner.style.display = 'flex';
-        if (freeQuestionsRemaining > 0) {
-            count.textContent = freeQuestionsRemaining;
-            count.className = 'free-count';
-            text.textContent = `${freeQuestionsRemaining} question${freeQuestionsRemaining > 1 ? 's' : ''} remaining in ICT`;
-        } else {
-            count.textContent = '0';
-            count.className = 'free-count locked';
-            text.textContent = 'Trial expired - Pay K10 to continue!';
-        }
-    }
-
-    function useFreeQuestion() {
-        if (currentUser) return true;
-        if (freeTrialUsed) return false;
-        const subjectName = document.getElementById('quizSubjectTitle').textContent;
-        if (subjectName === FREE_SUBJECT && freeQuestionsRemaining > 0) {
-            freeQuestionsRemaining--;
-            updateFreeTrialUI();
-            if (freeQuestionsRemaining === 0) {
-                freeTrialUsed = true;
-                setTimeout(() => {
-                    showPremiumPopup();
-                    showToast('🎯 Free trial complete! Pay K10 to unlock all subjects!', 'info');
-                }, 800);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    // ============ AUTH ============
-    function checkAuth() {
-        const userData = localStorage.getItem('quizUser');
-        if (userData) {
-            try {
-                currentUser = JSON.parse(userData);
-                updateUserUI();
-                showView('subjectsView');
-                document.getElementById('freeTrialBanner').style.display = 'none';
-            } catch (e) {
-                localStorage.removeItem('quizUser');
-                showView('loginView');
-            }
-        } else {
-            showView('loginView');
-        }
-    }
-
-    function updateUserUI() {
-        if (currentUser) {
-            document.getElementById('avatarText').textContent = currentUser.username.charAt(0).toUpperCase();
-            document.getElementById('userAvatar').style.display = 'flex';
-            document.getElementById('navLogout').style.display = 'flex';
-        }
-    }
-
-    async function login() {
-        const username = document.getElementById('loginUsername').value.trim();
-        const password = document.getElementById('loginPassword').value.trim();
-        const loginBtn = document.getElementById('loginBtn');
-        if (!username || !password) {
-            showToast('Please enter username and password', 'error');
-            return;
-        }
-        if (username.length < 3 || password.length < 3) {
-            showToast('Username and password must be at least 3 characters', 'error');
-            return;
-        }
-        loginBtn.disabled = true;
-        loginBtn.innerHTML = '<span class="spinner"></span> Signing in...';
-        try {
-            const user = await authenticateUser(username, password);
-            if (user) {
-                currentUser = { username: user.username, password: user.password, id: user.id };
-                localStorage.setItem('quizUser', JSON.stringify(currentUser));
-                updateUserUI();
-                document.getElementById('freeTrialBanner').style.display = 'none';
-                showToast(`Welcome back, ${username}!`, 'success');
-                showView('subjectsView');
-                renderSubjects();
-                updateProgress();
-            } else {
-                const exists = await checkUserExists(username);
-                if (exists) {
-                    showToast('Invalid password. Please try again.', 'error');
-                } else {
-                    showToast('Account not found. Pay K10 and WhatsApp 0966 011 066.', 'error');
-                }
-            }
-        } catch (error) {
-            showToast('Login error. Please try again.', 'error');
-        }
-        loginBtn.disabled = false;
-        loginBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Sign In';
-    }
-
-    function logout() {
-        localStorage.removeItem('quizUser');
-        currentUser = null;
-        document.getElementById('userAvatar').style.display = 'none';
-        document.getElementById('navLogout').style.display = 'none';
-        if (isTeacherLoggedIn) {
-            isTeacherLoggedIn = false;
-            document.getElementById('teacherView').classList.remove('active');
-        }
-        showView('loginView');
-        document.getElementById('loginUsername').value = '';
-        document.getElementById('loginPassword').value = '';
-        freeQuestionsRemaining = 3;
-        freeTrialUsed = false;
-        updateFreeTrialUI();
-        showToast('Logged out successfully', 'info');
-    }
-
-    // ============ TEACHER FUNCTIONS ============
-    function showTeacherLogin() {
-        if (isTeacherLoggedIn) {
-            showView('teacherView');
-            updateTeacherDashboard();
-            return;
-        }
-        showView('teacherLoginView');
-    }
-
-    async function teacherLogin() {
-        const username = document.getElementById('teacherUsername').value.trim();
-        const password = document.getElementById('teacherPassword').value.trim();
-        const loginBtn = document.getElementById('teacherLoginBtn');
-        if (!username || !password) {
-            showToast('Please enter teacher credentials', 'error');
-            return;
-        }
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=*`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                if (data.length > 0 && data[0].password === password && data[0].role === 'teacher') {
-                    isTeacherLoggedIn = true;
-                    showToast('👨‍🏫 Welcome Teacher!', 'success');
-                    showView('teacherView');
-                    updateTeacherDashboard();
-                    return;
-                }
-            }
-        } catch (error) {
-            console.error('Teacher login error:', error);
-        }
-        if (username === 'teacher' && password === 'teacher123') {
-            isTeacherLoggedIn = true;
-            showToast('👨‍🏫 Welcome Teacher!', 'success');
-            showView('teacherView');
-            updateTeacherDashboard();
-            return;
-        }
-        showToast('Invalid teacher credentials', 'error');
-    }
-
-    function logoutTeacher() {
-        isTeacherLoggedIn = false;
-        showView('loginView');
-        showToast('Logged out of teacher mode', 'info');
-    }
-
-    // ============ VIEW MANAGEMENT ============
-    function showView(viewId) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.querySelector(`.nav-item[data-view="${viewId}"]`)?.classList.add('active');
-    }
-
-    function navigateTo(viewId) {
-        if (viewId === 'subjectsView' && !currentUser) {
-            if (freeQuestionsRemaining > 0 || !freeTrialUsed) {
-                showView('subjectsView');
-                return;
-            }
-            showView('loginView');
-            return;
-        }
-        showView(viewId);
-    }
-
-    function goToSubjects() {
-        document.getElementById('premiumOverlay').classList.remove('active');
-        showView('subjectsView');
-        renderSubjects();
-        updateProgress();
-    }
-
-    function scrollToTop() {
-        document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // ============ SUBJECT RENDERING ============
+    // ============ RENDER SUBJECTS ============
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
@@ -2254,7 +2319,7 @@
         }
         allSubjects.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
-            const isFreeSubject = subject.name === FREE_SUBJECT;
+            const isFreeSubject = FREE_SUBJECTS.includes(subject.name);
             const hasFreeTrial = !currentUser && isFreeSubject && freeQuestionsRemaining > 0 && !freeTrialUsed;
             const trialUsed = !currentUser && isFreeSubject && freeTrialUsed;
             const isLocked = !currentUser && !hasFreeTrial && !isCompleted;
@@ -2262,7 +2327,7 @@
             let cardClass = `subject-card ${isCompleted ? 'border-green-500/30' : ''}`;
             if (isLocked && !isCompleted) cardClass += ' locked';
             if (hasFreeTrial && !isCompleted) cardClass += ' free';
-            if (trialUsed && !isCompleted) cardClass += ' completed-free';
+            if (trialUsed && !isCompleted) cardClass += ' free-done';
             card.className = cardClass;
             card.style.background = isCompleted ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.05)';
             let statusBadge = '';
@@ -2286,7 +2351,9 @@
             `;
             fetchQuestions(subject.id).then(questions => {
                 const countEl = card.querySelector('.subject-count');
-                if (countEl) countEl.textContent = `${questions.length} questions`;
+                if (countEl) {
+                    countEl.textContent = `${questions.length} questions`;
+                }
             });
             card.onclick = async () => {
                 if (isCompleted) {
@@ -2302,7 +2369,7 @@
                     return;
                 }
                 if (!currentUser && !isFreeSubject) {
-                    showToast('💎 Only ICT is available for free trial. Pay K10 to unlock all subjects!', 'error');
+                    showToast('💎 Only ICT & Mathematics have free questions (Q6-9). Pay K10 to unlock all subjects!', 'error');
                     setTimeout(() => showPremiumPopup(), 1000);
                     return;
                 }
@@ -2322,23 +2389,12 @@
         }
     }
 
-    // ============ QUIZ FUNCTIONS ============
+    // ============ START QUIZ ============
     async function startQuiz(subjectId, subjectName) {
-        if (!currentUser && subjectName !== FREE_SUBJECT) {
-            showToast('💎 Only ICT is free. Pay K10 to unlock all subjects!', 'error');
+        if (!currentUser && !FREE_SUBJECTS.includes(subjectName)) {
+            showToast('💎 Only ICT & Mathematics have free questions (Q6-9). Pay K10 to unlock all subjects!', 'error');
             setTimeout(() => showPremiumPopup(), 1000);
             return;
-        }
-        if (!currentUser && subjectName === FREE_SUBJECT) {
-            if (freeTrialUsed || freeQuestionsRemaining === 0) {
-                showPremiumPopup();
-                return;
-            }
-            const canProceed = useFreeQuestion();
-            if (!canProceed) {
-                showPremiumPopup();
-                return;
-            }
         }
         try {
             const questions = await fetchQuestions(subjectId);
@@ -2346,12 +2402,38 @@
                 showToast('No questions available for this subject.', 'error');
                 return;
             }
+            // Filter to only show Q6-9 for free trial
+            let quizQuestions = questions;
+            if (!currentUser && FREE_SUBJECTS.includes(subjectName)) {
+                // Find questions with IDs 6, 7, 8, 9 (1-indexed)
+                // Since we don't have id mapping, we'll use the index
+                const freeQuestions = [];
+                // Get all questions and select indices 5,6,7,8 (0-indexed = 6,7,8,9)
+                if (questions.length >= 9) {
+                    for (let i = 5; i < 9 && i < questions.length; i++) {
+                        freeQuestions.push(questions[i]);
+                    }
+                }
+                // If we have at least one free question, use them
+                if (freeQuestions.length > 0) {
+                    quizQuestions = freeQuestions;
+                    // Check if user has free questions remaining
+                    if (freeQuestionsRemaining === 0 || freeTrialUsed) {
+                        showPremiumPopup();
+                        return;
+                    }
+                } else {
+                    showToast('No free questions available for this subject.', 'error');
+                    return;
+                }
+            }
             currentSubject = subjectId;
-            currentQuestions = questions;
+            currentQuestions = quizQuestions;
             currentIndex = 0;
             score = 0;
             answered = false;
             document.getElementById('quizSubjectTitle').textContent = subjectName;
+            document.getElementById('questionCounter').textContent = `${currentIndex+1}/${currentQuestions.length}`;
             showView('quizView');
             renderQuestion();
         } catch (error) {
@@ -2411,6 +2493,24 @@
         });
         totalQuestionsAnswered++;
         document.getElementById('nextBtn').disabled = false;
+        // If free trial, decrement remaining questions
+        if (!currentUser) {
+            const subjectName = document.getElementById('quizSubjectTitle').textContent;
+            if (FREE_SUBJECTS.includes(subjectName)) {
+                // Check if we need to mark trial as used
+                if (freeQuestionsRemaining > 0) {
+                    freeQuestionsRemaining--;
+                    updateFreeTrialUI();
+                    if (freeQuestionsRemaining === 0) {
+                        freeTrialUsed = true;
+                        setTimeout(() => {
+                            showPremiumPopup();
+                            showToast('🎯 Free trial complete! Pay K10 to unlock all subjects!', 'info');
+                        }, 1000);
+                    }
+                }
+            }
+        }
     }
 
     function nextQuestion() {
@@ -2434,7 +2534,7 @@
         }
     }
 
-    // ============ TEACHER DASHBOARD FUNCTIONS ============
+    // ============ TEACHER DASHBOARD ============
     function switchTeacherTab(tab) {
         currentTeacherTab = tab;
         document.querySelectorAll('#teacherView .subject-tab').forEach(t => t.classList.remove('active'));
@@ -2568,11 +2668,11 @@
         allSubjects.forEach(subject => {
             const div = document.createElement('div');
             div.style.cssText = 'background:rgba(255,255,255,0.04);border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;';
-            const isFree = subject.name === FREE_SUBJECT;
+            const isFree = FREE_SUBJECTS.includes(subject.name);
             div.innerHTML = `
                 <div>
                     <div style="color:white;font-size:12px;"><i class="fas ${subject.icon}" style="color:#fbbf24;"></i> ${subject.name} ${isFree ? '🎯' : ''}</div>
-                    <div style="color:rgba(255,255,255,0.4);font-size:10px;">${subject.color} ${isFree ? '(Free Trial)' : ''}</div>
+                    <div style="color:rgba(255,255,255,0.4);font-size:10px;">${subject.color} ${isFree ? '(Free Trial: Q6-9)' : ''}</div>
                 </div>
                 <div onclick="deleteSubject('${subject.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
@@ -2676,10 +2776,11 @@
             questions.forEach((q, idx) => {
                 const div = document.createElement('div');
                 div.style.cssText = 'background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;';
+                const isFree = FREE_QUESTION_IDS.includes(idx + 1) && FREE_SUBJECTS.includes(document.getElementById('questionSubjectSelect').options[document.getElementById('questionSubjectSelect').selectedIndex]?.text || '');
                 div.innerHTML = `
                     <div>
-                        <div style="color:white;font-size:12px;">${idx + 1}. ${q.question}</div>
-                        <div style="color:rgba(255,255,255,0.4);font-size:10px;">${q.options.join(' | ')}</div>
+                        <div style="color:white;font-size:12px;">${idx + 1}. ${q.question} ${isFree ? '🎯' : ''}</div>
+                        <div style="color:rgba(255,255,255,0.4);font-size:10px;">${q.options.join(' | ')} ${isFree ? '(Free)' : ''}</div>
                     </div>
                     <div onclick="deleteQuestionTeacher('${q.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;">
                         <i class="fas fa-trash"></i>
@@ -2951,65 +3052,6 @@
         document.getElementById('fileInput').value = '';
     }
 
-    // ============ PREMIUM POPUP FUNCTIONS ============
-    function showPremiumPopup() {
-        document.getElementById('premiumOverlay').classList.add('active');
-    }
-
-    function closePremiumPopup() {
-        document.getElementById('premiumOverlay').classList.remove('active');
-    }
-
-    function copyNumber(number) {
-        const formatted = number.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
-        navigator.clipboard?.writeText(number).then(() => {
-            showToast(`📱 ${formatted} copied!`, 'success');
-        }).catch(() => {
-            const input = document.createElement('input');
-            input.value = number;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('copy');
-            document.body.removeChild(input);
-            showToast(`📱 ${formatted} copied!`, 'success');
-        });
-    }
-
-    // ============ TOAST FUNCTIONS ============
-    function showToast(message, type = 'info') {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
-                               type === 'success' ? 'rgba(16,185,129,0.95)' : 
-                               'rgba(0,0,0,0.9)';
-        toast.classList.add('show');
-        clearTimeout(toast._timeout);
-        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
-    }
-
-    // ============ HELP FUNCTIONS ============
-    function showHelp() { 
-        showToast('🎯 Try 3 free questions in ICT! Pay K10 to unlock all subjects.', 'info'); 
-    }
-
-    function toggleUserMenu() {
-        if (currentUser && confirm(`Logged in as ${currentUser.username}\nLogout?`)) logout();
-    }
-
-    // ============ SWIPE TO GO BACK ============
-    let touchStartX = 0;
-    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
-    document.addEventListener('touchend', (e) => {
-        const dx = e.changedTouches[0].clientX - touchStartX;
-        if (dx > 80) {
-            const activeView = document.querySelector('.view.active');
-            if (activeView && activeView.id === 'quizView') goToSubjects();
-        }
-    });
-
-    // ============ START ============
-    document.addEventListener('DOMContentLoaded', init);
-
     // ============ EXPOSE FUNCTIONS ============
     window.login = login;
     window.logout = logout;
@@ -3054,6 +3096,7 @@
     window.uploadQuestions = uploadQuestions;
 
     console.log('✅ All functions loaded successfully!');
+    console.log('🎯 Free trial: 8 questions (Q6-9 in ICT & Mathematics)');
 </script>
 </body>
 </html>
