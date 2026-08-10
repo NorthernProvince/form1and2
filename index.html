@@ -1647,35 +1647,35 @@
                 </p>
             </div>
             <div class="payment-grid">
-                <div class="payment-row" onclick="copyNumber('0971130511')">
+                <div class="payment-row" onclick="copyNumber('+260971130511')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(251,191,36,0.2);color:#fbbf24;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number">0971 130 511</div>
+                            <div class="payment-number">+260971 130 511</div>
                             <div class="payment-provider">MTN / Airtel</div>
                         </div>
                     </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0971130511')"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260971130511')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
                 <div class="payment-row" onclick="copyNumber('0958882550')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(52,211,153,0.2);color:#34d399;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number">0958 882 550</div>
+                            <div class="payment-number"> +260958 882 550</div>
                             <div class="payment-provider">MTN / Airtel</div>
                         </div>
                     </div>
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0958882550')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
-                <div class="payment-row" onclick="copyNumber('0763209826')">
+                <div class="payment-row" onclick="copyNumber('+260763209826')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(251,146,60,0.2);color:#fb923c;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number">0763 209 826</div>
+                            <div class="payment-number">+260763 209 826</div>
                             <div class="payment-provider">Zamtel</div>
                         </div>
                     </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0763209826')"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260763209826')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
             </div>
             <div class="account-name-box">
@@ -1684,7 +1684,7 @@
             </div>
             <p class="payment-instruction" style="color:rgba(255,255,255,0.6);font-size:12px;margin-bottom:12px;">
                 <i class="fas fa-whatsapp" style="color:#25D366;"></i>
-                Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
+                Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;"> +260966 011 066</strong>
             </p>
             <button onclick="openWhatsApp()" class="btn-whatsapp">
                 <i class="fab fa-whatsapp"></i> Send WhatsApp Message
@@ -1732,7 +1732,7 @@
 
     // ============ WHATSAPP FUNCTION ============
     function openWhatsApp() {
-        const phoneNumber = '0966011066';
+        const phoneNumber = '+260966011066';
         const message = 'Hello, I have paid K10 for Zambia Quiz Premium. Please create my account.\n\nDesired Username: (Enter your username here)\nDesired Password: (Enter your password here)\n\nThank you!';
         const encodedMessage = encodeURIComponent(message);
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -1878,8 +1878,8 @@
         await loadUsers();
         console.log('🇿🇲 Zambia Quiz Pro loaded!');
         console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
-        console.log('📱 WhatsApp: 0966 011 066 for payments');
-        console.log('💳 Mobile Money: 0971 130 511, 0958 882 550, 0763 209 826');
+        console.log('📱 WhatsApp: +260966 011 066 for payments');
+        console.log('💳 Mobile Money: +260971 130 511, +260958 882 550, 0763 209 826');
     }
 
     // ============ AUTH ============
