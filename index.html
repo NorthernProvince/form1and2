@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
-        /* ... (all styles remain the same as before) ... */
         * {
             margin: 0;
             padding: 0;
@@ -1303,7 +1302,7 @@
                     <div class="text-center mt-3">
                         <p class="text-white/40 text-xs">
                             No account? 
-                            <span class="text-gold font-semibold cursor-pointer" onclick="startFreeTrial()">Try 8 Free Questions</span>
+                            <span class="text-gold font-semibold cursor-pointer" onclick="startFreeTrial()">Try Free Questions</span>
                         </p>
                     </div>
                 </div>
@@ -1344,9 +1343,9 @@
             <div class="free-trial-banner" id="freeTrialBanner">
                 <div class="free-text">
                     <i class="fas fa-gift text-gold"></i>
-                    <strong>Free Trial:</strong> <span id="freeTrialText">8 questions (Q6-9 in ICT & Math)</span>
+                    <strong>Free Trial:</strong> <span id="freeTrialText">4 questions (Q6-9 in ICT & Math)</span>
                 </div>
-                <div class="free-count" id="freeTrialCount">8</div>
+                <div class="free-count" id="freeTrialCount">4</div>
             </div>
             <div class="flex items-center justify-between mb-3">
                 <div>
@@ -1373,7 +1372,7 @@
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
                 <span class="text-white/40 text-xs" id="quizSubjectTitle">ICT</span>
-                <span class="text-white/40 text-xs" id="questionCounter">6/8</span>
+                <span class="text-white/40 text-xs" id="questionCounter">6/4</span>
             </div>
             <div class="question-card">
                 <div class="flex items-center justify-between">
@@ -1635,7 +1634,7 @@
             <p class="premium-subtitle" id="premiumSubtitle">You've completed your free trial!</p>
             <div class="trial-complete-banner" id="trialCompleteBanner">
                 <div class="trial-title">🎯 Free Trial Complete!</div>
-                <div class="trial-text">You've answered 8 free questions (Q6-9 in ICT & Math). Pay K10 to unlock all subjects and get your certificate!</div>
+                <div class="trial-text">You've answered 4 free questions (Q6-9 in ICT & Math). Pay K10 to unlock all subjects and get your certificate!</div>
             </div>
             <div class="price-container">
                 <span class="price-tag">K10</span>
@@ -1717,7 +1716,8 @@
     let completedSubjects = new Set();
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
-    let freeQuestionsRemaining = 8;
+    let freeQuestionsUsed = 0;
+    const MAX_FREE_QUESTIONS = 4;
     let freeTrialUsed = false;
     let isTeacherLoggedIn = false;
     let currentTeacherTab = 'students';
@@ -1751,11 +1751,11 @@
             showPremiumPopup();
             return;
         }
-        freeQuestionsRemaining = 8;
+        freeQuestionsUsed = 0;
         showView('subjectsView');
         renderSubjects();
         updateFreeTrialUI();
-        showToast('🎯 Try 8 free questions (Q6-9 in ICT & Math)!', 'success');
+        showToast('🎯 Try 4 free questions (Q6-9 in ICT & Math)!', 'success');
     }
 
     function updateFreeTrialUI() {
@@ -1766,7 +1766,8 @@
             banner.style.display = 'none';
             return;
         }
-        if (freeTrialUsed) {
+        if (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
+            freeTrialUsed = true;
             banner.style.display = 'flex';
             count.textContent = '0';
             count.className = 'free-count locked';
@@ -1774,32 +1775,29 @@
             return;
         }
         banner.style.display = 'flex';
-        if (freeQuestionsRemaining > 0) {
-            count.textContent = freeQuestionsRemaining;
-            count.className = 'free-count';
-            text.textContent = `${freeQuestionsRemaining} question${freeQuestionsRemaining > 1 ? 's' : ''} remaining (Q6-9 in ICT & Math)`;
-        } else {
-            count.textContent = '0';
-            count.className = 'free-count locked';
-            text.textContent = 'Trial expired - Pay K10 to continue!';
-        }
+        const remaining = MAX_FREE_QUESTIONS - freeQuestionsUsed;
+        count.textContent = remaining;
+        count.className = 'free-count';
+        text.textContent = `${remaining} question${remaining > 1 ? 's' : ''} remaining (Q6-9 in ICT & Math)`;
     }
 
     function useFreeQuestion(subjectName, questionId) {
         if (currentUser) return true;
-        if (freeTrialUsed) return false;
+        if (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
+            return false;
+        }
         // Only allow Q6, Q7, Q8, Q9 in ICT and Mathematics
         const isFreeSubject = FREE_SUBJECTS.includes(subjectName);
         const isFreeQuestion = FREE_QUESTION_IDS.includes(questionId);
-        if (isFreeSubject && isFreeQuestion && freeQuestionsRemaining > 0) {
-            freeQuestionsRemaining--;
+        if (isFreeSubject && isFreeQuestion) {
+            freeQuestionsUsed++;
             updateFreeTrialUI();
-            if (freeQuestionsRemaining === 0) {
+            if (freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
                 freeTrialUsed = true;
                 setTimeout(() => {
                     showPremiumPopup();
                     showToast('🎯 Free trial complete! Pay K10 to unlock all subjects!', 'info');
-                }, 800);
+                }, 1000);
             }
             return true;
         }
@@ -1844,7 +1842,7 @@
 
     // ============ HELP ============
     function showHelp() { 
-        showToast('🎯 Try 8 free questions (Q6-9 in ICT & Math)! Pay K10 to unlock all subjects.', 'info'); 
+        showToast('🎯 Try 4 free questions (Q6-9 in ICT & Math)! Pay K10 to unlock all subjects.', 'info'); 
     }
 
     // ============ SWIPE TO GO BACK ============
@@ -1860,7 +1858,6 @@
 
     // ============ START ============
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize the app
         init();
     });
 
@@ -1880,7 +1877,7 @@
         await loadSubjects();
         await loadUsers();
         console.log('🇿🇲 Zambia Quiz Pro loaded!');
-        console.log('🎯 Free trial: 8 questions (Q6-9 in ICT & Mathematics)');
+        console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
         console.log('📱 WhatsApp: 0966 011 066 for payments');
         console.log('💳 Mobile Money: 0971 130 511, 0958 882 550, 0763 209 826');
     }
@@ -1963,7 +1960,7 @@
         showView('loginView');
         document.getElementById('loginUsername').value = '';
         document.getElementById('loginPassword').value = '';
-        freeQuestionsRemaining = 8;
+        freeQuestionsUsed = 0;
         freeTrialUsed = false;
         updateFreeTrialUI();
         showToast('Logged out successfully', 'info');
@@ -2033,7 +2030,7 @@
 
     function navigateTo(viewId) {
         if (viewId === 'subjectsView' && !currentUser) {
-            if (freeQuestionsRemaining > 0 || !freeTrialUsed) {
+            if (freeQuestionsUsed < MAX_FREE_QUESTIONS && !freeTrialUsed) {
                 showView('subjectsView');
                 return;
             }
@@ -2320,8 +2317,8 @@
         allSubjects.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
             const isFreeSubject = FREE_SUBJECTS.includes(subject.name);
-            const hasFreeTrial = !currentUser && isFreeSubject && freeQuestionsRemaining > 0 && !freeTrialUsed;
-            const trialUsed = !currentUser && isFreeSubject && freeTrialUsed;
+            const hasFreeTrial = !currentUser && isFreeSubject && freeQuestionsUsed < MAX_FREE_QUESTIONS && !freeTrialUsed;
+            const trialUsed = !currentUser && isFreeSubject && (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS);
             const isLocked = !currentUser && !hasFreeTrial && !isCompleted;
             const card = document.createElement('div');
             let cardClass = `subject-card ${isCompleted ? 'border-green-500/30' : ''}`;
@@ -2335,7 +2332,8 @@
                 if (isLocked) {
                     statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#ef4444;background:rgba(239,68,68,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 Locked</div>`;
                 } else if (hasFreeTrial) {
-                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#10b981;background:rgba(16,185,129,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 ${freeQuestionsRemaining} left</div>`;
+                    const remaining = MAX_FREE_QUESTIONS - freeQuestionsUsed;
+                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#10b981;background:rgba(16,185,129,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 ${remaining} left</div>`;
                 } else if (trialUsed) {
                     statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#fbbf24;background:rgba(251,191,36,0.2);padding:2px 10px;border-radius:10px;white-space:nowrap;">💎 Pay K10</div>`;
                 }
@@ -2405,23 +2403,21 @@
             // Filter to only show Q6-9 for free trial
             let quizQuestions = questions;
             if (!currentUser && FREE_SUBJECTS.includes(subjectName)) {
-                // Find questions with IDs 6, 7, 8, 9 (1-indexed)
-                // Since we don't have id mapping, we'll use the index
+                // Check if user has free questions remaining
+                if (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
+                    showPremiumPopup();
+                    return;
+                }
+                // Only show questions 6, 7, 8, 9
                 const freeQuestions = [];
-                // Get all questions and select indices 5,6,7,8 (0-indexed = 6,7,8,9)
-                if (questions.length >= 9) {
-                    for (let i = 5; i < 9 && i < questions.length; i++) {
+                for (let i = 0; i < questions.length; i++) {
+                    const qNum = i + 1;
+                    if (FREE_QUESTION_IDS.includes(qNum)) {
                         freeQuestions.push(questions[i]);
                     }
                 }
-                // If we have at least one free question, use them
                 if (freeQuestions.length > 0) {
                     quizQuestions = freeQuestions;
-                    // Check if user has free questions remaining
-                    if (freeQuestionsRemaining === 0 || freeTrialUsed) {
-                        showPremiumPopup();
-                        return;
-                    }
                 } else {
                     showToast('No free questions available for this subject.', 'error');
                     return;
@@ -2449,7 +2445,7 @@
             updateProgress();
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
             showToast(`🎉 Completed ${subjectName}!`, 'success');
-            if (!currentUser && freeTrialUsed) {
+            if (!currentUser && (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS)) {
                 setTimeout(() => showPremiumPopup(), 1000);
             }
             goToSubjects();
@@ -2457,8 +2453,11 @@
         }
         const q = currentQuestions[currentIndex];
         document.getElementById('questionText').textContent = q.question;
-        document.getElementById('qNum').textContent = currentIndex + 1;
-        document.getElementById('questionCounter').textContent = `${currentIndex + 1}/${currentQuestions.length}`;
+        const qNum = currentIndex + 1;
+        // Map to show actual question numbers (6,7,8,9)
+        const displayNum = FREE_QUESTION_IDS[currentIndex] || qNum;
+        document.getElementById('qNum').textContent = displayNum;
+        document.getElementById('questionCounter').textContent = `${displayNum}/${currentQuestions.length}`;
         document.getElementById('scoreDisplay').textContent = score;
         const container = document.getElementById('optionsContainer');
         container.innerHTML = '';
@@ -2493,22 +2492,13 @@
         });
         totalQuestionsAnswered++;
         document.getElementById('nextBtn').disabled = false;
-        // If free trial, decrement remaining questions
+        // If free trial, check if we've used all free questions
         if (!currentUser) {
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
             if (FREE_SUBJECTS.includes(subjectName)) {
-                // Check if we need to mark trial as used
-                if (freeQuestionsRemaining > 0) {
-                    freeQuestionsRemaining--;
-                    updateFreeTrialUI();
-                    if (freeQuestionsRemaining === 0) {
-                        freeTrialUsed = true;
-                        setTimeout(() => {
-                            showPremiumPopup();
-                            showToast('🎯 Free trial complete! Pay K10 to unlock all subjects!', 'info');
-                        }, 1000);
-                    }
-                }
+                // Use one free question
+                const qNum = FREE_QUESTION_IDS[currentIndex] || (currentIndex + 1);
+                useFreeQuestion(subjectName, qNum);
             }
         }
     }
@@ -2776,10 +2766,11 @@
             questions.forEach((q, idx) => {
                 const div = document.createElement('div');
                 div.style.cssText = 'background:rgba(255,255,255,0.04);border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;';
-                const isFree = FREE_QUESTION_IDS.includes(idx + 1) && FREE_SUBJECTS.includes(document.getElementById('questionSubjectSelect').options[document.getElementById('questionSubjectSelect').selectedIndex]?.text || '');
+                const qNum = idx + 1;
+                const isFree = FREE_QUESTION_IDS.includes(qNum) && FREE_SUBJECTS.includes(document.getElementById('questionSubjectSelect').options[document.getElementById('questionSubjectSelect').selectedIndex]?.text || '');
                 div.innerHTML = `
                     <div>
-                        <div style="color:white;font-size:12px;">${idx + 1}. ${q.question} ${isFree ? '🎯' : ''}</div>
+                        <div style="color:white;font-size:12px;">${qNum}. ${q.question} ${isFree ? '🎯' : ''}</div>
                         <div style="color:rgba(255,255,255,0.4);font-size:10px;">${q.options.join(' | ')} ${isFree ? '(Free)' : ''}</div>
                     </div>
                     <div onclick="deleteQuestionTeacher('${q.id}')" style="color:rgba(255,255,255,0.3);cursor:pointer;padding:4px 8px;border-radius:6px;">
@@ -3096,7 +3087,7 @@
     window.uploadQuestions = uploadQuestions;
 
     console.log('✅ All functions loaded successfully!');
-    console.log('🎯 Free trial: 8 questions (Q6-9 in ICT & Mathematics)');
+    console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
 </script>
 </body>
 </html>
