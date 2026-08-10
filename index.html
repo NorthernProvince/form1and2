@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
+        /* ===== ALL STYLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -274,23 +275,6 @@
             font-weight: 700;
             color: #10b981;
             background: rgba(16,185,129,0.15);
-            padding: 2px 10px;
-            border-radius: 10px;
-            z-index: 5;
-        }
-        .subject-card.free-done {
-            border: 2px solid rgba(251,191,36,0.3);
-            position: relative;
-        }
-        .subject-card.free-done::before {
-            content: '✅ Done';
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            font-size: 9px;
-            font-weight: 700;
-            color: #fbbf24;
-            background: rgba(251,191,36,0.15);
             padding: 2px 10px;
             border-radius: 10px;
             z-index: 5;
@@ -827,7 +811,8 @@
             background: rgba(239,68,68,0.2);
             color: #ef4444;
         }
-        
+
+        /* ===== TEACHER DASHBOARD STYLES ===== */
         .teacher-dashboard {
             background: rgba(15, 22, 41, 0.95);
             border-radius: 14px;
@@ -1049,7 +1034,7 @@
             margin-left: 4px;
         }
         .users-list {
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
         }
         .users-list::-webkit-scrollbar {
@@ -1118,8 +1103,8 @@
         }
         .stats-box {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
             margin-bottom: 12px;
         }
         .stat-card {
@@ -1131,12 +1116,12 @@
         }
         .stat-card .stat-number {
             color: #fbbf24;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
         }
         .stat-card .stat-label {
             color: rgba(255,255,255,0.4);
-            font-size: 9px;
+            font-size: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -1253,6 +1238,106 @@
         .upload-result .result-text .count {
             color: #fbbf24;
             font-weight: 700;
+        }
+
+        /* Progress container */
+        .progress-container {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .progress-container:hover {
+            background: rgba(255,255,255,0.06);
+        }
+        .progress-container .learner-name {
+            color: #fbbf24;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .progress-container .progress-bar-bg {
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 6px 0;
+        }
+        .progress-container .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        .progress-container .subject-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 8px;
+            font-weight: 600;
+            margin: 2px 3px 2px 0;
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.5);
+        }
+        .progress-container .subject-badge.done {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
+        .progress-container .subject-badge.pending {
+            background: rgba(251,191,36,0.1);
+            color: #fbbf24;
+        }
+        .progress-container .last-active {
+            color: rgba(255,255,255,0.3);
+            font-size: 9px;
+        }
+        .progress-container .score-badge {
+            background: rgba(251,191,36,0.15);
+            color: #fbbf24;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .progress-container .no-progress {
+            color: rgba(255,255,255,0.3);
+            font-size: 11px;
+            font-style: italic;
+        }
+        .progress-detail {
+            background: rgba(15,22,41,0.98);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            margin-top: 8px;
+            display: none;
+        }
+        .progress-detail.show {
+            display: block;
+            animation: fadeSlideUp 0.3s ease;
+        }
+        .progress-detail .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .progress-detail .detail-row .label {
+            color: rgba(255,255,255,0.4);
+            font-size: 11px;
+        }
+        .progress-detail .detail-row .value {
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .progress-detail .detail-row .value.gold {
+            color: #fbbf24;
+        }
+        .progress-detail .detail-row .value.green {
+            color: #10b981;
         }
     </style>
 </head>
@@ -1433,9 +1518,16 @@
                         <div class="stat-number" id="statQuestions">0</div>
                         <div class="stat-label">Questions</div>
                     </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statCompleted">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
                 </div>
                 <div style="display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;">
-                    <button class="subject-tab active" onclick="switchTeacherTab('students')">
+                    <button class="subject-tab active" onclick="switchTeacherTab('progress')">
+                        <i class="fas fa-chart-line"></i> Progress
+                    </button>
+                    <button class="subject-tab" onclick="switchTeacherTab('students')">
                         <i class="fas fa-users"></i> Students
                     </button>
                     <button class="subject-tab" onclick="switchTeacherTab('subjects')">
@@ -1449,8 +1541,18 @@
                     </button>
                 </div>
 
+                <!-- LEARNER PROGRESS TAB -->
+                <div id="teacherProgressTab">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                        <h3 style="color:white;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#fbbf24;"></i> Learner Progress</h3>
+                        <span style="color:rgba(255,255,255,0.3);font-size:10px;">Click a learner for details</span>
+                    </div>
+                    <input id="progressSearch" type="text" placeholder="🔍 Search learners..." oninput="filterProgress()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 12px;color:white;font-size:12px;width:100%;outline:none;margin-bottom:8px;" />
+                    <div id="progressList" style="max-height:400px;overflow-y:auto;"></div>
+                </div>
+
                 <!-- STUDENTS TAB -->
-                <div id="teacherStudentsTab">
+                <div id="teacherStudentsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                         <h3 style="color:white;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#fbbf24;"></i> Student Accounts</h3>
                         <button onclick="showAddStudentForm()" style="background:rgba(255,255,255,0.08);color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);font-size:11px;cursor:pointer;">
@@ -1647,35 +1749,35 @@
                 </p>
             </div>
             <div class="payment-grid">
-                <div class="payment-row" onclick="copyNumber('+260971130511')">
+                <div class="payment-row" onclick="copyNumber('0971130511')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(251,191,36,0.2);color:#fbbf24;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number">+260971 130 511</div>
+                            <div class="payment-number">0971 130 511</div>
                             <div class="payment-provider">MTN / Airtel</div>
                         </div>
                     </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260971130511')"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0971130511')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
                 <div class="payment-row" onclick="copyNumber('0958882550')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(52,211,153,0.2);color:#34d399;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number"> +260958 882 550</div>
+                            <div class="payment-number">0958 882 550</div>
                             <div class="payment-provider">MTN / Airtel</div>
                         </div>
                     </div>
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0958882550')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
-                <div class="payment-row" onclick="copyNumber('+260763209826')">
+                <div class="payment-row" onclick="copyNumber('0763209826')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(251,146,60,0.2);color:#fb923c;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number">+260763 209 826</div>
+                            <div class="payment-number">0763 209 826</div>
                             <div class="payment-provider">Zamtel</div>
                         </div>
                     </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260763209826')"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0763209826')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
             </div>
             <div class="account-name-box">
@@ -1684,7 +1786,7 @@
             </div>
             <p class="payment-instruction" style="color:rgba(255,255,255,0.6);font-size:12px;margin-bottom:12px;">
                 <i class="fas fa-whatsapp" style="color:#25D366;"></i>
-                Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;"> +260966 011 066</strong>
+                Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
             </p>
             <button onclick="openWhatsApp()" class="btn-whatsapp">
                 <i class="fab fa-whatsapp"></i> Send WhatsApp Message
@@ -1720,19 +1822,21 @@
     const MAX_FREE_QUESTIONS = 4;
     let freeTrialUsed = false;
     let isTeacherLoggedIn = false;
-    let currentTeacherTab = 'students';
+    let currentTeacherTab = 'progress';
     let selectedSubjectId = null;
     let allUsers = [];
     let uploadedData = [];
+    let learnerProgress = {};
     const FREE_SUBJECTS = ['ICT', 'Mathematics'];
     const FREE_QUESTION_IDS = [6, 7, 8, 9];
     const USERS_TABLE = 'app_users';
     const SUBJECTS_TABLE = 'subjects';
     const QUESTIONS_TABLE = 'questions';
+    const PROGRESS_TABLE = 'learner_progress';
 
     // ============ WHATSAPP FUNCTION ============
     function openWhatsApp() {
-        const phoneNumber = '+260966011066';
+        const phoneNumber = '0966011066';
         const message = 'Hello, I have paid K10 for Zambia Quiz Premium. Please create my account.\n\nDesired Username: (Enter your username here)\nDesired Password: (Enter your password here)\n\nThank you!';
         const encodedMessage = encodeURIComponent(message);
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -1786,7 +1890,6 @@
         if (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
             return false;
         }
-        // Only allow Q6, Q7, Q8, Q9 in ICT and Mathematics
         const isFreeSubject = FREE_SUBJECTS.includes(subjectName);
         const isFreeQuestion = FREE_QUESTION_IDS.includes(questionId);
         if (isFreeSubject && isFreeQuestion) {
@@ -1876,10 +1979,11 @@
         });
         await loadSubjects();
         await loadUsers();
+        await loadProgress();
         console.log('🇿🇲 Zambia Quiz Pro loaded!');
         console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
-        console.log('📱 WhatsApp: +260966 011 066 for payments');
-        console.log('💳 Mobile Money: +260971 130 511, +260958 882 550, 0763 209 826');
+        console.log('📱 WhatsApp: 0966 011 066 for payments');
+        console.log('📊 Learner Progress tracking enabled!');
     }
 
     // ============ AUTH ============
@@ -2267,6 +2371,203 @@
         }
     }
 
+    // ============ PROGRESS FUNCTIONS ============
+    async function loadProgress() {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?select=*`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                learnerProgress = {};
+                data.forEach(record => {
+                    if (!learnerProgress[record.user_id]) {
+                        learnerProgress[record.user_id] = [];
+                    }
+                    learnerProgress[record.user_id].push(record);
+                });
+                console.log('📊 Loaded progress for', Object.keys(learnerProgress).length, 'learners');
+                console.log('📊 Progress data:', data);
+            } else {
+                console.warn('⚠️ Progress table not found or empty');
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not load progress:', error);
+        }
+        renderProgress();
+    }
+
+    async function saveProgress(userId, subjectId, score, total) {
+        try {
+            console.log('💾 Saving progress for user:', userId, 'subject:', subjectId, 'score:', score, '/', total);
+            
+            const payload = {
+                user_id: userId,
+                subject_id: subjectId,
+                score: score,
+                total_questions: total,
+                completed_at: new Date().toISOString()
+            };
+            
+            // First check if a record exists
+            const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=id`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            
+            if (checkResponse.ok) {
+                const existing = await checkResponse.json();
+                if (existing && existing.length > 0) {
+                    // Update existing record
+                    const updateResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?id=eq.${existing[0].id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    if (updateResponse.ok) {
+                        console.log('✅ Progress updated for user', userId, 'subject', subjectId);
+                    } else {
+                        console.error('❌ Failed to update progress:', await updateResponse.text());
+                    }
+                } else {
+                    // Insert new record
+                    const insertResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}`, {
+                        method: 'POST',
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=representation'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    if (insertResponse.ok) {
+                        const newData = await insertResponse.json();
+                        console.log('✅ Progress saved for user', userId, 'subject', subjectId, newData);
+                    } else {
+                        console.error('❌ Failed to insert progress:', await insertResponse.text());
+                    }
+                }
+                // Reload progress after saving
+                await loadProgress();
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not save progress:', error);
+        }
+    }
+
+    function renderProgress() {
+        const container = document.getElementById('progressList');
+        if (!container) return;
+        
+        const searchTerm = document.getElementById('progressSearch')?.value?.toLowerCase() || '';
+        
+        const students = allUsers.filter(u => u.role !== 'teacher');
+        const filtered = students.filter(u => 
+            u.username.toLowerCase().includes(searchTerm)
+        );
+        
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="color:rgba(255,255,255,0.4);text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
+            document.getElementById('statCompleted').textContent = '0';
+            return;
+        }
+        
+        let totalCompleted = 0;
+        container.innerHTML = '';
+        
+        filtered.forEach(user => {
+            const progress = learnerProgress[user.id] || [];
+            const completedSubjectIds = progress.map(p => p.subject_id);
+            const totalSubjects = allSubjects.length;
+            const completed = completedSubjectIds.length;
+            const percentage = totalSubjects > 0 ? Math.round((completed / totalSubjects) * 100) : 0;
+            
+            if (completed === totalSubjects && totalSubjects > 0) totalCompleted++;
+            
+            const div = document.createElement('div');
+            div.className = 'progress-container';
+            div.onclick = () => toggleProgressDetail(user.id);
+            
+            let badgesHTML = '';
+            if (allSubjects.length === 0) {
+                badgesHTML = `<span class="no-progress">No subjects available</span>`;
+            } else {
+                allSubjects.forEach(subject => {
+                    const isDone = completedSubjectIds.includes(subject.id);
+                    badgesHTML += `<span class="subject-badge ${isDone ? 'done' : 'pending'}">${isDone ? '✅' : '⬜'} ${subject.name}</span>`;
+                });
+            }
+            
+            const lastActive = user.last_active || user.created_at;
+            const date = new Date(lastActive).toLocaleDateString();
+            
+            const hasProgress = progress.length > 0;
+            const progressStatus = hasProgress ? `${percentage}%` : '⏳ No progress yet';
+            
+            div.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <span class="learner-name">${user.username}</span>
+                        <span class="last-active">• Joined: ${date}</span>
+                        <span style="color:rgba(255,255,255,0.2);font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
+                    </div>
+                    <span class="score-badge">${progressStatus}</span>
+                </div>
+                ${hasProgress ? `
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width:${percentage}%"></div>
+                    </div>
+                ` : `
+                    <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:4px;margin:6px 0;"></div>
+                `}
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div style="display:flex;flex-wrap:wrap;gap:2px;">
+                        ${badgesHTML}
+                    </div>
+                    <span style="color:rgba(255,255,255,0.3);font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
+                </div>
+                <div class="progress-detail" id="detail-${user.id}">
+                    <div class="detail-row"><span class="label">Username</span><span class="value gold">${user.username}</span></div>
+                    <div class="detail-row"><span class="label">Subjects Completed</span><span class="value">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span></div>
+                    <div class="detail-row"><span class="label">Overall Score</span><span class="value gold">${hasProgress ? `${percentage}%` : 'N/A'}</span></div>
+                    <div class="detail-row"><span class="label">Account Created</span><span class="value">${new Date(user.created_at).toLocaleDateString()}</span></div>
+                    ${hasProgress ? progress.map(p => {
+                        const subject = allSubjects.find(s => s.id === p.subject_id);
+                        return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
+                    }).join('') : `
+                        <div class="detail-row" style="border-bottom:none;">
+                            <span class="label" style="color:rgba(255,255,255,0.3);font-style:italic;">No subjects completed yet</span>
+                        </div>
+                    `}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+        
+        document.getElementById('statCompleted').textContent = totalCompleted;
+    }
+
+    function toggleProgressDetail(userId) {
+        const detail = document.getElementById(`detail-${userId}`);
+        if (detail) {
+            detail.classList.toggle('show');
+        }
+    }
+
+    function filterProgress() {
+        renderProgress();
+    }
+
     // ============ LOAD SUBJECTS & USERS ============
     async function loadSubjects() {
         try {
@@ -2301,6 +2602,7 @@
             allUsers = users.filter(u => u.role !== 'teacher');
             document.getElementById('statStudents').textContent = allUsers.length;
             renderStudents();
+            renderProgress();
         } catch (error) {
             console.error('Error loading users:', error);
         }
@@ -2324,7 +2626,6 @@
             let cardClass = `subject-card ${isCompleted ? 'border-green-500/30' : ''}`;
             if (isLocked && !isCompleted) cardClass += ' locked';
             if (hasFreeTrial && !isCompleted) cardClass += ' free';
-            if (trialUsed && !isCompleted) cardClass += ' free-done';
             card.className = cardClass;
             card.style.background = isCompleted ? 'rgba(16,185,129,0.1)' : 'rgba(255,255,255,0.05)';
             let statusBadge = '';
@@ -2400,15 +2701,12 @@
                 showToast('No questions available for this subject.', 'error');
                 return;
             }
-            // Filter to only show Q6-9 for free trial
             let quizQuestions = questions;
             if (!currentUser && FREE_SUBJECTS.includes(subjectName)) {
-                // Check if user has free questions remaining
                 if (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
                     showPremiumPopup();
                     return;
                 }
-                // Only show questions 6, 7, 8, 9
                 const freeQuestions = [];
                 for (let i = 0; i < questions.length; i++) {
                     const qNum = i + 1;
@@ -2442,6 +2740,13 @@
         if (currentIndex >= currentQuestions.length) {
             completedSubjects.add(currentSubject);
             totalQuestionsAnswered += currentQuestions.length;
+            // Save progress - THIS IS THE KEY FIX
+            if (currentUser && currentUser.id) {
+                console.log('📊 Saving progress for:', currentUser.username, 'Subject:', document.getElementById('quizSubjectTitle').textContent);
+                saveProgress(currentUser.id, currentSubject, score, currentQuestions.length);
+            } else {
+                console.warn('⚠️ Cannot save progress: No user logged in');
+            }
             updateProgress();
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
             showToast(`🎉 Completed ${subjectName}!`, 'success');
@@ -2454,7 +2759,6 @@
         const q = currentQuestions[currentIndex];
         document.getElementById('questionText').textContent = q.question;
         const qNum = currentIndex + 1;
-        // Map to show actual question numbers (6,7,8,9)
         const displayNum = FREE_QUESTION_IDS[currentIndex] || qNum;
         document.getElementById('qNum').textContent = displayNum;
         document.getElementById('questionCounter').textContent = `${displayNum}/${currentQuestions.length}`;
@@ -2492,11 +2796,9 @@
         });
         totalQuestionsAnswered++;
         document.getElementById('nextBtn').disabled = false;
-        // If free trial, check if we've used all free questions
         if (!currentUser) {
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
             if (FREE_SUBJECTS.includes(subjectName)) {
-                // Use one free question
                 const qNum = FREE_QUESTION_IDS[currentIndex] || (currentIndex + 1);
                 useFreeQuestion(subjectName, qNum);
             }
@@ -2533,6 +2835,7 @@
                 t.classList.add('active');
             }
         });
+        document.getElementById('teacherProgressTab').style.display = tab === 'progress' ? 'block' : 'none';
         document.getElementById('teacherStudentsTab').style.display = tab === 'students' ? 'block' : 'none';
         document.getElementById('teacherSubjectsTab').style.display = tab === 'subjects' ? 'block' : 'none';
         document.getElementById('teacherQuestionsTab').style.display = tab === 'questions' ? 'block' : 'none';
@@ -2541,6 +2844,7 @@
         if (tab === 'questions') loadQuestionsForTeacher();
         if (tab === 'students') renderStudents();
         if (tab === 'upload') updateUploadSubjectSelect();
+        if (tab === 'progress') renderProgress();
     }
 
     function updateTeacherDashboard() {
@@ -2548,6 +2852,7 @@
         updateQuestionSubjectSelect();
         updateUploadSubjectSelect();
         renderStudents();
+        renderProgress();
         document.getElementById('statStudents').textContent = allUsers.length;
         document.getElementById('statSubjects').textContent = allSubjects.length;
     }
@@ -2623,6 +2928,7 @@
                 hideAddStudentForm();
                 await loadUsers();
                 renderStudents();
+                renderProgress();
                 document.getElementById('statStudents').textContent = allUsers.length;
             }
         } catch (error) {
@@ -2640,6 +2946,7 @@
                 showToast('Student deleted', 'info');
                 await loadUsers();
                 renderStudents();
+                renderProgress();
                 document.getElementById('statStudents').textContent = allUsers.length;
             }
         } catch (error) {
@@ -3085,8 +3392,13 @@
     window.downloadTemplate = downloadTemplate;
     window.handleFileUpload = handleFileUpload;
     window.uploadQuestions = uploadQuestions;
+    window.renderProgress = renderProgress;
+    window.filterProgress = filterProgress;
+    window.toggleProgressDetail = toggleProgressDetail;
+    window.saveProgress = saveProgress;
 
     console.log('✅ All functions loaded successfully!');
+    console.log('📊 Learner Progress tracking enabled!');
     console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
 </script>
 </body>
