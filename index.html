@@ -756,6 +756,9 @@
         .add-friend-btn.added {
             background: #22c55e;
         }
+        .add-friend-btn.friend-request {
+            background: #f59e0b;
+        }
 
         .chat-container {
             display: flex;
@@ -885,6 +888,23 @@
         .no-friends h3 {
             color: #1a2332;
             margin-bottom: 4px;
+        }
+
+        .search-members {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .search-members .input-field {
+            flex: 1;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+        .search-members .btn-primary {
+            width: auto;
+            padding: 10px 16px;
+            font-size: 13px;
+            flex-shrink: 0;
         }
 
         /* Premium Overlay - Membership */
@@ -1469,58 +1489,55 @@
             color: #ef4444;
         }
 
-        /* Payment Confirmation Overlay */
-        .payment-confirm-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 300;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            max-width: 430px;
-            margin: 0 auto;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
-        }
-        .payment-confirm-overlay.active {
+        .member-result {
             display: flex;
-        }
-        .payment-confirm-card {
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
             background: white;
-            border-radius: 24px;
-            padding: 32px 20px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .payment-confirm-card .success-icon {
-            font-size: 64px;
-            color: #22c55e;
-            margin-bottom: 12px;
-        }
-        .payment-confirm-card h2 {
-            color: #1a2332;
-            font-size: 22px;
-            font-weight: 700;
+            border-radius: 12px;
+            border: 1px solid #dce4ec;
             margin-bottom: 8px;
         }
-        .payment-confirm-card p {
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.5;
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1a5276;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            flex-shrink: 0;
         }
-        .payment-confirm-card .btn-primary {
-            width: 100%;
+        .member-info {
+            flex: 1;
+        }
+        .member-name {
+            font-weight: 600;
+            color: #1a2332;
+            font-size: 14px;
+        }
+        .member-status {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .member-status.online {
+            color: #22c55e;
+        }
+        .member-status.offline {
+            color: #94a3b8;
+        }
+        .no-members {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+        .no-members i {
+            font-size: 48px;
+            margin-bottom: 12px;
+            color: #dce4ec;
         }
     </style>
 </head>
@@ -1703,16 +1720,20 @@
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
             </div>
+            <div class="search-members">
+                <input type="text" id="searchMembersInput" class="input-field" placeholder="🔍 Search for friends..." style="padding:10px 14px; font-size:13px;" />
+                <button onclick="searchMembers()" class="btn-primary" style="width:auto; padding:10px 16px; font-size:13px;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
             <div id="friendsList">
                 <div class="no-friends" id="noFriends">
                     <i class="fas fa-user-plus"></i>
                     <h3>No Friends Yet</h3>
-                    <p style="font-size:13px;">Connect with other learners to chat and share progress!</p>
-                    <button onclick="findFriends()" class="btn-primary" style="margin-top:12px; padding:10px; font-size:13px; width:auto; display:inline-flex;">
-                        <i class="fas fa-search"></i> Find Friends
-                    </button>
+                    <p style="font-size:13px;">Search for other learners to connect with!</p>
                 </div>
             </div>
+            <div id="memberSearchResults" style="margin-top:12px;"></div>
         </div>
 
         <!-- CHAT VIEW -->
@@ -2032,7 +2053,7 @@
             <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1);border-radius:10px;padding:10px;margin-bottom:12px;">
                 <p style="color:#64748b;font-size:12px;">
                     <i class="fas fa-info-circle" style="color:#1a5276;"></i>
-                    <strong>Pay via mobile money below</strong>, then click "I've Paid" to activate your account instantly.
+                    <strong>Pay via mobile money below.</strong>, then WhatsApp your username and password to the teacher.
                 </p>
             </div>
             <div class="payment-grid">
@@ -2071,30 +2092,15 @@
                 <div class="label">Account Name</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
-            <button onclick="confirmPayment()" class="btn-primary" style="margin-bottom:10px;">
-                <i class="fas fa-check-circle"></i> I've Paid - Activate Now
-            </button>
-            <p class="payment-instruction" style="color:#94a3b8;font-size:11px;text-align:center;margin-bottom:4px;">
+            <p class="payment-instruction" style="color:#64748b;font-size:12px;margin-bottom:8px;">
                 <i class="fas fa-whatsapp" style="color:#25D366;"></i>
-                Or send payment confirmation via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
+                After payment, send <strong>Username &amp; Password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
             </p>
-            <button onclick="openWhatsApp()" class="btn-whatsapp" style="margin-top:8px;">
-                <i class="fab fa-whatsapp"></i> WhatsApp Teacher
+            <button onclick="openWhatsApp()" class="btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Send WhatsApp Message
             </button>
             <button onclick="closePremiumPopup()" class="btn-secondary" style="margin-top:8px;">
                 <i class="fas fa-times"></i> Close
-            </button>
-        </div>
-    </div>
-
-    <!-- PAYMENT CONFIRMATION OVERLAY -->
-    <div class="payment-confirm-overlay" id="paymentConfirmOverlay">
-        <div class="payment-confirm-card">
-            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-            <h2>🎉 Payment Confirmed!</h2>
-            <p>Your K10 membership has been activated. You now have full access to all subjects, features, and your certificate!</p>
-            <button onclick="closePaymentConfirm()" class="btn-primary">
-                <i class="fas fa-rocket"></i> Start Learning Now
             </button>
         </div>
     </div>
@@ -2209,45 +2215,18 @@
         document.getElementById('premiumOverlay').classList.remove('active');
     }
 
-    function confirmPayment() {
-        // Show payment confirmation overlay
-        document.getElementById('paymentConfirmOverlay').classList.add('active');
-        closePremiumPopup();
-        // Activate membership
-        activateMembership();
-    }
-
-    function closePaymentConfirm() {
-        document.getElementById('paymentConfirmOverlay').classList.remove('active');
-        showToast('✅ Welcome to NorthernQuiz Premium! All features unlocked.', 'success');
-        renderSubjects();
-        updateProgress();
-    }
-
-    function activateMembership() {
-        if (!currentUser) return;
-        localStorage.setItem(`membership_${currentUser.id}`, 'paid');
-        isPremium = true;
-        // Also store in user object
-        currentUser.is_premium = true;
-        localStorage.setItem('quizUser', JSON.stringify(currentUser));
-    }
-
     function checkMembership() {
         if (!currentUser) return false;
         if (isPremium) return true;
-        // Check localStorage
         const membershipStatus = localStorage.getItem(`membership_${currentUser.id}`);
         if (membershipStatus === 'paid') {
             isPremium = true;
             return true;
         }
-        // Check user object
         if (currentUser.is_premium) {
             isPremium = true;
             return true;
         }
-        // Check if user is teacher
         if (currentUser.role === 'teacher') {
             isPremium = true;
             return true;
@@ -2257,11 +2236,13 @@
 
     function openWhatsApp() {
         const phoneNumber = '0966011066';
-        const message = 'Hello, I have paid K10 for NorthernQuiz Premium.\n\nUsername: ' + (currentUser ? currentUser.username : '(Enter username)') + '\nPassword: (Enter password)\n\nPlease activate my account. Thank you!';
+        const username = currentUser ? currentUser.username : '(Your username)';
+        const message = `Hello, I have paid K10 for NorthernQuiz Premium.\n\nUsername: ${username}\nPassword: (Enter your password)\n\nPlease activate my account. Thank you!`;
         const encodedMessage = encodeURIComponent(message);
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(url, '_blank');
         showToast('📱 Opening WhatsApp... Send your username & password', 'info');
+        closePremiumPopup();
     }
 
     function copyNumber(number) {
@@ -2326,7 +2307,6 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                // Show membership popup for new users
                 setTimeout(() => {
                     showPremiumPopup();
                 }, 1000);
@@ -2368,7 +2348,6 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                // Check membership
                 const hasMembership = checkMembership();
                 if (!hasMembership && currentUser.role !== 'teacher') {
                     setTimeout(() => {
@@ -2550,6 +2529,8 @@
         }
         showView('friendsView');
         renderFriends();
+        document.getElementById('memberSearchResults').innerHTML = '';
+        document.getElementById('searchMembersInput').value = '';
     }
 
     function renderFriends() {
@@ -2559,10 +2540,7 @@
                 <div class="no-friends" id="noFriends">
                     <i class="fas fa-user-plus"></i>
                     <h3>No Friends Yet</h3>
-                    <p style="font-size:13px;">Connect with other learners to chat and share progress!</p>
-                    <button onclick="findFriends()" class="btn-primary" style="margin-top:12px; padding:10px; font-size:13px; width:auto; display:inline-flex;">
-                        <i class="fas fa-search"></i> Find Friends
-                    </button>
+                    <p style="font-size:13px;">Search for other learners to connect with!</p>
                 </div>
             `;
             return;
@@ -2589,29 +2567,86 @@
         container.innerHTML = html;
     }
 
-    function findFriends() {
+    function searchMembers() {
+        const searchTerm = document.getElementById('searchMembersInput').value.trim().toLowerCase();
+        const resultsContainer = document.getElementById('memberSearchResults');
+        
+        if (!searchTerm) {
+            resultsContainer.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">Enter a name to search</div>';
+            return;
+        }
+        
+        // Filter users (excluding current user and existing friends)
+        const availableUsers = allUsers.filter(u => 
+            u.id !== currentUser.id && 
+            u.role !== 'teacher' &&
+            u.username.toLowerCase().includes(searchTerm) &&
+            !friends.find(f => f.id === u.id)
+        );
+        
+        if (availableUsers.length === 0) {
+            resultsContainer.innerHTML = `
+                <div class="no-members">
+                    <i class="fas fa-search"></i>
+                    <h3>No Results Found</h3>
+                    <p style="font-size:13px;">No learners found matching "${searchTerm}"</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = `<div style="margin-top:8px;"><h3 style="color:#1a2332;font-size:14px;font-weight:600;margin-bottom:8px;">Found ${availableUsers.length} learner${availableUsers.length > 1 ? 's' : ''}</h3></div>`;
+        availableUsers.forEach(user => {
+            const isFriend = friends.find(f => f.id === user.id);
+            const status = user.online ? 'online' : 'offline';
+            const statusText = user.online ? 'Online' : 'Offline';
+            const btnText = isFriend ? 'Friends' : 'Add Friend';
+            const btnClass = isFriend ? 'added' : '';
+            const btnAction = isFriend ? '' : `onclick="addFriend('${user.id}', '${user.username}')"`;
+            
+            html += `
+                <div class="member-result">
+                    <div class="member-avatar" style="background:#1a5276;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">${user.username}</div>
+                        <div class="member-status ${status}">${statusText}</div>
+                    </div>
+                    <button class="add-friend-btn ${btnClass}" ${btnAction}>
+                        ${isFriend ? '<i class="fas fa-check"></i> Friends' : '<i class="fas fa-user-plus"></i> Add Friend'}
+                    </button>
+                </div>
+            `;
+        });
+        resultsContainer.innerHTML = html;
+    }
+
+    function addFriend(userId, username) {
         if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to access Friends feature.', 'error');
+            showToast('💎 Please pay K10 to add friends.', 'error');
             showPremiumPopup();
             return;
         }
-        showToast('🔍 Looking for other learners...', 'info');
-        const sampleFriends = [
-            { id: 'friend1', username: 'Mwangala', online: true, color: '#22c55e' },
-            { id: 'friend2', username: 'Banda', online: false, color: '#f59e0b' },
-            { id: 'friend3', username: 'Mulenga', online: true, color: '#8b5cf6' },
-            { id: 'friend4', username: 'Chanda', online: true, color: '#06b6d4' },
-            { id: 'friend5', username: 'Phiri', online: false, color: '#f472b6' }
-        ];
-        sampleFriends.forEach(f => {
-            if (!friends.find(ff => ff.id === f.id)) {
-                friends.push(f);
-                localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
-            }
-        });
+        
+        if (friends.find(f => f.id === userId)) {
+            showToast('Already friends with ' + username, 'info');
+            return;
+        }
+        
+        const newFriend = {
+            id: userId,
+            username: username,
+            online: true,
+            color: '#1a5276'
+        };
+        friends.push(newFriend);
+        localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
         renderFriends();
         updateProfile();
-        showToast('✅ Found some learners! Add them to chat.', 'success');
+        document.getElementById('memberSearchResults').innerHTML = '';
+        document.getElementById('searchMembersInput').value = '';
+        showToast(`✅ Added ${username} as a friend!`, 'success');
     }
 
     function removeFriend(friendId) {
@@ -3911,7 +3946,6 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                // Check membership
                 const hasMembership = checkMembership();
                 if (!hasMembership && currentUser.role !== 'teacher') {
                     setTimeout(() => {
@@ -3974,7 +4008,8 @@
     window.updateProfile = updateProfile;
     window.showFriends = showFriends;
     window.renderFriends = renderFriends;
-    window.findFriends = findFriends;
+    window.searchMembers = searchMembers;
+    window.addFriend = addFriend;
     window.removeFriend = removeFriend;
     window.openChat = openChat;
     window.sendMessage = sendMessage;
@@ -3984,10 +4019,7 @@
     window.closePremiumPopup = closePremiumPopup;
     window.openWhatsApp = openWhatsApp;
     window.copyNumber = copyNumber;
-    window.activateMembership = activateMembership;
     window.checkMembership = checkMembership;
-    window.confirmPayment = confirmPayment;
-    window.closePaymentConfirm = closePaymentConfirm;
 </script>
 </body>
 </html>
