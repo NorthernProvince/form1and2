@@ -16,7 +16,7 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #e8edf2;
+            background: #f0f0f0;
             overflow: hidden;
             height: 100vh;
             width: 100vw;
@@ -28,63 +28,61 @@
             height: 100vh;
             height: 100dvh;
             margin: 0 auto;
-            background: linear-gradient(160deg, #f0f4f8 0%, #dce4ec 40%, #c8d4de 100%);
+            background: #f5f5f5;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
         .app-header {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 12px 16px 10px;
+            background: #e91e63;
+            padding: 14px 16px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.5);
             flex-shrink: 0;
             z-index: 40;
+            box-shadow: 0 2px 10px rgba(233, 30, 99, 0.25);
         }
         .header-brand {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            width: 38px;
+            height: 38px;
+            background: white;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.25);
-            color: white;
+            font-size: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: #e91e63;
         }
         .brand-text {
-            color: #1a2332;
+            color: white;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 20px;
             letter-spacing: -0.5px;
         }
         .brand-text span {
-            color: #2563eb;
+            color: rgba(255,255,255,0.8);
         }
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
         .header-btn {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(37, 99, 235, 0.08);
+            background: rgba(255,255,255,0.15);
             border: none;
-            color: #1a2332;
-            font-size: 14px;
+            color: white;
+            font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -93,19 +91,21 @@
         }
         .header-btn:active {
             transform: scale(0.92);
+            background: rgba(255,255,255,0.25);
         }
         .user-avatar {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 13px;
-            color: white;
+            font-size: 14px;
+            color: #e91e63;
             cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.3);
         }
         .main-content {
             flex: 1;
@@ -114,12 +114,13 @@
             padding: 12px 12px 70px;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
+            background: #f5f5f5;
         }
         .main-content::-webkit-scrollbar {
             width: 3px;
         }
         .main-content::-webkit-scrollbar-thumb {
-            background: rgba(37, 99, 235, 0.3);
+            background: #e91e63;
             border-radius: 10px;
         }
         .bottom-nav {
@@ -129,15 +130,14 @@
             right: 0;
             max-width: 430px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.5);
+            background: white;
+            border-top: 1px solid #e8e8e8;
             padding: 4px 0 env(safe-area-inset-bottom);
             display: flex;
             justify-content: space-around;
             align-items: center;
             z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
         }
         .nav-item {
             display: flex;
@@ -146,7 +146,7 @@
             gap: 1px;
             background: none;
             border: none;
-            color: rgba(26, 35, 50, 0.35);
+            color: #999;
             font-size: 9px;
             padding: 4px 8px;
             cursor: pointer;
@@ -155,11 +155,11 @@
             min-width: 44px;
         }
         .nav-item i {
-            font-size: 18px;
+            font-size: 20px;
             transition: all 0.3s;
         }
         .nav-item.active {
-            color: #2563eb;
+            color: #e91e63;
         }
         .nav-item.active i {
             transform: translateY(-2px);
@@ -170,10 +170,10 @@
             top: -4px;
             left: 50%;
             transform: translateX(-50%);
-            width: 16px;
-            height: 2px;
-            background: #2563eb;
-            border-radius: 2px;
+            width: 20px;
+            height: 3px;
+            background: #e91e63;
+            border-radius: 3px;
         }
         .nav-item:active {
             transform: scale(0.9);
@@ -190,12 +190,10 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: white;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .subject-card {
             background: white;
@@ -203,38 +201,44 @@
             padding: 16px 14px 14px;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f0f0;
             position: relative;
             overflow: hidden;
             min-height: 130px;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .subject-card:active {
             transform: scale(0.96);
         }
         .subject-card .icon-wrapper {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 24px;
             margin-bottom: 10px;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            color: white;
+            position: relative;
+        }
+        .subject-card .icon-wrapper i {
+            font-size: 24px;
+            color: white;
         }
         .subject-card .subject-name {
-            color: #1a2332;
+            color: #1a1a2e;
             font-weight: 700;
             font-size: 14px;
             line-height: 1.2;
             margin-bottom: 2px;
         }
         .subject-card .subject-count {
-            color: #94a3b8;
+            color: #999;
             font-size: 10px;
             font-weight: 500;
         }
@@ -258,21 +262,21 @@
             bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            color: #16a34a;
+            background: #e91e63;
+            color: white;
             font-size: 9px;
             font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
             white-space: nowrap;
             z-index: 10;
-            backdrop-filter: blur(4px);
+            border: none;
+            box-shadow: 0 2px 8px rgba(233, 30, 99, 0.25);
         }
         .subject-card .mark-done-btn:hover {
-            background: rgba(34, 197, 94, 0.2);
+            background: #c2185b;
         }
         .subject-card .mark-done-btn:active {
             transform: scale(0.95);
@@ -284,7 +288,7 @@
             margin-right: 4px;
         }
         .subject-card.locked {
-            opacity: 0.4;
+            opacity: 0.5;
             cursor: not-allowed;
             position: relative;
         }
@@ -303,21 +307,22 @@
             filter: blur(2px);
         }
         .subject-card.free {
-            border: 2px solid rgba(34, 197, 94, 0.25);
+            border: 2px solid rgba(233, 30, 99, 0.2);
             position: relative;
         }
         .subject-card.free::before {
-            content: '🎯 FREE';
+            content: 'FREE';
             position: absolute;
             top: 8px;
             left: 8px;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 700;
-            color: #16a34a;
-            background: rgba(34, 197, 94, 0.1);
+            color: white;
+            background: #e91e63;
             padding: 2px 10px;
-            border-radius: 10px;
+            border-radius: 12px;
             z-index: 5;
+            letter-spacing: 0.5px;
         }
         .subject-grid {
             display: grid;
@@ -326,10 +331,10 @@
         }
         .option-btn {
             background: white;
-            border: 2px solid #e2e8f0;
+            border: 2px solid #f0f0f0;
             border-radius: 12px;
             padding: 12px 14px;
-            color: #1a2332;
+            color: #1a1a2e;
             font-size: 13px;
             font-weight: 500;
             transition: all 0.2s;
@@ -341,16 +346,16 @@
             gap: 10px;
         }
         .option-btn .option-letter {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background: #f1f5f9;
+            background: #f0f0f0;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 11px;
             font-weight: 700;
-            color: #64748b;
+            color: #666;
             flex-shrink: 0;
         }
         .option-btn:active:not(.disabled) {
@@ -373,10 +378,10 @@
             color: white;
         }
         .option-btn.selected {
-            border-color: #2563eb;
+            border-color: #e91e63;
         }
         .option-btn.selected .option-letter {
-            background: #2563eb;
+            background: #e91e63;
             color: white;
         }
         .option-btn.disabled {
@@ -387,44 +392,44 @@
             background: white;
             border-radius: 16px;
             padding: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .question-number {
-            color: #94a3b8;
+            color: #999;
             font-size: 11px;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
         .question-text {
-            color: #1a2332;
+            color: #1a1a2e;
             font-size: 16px;
             font-weight: 600;
             line-height: 1.5;
             margin-top: 6px;
         }
         .progress-track {
-            height: 4px;
-            background: #e2e8f0;
+            height: 6px;
+            background: #f0f0f0;
             border-radius: 4px;
             overflow: hidden;
             margin: 4px 0;
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            background: linear-gradient(90deg, #e91e63, #c2185b);
             border-radius: 4px;
             transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn-primary {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: #e91e63;
             color: white;
             font-weight: 700;
-            padding: 12px;
+            padding: 14px;
             border-radius: 12px;
             border: none;
-            font-size: 14px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
@@ -432,7 +437,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.25);
         }
         .btn-primary:active {
             transform: scale(0.96);
@@ -442,13 +447,13 @@
             cursor: not-allowed;
         }
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.5);
-            color: #1a2332;
+            background: #f5f5f5;
+            color: #1a1a2e;
             font-weight: 600;
-            padding: 12px;
+            padding: 14px;
             border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            font-size: 14px;
+            border: 1px solid #e8e8e8;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
@@ -465,10 +470,10 @@
             background: linear-gradient(135deg, #25D366, #128C7E);
             color: white;
             font-weight: 700;
-            padding: 12px;
+            padding: 14px;
             border-radius: 12px;
             border: none;
-            font-size: 14px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
@@ -486,49 +491,48 @@
         }
         .input-field {
             background: white;
-            border: 2px solid #e2e8f0;
+            border: 2px solid #f0f0f0;
             border-radius: 12px;
             padding: 12px 14px;
-            color: #1a2332;
+            color: #1a1a2e;
             font-size: 14px;
             width: 100%;
             transition: all 0.3s;
             outline: none;
         }
         .input-field:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #e91e63;
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.08);
         }
         .input-field::placeholder {
-            color: #94a3b8;
+            color: #aaa;
         }
         .badge {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 3px 8px;
-            border-radius: 16px;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 9px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .badge-gold {
-            background: rgba(37, 99, 235, 0.1);
-            color: #2563eb;
+            background: rgba(233, 30, 99, 0.1);
+            color: #e91e63;
         }
         .badge-free {
-            background: rgba(34, 197, 94, 0.1);
-            color: #16a34a;
+            background: rgba(233, 30, 99, 0.1);
+            color: #e91e63;
         }
         .toast {
             position: fixed;
             bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(26, 35, 50, 0.92);
-            backdrop-filter: blur(20px);
-            padding: 10px 20px;
+            background: #1a1a2e;
+            padding: 12px 24px;
             border-radius: 12px;
             color: white;
             font-size: 13px;
@@ -536,16 +540,16 @@
             display: none;
             max-width: 360px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.08);
             font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
         }
         .toast.show {
             display: block;
             animation: fadeSlideUp 0.3s ease;
         }
-        .text-gold { color: #2563eb; }
-        .bg-gold { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
-        .divider { height: 1px; background: #e2e8f0; margin: 10px 0; }
+        .text-gold { color: #e91e63; }
+        .bg-gold { background: #e91e63; }
+        .divider { height: 1px; background: #f0f0f0; margin: 10px 0; }
         .certificate-card {
             background: linear-gradient(145deg, #f8fafc, #ffffff);
             border-radius: 20px;
@@ -565,15 +569,16 @@
         @media (max-width: 430px) {
             .subject-grid { gap: 8px; }
             .subject-card { padding: 12px 10px 10px; min-height: 120px; }
-            .subject-card .icon-wrapper { width: 40px; height: 40px; font-size: 18px; }
+            .subject-card .icon-wrapper { width: 44px; height: 44px; font-size: 20px; }
+            .subject-card .icon-wrapper i { font-size: 20px; }
             .subject-card .subject-name { font-size: 13px; }
             .question-text { font-size: 15px; }
             .option-btn { padding: 10px 12px; font-size: 12px; }
         }
         @media (min-width: 431px) {
             .app-container {
-                border-left: 1px solid rgba(255,255,255,0.1);
-                border-right: 1px solid rgba(255,255,255,0.1);
+                border-left: 1px solid #e8e8e8;
+                border-right: 1px solid #e8e8e8;
                 box-shadow: 0 0 60px rgba(0,0,0,0.06);
             }
         }
@@ -586,12 +591,12 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: #e91e63;
             border: none;
             color: white;
             font-size: 18px;
             cursor: pointer;
-            box-shadow: 0 8px 30px rgba(37,99,235,0.3);
+            box-shadow: 0 8px 30px rgba(233, 30, 99, 0.3);
             display: none;
             align-items: center;
             justify-content: center;
@@ -604,13 +609,13 @@
             width: 18px;
             height: 18px;
             border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: #2563eb;
+            border-top-color: #e91e63;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .skeleton {
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background: linear-gradient(90deg, #f0f0f0 25%, #f5f5f5 50%, #f0f0f0 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
             border-radius: 16px;
@@ -620,9 +625,9 @@
             100% { background-position: 200% 0; }
         }
         .teacher-login-btn {
-            background: rgba(37, 99, 235, 0.08);
-            border: 1px solid rgba(37, 99, 235, 0.1);
-            color: #1a2332;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 10px;
@@ -634,46 +639,48 @@
         }
         .teacher-login-btn:active {
             transform: scale(0.95);
+            background: rgba(255,255,255,0.25);
         }
         .free-trial-banner {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.06), rgba(37, 99, 235, 0.02));
-            border: 1px solid rgba(37, 99, 235, 0.1);
+            background: white;
+            border: 1px solid #f0f0f0;
             border-radius: 12px;
             padding: 10px 14px;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .free-trial-banner .free-text {
-            color: #475569;
+            color: #666;
             font-size: 12px;
         }
         .free-trial-banner .free-text strong {
-            color: #2563eb;
+            color: #e91e63;
         }
         .free-trial-banner .free-count {
-            background: rgba(37, 99, 235, 0.08);
-            color: #2563eb;
-            padding: 2px 10px;
+            background: #e91e63;
+            color: white;
+            padding: 2px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 700;
         }
         .free-trial-banner .free-count.locked {
-            background: rgba(239, 68, 68, 0.08);
-            color: #ef4444;
+            background: #ef4444;
+            color: white;
         }
 
         .teacher-dashboard {
             background: white;
             border-radius: 16px;
             padding: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .teacher-dashboard h2 {
-            color: #1a2332;
+            color: #1a1a2e;
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 12px;
@@ -682,706 +689,266 @@
             gap: 8px;
         }
         .teacher-dashboard h2 i {
-            color: #2563eb;
+            color: #e91e63;
         }
-        .form-group {
-            margin-bottom: 10px;
-        }
-        .form-group label {
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .form-group .input-field {
+
+        /* PROFILE STYLES */
+        .profile-card {
             background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 10px 14px;
-            color: #1a2332;
-            font-size: 14px;
-            width: 100%;
-            transition: all 0.3s;
-            outline: none;
-        }
-        .form-group .input-field:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        .form-group .input-field::placeholder {
-            color: #94a3b8;
-        }
-        .form-group select {
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 10px 14px;
-            color: #1a2332;
-            font-size: 14px;
-            width: 100%;
-            transition: all 0.3s;
-            outline: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-        }
-        .form-group select:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        .form-group select option {
-            background: white;
-            color: #1a2332;
-        }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        .options-grid .input-field {
-            font-size: 13px;
-            padding: 8px 12px;
-        }
-        .btn-teacher {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
-            font-weight: 700;
-            padding: 12px;
-            border-radius: 12px;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15);
-        }
-        .btn-teacher:active {
-            transform: scale(0.96);
-        }
-        .btn-teacher:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .btn-teacher-secondary {
-            background: #f1f5f9;
-            color: #1a2332;
-            font-weight: 600;
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-teacher-secondary:active {
-            transform: scale(0.96);
-        }
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.08);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.15);
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .btn-danger:active {
-            transform: scale(0.96);
-        }
-        .question-list {
-            margin-top: 12px;
-            max-height: 250px;
-            overflow-y: auto;
-        }
-        .question-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        .question-list::-webkit-scrollbar-thumb {
-            background: rgba(37,99,235,0.3);
-            border-radius: 10px;
-        }
-        .question-item {
-            background: #f8fafc;
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin-bottom: 6px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .question-item .q-text {
-            color: #1a2332;
-            font-size: 12px;
-            flex: 1;
-        }
-        .question-item .q-options {
-            color: #94a3b8;
-            font-size: 10px;
-            margin-top: 2px;
-        }
-        .question-item .q-delete {
-            color: #94a3b8;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        .question-item .q-delete:active {
-            background: rgba(239,68,68,0.08);
-            color: #ef4444;
-        }
-        .subject-tabs {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            margin-bottom: 12px;
-        }
-        .subject-tabs::-webkit-scrollbar {
-            height: 2px;
-        }
-        .subject-tabs::-webkit-scrollbar-thumb {
-            background: rgba(37,99,235,0.3);
-            border-radius: 10px;
-        }
-        .subject-tab {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 6px 14px;
-            color: #64748b;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s;
-        }
-        .subject-tab.active {
-            background: rgba(37, 99, 235, 0.08);
-            border-color: #2563eb;
-            color: #2563eb;
-        }
-        .subject-tab:active {
-            transform: scale(0.95);
-        }
-        .badge-count {
-            background: #f1f5f9;
-            border-radius: 10px;
-            padding: 1px 6px;
-            font-size: 9px;
-            color: #94a3b8;
-            margin-left: 4px;
-        }
-        .users-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .users-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        .users-list::-webkit-scrollbar-thumb {
-            background: rgba(37,99,235,0.3);
-            border-radius: 10px;
-        }
-        .user-item {
-            background: #f8fafc;
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin-bottom: 4px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .user-item .user-info {
-            color: #1a2332;
-            font-size: 12px;
-        }
-        .user-item .user-info .username {
-            font-weight: 600;
-            color: #2563eb;
-        }
-        .user-item .user-info .user-pass {
-            color: #94a3b8;
-            font-size: 11px;
-            margin-left: 8px;
-            font-family: 'Courier New', monospace;
-        }
-        .user-item .user-info .user-date {
-            color: #94a3b8;
-            font-size: 10px;
-            margin-left: 8px;
-        }
-        .user-item .user-delete {
-            color: #94a3b8;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        .user-item .user-delete:active {
-            background: rgba(239,68,68,0.08);
-            color: #ef4444;
-        }
-        .search-box {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: #1a2332;
-            font-size: 12px;
-            width: 100%;
-            outline: none;
-            margin-bottom: 8px;
-        }
-        .search-box:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        .search-box::placeholder {
-            color: #94a3b8;
-        }
-        .stats-box {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-        .stat-card {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-        .stat-card .stat-number {
-            color: #2563eb;
-            font-size: 18px;
-            font-weight: 700;
-        }
-        .stat-card .stat-label {
-            color: #94a3b8;
-            font-size: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .trial-complete-banner {
-            background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02));
-            border: 1px solid rgba(37,99,235,0.1);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 14px;
-        }
-        .trial-complete-banner .trial-title {
-            color: #2563eb;
-            font-weight: 700;
-            font-size: 14px;
-        }
-        .trial-complete-banner .trial-text {
-            color: #64748b;
-            font-size: 12px;
-            margin-top: 4px;
-        }
-        .upload-zone {
-            border: 2px dashed #e2e8f0;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 20px;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-            background: #f8fafc;
         }
-        .upload-zone:hover {
-            border-color: #2563eb;
-            background: rgba(37,99,235,0.02);
-        }
-        .upload-zone.dragover {
-            border-color: #2563eb;
-            background: rgba(37,99,235,0.04);
-        }
-        .upload-zone .upload-icon {
-            font-size: 40px;
-            color: #94a3b8;
-            margin-bottom: 8px;
-        }
-        .upload-zone .upload-text {
-            color: #64748b;
-            font-size: 13px;
-        }
-        .upload-zone .upload-text strong {
-            color: #2563eb;
-        }
-        .upload-preview {
-            margin-top: 12px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .upload-preview table {
-            width: 100%;
-            font-size: 11px;
-            border-collapse: collapse;
-        }
-        .upload-preview th {
-            color: #94a3b8;
-            text-align: left;
-            padding: 4px 6px;
-            border-bottom: 1px solid #e2e8f0;
-            font-weight: 600;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .upload-preview td {
-            color: #475569;
-            padding: 4px 6px;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 11px;
-        }
-        .upload-preview tr:hover td {
-            background: #f8fafc;
-        }
-        .upload-progress {
-            margin-top: 10px;
-            height: 4px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            display: none;
-        }
-        .upload-progress .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #2563eb, #1d4ed8);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-        .upload-result {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 8px;
-            display: none;
-        }
-        .upload-result.success {
-            display: block;
-            background: rgba(34,197,94,0.06);
-            border: 1px solid rgba(34,197,94,0.15);
-        }
-        .upload-result.error {
-            display: block;
-            background: rgba(239,68,68,0.06);
-            border: 1px solid rgba(239,68,68,0.15);
-        }
-        .upload-result .result-text {
-            color: #475569;
-            font-size: 13px;
-        }
-        .upload-result .result-text .count {
-            color: #2563eb;
-            font-weight: 700;
-        }
-
-        .progress-container {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 8px;
-            border: 1px solid #e2e8f0;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .progress-container:hover {
-            background: #f1f5f9;
-        }
-        .progress-container .learner-name {
-            color: #2563eb;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .progress-container .progress-bar-bg {
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 6px 0;
-        }
-        .progress-container .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #2563eb, #1d4ed8);
-            border-radius: 4px;
-            transition: width 0.6s ease;
-        }
-        .progress-container .subject-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 8px;
-            font-weight: 600;
-            margin: 2px 3px 2px 0;
-            background: #f1f5f9;
-            color: #64748b;
-        }
-        .progress-container .subject-badge.done {
-            background: rgba(34,197,94,0.1);
-            color: #16a34a;
-        }
-        .progress-container .subject-badge.pending {
-            background: rgba(37,99,235,0.06);
-            color: #2563eb;
-        }
-        .progress-container .last-active {
-            color: #94a3b8;
-            font-size: 9px;
-        }
-        .progress-container .score-badge {
-            background: rgba(37,99,235,0.06);
-            color: #2563eb;
-            padding: 2px 10px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        .progress-container .no-progress {
-            color: #94a3b8;
-            font-size: 11px;
-            font-style: italic;
-        }
-        .progress-detail {
-            background: white;
-            border-radius: 10px;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            margin-top: 8px;
-            display: none;
-        }
-        .progress-detail.show {
-            display: block;
-            animation: fadeSlideUp 0.3s ease;
-        }
-        .progress-detail .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .progress-detail .detail-row .label {
-            color: #94a3b8;
-            font-size: 11px;
-        }
-        .progress-detail .detail-row .value {
-            color: #1a2332;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .progress-detail .detail-row .value.gold {
-            color: #2563eb;
-        }
-        .progress-detail .detail-row .value.green {
-            color: #16a34a;
-        }
-
-        .premium-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            z-index: 200;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            max-width: 430px;
-            margin: 0 auto;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
-        }
-        .premium-overlay.active {
-            display: flex;
-        }
-        .premium-card {
-            background: white;
-            border-radius: 24px;
-            padding: 28px 20px 24px;
-            width: 100%;
-            max-width: 380px;
-            border: 1px solid #e2e8f0;
-            text-align: center;
-            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            max-height: 94vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-        }
-        .premium-card::-webkit-scrollbar {
-            width: 3px;
-        }
-        .premium-card::-webkit-scrollbar-thumb {
-            background: rgba(37,99,235,0.3);
-            border-radius: 10px;
-        }
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.95) translateY(15px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .premium-icon-wrapper {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
+            background: linear-gradient(135deg, #e91e63, #c2185b);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
-            margin: 0 auto 10px;
-            box-shadow: 0 6px 30px rgba(37,99,235,0.2);
             color: white;
+            margin: 0 auto 12px;
+            box-shadow: 0 4px 20px rgba(233, 30, 99, 0.3);
         }
-        .premium-title {
-            color: #1a2332;
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        .premium-subtitle {
-            color: #64748b;
-            font-size: 13px;
-            margin-top: 2px;
-        }
-        .price-container {
-            margin: 12px 0 14px;
-        }
-        .price-tag {
-            font-size: 44px;
-            font-weight: 800;
-            color: #2563eb;
-            line-height: 1;
-        }
-        .price-label {
-            color: #94a3b8;
-            font-size: 12px;
-            margin-top: 2px;
-        }
-        .payment-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 12px 0;
-        }
-        .payment-row {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-        .payment-row:active {
-            transform: scale(0.97);
-            background: #f1f5f9;
-        }
-        .payment-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-        .payment-provider-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-        .payment-details {
-            text-align: left;
-            min-width: 0;
-        }
-        .payment-number {
-            color: #1a2332;
+        .profile-name {
+            font-size: 20px;
             font-weight: 700;
+            color: #1a1a2e;
+        }
+        .profile-username {
             font-size: 14px;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 0.3px;
-            white-space: nowrap;
+            color: #999;
         }
-        .payment-provider {
-            color: #94a3b8;
-            font-size: 10px;
-            font-weight: 500;
-            margin-top: 1px;
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 16px;
         }
-        .copy-btn {
-            background: #f1f5f9;
-            border: none;
-            color: #64748b;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
-            font-weight: 500;
-        }
-        .copy-btn:active {
-            transform: scale(0.92);
-            background: rgba(37,99,235,0.08);
-            color: #2563eb;
-        }
-        .account-name-box {
-            background: rgba(37,99,235,0.04);
-            border: 1px solid rgba(37,99,235,0.08);
+        .profile-stat {
+            background: #f5f5f5;
             border-radius: 10px;
             padding: 10px;
-            margin: 10px 0 12px;
+            text-align: center;
         }
-        .account-name-box .label {
-            color: #94a3b8;
+        .profile-stat .number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e91e63;
+        }
+        .profile-stat .label {
             font-size: 9px;
+            color: #999;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .account-name-box .name {
-            color: #2563eb;
-            font-weight: 700;
-            font-size: 16px;
-            margin-top: 2px;
+
+        /* FRIENDS & CHAT STYLES */
+        .friend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .payment-instruction {
-            color: #64748b;
-            font-size: 11px;
-            text-align: center;
-            margin-bottom: 12px;
-            line-height: 1.4;
+        .friend-item:active {
+            transform: scale(0.97);
+            background: #fafafa;
         }
-        .payment-instruction strong {
-            color: #1a2332;
+        .friend-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .friend-info {
+            flex: 1;
+        }
+        .friend-name {
             font-weight: 600;
+            color: #1a1a2e;
+            font-size: 14px;
+        }
+        .friend-status {
+            font-size: 11px;
+            color: #999;
+        }
+        .friend-status.online {
+            color: #22c55e;
+        }
+        .friend-status.offline {
+            color: #999;
+        }
+        .friend-badge {
+            background: #e91e63;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .add-friend-btn {
+            background: #e91e63;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .add-friend-btn:active {
+            transform: scale(0.95);
+        }
+        .add-friend-btn.added {
+            background: #22c55e;
+        }
+
+        /* CHAT STYLES */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .chat-header {
+            background: white;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 16px 16px 0 0;
+        }
+        .chat-back {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #666;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .chat-back:active {
+            transform: scale(0.9);
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 16px;
+            background: #fafafa;
+            min-height: 300px;
+            max-height: 400px;
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 3px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #e91e63;
+            border-radius: 10px;
+        }
+        .message {
+            margin-bottom: 8px;
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            animation: fadeSlideUp 0.2s ease;
+        }
+        .message.sent {
+            background: #e91e63;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        .message.received {
+            background: white;
+            color: #1a1a2e;
+            border: 1px solid #f0f0f0;
+            border-bottom-left-radius: 4px;
+        }
+        .message .time {
+            font-size: 9px;
+            opacity: 0.7;
+            margin-top: 4px;
+            display: block;
+        }
+        .message.sent .time {
+            color: rgba(255,255,255,0.7);
+        }
+        .message.received .time {
+            color: #999;
+        }
+        .chat-input-area {
+            display: flex;
+            gap: 8px;
+            padding: 10px 16px;
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            border-radius: 0 0 16px 16px;
+        }
+        .chat-input {
+            flex: 1;
+            border: 1px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 10px 16px;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .chat-input:focus {
+            border-color: #e91e63;
+        }
+        .chat-send {
+            background: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .chat-send:active {
+            transform: scale(0.9);
+        }
+        .chat-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .no-friends {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        .no-friends i {
+            font-size: 48px;
+            margin-bottom: 12px;
+            color: #ddd;
+        }
+        .no-friends h3 {
+            color: #1a1a2e;
+            margin-bottom: 4px;
         }
     </style>
 </head>
@@ -1410,28 +977,28 @@
         <div class="view active" id="loginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-500/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-pink-500/20">
                         <i class="fas fa-user-graduate text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-slate-800 text-xl font-bold">Welcome Back!</h2>
-                    <p class="text-slate-500 text-xs mt-1">Enter your username &amp; password</p>
+                    <h2 class="text-2xl font-bold text-[#1a1a2e]">Welcome Back!</h2>
+                    <p class="text-gray-500 text-xs mt-1">Sign in to continue learning</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-slate-600 text-[10px] font-semibold uppercase tracking-wider">Username</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Username</label>
                         <input id="loginUsername" type="text" placeholder="Enter username" class="input-field mt-1" />
                     </div>
                     <div>
-                        <label class="text-slate-600 text-[10px] font-semibold uppercase tracking-wider">Password</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Password</label>
                         <input id="loginPassword" type="password" placeholder="Enter password" class="input-field mt-1" />
                     </div>
                     <button onclick="login()" class="btn-primary mt-2" id="loginBtn">
                         <i class="fas fa-arrow-right"></i> Sign In
                     </button>
                     <div class="text-center mt-3">
-                        <p class="text-slate-500 text-xs">
+                        <p class="text-gray-500 text-xs">
                             No account? 
-                            <span class="text-blue-600 font-semibold cursor-pointer" onclick="startFreeTrial()">Try Free Questions</span>
+                            <span class="text-pink-600 font-semibold cursor-pointer" onclick="startFreeTrial()">Try Free Questions</span>
                         </p>
                     </div>
                 </div>
@@ -1442,19 +1009,19 @@
         <div class="view" id="teacherLoginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-500/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-pink-500/20">
                         <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-slate-800 text-xl font-bold">Teacher Login</h2>
-                    <p class="text-slate-500 text-xs mt-1">Manage students, subjects &amp; questions</p>
+                    <h2 class="text-2xl font-bold text-[#1a1a2e]">Teacher Login</h2>
+                    <p class="text-gray-500 text-xs mt-1">Manage students, subjects &amp; questions</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-slate-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
                         <input id="teacherUsername" type="text" placeholder="Enter teacher username" class="input-field mt-1" value="teacher" />
                     </div>
                     <div>
-                        <label class="text-slate-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
                         <input id="teacherPassword" type="password" placeholder="Enter teacher password" class="input-field mt-1" value="teacher123" />
                     </div>
                     <button onclick="teacherLogin()" class="btn-primary mt-2" id="teacherLoginBtn">
@@ -1471,15 +1038,15 @@
         <div class="view" id="subjectsView">
             <div class="free-trial-banner" id="freeTrialBanner">
                 <div class="free-text">
-                    <i class="fas fa-gift text-blue-600"></i>
+                    <i class="fas fa-gift text-pink-600"></i>
                     <strong>Free Trial:</strong> <span id="freeTrialText">4 questions (Q6-9 in ICT & Math)</span>
                 </div>
                 <div class="free-count" id="freeTrialCount">4</div>
             </div>
             <div class="flex items-center justify-between mb-3">
                 <div>
-                    <h2 class="text-slate-800 text-lg font-bold">My Subjects</h2>
-                    <p class="text-slate-500 text-xs" id="progressText">0 of 0 completed</p>
+                    <h2 class="text-xl font-bold text-[#1a1a2e]">My Subjects</h2>
+                    <p class="text-gray-500 text-xs" id="progressText">0 of 0 completed</p>
                 </div>
                 <span class="badge badge-gold"><i class="fas fa-star"></i> Premium</span>
             </div>
@@ -1494,14 +1061,98 @@
             </div>
         </div>
 
+        <!-- PROFILE VIEW -->
+        <div class="view" id="profileView">
+            <div class="profile-card">
+                <div class="profile-avatar" id="profileAvatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-name" id="profileName">Student</div>
+                <div class="profile-username" id="profileUsername">@student</div>
+                <div class="divider" style="margin: 12px 0;"></div>
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="number" id="statSubjectsCompleted">0</div>
+                        <div class="label">Subjects Done</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="number" id="statQuestionsAnswered">0</div>
+                        <div class="label">Questions</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="number" id="statFriends">0</div>
+                        <div class="label">Friends</div>
+                    </div>
+                </div>
+                <div style="margin-top: 16px; display: flex; gap: 8px;">
+                    <button onclick="showView('subjectsView')" class="btn-secondary" style="flex:1; padding:10px; font-size:13px;">
+                        <i class="fas fa-book"></i> Subjects
+                    </button>
+                    <button onclick="showFriends()" class="btn-primary" style="flex:1; padding:10px; font-size:13px;">
+                        <i class="fas fa-users"></i> Friends
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FRIENDS VIEW -->
+        <div class="view" id="friendsView">
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <h2 class="text-xl font-bold text-[#1a1a2e]">My Friends</h2>
+                    <p class="text-gray-500 text-xs">Connect with other learners</p>
+                </div>
+                <button onclick="showView('profileView')" class="text-gray-500 hover:text-gray-700 transition">
+                    <i class="fas fa-arrow-left text-lg"></i>
+                </button>
+            </div>
+            <div id="friendsList">
+                <div class="no-friends" id="noFriends">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>No Friends Yet</h3>
+                    <p style="font-size:13px;">Connect with other learners to chat and share progress!</p>
+                    <button onclick="findFriends()" class="btn-primary" style="margin-top:12px; padding:10px; font-size:13px; width:auto; display:inline-flex;">
+                        <i class="fas fa-search"></i> Find Friends
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHAT VIEW -->
+        <div class="view" id="chatView">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <button class="chat-back" onclick="showView('friendsView')">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div style="flex:1;">
+                        <div style="font-weight:600; color:#1a1a2e;" id="chatFriendName">Friend</div>
+                        <div style="font-size:11px; color:#22c55e;" id="chatFriendStatus">Online</div>
+                    </div>
+                    <div class="profile-avatar" style="width:36px; height:36px; font-size:16px;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be rendered here -->
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." />
+                    <button class="chat-send" id="chatSendBtn" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- QUIZ VIEW -->
         <div class="view" id="quizView">
             <div class="flex items-center justify-between mb-3">
-                <button onclick="goToSubjects()" class="text-slate-500 hover:text-slate-700 transition">
+                <button onclick="goToSubjects()" class="text-gray-500 hover:text-gray-700 transition">
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
-                <span class="text-slate-500 text-xs" id="quizSubjectTitle">ICT</span>
-                <span class="text-slate-500 text-xs" id="questionCounter">6/4</span>
+                <span class="text-gray-500 text-xs" id="quizSubjectTitle">ICT</span>
+                <span class="text-gray-500 text-xs" id="questionCounter">6/4</span>
             </div>
             <div class="question-card">
                 <div class="flex items-center justify-between">
@@ -1524,7 +1175,7 @@
                     <h2 class="text-xl font-bold text-gray-800">Certificate of Completion</h2>
                     <div class="divider"></div>
                     <p class="text-gray-600 text-xs">This certifies that</p>
-                    <p class="text-2xl font-bold text-blue-600 mt-2" id="certUsername">Student</p>
+                    <p class="text-2xl font-bold text-pink-600 mt-2" id="certUsername">Student</p>
                     <p class="text-gray-600 text-xs mt-1">has successfully completed all subjects</p>
                     <div class="divider"></div>
                     <div class="flex justify-around text-xs text-gray-500">
@@ -1588,8 +1239,8 @@
                 <!-- LEARNER PROGRESS TAB -->
                 <div id="teacherProgressTab">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#2563eb;"></i> Learner Progress</h3>
-                        <span style="color:#94a3b8;font-size:10px;">Click a learner for details</span>
+                        <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#e91e63;"></i> Learner Progress</h3>
+                        <span style="color:#999;font-size:10px;">Click a learner for details</span>
                     </div>
                     <input id="progressSearch" type="text" placeholder="🔍 Search learners..." oninput="filterProgress()" class="search-box" />
                     <div id="progressList" style="max-height:400px;overflow-y:auto;"></div>
@@ -1598,19 +1249,19 @@
                 <!-- STUDENTS TAB -->
                 <div id="teacherStudentsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#2563eb;"></i> Student Accounts</h3>
-                        <button onclick="showAddStudentForm()" style="background:rgba(37,99,235,0.06);color:#2563eb;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(37,99,235,0.1);font-size:11px;cursor:pointer;">
+                        <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#e91e63;"></i> Student Accounts</h3>
+                        <button onclick="showAddStudentForm()" style="background:#e91e63;color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
                             <i class="fas fa-user-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#2563eb;"></i> Create Student Account</h4>
+                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:#fafafa;border-radius:10px;border:1px solid #f0f0f0;">
+                        <h4 style="color:#1a1a2e;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#e91e63;"></i> Create Student Account</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
+                            <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
                             <input id="studentUsername" type="text" placeholder="Enter username" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
+                            <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
                             <input id="studentPassword" type="text" placeholder="Enter password" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="display:flex;gap:8px;">
@@ -1629,29 +1280,29 @@
                 <!-- SUBJECTS TAB -->
                 <div id="teacherSubjectsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#2563eb;"></i> Subjects</h3>
-                        <button onclick="showAddSubjectForm()" style="background:rgba(37,99,235,0.06);color:#2563eb;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(37,99,235,0.1);font-size:11px;cursor:pointer;">
+                        <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#e91e63;"></i> Subjects</h3>
+                        <button onclick="showAddSubjectForm()" style="background:#e91e63;color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#2563eb;"></i> New Subject</h4>
+                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:#fafafa;border-radius:10px;border:1px solid #f0f0f0;">
+                        <h4 style="color:#1a1a2e;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#e91e63;"></i> New Subject</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
+                            <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
                             <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
+                            <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
                             <div style="display:flex;gap:8px;">
                                 <input id="subjectIcon" type="text" placeholder="fa-atom" class="input-field" style="padding:8px 12px;font-size:13px;flex:1;" />
-                                <button onclick="pickIcon()" style="background:#f1f5f9;color:#64748b;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:12px;cursor:pointer;">
+                                <button onclick="pickIcon()" style="background:#f0f0f0;color:#666;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid #e8e8e8;font-size:12px;cursor:pointer;">
                                     <i class="fas fa-random"></i>
                                 </button>
                             </div>
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
-                            <input id="subjectColor" type="text" placeholder="from-indigo-500 to-purple-600" class="input-field" style="padding:8px 12px;font-size:13px;" />
+                            <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
+                            <input id="subjectColor" type="text" placeholder="from-pink-400 to-pink-600" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="display:flex;gap:8px;">
                             <button onclick="addSubject()" class="btn-teacher" style="flex:1;padding:8px;font-size:13px;">
@@ -1667,21 +1318,21 @@
 
                 <!-- QUESTIONS TAB -->
                 <div id="teacherQuestionsTab" style="display:none;">
-                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#2563eb;"></i> Manage Questions</h3>
+                    <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#e91e63;"></i> Manage Questions</h3>
                     <div style="margin-bottom:8px;">
-                        <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
-                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
+                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:white;border:2px solid #f0f0f0;border-radius:12px;padding:8px 12px;color:#1a1a2e;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
-                    <div style="margin-bottom:10px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#2563eb;"></i> Add Question</h4>
+                    <div style="margin-bottom:10px;padding:12px;background:#fafafa;border-radius:10px;border:1px solid #f0f0f0;">
+                        <h4 style="color:#1a1a2e;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#e91e63;"></i> Add Question</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
+                            <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
                             <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
+                            <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
                             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                                 <input id="optionA" type="text" placeholder="A" class="input-field" style="padding:6px 10px;font-size:12px;" />
                                 <input id="optionB" type="text" placeholder="B" class="input-field" style="padding:6px 10px;font-size:12px;" />
@@ -1690,8 +1341,8 @@
                             </div>
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
-                            <select id="correctAnswer" style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                            <label style="color:#666;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
+                            <select id="correctAnswer" style="background:white;border:2px solid #f0f0f0;border-radius:12px;padding:8px 12px;color:#1a1a2e;font-size:13px;width:100%;outline:none;appearance:none;">
                                 <option value="0">A</option>
                                 <option value="1">B</option>
                                 <option value="2">C</option>
@@ -1707,29 +1358,29 @@
 
                 <!-- BULK UPLOAD TAB -->
                 <div id="teacherUploadTab" style="display:none;">
-                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#2563eb;"></i> Bulk Upload Questions</h3>
-                    <div style="margin-bottom:10px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
-                        <p style="color:#64748b;font-size:11px;margin-bottom:8px;">
-                            <i class="fas fa-info-circle" style="color:#2563eb;"></i>
+                    <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#e91e63;"></i> Bulk Upload Questions</h3>
+                    <div style="margin-bottom:10px;padding:12px;background:#fafafa;border-radius:10px;border:1px solid #f0f0f0;">
+                        <p style="color:#666;font-size:11px;margin-bottom:8px;">
+                            <i class="fas fa-info-circle" style="color:#e91e63;"></i>
                             Upload a CSV file with your questions. The format should be:
                         </p>
-                        <div style="background:#f1f5f9;border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:#64748b;overflow-x:auto;white-space:nowrap;">
+                        <div style="background:#f5f5f5;border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:#666;overflow-x:auto;white-space:nowrap;">
                             question,option_a,option_b,option_c,option_d,correct_answer
                             <br/>What is 5+3?,4,5,8,10,C
                             <br/>What is the capital of Zambia?,Lusaka,Ndola,Kitwe,Livingstone,A
                         </div>
                         <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-                            <button onclick="downloadTemplate()" style="background:rgba(37,99,235,0.06);color:#2563eb;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(37,99,235,0.1);font-size:11px;cursor:pointer;">
+                            <button onclick="downloadTemplate()" style="background:rgba(233,30,99,0.08);color:#e91e63;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(233,30,99,0.1);font-size:11px;cursor:pointer;">
                                 <i class="fas fa-download"></i> Download Template
                             </button>
-                            <span style="color:#94a3b8;font-size:10px;display:flex;align-items:center;">
+                            <span style="color:#999;font-size:10px;display:flex;align-items:center;">
                                 Correct answer: A, B, C, or D
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Select Subject</label>
-                        <select id="uploadSubjectSelect" style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <select id="uploadSubjectSelect" style="background:white;border:2px solid #f0f0f0;border-radius:12px;padding:8px 12px;color:#1a1a2e;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
@@ -1761,11 +1412,11 @@
         <button class="nav-item" data-view="subjectsView" onclick="navigateTo('subjectsView')">
             <i class="fas fa-book"></i><span>Subjects</span>
         </button>
-        <button class="nav-item" data-view="subjectsView" onclick="navigateTo('subjectsView')">
-            <i class="fas fa-trophy"></i><span>Progress</span>
+        <button class="nav-item" data-view="profileView" onclick="navigateTo('profileView')">
+            <i class="fas fa-user"></i><span>Profile</span>
         </button>
-        <button class="nav-item" onclick="showPremiumPopup()">
-            <i class="fas fa-crown"></i><span>Premium</span>
+        <button class="nav-item" data-view="friendsView" onclick="navigateTo('friendsView')">
+            <i class="fas fa-users"></i><span>Friends</span>
         </button>
         <button class="nav-item" onclick="logout()" id="navLogout" style="display:none;">
             <i class="fas fa-sign-out-alt"></i><span>Logout</span>
@@ -1787,15 +1438,15 @@
                 <p class="price-label">One-time payment · Lifetime access</p>
             </div>
             <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1);border-radius:10px;padding:10px;margin-bottom:12px;">
-                <p style="color:#64748b;font-size:12px;">
-                    <i class="fas fa-info-circle" style="color:#2563eb;"></i>
+                <p style="color:#666;font-size:12px;">
+                    <i class="fas fa-info-circle" style="color:#e91e63;"></i>
                     After payment, <strong>send a WhatsApp message</strong> with your desired username &amp; password. The teacher will create your account.
                 </p>
             </div>
             <div class="payment-grid">
                 <div class="payment-row" onclick="copyNumber('0971130511')">
                     <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(37,99,235,0.08);color:#2563eb;"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="payment-provider-icon" style="background:rgba(233,30,99,0.08);color:#e91e63;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
                             <div class="payment-number">0971 130 511</div>
                             <div class="payment-provider">MTN / Airtel</div>
@@ -1828,7 +1479,7 @@
                 <div class="label">Account Name</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
-            <p class="payment-instruction" style="color:#64748b;font-size:12px;margin-bottom:12px;">
+            <p class="payment-instruction" style="color:#666;font-size:12px;margin-bottom:12px;">
                 <i class="fas fa-whatsapp" style="color:#25D366;"></i>
                 Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
             </p>
@@ -1871,14 +1522,19 @@
     let allUsers = [];
     let uploadedData = [];
     let learnerProgress = {};
+    let chatMessages = {};
+    let friends = [];
+    let currentChatFriend = null;
     const FREE_SUBJECTS = ['ICT', 'Mathematics'];
     const FREE_QUESTION_IDS = [6, 7, 8, 9];
     const USERS_TABLE = 'app_users';
     const SUBJECTS_TABLE = 'subjects';
     const QUESTIONS_TABLE = 'questions';
     const PROGRESS_TABLE = 'learner_progress';
+    const FRIENDS_TABLE = 'friends';
+    const MESSAGES_TABLE = 'messages';
 
-    // Subject icon mapping
+    // ============ SUBJECT ICON MAP ============
     const subjectIcons = {
         'mathematics': 'fa-calculator',
         'math': 'fa-calculator',
@@ -1927,18 +1583,18 @@
 
     function getSubjectColor(name) {
         const colors = [
-            'from-blue-500 to-blue-600',
-            'from-purple-500 to-purple-600',
-            'from-green-500 to-green-600',
-            'from-red-500 to-red-600',
-            'from-yellow-500 to-yellow-600',
-            'from-pink-500 to-pink-600',
-            'from-indigo-500 to-indigo-600',
-            'from-orange-500 to-orange-600',
-            'from-teal-500 to-teal-600',
-            'from-cyan-500 to-cyan-600',
-            'from-rose-500 to-rose-600',
-            'from-amber-500 to-amber-600'
+            'from-pink-400 to-pink-600',
+            'from-rose-400 to-rose-600',
+            'from-fuchsia-400 to-fuchsia-600',
+            'from-purple-400 to-purple-600',
+            'from-red-400 to-red-600',
+            'from-orange-400 to-orange-600',
+            'from-amber-400 to-amber-600',
+            'from-yellow-400 to-yellow-600',
+            'from-lime-400 to-lime-600',
+            'from-green-400 to-green-600',
+            'from-emerald-400 to-emerald-600',
+            'from-teal-400 to-teal-600'
         ];
         let hash = 0;
         for (let i = 0; i < name.length; i++) {
@@ -1947,10 +1603,177 @@
         return colors[hash];
     }
 
+    // ============ PROFILE FUNCTIONS ============
+    function updateProfile() {
+        if (!currentUser) return;
+        document.getElementById('profileName').textContent = currentUser.username;
+        document.getElementById('profileUsername').textContent = '@' + currentUser.username.toLowerCase();
+        document.getElementById('profileAvatar').innerHTML = '<i class="fas fa-user"></i>';
+        document.getElementById('statSubjectsCompleted').textContent = completedSubjects.size;
+        document.getElementById('statQuestionsAnswered').textContent = totalQuestionsAnswered;
+        document.getElementById('statFriends').textContent = friends.length;
+    }
+
+    // ============ FRIENDS FUNCTIONS ============
+    function showFriends() {
+        showView('friendsView');
+        renderFriends();
+    }
+
+    function renderFriends() {
+        const container = document.getElementById('friendsList');
+        if (friends.length === 0) {
+            container.innerHTML = `
+                <div class="no-friends" id="noFriends">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>No Friends Yet</h3>
+                    <p style="font-size:13px;">Connect with other learners to chat and share progress!</p>
+                    <button onclick="findFriends()" class="btn-primary" style="margin-top:12px; padding:10px; font-size:13px; width:auto; display:inline-flex;">
+                        <i class="fas fa-search"></i> Find Friends
+                    </button>
+                </div>
+            `;
+            return;
+        }
+        let html = '';
+        friends.forEach(friend => {
+            const status = friend.online ? 'online' : 'offline';
+            const statusText = friend.online ? 'Online' : 'Offline';
+            html += `
+                <div class="friend-item" onclick="openChat('${friend.id}')">
+                    <div class="friend-avatar" style="background:${friend.color || '#e91e63'}">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="friend-info">
+                        <div class="friend-name">${friend.username}</div>
+                        <div class="friend-status ${status}">${statusText}</div>
+                    </div>
+                    <button class="add-friend-btn added" onclick="event.stopPropagation(); removeFriend('${friend.id}')">
+                        <i class="fas fa-check"></i> Friends
+                    </button>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function findFriends() {
+        showToast('🔍 Looking for other learners...', 'info');
+        // Simulate finding friends - add some sample friends
+        const sampleFriends = [
+            { id: 'friend1', username: 'Mwangala', online: true, color: '#22c55e' },
+            { id: 'friend2', username: 'Banda', online: false, color: '#f59e0b' },
+            { id: 'friend3', username: 'Mulenga', online: true, color: '#8b5cf6' }
+        ];
+        sampleFriends.forEach(f => {
+            if (!friends.find(ff => ff.id === f.id)) {
+                friends.push(f);
+                // Save to localStorage
+                localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
+            }
+        });
+        renderFriends();
+        updateProfile();
+        showToast('✅ Found some learners! Add them to chat.', 'success');
+    }
+
+    function removeFriend(friendId) {
+        friends = friends.filter(f => f.id !== friendId);
+        localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
+        renderFriends();
+        updateProfile();
+        showToast('Friend removed', 'info');
+    }
+
+    // ============ CHAT FUNCTIONS ============
+    function openChat(friendId) {
+        currentChatFriend = friends.find(f => f.id === friendId);
+        if (!currentChatFriend) return;
+        document.getElementById('chatFriendName').textContent = currentChatFriend.username;
+        document.getElementById('chatFriendStatus').textContent = currentChatFriend.online ? 'Online' : 'Offline';
+        document.getElementById('chatFriendStatus').style.color = currentChatFriend.online ? '#22c55e' : '#999';
+        showView('chatView');
+        renderChatMessages();
+    }
+
+    function renderChatMessages() {
+        const container = document.getElementById('chatMessages');
+        const chatId = getChatId();
+        const messages = chatMessages[chatId] || [];
+        if (messages.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center; padding:40px 0; color:#999;">
+                    <i class="fas fa-comment-dots" style="font-size:32px; display:block; margin-bottom:8px; color:#ddd;"></i>
+                    <p>No messages yet</p>
+                    <p style="font-size:11px;">Say hello to ${currentChatFriend.username}!</p>
+                </div>
+            `;
+            return;
+        }
+        let html = '';
+        messages.forEach(msg => {
+            const isSent = msg.sender === currentUser.id;
+            html += `
+                <div class="message ${isSent ? 'sent' : 'received'}">
+                    ${msg.text}
+                    <span class="time">${msg.time}</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function getChatId() {
+        if (!currentUser || !currentChatFriend) return '';
+        // Sort IDs to ensure consistent chat ID
+        const ids = [currentUser.id, currentChatFriend.id].sort();
+        return ids.join('_');
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text || !currentChatFriend) return;
+        const chatId = getChatId();
+        if (!chatMessages[chatId]) chatMessages[chatId] = [];
+        const now = new Date();
+        const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        chatMessages[chatId].push({
+            sender: currentUser.id,
+            text: text,
+            time: time,
+            timestamp: now.getTime()
+        });
+        localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
+        input.value = '';
+        renderChatMessages();
+        // Simulate reply
+        simulateReply();
+    }
+
+    function simulateReply() {
+        const replies = ['That\'s interesting!', 'I agree! 😊', 'Let\'s study together!', 'Great point!', 'I\'ll check that out.', 'Thanks for sharing!'];
+        setTimeout(() => {
+            const chatId = getChatId();
+            if (!chatMessages[chatId]) chatMessages[chatId] = [];
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            chatMessages[chatId].push({
+                sender: currentChatFriend.id,
+                text: replies[Math.floor(Math.random() * replies.length)],
+                time: time,
+                timestamp: now.getTime()
+            });
+            localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
+            renderChatMessages();
+        }, 1000 + Math.random() * 2000);
+    }
+
     // ============ WHATSAPP FUNCTION ============
     function openWhatsApp() {
         const phoneNumber = '0966011066';
-        const message = 'Hello, I have paid K10 for Zambia Quiz Premium. Please create my account.\n\nDesired Username: (Enter your username here)\nDesired Password: (Enter your password here)\n\nThank you!';
+        const message = 'Hello, I have paid K10 for Northern Quiz Premium. Please create my account.\n\nDesired Username: (Enter your username here)\nDesired Password: (Enter your password here)\n\nThank you!';
         const encodedMessage = encodeURIComponent(message);
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(url, '_blank');
@@ -2050,7 +1873,7 @@
         toast.textContent = message;
         toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
                                type === 'success' ? 'rgba(34,197,94,0.95)' : 
-                               'rgba(26,35,50,0.92)';
+                               '#1a1a2e';
         toast.classList.add('show');
         clearTimeout(toast._timeout);
         toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
@@ -2058,7 +1881,7 @@
 
     // ============ HELP ============
     function showHelp() { 
-        showToast('🎯 Try 4 free questions (Q6-9 in ICT & Math)! Pay K10 to unlock all subjects.', 'info'); 
+        showToast('🎯 Try 4 free questions (Q6-9 in ICT & Math)! Connect with friends and learn together.', 'info'); 
     }
 
     // ============ SWIPE TO GO BACK ============
@@ -2069,6 +1892,8 @@
         if (dx > 80) {
             const activeView = document.querySelector('.view.active');
             if (activeView && activeView.id === 'quizView') goToSubjects();
+            if (activeView && activeView.id === 'chatView') showView('friendsView');
+            if (activeView && activeView.id === 'friendsView') showView('profileView');
         }
     });
 
@@ -2093,10 +1918,37 @@
         await loadSubjects();
         await loadUsers();
         await loadProgress();
-        console.log('🇿🇲 NorthernQuiz loaded!');
+        loadFriends();
+        loadChats();
+        console.log('🇿🇲 NorthernQuiz loaded with Profile & Chat!');
         console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
         console.log('📱 WhatsApp: 0966 011 066 for payments');
-        console.log('📊 Learner Progress tracking enabled!');
+    }
+
+    // ============ LOAD FRIENDS & CHATS ============
+    function loadFriends() {
+        if (currentUser) {
+            const stored = localStorage.getItem(`friends_${currentUser.id}`);
+            if (stored) {
+                try {
+                    friends = JSON.parse(stored);
+                } catch(e) { friends = []; }
+            }
+        }
+    }
+
+    function loadChats() {
+        if (currentUser) {
+            // Load all chat messages from localStorage
+            for (let key in localStorage) {
+                if (key.startsWith('chat_')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        chatMessages[key.replace('chat_', '')] = data;
+                    } catch(e) {}
+                }
+            }
+        }
     }
 
     // ============ AUTH ============
@@ -2108,6 +1960,7 @@
                 updateUserUI();
                 showView('subjectsView');
                 document.getElementById('freeTrialBanner').style.display = 'none';
+                updateProfile();
             } catch (e) {
                 localStorage.removeItem('quizUser');
                 showView('loginView');
@@ -2150,6 +2003,9 @@
                 showView('subjectsView');
                 renderSubjects();
                 updateProgress();
+                updateProfile();
+                loadFriends();
+                loadChats();
             } else {
                 const exists = await checkUserExists(username);
                 if (exists) {
@@ -2243,6 +2099,8 @@
         document.getElementById(viewId).classList.add('active');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.querySelector(`.nav-item[data-view="${viewId}"]`)?.classList.add('active');
+        if (viewId === 'profileView') updateProfile();
+        if (viewId === 'friendsView') renderFriends();
     }
 
     function navigateTo(viewId) {
@@ -2252,6 +2110,14 @@
                 return;
             }
             showView('loginView');
+            return;
+        }
+        if (viewId === 'profileView' && !currentUser) {
+            showToast('Please login first', 'error');
+            return;
+        }
+        if (viewId === 'friendsView' && !currentUser) {
+            showToast('Please login first', 'error');
             return;
         }
         showView(viewId);
@@ -2503,7 +2369,6 @@
                     learnerProgress[record.user_id].push(record);
                 });
                 console.log('📊 Loaded progress for', Object.keys(learnerProgress).length, 'learners');
-                console.log('📊 Progress data:', data);
             } else {
                 console.warn('⚠️ Progress table not found or empty');
             }
@@ -2525,7 +2390,6 @@
                 completed_at: new Date().toISOString()
             };
             
-            // First check if a record exists
             const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=id`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
@@ -2536,7 +2400,6 @@
             if (checkResponse.ok) {
                 const existing = await checkResponse.json();
                 if (existing && existing.length > 0) {
-                    // Update existing record
                     const updateResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?id=eq.${existing[0].id}`, {
                         method: 'PATCH',
                         headers: {
@@ -2548,11 +2411,8 @@
                     });
                     if (updateResponse.ok) {
                         console.log('✅ Progress updated for user', userId, 'subject', subjectId);
-                    } else {
-                        console.error('❌ Failed to update progress:', await updateResponse.text());
                     }
                 } else {
-                    // Insert new record
                     const insertResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}`, {
                         method: 'POST',
                         headers: {
@@ -2564,13 +2424,9 @@
                         body: JSON.stringify(payload)
                     });
                     if (insertResponse.ok) {
-                        const newData = await insertResponse.json();
-                        console.log('✅ Progress saved for user', userId, 'subject', subjectId, newData);
-                    } else {
-                        console.error('❌ Failed to insert progress:', await insertResponse.text());
+                        console.log('✅ Progress saved for user', userId, 'subject', subjectId);
                     }
                 }
-                // Reload progress after saving
                 await loadProgress();
             }
         } catch (error) {
@@ -2583,14 +2439,11 @@
         if (!container) return;
         
         const searchTerm = document.getElementById('progressSearch')?.value?.toLowerCase() || '';
-        
         const students = allUsers.filter(u => u.role !== 'teacher');
-        const filtered = students.filter(u => 
-            u.username.toLowerCase().includes(searchTerm)
-        );
+        const filtered = students.filter(u => u.username.toLowerCase().includes(searchTerm));
         
         if (filtered.length === 0) {
-            container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
+            container.innerHTML = `<div style="color:#999;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
             document.getElementById('statCompleted').textContent = '0';
             return;
         }
@@ -2621,45 +2474,39 @@
                 });
             }
             
-            const lastActive = user.last_active || user.created_at;
-            const date = new Date(lastActive).toLocaleDateString();
-            
+            const date = new Date(user.created_at).toLocaleDateString();
             const hasProgress = progress.length > 0;
-            const progressStatus = hasProgress ? `${percentage}%` : '⏳ No progress yet';
             
             div.innerHTML = `
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div>
                         <span class="learner-name">${user.username}</span>
                         <span class="last-active">• Joined: ${date}</span>
-                        <span style="color:#94a3b8;font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
+                        <span style="color:#999;font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
                     </div>
-                    <span class="score-badge">${progressStatus}</span>
+                    <span class="score-badge">${hasProgress ? `${percentage}%` : '⏳ No progress yet'}</span>
                 </div>
                 ${hasProgress ? `
                     <div class="progress-bar-bg">
                         <div class="progress-bar-fill" style="width:${percentage}%"></div>
                     </div>
                 ` : `
-                    <div style="height:6px;background:#e2e8f0;border-radius:4px;margin:6px 0;"></div>
+                    <div style="height:6px;background:#f0f0f0;border-radius:4px;margin:6px 0;"></div>
                 `}
                 <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <div style="display:flex;flex-wrap:wrap;gap:2px;">
-                        ${badgesHTML}
-                    </div>
-                    <span style="color:#94a3b8;font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
+                    <div style="display:flex;flex-wrap:wrap;gap:2px;">${badgesHTML}</div>
+                    <span style="color:#999;font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
                 </div>
                 <div class="progress-detail" id="detail-${user.id}">
                     <div class="detail-row"><span class="label">Username</span><span class="value gold">${user.username}</span></div>
                     <div class="detail-row"><span class="label">Subjects Completed</span><span class="value">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span></div>
                     <div class="detail-row"><span class="label">Overall Score</span><span class="value gold">${hasProgress ? `${percentage}%` : 'N/A'}</span></div>
-                    <div class="detail-row"><span class="label">Account Created</span><span class="value">${new Date(user.created_at).toLocaleDateString()}</span></div>
                     ${hasProgress ? progress.map(p => {
                         const subject = allSubjects.find(s => s.id === p.subject_id);
                         return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
                     }).join('') : `
                         <div class="detail-row" style="border-bottom:none;">
-                            <span class="label" style="color:#94a3b8;font-style:italic;">No subjects completed yet</span>
+                            <span class="label" style="color:#999;font-style:italic;">No subjects completed yet</span>
                         </div>
                     `}
                 </div>
@@ -2686,7 +2533,6 @@
         try {
             const subjects = await fetchSubjects();
             if (subjects && subjects.length > 0) {
-                // Ensure each subject has an icon and color
                 allSubjects = subjects.map(sub => {
                     if (!sub.icon || sub.icon === 'fa-book' || sub.icon === '') {
                         sub.icon = getSubjectIcon(sub.name);
@@ -2735,7 +2581,7 @@
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
         if (!allSubjects || allSubjects.length === 0) {
-            grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-slate-500 text-sm">No subjects available. Contact your teacher.</div>`;
+            grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-gray-500 text-sm">No subjects available. Contact your teacher.</div>`;
             return;
         }
         allSubjects.forEach(subject => {
@@ -2745,7 +2591,6 @@
             const trialUsed = !currentUser && isFreeSubject && (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS);
             const isLocked = !currentUser && !hasFreeTrial && !isCompleted;
             
-            // Get icon and color
             const icon = subject.icon || getSubjectIcon(subject.name);
             const color = subject.color || getSubjectColor(subject.name);
             
@@ -2762,15 +2607,15 @@
                     statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 Locked</div>`;
                 } else if (hasFreeTrial) {
                     const remaining = MAX_FREE_QUESTIONS - freeQuestionsUsed;
-                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#16a34a;background:rgba(34,197,94,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 ${remaining} left</div>`;
+                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#22c55e;background:rgba(34,197,94,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 ${remaining} left</div>`;
                 } else if (trialUsed) {
-                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#2563eb;background:rgba(37,99,235,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">💎 Pay K10</div>`;
+                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#e91e63;background:rgba(233,30,99,0.06);padding:2px 10px;border-radius:10px;white-space:nowrap;">💎 Pay K10</div>`;
                 }
             }
             
             card.innerHTML = `
-                <div class="icon-wrapper bg-gradient-to-br ${color}">
-                    <i class="fas ${icon} text-white"></i>
+                <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#e91e63'}">
+                    <i class="fas ${icon}"></i>
                 </div>
                 <div class="subject-name">${subject.name}</div>
                 <div class="subject-count">Loading...</div>
@@ -2810,7 +2655,6 @@
         });
     }
 
-    // ============ MARK SUBJECT COMPLETE ============
     function markSubjectComplete(subjectId) {
         if (!currentUser) {
             showToast('Please login first', 'error');
@@ -2824,7 +2668,6 @@
         if (!subject) return;
         
         completedSubjects.add(subjectId);
-        
         const key = `completed_${currentUser.id}`;
         const stored = JSON.parse(localStorage.getItem(key) || '[]');
         if (!stored.includes(subjectId)) {
@@ -2838,6 +2681,7 @@
         
         renderSubjects();
         updateProgress();
+        updateProfile();
         showToast(`✅ "${subject.name}" marked as complete!`, 'success');
     }
 
@@ -2854,6 +2698,7 @@
         if (completed === total && total > 0) {
             setTimeout(() => showCertificate(), 500);
         }
+        updateProfile();
     }
 
     // ============ START QUIZ ============
@@ -2909,10 +2754,7 @@
             completedSubjects.add(currentSubject);
             totalQuestionsAnswered += currentQuestions.length;
             if (currentUser && currentUser.id) {
-                console.log('📊 Saving progress for:', currentUser.username, 'Subject:', document.getElementById('quizSubjectTitle').textContent);
                 saveProgress(currentUser.id, currentSubject, score, currentQuestions.length);
-            } else {
-                console.warn('⚠️ Cannot save progress: No user logged in');
             }
             updateProgress();
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
@@ -2970,6 +2812,7 @@
                 useFreeQuestion(subjectName, qNum);
             }
         }
+        updateProfile();
     }
 
     function nextQuestion() {
@@ -3030,21 +2873,21 @@
         const searchTerm = document.getElementById('studentSearch')?.value?.toLowerCase() || '';
         const filtered = allUsers.filter(u => u.username.toLowerCase().includes(searchTerm));
         if (filtered.length === 0) {
-            list.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
+            list.innerHTML = `<div style="color:#999;text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
             return;
         }
         list.innerHTML = '';
         filtered.forEach(user => {
             const div = document.createElement('div');
-            div.style.cssText = 'background:#f8fafc;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;';
+            div.style.cssText = 'background:#fafafa;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;';
             const date = new Date(user.created_at).toLocaleDateString();
             div.innerHTML = `
-                <div style="color:#1a2332;font-size:12px;">
-                    <span style="font-weight:600;color:#2563eb;">${user.username}</span>
-                    <span style="color:#94a3b8;font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
-                    <span style="color:#94a3b8;font-size:10px;margin-left:8px;">📅 ${date}</span>
+                <div style="color:#1a1a2e;font-size:12px;">
+                    <span style="font-weight:600;color:#e91e63;">${user.username}</span>
+                    <span style="color:#999;font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
+                    <span style="color:#999;font-size:10px;margin-left:8px;">📅 ${date}</span>
                 </div>
-                <div onclick="deleteStudent('${user.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                <div onclick="deleteStudent('${user.id}')" style="color:#999;cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
                 </div>
             `;
@@ -3052,20 +2895,9 @@
         });
     }
 
-    function filterStudents() {
-        renderStudents();
-    }
-
-    function showAddStudentForm() {
-        document.getElementById('addStudentForm').style.display = 'block';
-        document.getElementById('studentUsername').focus();
-    }
-
-    function hideAddStudentForm() {
-        document.getElementById('addStudentForm').style.display = 'none';
-        document.getElementById('studentUsername').value = '';
-        document.getElementById('studentPassword').value = '';
-    }
+    function filterStudents() { renderStudents(); }
+    function showAddStudentForm() { document.getElementById('addStudentForm').style.display = 'block'; document.getElementById('studentUsername').focus(); }
+    function hideAddStudentForm() { document.getElementById('addStudentForm').style.display = 'none'; document.getElementById('studentUsername').value = ''; document.getElementById('studentPassword').value = ''; }
 
     async function addStudent() {
         const username = document.getElementById('studentUsername').value.trim();
@@ -3125,7 +2957,7 @@
     function updateTeacherSubjects() {
         const list = document.getElementById('subjectList');
         if (!allSubjects || allSubjects.length === 0) {
-            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
+            list.innerHTML = '<div style="color:#999;text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
             return;
         }
         list.innerHTML = '';
@@ -3133,13 +2965,13 @@
             const icon = subject.icon || getSubjectIcon(subject.name);
             const isFree = FREE_SUBJECTS.includes(subject.name);
             const div = document.createElement('div');
-            div.style.cssText = 'background:#f8fafc;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;';
+            div.style.cssText = 'background:#fafafa;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;';
             div.innerHTML = `
                 <div>
-                    <div style="color:#1a2332;font-size:12px;"><i class="fas ${icon}" style="color:#2563eb;"></i> ${subject.name} ${isFree ? '🎯' : ''}</div>
-                    <div style="color:#94a3b8;font-size:10px;">${subject.color} ${isFree ? '(Free Trial: Q6-9)' : ''}</div>
+                    <div style="color:#1a1a2e;font-size:12px;"><i class="fas ${icon}" style="color:#e91e63;"></i> ${subject.name} ${isFree ? '🎯' : ''}</div>
+                    <div style="color:#999;font-size:10px;">${subject.color} ${isFree ? '(Free Trial: Q6-9)' : ''}</div>
                 </div>
-                <div onclick="deleteSubject('${subject.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                <div onclick="deleteSubject('${subject.id}')" style="color:#999;cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
                 </div>
             `;
@@ -3147,17 +2979,8 @@
         });
     }
 
-    function showAddSubjectForm() {
-        document.getElementById('addSubjectForm').style.display = 'block';
-        document.getElementById('subjectName').focus();
-    }
-
-    function hideAddSubjectForm() {
-        document.getElementById('addSubjectForm').style.display = 'none';
-        document.getElementById('subjectName').value = '';
-        document.getElementById('subjectIcon').value = '';
-        document.getElementById('subjectColor').value = '';
-    }
+    function showAddSubjectForm() { document.getElementById('addSubjectForm').style.display = 'block'; document.getElementById('subjectName').focus(); }
+    function hideAddSubjectForm() { document.getElementById('addSubjectForm').style.display = 'none'; document.getElementById('subjectName').value = ''; document.getElementById('subjectIcon').value = ''; document.getElementById('subjectColor').value = ''; }
 
     async function addSubject() {
         const name = document.getElementById('subjectName').value.trim();
@@ -3227,30 +3050,30 @@
     async function loadQuestionsForTeacher() {
         const subjectId = document.getElementById('questionSubjectSelect').value;
         if (!subjectId) {
-            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
+            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:#999;text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
             return;
         }
         selectedSubjectId = subjectId;
         const list = document.getElementById('teacherQuestionList');
-        list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        list.innerHTML = '<div style="color:#999;text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
         try {
             const questions = await fetchQuestions(subjectId);
             if (questions.length === 0) {
-                list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
+                list.innerHTML = '<div style="color:#999;text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
                 return;
             }
             list.innerHTML = '';
             questions.forEach((q, idx) => {
                 const div = document.createElement('div');
-                div.style.cssText = 'background:#f8fafc;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;';
+                div.style.cssText = 'background:#fafafa;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;';
                 const qNum = idx + 1;
                 const isFree = FREE_QUESTION_IDS.includes(qNum) && FREE_SUBJECTS.includes(document.getElementById('questionSubjectSelect').options[document.getElementById('questionSubjectSelect').selectedIndex]?.text || '');
                 div.innerHTML = `
                     <div>
-                        <div style="color:#1a2332;font-size:12px;">${qNum}. ${q.question} ${isFree ? '🎯' : ''}</div>
-                        <div style="color:#94a3b8;font-size:10px;">${q.options.join(' | ')} ${isFree ? '(Free)' : ''}</div>
+                        <div style="color:#1a1a2e;font-size:12px;">${qNum}. ${q.question} ${isFree ? '🎯' : ''}</div>
+                        <div style="color:#999;font-size:10px;">${q.options.join(' | ')} ${isFree ? '(Free)' : ''}</div>
                     </div>
-                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:#999;cursor:pointer;padding:4px 8px;border-radius:6px;">
                         <i class="fas fa-trash"></i>
                     </div>
                 `;
@@ -3258,7 +3081,7 @@
             });
         } catch (error) {
             console.error('Error loading questions:', error);
-            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
+            list.innerHTML = '<div style="color:#999;text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
         }
     }
 
@@ -3416,16 +3239,16 @@
                 html += `<tr>
                     <td>${idx + 1}</td>
                     <td>${row.question.substring(0, 30)}${row.question.length > 30 ? '...' : ''}</td>
-                    <td style="font-size:10px;color:#94a3b8;">${options}</td>
-                    <td style="color:#2563eb;font-weight:700;">${row.correct_answer}</td>
+                    <td style="font-size:10px;color:#999;">${options}</td>
+                    <td style="color:#e91e63;font-weight:700;">${row.correct_answer}</td>
                 </tr>`;
             });
             if (uploadedData.length > 10) {
-                html += `<tr><td colspan="4" style="text-align:center;color:#94a3b8;font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
+                html += `<tr><td colspan="4" style="text-align:center;color:#999;font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
             }
             html += `</tbody></table>
-                <div style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
-                    Found <strong style="color:#2563eb;">${uploadedData.length}</strong> questions ready to upload
+                <div style="margin-top:8px;color:#999;font-size:11px;text-align:center;">
+                    Found <strong style="color:#e91e63;">${uploadedData.length}</strong> questions ready to upload
                 </div>`;
             preview.innerHTML = html;
             preview.style.display = 'block';
@@ -3571,9 +3394,19 @@
     window.markSubjectComplete = markSubjectComplete;
     window.getSubjectIcon = getSubjectIcon;
     window.getSubjectColor = getSubjectColor;
+    window.updateProfile = updateProfile;
+    window.showFriends = showFriends;
+    window.renderFriends = renderFriends;
+    window.findFriends = findFriends;
+    window.removeFriend = removeFriend;
+    window.openChat = openChat;
+    window.sendMessage = sendMessage;
+    window.renderChatMessages = renderChatMessages;
 
     console.log('✅ All functions loaded successfully!');
     console.log('📊 Learner Progress tracking enabled!');
+    console.log('👥 Profile & Friends system active!');
+    console.log('💬 Chat messaging enabled!');
     console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
 </script>
 </body>
