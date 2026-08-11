@@ -287,43 +287,6 @@
         .subject-card .mark-done-btn i {
             margin-right: 4px;
         }
-        .subject-card.locked {
-            opacity: 0.5;
-            cursor: not-allowed;
-            position: relative;
-        }
-        .subject-card.locked::after {
-            content: '🔒';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 30px;
-            z-index: 10;
-        }
-        .subject-card.locked .icon-wrapper,
-        .subject-card.locked .subject-name,
-        .subject-card.locked .subject-count {
-            filter: blur(2px);
-        }
-        .subject-card.free {
-            border: 2px solid rgba(233, 30, 99, 0.2);
-            position: relative;
-        }
-        .subject-card.free::before {
-            content: 'FREE';
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            font-size: 8px;
-            font-weight: 700;
-            color: white;
-            background: #e91e63;
-            padding: 2px 10px;
-            border-radius: 12px;
-            z-index: 5;
-            letter-spacing: 0.5px;
-        }
         .subject-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -522,10 +485,6 @@
             background: rgba(233, 30, 99, 0.1);
             color: #e91e63;
         }
-        .badge-free {
-            background: rgba(233, 30, 99, 0.1);
-            color: #e91e63;
-        }
         .toast {
             position: fixed;
             bottom: 80px;
@@ -642,34 +601,7 @@
             background: rgba(255,255,255,0.25);
         }
         .free-trial-banner {
-            background: white;
-            border: 1px solid #f0f0f0;
-            border-radius: 12px;
-            padding: 10px 14px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-        .free-trial-banner .free-text {
-            color: #666;
-            font-size: 12px;
-        }
-        .free-trial-banner .free-text strong {
-            color: #e91e63;
-        }
-        .free-trial-banner .free-count {
-            background: #e91e63;
-            color: white;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .free-trial-banner .free-count.locked {
-            background: #ef4444;
-            color: white;
+            display: none !important;
         }
 
         .teacher-dashboard {
@@ -692,7 +624,6 @@
             color: #e91e63;
         }
 
-        /* PROFILE STYLES */
         .profile-card {
             background: white;
             border-radius: 16px;
@@ -747,7 +678,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* FRIENDS & CHAT STYLES */
         .friend-item {
             display: flex;
             align-items: center;
@@ -768,7 +698,6 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #e91e63, #c2185b);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -794,14 +723,6 @@
         .friend-status.offline {
             color: #999;
         }
-        .friend-badge {
-            background: #e91e63;
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 12px;
-        }
         .add-friend-btn {
             background: #e91e63;
             color: white;
@@ -820,7 +741,6 @@
             background: #22c55e;
         }
 
-        /* CHAT STYLES */
         .chat-container {
             display: flex;
             flex-direction: column;
@@ -950,6 +870,9 @@
             color: #1a1a2e;
             margin-bottom: 4px;
         }
+        .premium-overlay {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -997,8 +920,40 @@
                     </button>
                     <div class="text-center mt-3">
                         <p class="text-gray-500 text-xs">
-                            No account? 
-                            <span class="text-pink-600 font-semibold cursor-pointer" onclick="startFreeTrial()">Try Free Questions</span>
+                            New to NorthernQuiz? 
+                            <span class="text-pink-600 font-semibold cursor-pointer" onclick="showRegister()">Create Account</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTER VIEW -->
+        <div class="view" id="registerView">
+            <div class="glass-card p-5" style="margin-top:16px;">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-pink-500/20">
+                        <i class="fas fa-user-plus text-2xl text-white"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-[#1a1a2e]">Create Account</h2>
+                    <p class="text-gray-500 text-xs mt-1">Join NorthernQuiz for free!</p>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Choose Username</label>
+                        <input id="registerUsername" type="text" placeholder="Choose a username" class="input-field mt-1" />
+                    </div>
+                    <div>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Choose Password</label>
+                        <input id="registerPassword" type="password" placeholder="Choose a password" class="input-field mt-1" />
+                    </div>
+                    <button onclick="register()" class="btn-primary mt-2" id="registerBtn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                    <div class="text-center mt-3">
+                        <p class="text-gray-500 text-xs">
+                            Already have an account? 
+                            <span class="text-pink-600 font-semibold cursor-pointer" onclick="showLogin()">Sign In</span>
                         </p>
                     </div>
                 </div>
@@ -1048,7 +1003,7 @@
                     <h2 class="text-xl font-bold text-[#1a1a2e]">My Subjects</h2>
                     <p class="text-gray-500 text-xs" id="progressText">0 of 0 completed</p>
                 </div>
-                <span class="badge badge-gold"><i class="fas fa-star"></i> Premium</span>
+                <span class="badge badge-gold"><i class="fas fa-star"></i> Free</span>
             </div>
             <div class="progress-track mb-3">
                 <div class="progress-fill" id="progressBar" style="width:0%"></div>
@@ -1236,7 +1191,6 @@
                     </button>
                 </div>
 
-                <!-- LEARNER PROGRESS TAB -->
                 <div id="teacherProgressTab">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                         <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#e91e63;"></i> Learner Progress</h3>
@@ -1246,7 +1200,6 @@
                     <div id="progressList" style="max-height:400px;overflow-y:auto;"></div>
                 </div>
 
-                <!-- STUDENTS TAB -->
                 <div id="teacherStudentsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                         <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#e91e63;"></i> Student Accounts</h3>
@@ -1277,7 +1230,6 @@
                     <div id="studentList" style="max-height:250px;overflow-y:auto;"></div>
                 </div>
 
-                <!-- SUBJECTS TAB -->
                 <div id="teacherSubjectsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                         <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#e91e63;"></i> Subjects</h3>
@@ -1316,7 +1268,6 @@
                     <div id="subjectList" style="max-height:250px;overflow-y:auto;"></div>
                 </div>
 
-                <!-- QUESTIONS TAB -->
                 <div id="teacherQuestionsTab" style="display:none;">
                     <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#e91e63;"></i> Manage Questions</h3>
                     <div style="margin-bottom:8px;">
@@ -1356,7 +1307,6 @@
                     <div id="teacherQuestionList" style="max-height:200px;overflow-y:auto;"></div>
                 </div>
 
-                <!-- BULK UPLOAD TAB -->
                 <div id="teacherUploadTab" style="display:none;">
                     <h3 style="color:#1a1a2e;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#e91e63;"></i> Bulk Upload Questions</h3>
                     <div style="margin-bottom:10px;padding:12px;background:#fafafa;border-radius:10px;border:1px solid #f0f0f0;">
@@ -1423,75 +1373,6 @@
         </button>
     </div>
 
-    <!-- PREMIUM POPUP -->
-    <div class="premium-overlay" id="premiumOverlay">
-        <div class="premium-card">
-            <div class="premium-icon-wrapper"><i class="fas fa-crown"></i></div>
-            <h3 class="premium-title">Unlock Full Access! 🎓</h3>
-            <p class="premium-subtitle" id="premiumSubtitle">You've completed your free trial!</p>
-            <div class="trial-complete-banner" id="trialCompleteBanner">
-                <div class="trial-title">🎯 Free Trial Complete!</div>
-                <div class="trial-text">You've answered 4 free questions (Q6-9 in ICT & Math). Pay K10 to unlock all subjects and get your certificate!</div>
-            </div>
-            <div class="price-container">
-                <span class="price-tag">K10</span>
-                <p class="price-label">One-time payment · Lifetime access</p>
-            </div>
-            <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1);border-radius:10px;padding:10px;margin-bottom:12px;">
-                <p style="color:#666;font-size:12px;">
-                    <i class="fas fa-info-circle" style="color:#e91e63;"></i>
-                    After payment, <strong>send a WhatsApp message</strong> with your desired username &amp; password. The teacher will create your account.
-                </p>
-            </div>
-            <div class="payment-grid">
-                <div class="payment-row" onclick="copyNumber('0971130511')">
-                    <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(233,30,99,0.08);color:#e91e63;"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="payment-details">
-                            <div class="payment-number">0971 130 511</div>
-                            <div class="payment-provider">MTN / Airtel</div>
-                        </div>
-                    </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0971130511')"><i class="fas fa-copy"></i> Copy</button>
-                </div>
-                <div class="payment-row" onclick="copyNumber('0958882550')">
-                    <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(52,211,153,0.08);color:#34d399;"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="payment-details">
-                            <div class="payment-number">0958 882 550</div>
-                            <div class="payment-provider">MTN / Airtel</div>
-                        </div>
-                    </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0958882550')"><i class="fas fa-copy"></i> Copy</button>
-                </div>
-                <div class="payment-row" onclick="copyNumber('0763209826')">
-                    <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(251,146,60,0.08);color:#fb923c;"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="payment-details">
-                            <div class="payment-number">0763 209 826</div>
-                            <div class="payment-provider">Zamtel</div>
-                        </div>
-                    </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0763209826')"><i class="fas fa-copy"></i> Copy</button>
-                </div>
-            </div>
-            <div class="account-name-box">
-                <div class="label">Account Name</div>
-                <div class="name">Chaiwa Justine</div>
-            </div>
-            <p class="payment-instruction" style="color:#666;font-size:12px;margin-bottom:12px;">
-                <i class="fas fa-whatsapp" style="color:#25D366;"></i>
-                Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
-            </p>
-            <button onclick="openWhatsApp()" class="btn-whatsapp">
-                <i class="fab fa-whatsapp"></i> Send WhatsApp Message
-            </button>
-            <button onclick="closePremiumPopup()" class="btn-secondary">
-                <i class="fas fa-times"></i> Close
-            </button>
-        </div>
-    </div>
-
     <div class="toast" id="toast"></div>
     <button class="fab" id="fab" onclick="scrollToTop()">
         <i class="fas fa-chevron-up"></i>
@@ -1513,9 +1394,6 @@
     let completedSubjects = new Set();
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
-    let freeQuestionsUsed = 0;
-    const MAX_FREE_QUESTIONS = 4;
-    let freeTrialUsed = false;
     let isTeacherLoggedIn = false;
     let currentTeacherTab = 'progress';
     let selectedSubjectId = null;
@@ -1525,14 +1403,10 @@
     let chatMessages = {};
     let friends = [];
     let currentChatFriend = null;
-    const FREE_SUBJECTS = ['ICT', 'Mathematics'];
-    const FREE_QUESTION_IDS = [6, 7, 8, 9];
     const USERS_TABLE = 'app_users';
     const SUBJECTS_TABLE = 'subjects';
     const QUESTIONS_TABLE = 'questions';
     const PROGRESS_TABLE = 'learner_progress';
-    const FRIENDS_TABLE = 'friends';
-    const MESSAGES_TABLE = 'messages';
 
     // ============ SUBJECT ICON MAP ============
     const subjectIcons = {
@@ -1603,379 +1477,62 @@
         return colors[hash];
     }
 
-    // ============ PROFILE FUNCTIONS ============
-    function updateProfile() {
-        if (!currentUser) return;
-        document.getElementById('profileName').textContent = currentUser.username;
-        document.getElementById('profileUsername').textContent = '@' + currentUser.username.toLowerCase();
-        document.getElementById('profileAvatar').innerHTML = '<i class="fas fa-user"></i>';
-        document.getElementById('statSubjectsCompleted').textContent = completedSubjects.size;
-        document.getElementById('statQuestionsAnswered').textContent = totalQuestionsAnswered;
-        document.getElementById('statFriends').textContent = friends.length;
+    // ============ AUTH FUNCTIONS ============
+    function showLogin() {
+        showView('loginView');
     }
 
-    // ============ FRIENDS FUNCTIONS ============
-    function showFriends() {
-        showView('friendsView');
-        renderFriends();
+    function showRegister() {
+        showView('registerView');
     }
 
-    function renderFriends() {
-        const container = document.getElementById('friendsList');
-        if (friends.length === 0) {
-            container.innerHTML = `
-                <div class="no-friends" id="noFriends">
-                    <i class="fas fa-user-plus"></i>
-                    <h3>No Friends Yet</h3>
-                    <p style="font-size:13px;">Connect with other learners to chat and share progress!</p>
-                    <button onclick="findFriends()" class="btn-primary" style="margin-top:12px; padding:10px; font-size:13px; width:auto; display:inline-flex;">
-                        <i class="fas fa-search"></i> Find Friends
-                    </button>
-                </div>
-            `;
+    async function register() {
+        const username = document.getElementById('registerUsername').value.trim();
+        const password = document.getElementById('registerPassword').value.trim();
+        const btn = document.getElementById('registerBtn');
+        
+        if (!username || !password) {
+            showToast('Please enter username and password', 'error');
             return;
         }
-        let html = '';
-        friends.forEach(friend => {
-            const status = friend.online ? 'online' : 'offline';
-            const statusText = friend.online ? 'Online' : 'Offline';
-            html += `
-                <div class="friend-item" onclick="openChat('${friend.id}')">
-                    <div class="friend-avatar" style="background:${friend.color || '#e91e63'}">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="friend-info">
-                        <div class="friend-name">${friend.username}</div>
-                        <div class="friend-status ${status}">${statusText}</div>
-                    </div>
-                    <button class="add-friend-btn added" onclick="event.stopPropagation(); removeFriend('${friend.id}')">
-                        <i class="fas fa-check"></i> Friends
-                    </button>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    function findFriends() {
-        showToast('🔍 Looking for other learners...', 'info');
-        // Simulate finding friends - add some sample friends
-        const sampleFriends = [
-            { id: 'friend1', username: 'Mwangala', online: true, color: '#22c55e' },
-            { id: 'friend2', username: 'Banda', online: false, color: '#f59e0b' },
-            { id: 'friend3', username: 'Mulenga', online: true, color: '#8b5cf6' }
-        ];
-        sampleFriends.forEach(f => {
-            if (!friends.find(ff => ff.id === f.id)) {
-                friends.push(f);
-                // Save to localStorage
-                localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
+        if (username.length < 3 || password.length < 3) {
+            showToast('Username and password must be at least 3 characters', 'error');
+            return;
+        }
+        
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Creating...';
+        
+        try {
+            const exists = await checkUserExists(username);
+            if (exists) {
+                showToast('Username already exists. Please choose another.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                return;
             }
-        });
-        renderFriends();
-        updateProfile();
-        showToast('✅ Found some learners! Add them to chat.', 'success');
-    }
-
-    function removeFriend(friendId) {
-        friends = friends.filter(f => f.id !== friendId);
-        localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
-        renderFriends();
-        updateProfile();
-        showToast('Friend removed', 'info');
-    }
-
-    // ============ CHAT FUNCTIONS ============
-    function openChat(friendId) {
-        currentChatFriend = friends.find(f => f.id === friendId);
-        if (!currentChatFriend) return;
-        document.getElementById('chatFriendName').textContent = currentChatFriend.username;
-        document.getElementById('chatFriendStatus').textContent = currentChatFriend.online ? 'Online' : 'Offline';
-        document.getElementById('chatFriendStatus').style.color = currentChatFriend.online ? '#22c55e' : '#999';
-        showView('chatView');
-        renderChatMessages();
-    }
-
-    function renderChatMessages() {
-        const container = document.getElementById('chatMessages');
-        const chatId = getChatId();
-        const messages = chatMessages[chatId] || [];
-        if (messages.length === 0) {
-            container.innerHTML = `
-                <div style="text-align:center; padding:40px 0; color:#999;">
-                    <i class="fas fa-comment-dots" style="font-size:32px; display:block; margin-bottom:8px; color:#ddd;"></i>
-                    <p>No messages yet</p>
-                    <p style="font-size:11px;">Say hello to ${currentChatFriend.username}!</p>
-                </div>
-            `;
-            return;
-        }
-        let html = '';
-        messages.forEach(msg => {
-            const isSent = msg.sender === currentUser.id;
-            html += `
-                <div class="message ${isSent ? 'sent' : 'received'}">
-                    ${msg.text}
-                    <span class="time">${msg.time}</span>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-        container.scrollTop = container.scrollHeight;
-    }
-
-    function getChatId() {
-        if (!currentUser || !currentChatFriend) return '';
-        // Sort IDs to ensure consistent chat ID
-        const ids = [currentUser.id, currentChatFriend.id].sort();
-        return ids.join('_');
-    }
-
-    function sendMessage() {
-        const input = document.getElementById('chatInput');
-        const text = input.value.trim();
-        if (!text || !currentChatFriend) return;
-        const chatId = getChatId();
-        if (!chatMessages[chatId]) chatMessages[chatId] = [];
-        const now = new Date();
-        const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        chatMessages[chatId].push({
-            sender: currentUser.id,
-            text: text,
-            time: time,
-            timestamp: now.getTime()
-        });
-        localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
-        input.value = '';
-        renderChatMessages();
-        // Simulate reply
-        simulateReply();
-    }
-
-    function simulateReply() {
-        const replies = ['That\'s interesting!', 'I agree! 😊', 'Let\'s study together!', 'Great point!', 'I\'ll check that out.', 'Thanks for sharing!'];
-        setTimeout(() => {
-            const chatId = getChatId();
-            if (!chatMessages[chatId]) chatMessages[chatId] = [];
-            const now = new Date();
-            const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            chatMessages[chatId].push({
-                sender: currentChatFriend.id,
-                text: replies[Math.floor(Math.random() * replies.length)],
-                time: time,
-                timestamp: now.getTime()
-            });
-            localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
-            renderChatMessages();
-        }, 1000 + Math.random() * 2000);
-    }
-
-    // ============ WHATSAPP FUNCTION ============
-    function openWhatsApp() {
-        const phoneNumber = '0966011066';
-        const message = 'Hello, I have paid K10 for Northern Quiz Premium. Please create my account.\n\nDesired Username: (Enter your username here)\nDesired Password: (Enter your password here)\n\nThank you!';
-        const encodedMessage = encodeURIComponent(message);
-        const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-        window.open(url, '_blank');
-        showToast('📱 Opening WhatsApp... Send your desired username & password', 'info');
-    }
-
-    // ============ FREE TRIAL FUNCTIONS ============
-    function startFreeTrial() {
-        if (currentUser) {
-            showToast('You already have an account! Please login.', 'info');
-            return;
-        }
-        if (freeTrialUsed) {
-            showToast('You already used your free trial! Pay K10 to continue.', 'error');
-            showPremiumPopup();
-            return;
-        }
-        freeQuestionsUsed = 0;
-        showView('subjectsView');
-        renderSubjects();
-        updateFreeTrialUI();
-        showToast('🎯 Try 4 free questions (Q6-9 in ICT & Math)!', 'success');
-    }
-
-    function updateFreeTrialUI() {
-        const banner = document.getElementById('freeTrialBanner');
-        const count = document.getElementById('freeTrialCount');
-        const text = document.getElementById('freeTrialText');
-        if (currentUser) {
-            banner.style.display = 'none';
-            return;
-        }
-        if (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
-            freeTrialUsed = true;
-            banner.style.display = 'flex';
-            count.textContent = '0';
-            count.className = 'free-count locked';
-            text.textContent = 'Trial used - Pay K10 to continue!';
-            return;
-        }
-        banner.style.display = 'flex';
-        const remaining = MAX_FREE_QUESTIONS - freeQuestionsUsed;
-        count.textContent = remaining;
-        count.className = 'free-count';
-        text.textContent = `${remaining} question${remaining > 1 ? 's' : ''} remaining (Q6-9 in ICT & Math)`;
-    }
-
-    function useFreeQuestion(subjectName, questionId) {
-        if (currentUser) return true;
-        if (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
-            return false;
-        }
-        const isFreeSubject = FREE_SUBJECTS.includes(subjectName);
-        const isFreeQuestion = FREE_QUESTION_IDS.includes(questionId);
-        if (isFreeSubject && isFreeQuestion) {
-            freeQuestionsUsed++;
-            updateFreeTrialUI();
-            if (freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
-                freeTrialUsed = true;
-                setTimeout(() => {
-                    showPremiumPopup();
-                    showToast('🎯 Free trial complete! Pay K10 to unlock all subjects!', 'info');
-                }, 1000);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    // ============ PREMIUM POPUP FUNCTIONS ============
-    function showPremiumPopup() {
-        document.getElementById('premiumOverlay').classList.add('active');
-    }
-
-    function closePremiumPopup() {
-        document.getElementById('premiumOverlay').classList.remove('active');
-    }
-
-    function copyNumber(number) {
-        const formatted = number.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
-        navigator.clipboard?.writeText(number).then(() => {
-            showToast(`📱 ${formatted} copied!`, 'success');
-        }).catch(() => {
-            const input = document.createElement('input');
-            input.value = number;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('copy');
-            document.body.removeChild(input);
-            showToast(`📱 ${formatted} copied!`, 'success');
-        });
-    }
-
-    // ============ TOAST ============
-    function showToast(message, type = 'info') {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
-                               type === 'success' ? 'rgba(34,197,94,0.95)' : 
-                               '#1a1a2e';
-        toast.classList.add('show');
-        clearTimeout(toast._timeout);
-        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
-    }
-
-    // ============ HELP ============
-    function showHelp() { 
-        showToast('🎯 Try 4 free questions (Q6-9 in ICT & Math)! Connect with friends and learn together.', 'info'); 
-    }
-
-    // ============ SWIPE TO GO BACK ============
-    let touchStartX = 0;
-    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
-    document.addEventListener('touchend', (e) => {
-        const dx = e.changedTouches[0].clientX - touchStartX;
-        if (dx > 80) {
-            const activeView = document.querySelector('.view.active');
-            if (activeView && activeView.id === 'quizView') goToSubjects();
-            if (activeView && activeView.id === 'chatView') showView('friendsView');
-            if (activeView && activeView.id === 'friendsView') showView('profileView');
-        }
-    });
-
-    // ============ START ============
-    document.addEventListener('DOMContentLoaded', function() {
-        init();
-    });
-
-    // ============ INIT ============
-    async function init() {
-        checkAuth();
-        updateFreeTrialUI();
-        const mainContent = document.getElementById('mainContent');
-        mainContent.addEventListener('scroll', () => {
-            const fab = document.getElementById('fab');
-            if (mainContent.scrollTop > 200) {
-                fab.style.display = 'flex';
-            } else {
-                fab.style.display = 'none';
-            }
-        });
-        await loadSubjects();
-        await loadUsers();
-        await loadProgress();
-        loadFriends();
-        loadChats();
-        console.log('🇿🇲 NorthernQuiz loaded with Profile & Chat!');
-        console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
-        console.log('📱 WhatsApp: 0966 011 066 for payments');
-    }
-
-    // ============ LOAD FRIENDS & CHATS ============
-    function loadFriends() {
-        if (currentUser) {
-            const stored = localStorage.getItem(`friends_${currentUser.id}`);
-            if (stored) {
-                try {
-                    friends = JSON.parse(stored);
-                } catch(e) { friends = []; }
-            }
-        }
-    }
-
-    function loadChats() {
-        if (currentUser) {
-            // Load all chat messages from localStorage
-            for (let key in localStorage) {
-                if (key.startsWith('chat_')) {
-                    try {
-                        const data = JSON.parse(localStorage.getItem(key));
-                        chatMessages[key.replace('chat_', '')] = data;
-                    } catch(e) {}
-                }
-            }
-        }
-    }
-
-    // ============ AUTH ============
-    function checkAuth() {
-        const userData = localStorage.getItem('quizUser');
-        if (userData) {
-            try {
-                currentUser = JSON.parse(userData);
+            
+            const newUser = await createUser(username, password);
+            if (newUser) {
+                currentUser = { username: newUser.username, password: newUser.password, id: newUser.id };
+                localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
+                showToast(`🎉 Welcome, ${username}! Account created successfully!`, 'success');
                 showView('subjectsView');
-                document.getElementById('freeTrialBanner').style.display = 'none';
+                renderSubjects();
+                updateProgress();
                 updateProfile();
-            } catch (e) {
-                localStorage.removeItem('quizUser');
-                showView('loginView');
+                loadFriends();
+                loadChats();
+            } else {
+                showToast('Error creating account. Please try again.', 'error');
             }
-        } else {
-            showView('loginView');
+        } catch (error) {
+            showToast('Error creating account. Please try again.', 'error');
         }
-    }
-
-    function updateUserUI() {
-        if (currentUser) {
-            document.getElementById('avatarText').textContent = currentUser.username.charAt(0).toUpperCase();
-            document.getElementById('userAvatar').style.display = 'flex';
-            document.getElementById('navLogout').style.display = 'flex';
-        }
+        
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
     }
 
     async function login() {
@@ -1998,7 +1555,6 @@
                 currentUser = { username: user.username, password: user.password, id: user.id };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
-                document.getElementById('freeTrialBanner').style.display = 'none';
                 showToast(`Welcome back, ${username}!`, 'success');
                 showView('subjectsView');
                 renderSubjects();
@@ -2011,7 +1567,8 @@
                 if (exists) {
                     showToast('Invalid password. Please try again.', 'error');
                 } else {
-                    showToast('Account not found. Pay K10 and WhatsApp 0966 011 066.', 'error');
+                    showToast('Account not found. Please create an account.', 'error');
+                    setTimeout(() => showRegister(), 1500);
                 }
             }
         } catch (error) {
@@ -2019,6 +1576,67 @@
         }
         loginBtn.disabled = false;
         loginBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Sign In';
+    }
+
+    async function createUser(username, password) {
+        try {
+            const payload = { username, password, role: 'student', is_premium: true };
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data[0];
+            }
+        } catch (error) {
+            console.error('Create user error:', error);
+        }
+        return null;
+    }
+
+    async function authenticateUser(username, password) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=*`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.length > 0 && data[0].password === password) {
+                    return data[0];
+                }
+            }
+        } catch (error) {
+            console.error('Auth error:', error);
+        }
+        return null;
+    }
+
+    async function checkUserExists(username) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=username`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data.length > 0;
+            }
+        } catch (error) {
+            console.error('Check user error:', error);
+        }
+        return false;
     }
 
     function logout() {
@@ -2033,10 +1651,15 @@
         showView('loginView');
         document.getElementById('loginUsername').value = '';
         document.getElementById('loginPassword').value = '';
-        freeQuestionsUsed = 0;
-        freeTrialUsed = false;
-        updateFreeTrialUI();
         showToast('Logged out successfully', 'info');
+    }
+
+    function updateUserUI() {
+        if (currentUser) {
+            document.getElementById('avatarText').textContent = currentUser.username.charAt(0).toUpperCase();
+            document.getElementById('userAvatar').style.display = 'flex';
+            document.getElementById('navLogout').style.display = 'flex';
+        }
     }
 
     // ============ TEACHER FUNCTIONS ============
@@ -2093,6 +1716,195 @@
         showToast('Logged out of teacher mode', 'info');
     }
 
+    // ============ PROFILE FUNCTIONS ============
+    function updateProfile() {
+        if (!currentUser) return;
+        document.getElementById('profileName').textContent = currentUser.username;
+        document.getElementById('profileUsername').textContent = '@' + currentUser.username.toLowerCase();
+        document.getElementById('profileAvatar').innerHTML = '<i class="fas fa-user"></i>';
+        document.getElementById('statSubjectsCompleted').textContent = completedSubjects.size;
+        document.getElementById('statQuestionsAnswered').textContent = totalQuestionsAnswered;
+        document.getElementById('statFriends').textContent = friends.length;
+    }
+
+    // ============ FRIENDS FUNCTIONS ============
+    function showFriends() {
+        showView('friendsView');
+        renderFriends();
+    }
+
+    function renderFriends() {
+        const container = document.getElementById('friendsList');
+        if (friends.length === 0) {
+            container.innerHTML = `
+                <div class="no-friends" id="noFriends">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>No Friends Yet</h3>
+                    <p style="font-size:13px;">Connect with other learners to chat and share progress!</p>
+                    <button onclick="findFriends()" class="btn-primary" style="margin-top:12px; padding:10px; font-size:13px; width:auto; display:inline-flex;">
+                        <i class="fas fa-search"></i> Find Friends
+                    </button>
+                </div>
+            `;
+            return;
+        }
+        let html = '';
+        friends.forEach(friend => {
+            const status = friend.online ? 'online' : 'offline';
+            const statusText = friend.online ? 'Online' : 'Offline';
+            html += `
+                <div class="friend-item" onclick="openChat('${friend.id}')">
+                    <div class="friend-avatar" style="background:${friend.color || '#e91e63'}">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="friend-info">
+                        <div class="friend-name">${friend.username}</div>
+                        <div class="friend-status ${status}">${statusText}</div>
+                    </div>
+                    <button class="add-friend-btn added" onclick="event.stopPropagation(); removeFriend('${friend.id}')">
+                        <i class="fas fa-check"></i> Friends
+                    </button>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function findFriends() {
+        showToast('🔍 Looking for other learners...', 'info');
+        const sampleFriends = [
+            { id: 'friend1', username: 'Mwangala', online: true, color: '#22c55e' },
+            { id: 'friend2', username: 'Banda', online: false, color: '#f59e0b' },
+            { id: 'friend3', username: 'Mulenga', online: true, color: '#8b5cf6' },
+            { id: 'friend4', username: 'Chanda', online: true, color: '#06b6d4' },
+            { id: 'friend5', username: 'Phiri', online: false, color: '#f472b6' }
+        ];
+        sampleFriends.forEach(f => {
+            if (!friends.find(ff => ff.id === f.id)) {
+                friends.push(f);
+                localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
+            }
+        });
+        renderFriends();
+        updateProfile();
+        showToast('✅ Found some learners! Add them to chat.', 'success');
+    }
+
+    function removeFriend(friendId) {
+        friends = friends.filter(f => f.id !== friendId);
+        localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
+        renderFriends();
+        updateProfile();
+        showToast('Friend removed', 'info');
+    }
+
+    function loadFriends() {
+        if (currentUser) {
+            const stored = localStorage.getItem(`friends_${currentUser.id}`);
+            if (stored) {
+                try {
+                    friends = JSON.parse(stored);
+                } catch(e) { friends = []; }
+            }
+        }
+    }
+
+    // ============ CHAT FUNCTIONS ============
+    function openChat(friendId) {
+        currentChatFriend = friends.find(f => f.id === friendId);
+        if (!currentChatFriend) return;
+        document.getElementById('chatFriendName').textContent = currentChatFriend.username;
+        document.getElementById('chatFriendStatus').textContent = currentChatFriend.online ? 'Online' : 'Offline';
+        document.getElementById('chatFriendStatus').style.color = currentChatFriend.online ? '#22c55e' : '#999';
+        showView('chatView');
+        renderChatMessages();
+    }
+
+    function renderChatMessages() {
+        const container = document.getElementById('chatMessages');
+        const chatId = getChatId();
+        const messages = chatMessages[chatId] || [];
+        if (messages.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center; padding:40px 0; color:#999;">
+                    <i class="fas fa-comment-dots" style="font-size:32px; display:block; margin-bottom:8px; color:#ddd;"></i>
+                    <p>No messages yet</p>
+                    <p style="font-size:11px;">Say hello to ${currentChatFriend.username}!</p>
+                </div>
+            `;
+            return;
+        }
+        let html = '';
+        messages.forEach(msg => {
+            const isSent = msg.sender === currentUser.id;
+            html += `
+                <div class="message ${isSent ? 'sent' : 'received'}">
+                    ${msg.text}
+                    <span class="time">${msg.time}</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function getChatId() {
+        if (!currentUser || !currentChatFriend) return '';
+        const ids = [currentUser.id, currentChatFriend.id].sort();
+        return ids.join('_');
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text || !currentChatFriend) return;
+        const chatId = getChatId();
+        if (!chatMessages[chatId]) chatMessages[chatId] = [];
+        const now = new Date();
+        const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        chatMessages[chatId].push({
+            sender: currentUser.id,
+            text: text,
+            time: time,
+            timestamp: now.getTime()
+        });
+        localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
+        input.value = '';
+        renderChatMessages();
+        simulateReply();
+    }
+
+    function simulateReply() {
+        const replies = ['That\'s interesting!', 'I agree! 😊', 'Let\'s study together!', 'Great point!', 'I\'ll check that out.', 'Thanks for sharing!'];
+        setTimeout(() => {
+            const chatId = getChatId();
+            if (!chatMessages[chatId]) chatMessages[chatId] = [];
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            chatMessages[chatId].push({
+                sender: currentChatFriend.id,
+                text: replies[Math.floor(Math.random() * replies.length)],
+                time: time,
+                timestamp: now.getTime()
+            });
+            localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
+            renderChatMessages();
+        }, 1000 + Math.random() * 2000);
+    }
+
+    function loadChats() {
+        if (currentUser) {
+            for (let key in localStorage) {
+                if (key.startsWith('chat_')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        chatMessages[key.replace('chat_', '')] = data;
+                    } catch(e) {}
+                }
+            }
+        }
+    }
+
     // ============ VIEW MANAGEMENT ============
     function showView(viewId) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -2104,14 +1916,6 @@
     }
 
     function navigateTo(viewId) {
-        if (viewId === 'subjectsView' && !currentUser) {
-            if (freeQuestionsUsed < MAX_FREE_QUESTIONS && !freeTrialUsed) {
-                showView('subjectsView');
-                return;
-            }
-            showView('loginView');
-            return;
-        }
         if (viewId === 'profileView' && !currentUser) {
             showToast('Please login first', 'error');
             return;
@@ -2124,7 +1928,6 @@
     }
 
     function goToSubjects() {
-        document.getElementById('premiumOverlay').classList.remove('active');
         showView('subjectsView');
         renderSubjects();
         updateProgress();
@@ -2134,71 +1937,29 @@
         document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // ============ TOAST & HELP ============
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
+                               type === 'success' ? 'rgba(34,197,94,0.95)' : 
+                               '#1a1a2e';
+        toast.classList.add('show');
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    function showHelp() { 
+        showToast('🎯 All subjects are FREE! Login to track your progress.', 'info'); 
+    }
+
+    function toggleUserMenu() {
+        if (currentUser) {
+            showToast(`👤 ${currentUser.username}`, 'info');
+        }
+    }
+
     // ============ SUPABASE FUNCTIONS ============
-    async function createUser(username, password) {
-        try {
-            const payload = { username, password, role: 'student', is_premium: true };
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}`, {
-                method: 'POST',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`,
-                    'Content-Type': 'application/json',
-                    'Prefer': 'return=representation'
-                },
-                body: JSON.stringify(payload)
-            });
-            if (response.ok) {
-                const data = await response.json();
-                return data[0];
-            } else {
-                const errorText = await response.text();
-                throw new Error(`Server error: ${response.status} - ${errorText}`);
-            }
-        } catch (error) {
-            console.error('Create user error:', error);
-            throw error;
-        }
-    }
-
-    async function authenticateUser(username, password) {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=*`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                if (data.length > 0 && data[0].password === password) {
-                    return data[0];
-                }
-            }
-        } catch (error) {
-            console.error('Auth error:', error);
-        }
-        return null;
-    }
-
-    async function checkUserExists(username) {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?username=eq.${encodeURIComponent(username)}&select=username`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                return data.length > 0;
-            }
-        } catch (error) {
-            console.error('Check user error:', error);
-        }
-        return false;
-    }
-
     async function fetchAllUsers() {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?select=*&order=created_at.desc`, {
@@ -2265,14 +2026,11 @@
             if (response.ok) {
                 const data = await response.json();
                 return data[0];
-            } else {
-                const errorText = await response.text();
-                throw new Error(`Server error: ${response.status} - ${errorText}`);
             }
         } catch (error) {
             console.error('Add subject error:', error);
-            throw error;
         }
+        return null;
     }
 
     async function deleteSubjectFromDB(subjectId) {
@@ -2324,14 +2082,11 @@
             if (response.ok) {
                 const data = await response.json();
                 return data[0];
-            } else {
-                const errorText = await response.text();
-                throw new Error(`Server error: ${response.status} - ${errorText}`);
             }
         } catch (error) {
             console.error('Add question error:', error);
-            throw error;
         }
+        return null;
     }
 
     async function deleteQuestionFromDB(questionId) {
@@ -2368,9 +2123,6 @@
                     }
                     learnerProgress[record.user_id].push(record);
                 });
-                console.log('📊 Loaded progress for', Object.keys(learnerProgress).length, 'learners');
-            } else {
-                console.warn('⚠️ Progress table not found or empty');
             }
         } catch (error) {
             console.warn('⚠️ Could not load progress:', error);
@@ -2380,8 +2132,6 @@
 
     async function saveProgress(userId, subjectId, score, total) {
         try {
-            console.log('💾 Saving progress for user:', userId, 'subject:', subjectId, 'score:', score, '/', total);
-            
             const payload = {
                 user_id: userId,
                 subject_id: subjectId,
@@ -2400,7 +2150,7 @@
             if (checkResponse.ok) {
                 const existing = await checkResponse.json();
                 if (existing && existing.length > 0) {
-                    const updateResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?id=eq.${existing[0].id}`, {
+                    await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?id=eq.${existing[0].id}`, {
                         method: 'PATCH',
                         headers: {
                             'apikey': SUPABASE_KEY,
@@ -2409,11 +2159,8 @@
                         },
                         body: JSON.stringify(payload)
                     });
-                    if (updateResponse.ok) {
-                        console.log('✅ Progress updated for user', userId, 'subject', subjectId);
-                    }
                 } else {
-                    const insertResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}`, {
+                    await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}`, {
                         method: 'POST',
                         headers: {
                             'apikey': SUPABASE_KEY,
@@ -2423,9 +2170,6 @@
                         },
                         body: JSON.stringify(payload)
                     });
-                    if (insertResponse.ok) {
-                        console.log('✅ Progress saved for user', userId, 'subject', subjectId);
-                    }
                 }
                 await loadProgress();
             }
@@ -2586,32 +2330,13 @@
         }
         allSubjects.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
-            const isFreeSubject = FREE_SUBJECTS.includes(subject.name);
-            const hasFreeTrial = !currentUser && isFreeSubject && freeQuestionsUsed < MAX_FREE_QUESTIONS && !freeTrialUsed;
-            const trialUsed = !currentUser && isFreeSubject && (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS);
-            const isLocked = !currentUser && !hasFreeTrial && !isCompleted;
-            
             const icon = subject.icon || getSubjectIcon(subject.name);
             const color = subject.color || getSubjectColor(subject.name);
             
             const card = document.createElement('div');
             let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/30' : ''}`;
-            if (isLocked && !isCompleted) cardClass += ' locked';
-            if (hasFreeTrial && !isCompleted) cardClass += ' free';
             card.className = cardClass;
             card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
-            
-            let statusBadge = '';
-            if (!isCompleted) {
-                if (isLocked) {
-                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 Locked</div>`;
-                } else if (hasFreeTrial) {
-                    const remaining = MAX_FREE_QUESTIONS - freeQuestionsUsed;
-                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#22c55e;background:rgba(34,197,94,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 ${remaining} left</div>`;
-                } else if (trialUsed) {
-                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#e91e63;background:rgba(233,30,99,0.06);padding:2px 10px;border-radius:10px;white-space:nowrap;">💎 Pay K10</div>`;
-                }
-            }
             
             card.innerHTML = `
                 <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#e91e63'}">
@@ -2621,7 +2346,6 @@
                 <div class="subject-count">Loading...</div>
                 ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
                 ${!isCompleted ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
-                ${statusBadge}
             `;
             
             fetchQuestions(subject.id).then(questions => {
@@ -2634,19 +2358,6 @@
             card.onclick = async () => {
                 if (isCompleted) {
                     showToast('✅ You already completed this subject!', 'info');
-                    return;
-                }
-                if (isLocked) {
-                    showPremiumPopup();
-                    return;
-                }
-                if (!currentUser && trialUsed) {
-                    showPremiumPopup();
-                    return;
-                }
-                if (!currentUser && !isFreeSubject) {
-                    showToast('💎 Only ICT & Mathematics have free questions (Q6-9). Pay K10 to unlock all subjects!', 'error');
-                    setTimeout(() => showPremiumPopup(), 1000);
                     return;
                 }
                 await startQuiz(subject.id, subject.name);
@@ -2703,39 +2414,14 @@
 
     // ============ START QUIZ ============
     async function startQuiz(subjectId, subjectName) {
-        if (!currentUser && !FREE_SUBJECTS.includes(subjectName)) {
-            showToast('💎 Only ICT & Mathematics have free questions (Q6-9). Pay K10 to unlock all subjects!', 'error');
-            setTimeout(() => showPremiumPopup(), 1000);
-            return;
-        }
         try {
             const questions = await fetchQuestions(subjectId);
             if (!questions || questions.length === 0) {
                 showToast('No questions available for this subject.', 'error');
                 return;
             }
-            let quizQuestions = questions;
-            if (!currentUser && FREE_SUBJECTS.includes(subjectName)) {
-                if (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS) {
-                    showPremiumPopup();
-                    return;
-                }
-                const freeQuestions = [];
-                for (let i = 0; i < questions.length; i++) {
-                    const qNum = i + 1;
-                    if (FREE_QUESTION_IDS.includes(qNum)) {
-                        freeQuestions.push(questions[i]);
-                    }
-                }
-                if (freeQuestions.length > 0) {
-                    quizQuestions = freeQuestions;
-                } else {
-                    showToast('No free questions available for this subject.', 'error');
-                    return;
-                }
-            }
             currentSubject = subjectId;
-            currentQuestions = quizQuestions;
+            currentQuestions = questions;
             currentIndex = 0;
             score = 0;
             answered = false;
@@ -2759,18 +2445,14 @@
             updateProgress();
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
             showToast(`🎉 Completed ${subjectName}!`, 'success');
-            if (!currentUser && (freeTrialUsed || freeQuestionsUsed >= MAX_FREE_QUESTIONS)) {
-                setTimeout(() => showPremiumPopup(), 1000);
-            }
             goToSubjects();
             return;
         }
         const q = currentQuestions[currentIndex];
         document.getElementById('questionText').textContent = q.question;
         const qNum = currentIndex + 1;
-        const displayNum = FREE_QUESTION_IDS[currentIndex] || qNum;
-        document.getElementById('qNum').textContent = displayNum;
-        document.getElementById('questionCounter').textContent = `${displayNum}/${currentQuestions.length}`;
+        document.getElementById('qNum').textContent = qNum;
+        document.getElementById('questionCounter').textContent = `${qNum}/${currentQuestions.length}`;
         document.getElementById('scoreDisplay').textContent = score;
         const container = document.getElementById('optionsContainer');
         container.innerHTML = '';
@@ -2805,13 +2487,6 @@
         });
         totalQuestionsAnswered++;
         document.getElementById('nextBtn').disabled = false;
-        if (!currentUser) {
-            const subjectName = document.getElementById('quizSubjectTitle').textContent;
-            if (FREE_SUBJECTS.includes(subjectName)) {
-                const qNum = FREE_QUESTION_IDS[currentIndex] || (currentIndex + 1);
-                useFreeQuestion(subjectName, qNum);
-            }
-        }
         updateProfile();
     }
 
@@ -2963,13 +2638,12 @@
         list.innerHTML = '';
         allSubjects.forEach(subject => {
             const icon = subject.icon || getSubjectIcon(subject.name);
-            const isFree = FREE_SUBJECTS.includes(subject.name);
             const div = document.createElement('div');
             div.style.cssText = 'background:#fafafa;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;';
             div.innerHTML = `
                 <div>
-                    <div style="color:#1a1a2e;font-size:12px;"><i class="fas ${icon}" style="color:#e91e63;"></i> ${subject.name} ${isFree ? '🎯' : ''}</div>
-                    <div style="color:#999;font-size:10px;">${subject.color} ${isFree ? '(Free Trial: Q6-9)' : ''}</div>
+                    <div style="color:#1a1a2e;font-size:12px;"><i class="fas ${icon}" style="color:#e91e63;"></i> ${subject.name}</div>
+                    <div style="color:#999;font-size:10px;">${subject.color}</div>
                 </div>
                 <div onclick="deleteSubject('${subject.id}')" style="color:#999;cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
@@ -3066,12 +2740,10 @@
             questions.forEach((q, idx) => {
                 const div = document.createElement('div');
                 div.style.cssText = 'background:#fafafa;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;';
-                const qNum = idx + 1;
-                const isFree = FREE_QUESTION_IDS.includes(qNum) && FREE_SUBJECTS.includes(document.getElementById('questionSubjectSelect').options[document.getElementById('questionSubjectSelect').selectedIndex]?.text || '');
                 div.innerHTML = `
                     <div>
-                        <div style="color:#1a1a2e;font-size:12px;">${qNum}. ${q.question} ${isFree ? '🎯' : ''}</div>
-                        <div style="color:#999;font-size:10px;">${q.options.join(' | ')} ${isFree ? '(Free)' : ''}</div>
+                        <div style="color:#1a1a2e;font-size:12px;">${idx+1}. ${q.question}</div>
+                        <div style="color:#999;font-size:10px;">${q.options.join(' | ')}</div>
                     </div>
                     <div onclick="deleteQuestionTeacher('${q.id}')" style="color:#999;cursor:pointer;padding:4px 8px;border-radius:6px;">
                         <i class="fas fa-trash"></i>
@@ -3345,23 +3017,60 @@
         document.getElementById('fileInput').value = '';
     }
 
+    // ============ INIT ============
+    async function init() {
+        checkAuth();
+        const mainContent = document.getElementById('mainContent');
+        mainContent.addEventListener('scroll', () => {
+            const fab = document.getElementById('fab');
+            if (mainContent.scrollTop > 200) {
+                fab.style.display = 'flex';
+            } else {
+                fab.style.display = 'none';
+            }
+        });
+        await loadSubjects();
+        await loadUsers();
+        await loadProgress();
+        console.log('🇿🇲 NorthernQuiz loaded - All subjects FREE!');
+        console.log('👥 Profile & Friends system active!');
+        console.log('💬 Chat messaging enabled!');
+    }
+
+    function checkAuth() {
+        const userData = localStorage.getItem('quizUser');
+        if (userData) {
+            try {
+                currentUser = JSON.parse(userData);
+                updateUserUI();
+                showView('subjectsView');
+                updateProfile();
+                loadFriends();
+                loadChats();
+            } catch (e) {
+                localStorage.removeItem('quizUser');
+                showView('loginView');
+            }
+        } else {
+            showView('loginView');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+
     // ============ EXPOSE FUNCTIONS ============
     window.login = login;
+    window.register = register;
+    window.showLogin = showLogin;
+    window.showRegister = showRegister;
     window.logout = logout;
     window.goToSubjects = goToSubjects;
     window.startQuiz = startQuiz;
     window.nextQuestion = nextQuestion;
-    window.showPremiumPopup = showPremiumPopup;
-    window.closePremiumPopup = closePremiumPopup;
-    window.copyNumber = copyNumber;
-    window.openWhatsApp = openWhatsApp;
     window.showHelp = showHelp;
     window.toggleUserMenu = toggleUserMenu;
     window.navigateTo = navigateTo;
     window.scrollToTop = scrollToTop;
-    window.renderSubjects = renderSubjects;
-    window.updateProgress = updateProgress;
-    window.showToast = showToast;
     window.showTeacherLogin = showTeacherLogin;
     window.teacherLogin = teacherLogin;
     window.logoutTeacher = logoutTeacher;
@@ -3383,7 +3092,6 @@
     window.deleteStudent = deleteStudent;
     window.filterStudents = filterStudents;
     window.pickIcon = pickIcon;
-    window.startFreeTrial = startFreeTrial;
     window.downloadTemplate = downloadTemplate;
     window.handleFileUpload = handleFileUpload;
     window.uploadQuestions = uploadQuestions;
@@ -3392,8 +3100,6 @@
     window.toggleProgressDetail = toggleProgressDetail;
     window.saveProgress = saveProgress;
     window.markSubjectComplete = markSubjectComplete;
-    window.getSubjectIcon = getSubjectIcon;
-    window.getSubjectColor = getSubjectColor;
     window.updateProfile = updateProfile;
     window.showFriends = showFriends;
     window.renderFriends = renderFriends;
@@ -3402,12 +3108,7 @@
     window.openChat = openChat;
     window.sendMessage = sendMessage;
     window.renderChatMessages = renderChatMessages;
-
-    console.log('✅ All functions loaded successfully!');
-    console.log('📊 Learner Progress tracking enabled!');
-    console.log('👥 Profile & Friends system active!');
-    console.log('💬 Chat messaging enabled!');
-    console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
+    window.showToast = showToast;
 </script>
 </body>
 </html>
