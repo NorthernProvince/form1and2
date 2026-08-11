@@ -907,7 +907,6 @@
             flex-shrink: 0;
         }
 
-        /* Premium Overlay - Membership */
         .premium-overlay {
             position: fixed;
             inset: 0;
@@ -1539,6 +1538,60 @@
             margin-bottom: 12px;
             color: #dce4ec;
         }
+
+        /* Payment Confirmation Overlay */
+        .payment-confirm-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 300;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            max-width: 430px;
+            margin: 0 auto;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+        }
+        .payment-confirm-overlay.active {
+            display: flex;
+        }
+        .payment-confirm-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px 20px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .payment-confirm-card .success-icon {
+            font-size: 64px;
+            color: #22c55e;
+            margin-bottom: 12px;
+        }
+        .payment-confirm-card h2 {
+            color: #1a2332;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .payment-confirm-card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .payment-confirm-card .btn-primary {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -1548,7 +1601,7 @@
     <div class="app-header">
         <div class="header-brand">
             <div class="brand-icon"><i class="fas fa-graduation-cap"></i></div>
-            <div class="brand-text">.Northern<span>Quiz</span></div>
+            <div class="brand-text">Northern<span>Quiz</span></div>
         </div>
         <div class="header-actions">
             <button class="header-btn" onclick="showHelp()"><i class="fas fa-question-circle"></i></button>
@@ -2057,35 +2110,35 @@
                 </p>
             </div>
             <div class="payment-grid">
-                <div class="payment-row" onclick="copyNumber('0971130511')">
+                <div class="payment-row" onclick="copyNumber('+260971130511')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(26,82,118,0.08);color:#1a5276;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number">0971 130 511</div>
+                            <div class="payment-number">+260 971 130 511</div>
                             <div class="payment-provider">MTN / Airtel</div>
                         </div>
                     </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0971130511')"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260971130511')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
-                <div class="payment-row" onclick="copyNumber('0958882550')">
+                <div class="payment-row" onclick="copyNumber('+260958882550')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(52,211,153,0.08);color:#34d399;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number">0958 882 550</div>
+                            <div class="payment-number">+260 958 882 550</div>
                             <div class="payment-provider">MTN / Airtel</div>
                         </div>
                     </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0958882550')"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260958882550')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
-                <div class="payment-row" onclick="copyNumber('0763209826')">
+                <div class="payment-row" onclick="copyNumber('+260763209826')">
                     <div class="payment-left">
                         <div class="payment-provider-icon" style="background:rgba(251,146,60,0.08);color:#fb923c;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
-                            <div class="payment-number">0763 209 826</div>
+                            <div class="payment-number">+260 763 209 826</div>
                             <div class="payment-provider">Zamtel</div>
                         </div>
                     </div>
-                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('0763209826')"><i class="fas fa-copy"></i> Copy</button>
+                    <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260763209826')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
             </div>
             <div class="account-name-box">
@@ -2094,7 +2147,7 @@
             </div>
             <p class="payment-instruction" style="color:#64748b;font-size:12px;margin-bottom:8px;">
                 <i class="fas fa-whatsapp" style="color:#25D366;"></i>
-                After payment, send <strong>Username &amp; Password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
+                After payment, send <strong>Username &amp; Password</strong> via WhatsApp to <strong style="color:#25D366;">+260 966 011 066</strong>
             </p>
             <button onclick="openWhatsApp()" class="btn-whatsapp">
                 <i class="fab fa-whatsapp"></i> Send WhatsApp Message
@@ -2235,7 +2288,7 @@
     }
 
     function openWhatsApp() {
-        const phoneNumber = '0966011066';
+        const phoneNumber = '+260966011066';
         const username = currentUser ? currentUser.username : '(Your username)';
         const message = `Hello, I have paid K10 for NorthernQuiz Premium.\n\nUsername: ${username}\nPassword: (Enter your password)\n\nPlease activate my account. Thank you!`;
         const encodedMessage = encodeURIComponent(message);
@@ -2576,7 +2629,6 @@
             return;
         }
         
-        // Filter users (excluding current user and existing friends)
         const availableUsers = allUsers.filter(u => 
             u.id !== currentUser.id && 
             u.role !== 'teacher' &&
@@ -2600,9 +2652,6 @@
             const isFriend = friends.find(f => f.id === user.id);
             const status = user.online ? 'online' : 'offline';
             const statusText = user.online ? 'Online' : 'Offline';
-            const btnText = isFriend ? 'Friends' : 'Add Friend';
-            const btnClass = isFriend ? 'added' : '';
-            const btnAction = isFriend ? '' : `onclick="addFriend('${user.id}', '${user.username}')"`;
             
             html += `
                 <div class="member-result">
@@ -2613,8 +2662,8 @@
                         <div class="member-name">${user.username}</div>
                         <div class="member-status ${status}">${statusText}</div>
                     </div>
-                    <button class="add-friend-btn ${btnClass}" ${btnAction}>
-                        ${isFriend ? '<i class="fas fa-check"></i> Friends' : '<i class="fas fa-user-plus"></i> Add Friend'}
+                    <button class="add-friend-btn" onclick="addFriend('${user.id}', '${user.username}')">
+                        <i class="fas fa-user-plus"></i> Add Friend
                     </button>
                 </div>
             `;
@@ -3934,6 +3983,8 @@
         console.log('💎 Pay K10 to unlock all features!');
         console.log('👥 Profile & Friends system active!');
         console.log('💬 Chat messaging enabled!');
+        console.log('📱 WhatsApp: +260 966 011 066');
+        console.log('📱 Payments: +260 971 130 511, +260 958 882 550, +260 763 209 826');
     }
 
     function checkAuth() {
