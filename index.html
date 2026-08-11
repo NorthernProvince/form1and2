@@ -2606,4 +2606,1469 @@
                         <div class="friend-name">${friend.username}</div>
                         <div class="friend-status ${status}">${statusText}</div>
                     </div>
-                    <button class="add-friend-btn added" onclick
+                    <button class="add-friend-btn added" onclick="event.stopPropagation(); removeFriend('${friend.id}')">
+                        <i class="fas fa-check"></i> Friends
+                    </button>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function searchMembers() {
+        const searchTerm = document.getElementById('searchMembersInput').value.trim().toLowerCase();
+        const resultsContainer = document.getElementById('memberSearchResults');
+        
+        if (!searchTerm) {
+            resultsContainer.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">Enter a name to search</div>';
+            return;
+        }
+        
+        const availableUsers = allUsers.filter(u => 
+            u.id !== currentUser.id && 
+            u.role !== 'teacher' &&
+            u.username.toLowerCase().includes(searchTerm) &&
+            !friends.find(f => f.id === u.id)
+        );
+        
+        if (availableUsers.length === 0) {
+            resultsContainer.innerHTML = `
+                <div class="no-members">
+                    <i class="fas fa-search"></i>
+                    <h3>No Results Found</h3>
+                    <p style="font-size:13px;">No learners found matching "${searchTerm}"</p>
+                </div>
+            `;
+            return;
+        }
+        
+        let html = `<div style="margin-top:8px;"><h3 style="color:#1a2332;font-size:14px;font-weight:600;margin-bottom:8px;">Found ${availableUsers.length} learner${availableUsers.length > 1 ? 's' : ''}</h3></div>`;
+        availableUsers.forEach(user => {
+            const isFriend = friends.find(f => f.id === user.id);
+            const status = user.online ? 'online' : 'offline';
+            const statusText = user.online ? 'Online' : 'Offline';
+            
+            html += `
+                <div class="member-result">
+                    <div class="member-avatar" style="background:#1a5276;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-info">
+                        <div class="member-name">${user.username}</div>
+                        <div class="member-status ${status}">${statusText}</div>
+                    </div>
+                    <button class="add-friend-btn" onclick="addFriend('${user.id}', '${user.username}')">
+                        <i class="fas fa-user-plus"></i> Add Friend
+                    </button>
+                </div>
+            `;
+        });
+        resultsContainer.innerHTML = html;
+    }
+
+    function addFriend(userId, username) {
+        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
+            showToast('💎 Please pay K10 to add friends.', 'error');
+            showPremiumPopup();
+            return;
+        }
+        
+        if (friends.find(f => f.id === userId)) {
+            showToast('Already friends with ' + username, 'info');
+            return;
+        }
+        
+        const newFriend = {
+            id: userId,
+            username: username,
+            online: true,
+            color: '#1a5276'
+        };
+        friends.push(newFriend);
+        localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
+        renderFriends();
+        updateProfile();
+        document.getElementById('memberSearchResults').innerHTML = '';
+        document.getElementById('searchMembersInput').value = '';
+        showToast(`✅ Added ${username} as a friend!`, 'success');
+    }
+
+    function removeFriend(friendId) {
+        friends = friends.filter(f => f.id !== friendId);
+        localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
+        renderFriends();
+        updateProfile();
+        showToast('Friend removed', 'info');
+    }
+
+    function loadFriends() {
+        if (currentUser) {
+            const stored = localStorage.getItem(`friends_${currentUser.id}`);
+            if (stored) {
+                try {
+                    friends = JSON.parse(stored);
+                } catch(e) { friends = []; }
+            }
+        }
+    }
+
+    // ============ CHAT FUNCTIONS ============
+    function openChat(friendId) {
+        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
+            showToast('💎 Please pay K10 to access Chat feature.', 'error');
+            showPremiumPopup();
+            return;
+        }
+        currentChatFriend = friends.find(f => f.id === friendId);
+        if (!currentChatFriend) return;
+        document.getElementById('chatFriendName').textContent = currentChatFriend.username;
+        document.getElementById('chatFriendStatus').textContent = currentChatFriend.online ? 'Online' : 'Offline';
+        document.getElementById('chatFriendStatus').style.color = currentChatFriend.online ? '#22c55e' : '#94a3b8';
+        showView('chatView');
+        renderChatMessages();
+    }
+
+    function renderChatMessages() {
+        const container = document.getElementById('chatMessages');
+        const chatId = getChatId();
+        const messages = chatMessages[chatId] || [];
+        if (messages.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center; padding:40px 0; color:#94a3b8;">
+                    <i class="fas fa-comment-dots" style="font-size:32px; display:block; margin-bottom:8px; color:#dce4ec;"></i>
+                    <p>No messages yet</p>
+                    <p style="font-size:11px;">Say hello to ${currentChatFriend.username}!</p>
+                </div>
+            `;
+            return;
+        }
+        let html = '';
+        messages.forEach(msg => {
+            const isSent = msg.sender === currentUser.id;
+            html += `
+                <div class="message ${isSent ? 'sent' : 'received'}">
+                    ${msg.text}
+                    <span class="time">${msg.time}</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function getChatId() {
+        if (!currentUser || !currentChatFriend) return '';
+        const ids = [currentUser.id, currentChatFriend.id].sort();
+        return ids.join('_');
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text || !currentChatFriend) return;
+        const chatId = getChatId();
+        if (!chatMessages[chatId]) chatMessages[chatId] = [];
+        const now = new Date();
+        const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        chatMessages[chatId].push({
+            sender: currentUser.id,
+            text: text,
+            time: time,
+            timestamp: now.getTime()
+        });
+        localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
+        input.value = '';
+        renderChatMessages();
+        simulateReply();
+    }
+
+    function simulateReply() {
+        const replies = ['That\'s interesting!', 'I agree! 😊', 'Let\'s study together!', 'Great point!', 'I\'ll check that out.', 'Thanks for sharing!'];
+        setTimeout(() => {
+            const chatId = getChatId();
+            if (!chatMessages[chatId]) chatMessages[chatId] = [];
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            chatMessages[chatId].push({
+                sender: currentChatFriend.id,
+                text: replies[Math.floor(Math.random() * replies.length)],
+                time: time,
+                timestamp: now.getTime()
+            });
+            localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
+            renderChatMessages();
+        }, 1000 + Math.random() * 2000);
+    }
+
+    function loadChats() {
+        if (currentUser) {
+            for (let key in localStorage) {
+                if (key.startsWith('chat_')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        chatMessages[key.replace('chat_', '')] = data;
+                    } catch(e) {}
+                }
+            }
+        }
+    }
+
+    // ============ VIEW MANAGEMENT ============
+    function showView(viewId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelector(`.nav-item[data-view="${viewId}"]`)?.classList.add('active');
+        if (viewId === 'profileView') updateProfile();
+        if (viewId === 'friendsView') renderFriends();
+    }
+
+    function navigateTo(viewId) {
+        if (viewId === 'profileView' && !currentUser) {
+            showToast('Please login first', 'error');
+            return;
+        }
+        if (viewId === 'friendsView' && !currentUser) {
+            showToast('Please login first', 'error');
+            return;
+        }
+        showView(viewId);
+    }
+
+    function goToSubjects() {
+        closePremiumPopup();
+        showView('subjectsView');
+        renderSubjects();
+        updateProgress();
+    }
+
+    function scrollToTop() {
+        document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ============ TOAST & HELP ============
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
+                               type === 'success' ? 'rgba(34,197,94,0.95)' : 
+                               '#1a2332';
+        toast.classList.add('show');
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    function showHelp() { 
+        showToast('🎯 Pay K10 to unlock all subjects, track progress, and get your certificate!', 'info'); 
+    }
+
+    function toggleUserMenu() {
+        if (currentUser) {
+            const status = isPremium ? '✅ Premium' : '💎 Pay K10';
+            showToast(`👤 ${currentUser.username} - ${status}`, 'info');
+        }
+    }
+
+    // ============ SUPABASE FUNCTIONS ============
+    async function fetchAllUsers() {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?select=*&order=created_at.desc`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error('Fetch users error:', error);
+        }
+        return [];
+    }
+
+    async function deleteUser(userId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?id=eq.${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            return response.ok;
+        } catch (error) {
+            console.error('Delete user error:', error);
+            return false;
+        }
+    }
+
+    async function fetchSubjects() {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?select=*&order=name.asc`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error('Fetch subjects error:', error);
+        }
+        return [];
+    }
+
+    async function addSubjectToDB(name, icon, color) {
+        try {
+            const payload = { name, icon, color };
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data[0];
+            }
+        } catch (error) {
+            console.error('Add subject error:', error);
+        }
+        return null;
+    }
+
+    async function deleteSubjectFromDB(subjectId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?id=eq.${subjectId}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            return response.ok;
+        } catch (error) {
+            console.error('Delete subject error:', error);
+            return false;
+        }
+    }
+
+    async function fetchQuestions(subjectId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?subject_id=eq.${subjectId}&select=*`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.error('Fetch questions error:', error);
+        }
+        return [];
+    }
+
+    async function addQuestionToDB(subjectId, question, options, correct_answer) {
+        try {
+            const payload = { subject_id: subjectId, question, options, correct_answer };
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data[0];
+            }
+        } catch (error) {
+            console.error('Add question error:', error);
+        }
+        return null;
+    }
+
+    async function deleteQuestionFromDB(questionId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?id=eq.${questionId}`, {
+                method: 'DELETE',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            return response.ok;
+        } catch (error) {
+            console.error('Delete question error:', error);
+            return false;
+        }
+    }
+
+    // ============ PROGRESS FUNCTIONS ============
+    async function loadProgress() {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?select=*`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                learnerProgress = {};
+                data.forEach(record => {
+                    if (!learnerProgress[record.user_id]) {
+                        learnerProgress[record.user_id] = [];
+                    }
+                    learnerProgress[record.user_id].push(record);
+                });
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not load progress:', error);
+        }
+        renderProgress();
+    }
+
+    async function saveProgress(userId, subjectId, score, total) {
+        try {
+            const payload = {
+                user_id: userId,
+                subject_id: subjectId,
+                score: score,
+                total_questions: total,
+                completed_at: new Date().toISOString()
+            };
+            
+            const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=id`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            
+            if (checkResponse.ok) {
+                const existing = await checkResponse.json();
+                if (existing && existing.length > 0) {
+                    await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?id=eq.${existing[0].id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                } else {
+                    await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}`, {
+                        method: 'POST',
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': `Bearer ${SUPABASE_KEY}`,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=representation'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                }
+                await loadProgress();
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not save progress:', error);
+        }
+    }
+
+    function renderProgress() {
+        const container = document.getElementById('progressList');
+        if (!container) return;
+        
+        const searchTerm = document.getElementById('progressSearch')?.value?.toLowerCase() || '';
+        const students = allUsers.filter(u => u.role !== 'teacher');
+        const filtered = students.filter(u => u.username.toLowerCase().includes(searchTerm));
+        
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
+            document.getElementById('statCompleted').textContent = '0';
+            return;
+        }
+        
+        let totalCompleted = 0;
+        container.innerHTML = '';
+        
+        filtered.forEach(user => {
+            const progress = learnerProgress[user.id] || [];
+            const completedSubjectIds = progress.map(p => p.subject_id);
+            const totalSubjects = allSubjects.length;
+            const completed = completedSubjectIds.length;
+            const percentage = totalSubjects > 0 ? Math.round((completed / totalSubjects) * 100) : 0;
+            
+            if (completed === totalSubjects && totalSubjects > 0) totalCompleted++;
+            
+            const div = document.createElement('div');
+            div.className = 'progress-container';
+            div.onclick = () => toggleProgressDetail(user.id);
+            
+            let badgesHTML = '';
+            if (allSubjects.length === 0) {
+                badgesHTML = `<span class="no-progress">No subjects available</span>`;
+            } else {
+                allSubjects.forEach(subject => {
+                    const isDone = completedSubjectIds.includes(subject.id);
+                    badgesHTML += `<span class="subject-badge ${isDone ? 'done' : 'pending'}">${isDone ? '✅' : '⬜'} ${subject.name}</span>`;
+                });
+            }
+            
+            const date = new Date(user.created_at).toLocaleDateString();
+            const hasProgress = progress.length > 0;
+            
+            div.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <span class="learner-name">${user.username}</span>
+                        <span class="last-active">• Joined: ${date}</span>
+                        <span style="color:#94a3b8;font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
+                    </div>
+                    <span class="score-badge">${hasProgress ? `${percentage}%` : '⏳ No progress yet'}</span>
+                </div>
+                ${hasProgress ? `
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width:${percentage}%"></div>
+                    </div>
+                ` : `
+                    <div style="height:6px;background:#dce4ec;border-radius:4px;margin:6px 0;"></div>
+                `}
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div style="display:flex;flex-wrap:wrap;gap:2px;">${badgesHTML}</div>
+                    <span style="color:#94a3b8;font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
+                </div>
+                <div class="progress-detail" id="detail-${user.id}">
+                    <div class="detail-row"><span class="label">Username</span><span class="value gold">${user.username}</span></div>
+                    <div class="detail-row"><span class="label">Subjects Completed</span><span class="value">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span></div>
+                    <div class="detail-row"><span class="label">Overall Score</span><span class="value gold">${hasProgress ? `${percentage}%` : 'N/A'}</span></div>
+                    ${hasProgress ? progress.map(p => {
+                        const subject = allSubjects.find(s => s.id === p.subject_id);
+                        return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
+                    }).join('') : `
+                        <div class="detail-row" style="border-bottom:none;">
+                            <span class="label" style="color:#94a3b8;font-style:italic;">No subjects completed yet</span>
+                        </div>
+                    `}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+        
+        document.getElementById('statCompleted').textContent = totalCompleted;
+    }
+
+    function toggleProgressDetail(userId) {
+        const detail = document.getElementById(`detail-${userId}`);
+        if (detail) {
+            detail.classList.toggle('show');
+        }
+    }
+
+    function filterProgress() {
+        renderProgress();
+    }
+
+    // ============ LOAD SUBJECTS & USERS ============
+    async function loadSubjects() {
+        try {
+            const subjects = await fetchSubjects();
+            if (subjects && subjects.length > 0) {
+                allSubjects = subjects.map(sub => {
+                    if (!sub.icon || sub.icon === 'fa-book' || sub.icon === '') {
+                        sub.icon = getSubjectIcon(sub.name);
+                    }
+                    if (!sub.color || sub.color === '') {
+                        sub.color = getSubjectColor(sub.name);
+                    }
+                    return sub;
+                });
+                renderSubjects();
+                updateProgress();
+                updateTeacherSubjects();
+                updateQuestionSubjectSelect();
+                updateUploadSubjectSelect();
+                document.getElementById('statSubjects').textContent = subjects.length;
+                let totalQ = 0;
+                for (const subject of subjects) {
+                    const qs = await fetchQuestions(subject.id);
+                    totalQ += qs.length;
+                }
+                document.getElementById('statQuestions').textContent = totalQ;
+            } else {
+                allSubjects = [];
+                renderSubjects();
+            }
+        } catch (error) {
+            console.error('Error loading subjects:', error);
+            showToast('Error loading subjects. Please refresh.', 'error');
+        }
+    }
+
+    async function loadUsers() {
+        try {
+            const users = await fetchAllUsers();
+            allUsers = users.filter(u => u.role !== 'teacher');
+            document.getElementById('statStudents').textContent = allUsers.length;
+            renderStudents();
+            renderProgress();
+        } catch (error) {
+            console.error('Error loading users:', error);
+        }
+    }
+
+    // ============ RENDER SUBJECTS ============
+    function renderSubjects() {
+        const grid = document.getElementById('subjectGrid');
+        grid.innerHTML = '';
+        if (!allSubjects || allSubjects.length === 0) {
+            grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-gray-500 text-sm">No subjects available. Contact your teacher.</div>`;
+            return;
+        }
+        
+        const hasMembership = checkMembership();
+        
+        allSubjects.forEach(subject => {
+            const isCompleted = completedSubjects.has(subject.id);
+            const isLocked = !hasMembership && currentUser && currentUser.role !== 'teacher' && !isCompleted;
+            
+            const icon = subject.icon || getSubjectIcon(subject.name);
+            const color = subject.color || getSubjectColor(subject.name);
+            
+            const card = document.createElement('div');
+            let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/30' : ''}`;
+            if (isLocked && !isCompleted) cardClass += ' locked';
+            card.className = cardClass;
+            card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
+            
+            let statusBadge = '';
+            if (!isCompleted && isLocked) {
+                statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#1a5276;background:rgba(26,82,118,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 K10</div>`;
+            }
+            
+            card.innerHTML = `
+                <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="subject-name">${subject.name}</div>
+                <div class="subject-count">Loading...</div>
+                ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
+                ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
+                ${statusBadge}
+            `;
+            
+            fetchQuestions(subject.id).then(questions => {
+                const countEl = card.querySelector('.subject-count');
+                if (countEl) {
+                    countEl.textContent = `${questions.length} questions`;
+                }
+            });
+            
+            card.onclick = async () => {
+                if (isCompleted) {
+                    showToast('✅ You already completed this subject!', 'info');
+                    return;
+                }
+                if (isLocked) {
+                    showToast('💎 Pay K10 to unlock this subject!', 'error');
+                    showPremiumPopup();
+                    return;
+                }
+                await startQuiz(subject.id, subject.name);
+            };
+            grid.appendChild(card);
+        });
+    }
+
+    function markSubjectComplete(subjectId) {
+        if (!currentUser) {
+            showToast('Please login first', 'error');
+            return;
+        }
+        if (!checkMembership() && currentUser.role !== 'teacher') {
+            showToast('💎 Please pay K10 to mark subjects complete.', 'error');
+            showPremiumPopup();
+            return;
+        }
+        if (completedSubjects.has(subjectId)) {
+            showToast('Already completed', 'info');
+            return;
+        }
+        const subject = allSubjects.find(s => s.id === subjectId);
+        if (!subject) return;
+        
+        completedSubjects.add(subjectId);
+        const key = `completed_${currentUser.id}`;
+        const stored = JSON.parse(localStorage.getItem(key) || '[]');
+        if (!stored.includes(subjectId)) {
+            stored.push(subjectId);
+            localStorage.setItem(key, JSON.stringify(stored));
+        }
+        
+        if (currentUser && currentUser.id) {
+            saveProgress(currentUser.id, subjectId, 0, 0);
+        }
+        
+        renderSubjects();
+        updateProgress();
+        updateProfile();
+        showToast(`✅ "${subject.name}" marked as complete!`, 'success');
+    }
+
+    function updateProgress() {
+        if (currentUser) {
+            const key = `completed_${currentUser.id}`;
+            const stored = JSON.parse(localStorage.getItem(key) || '[]');
+            stored.forEach(id => completedSubjects.add(id));
+        }
+        const total = allSubjects.length;
+        const completed = completedSubjects.size;
+        document.getElementById('progressText').textContent = `${completed} of ${total} completed`;
+        document.getElementById('progressBar').style.width = total > 0 ? `${(completed / total) * 100}%` : '0%';
+        if (completed === total && total > 0 && checkMembership()) {
+            setTimeout(() => showCertificate(), 500);
+        }
+        updateProfile();
+    }
+
+    // ============ START QUIZ ============
+    async function startQuiz(subjectId, subjectName) {
+        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
+            showToast('💎 Please pay K10 to access quizzes.', 'error');
+            showPremiumPopup();
+            return;
+        }
+        try {
+            const questions = await fetchQuestions(subjectId);
+            if (!questions || questions.length === 0) {
+                showToast('No questions available for this subject.', 'error');
+                return;
+            }
+            currentSubject = subjectId;
+            currentQuestions = questions;
+            currentIndex = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quizSubjectTitle').textContent = subjectName;
+            document.getElementById('questionCounter').textContent = `${currentIndex+1}/${currentQuestions.length}`;
+            showView('quizView');
+            renderQuestion();
+        } catch (error) {
+            console.error('Error starting quiz:', error);
+            showToast('Error loading questions. Please try again.', 'error');
+        }
+    }
+
+    function renderQuestion() {
+        if (currentIndex >= currentQuestions.length) {
+            completedSubjects.add(currentSubject);
+            totalQuestionsAnswered += currentQuestions.length;
+            if (currentUser && currentUser.id) {
+                saveProgress(currentUser.id, currentSubject, score, currentQuestions.length);
+            }
+            updateProgress();
+            const subjectName = document.getElementById('quizSubjectTitle').textContent;
+            showToast(`🎉 Completed ${subjectName}!`, 'success');
+            goToSubjects();
+            return;
+        }
+        const q = currentQuestions[currentIndex];
+        document.getElementById('questionText').textContent = q.question;
+        const qNum = currentIndex + 1;
+        document.getElementById('qNum').textContent = qNum;
+        document.getElementById('questionCounter').textContent = `${qNum}/${currentQuestions.length}`;
+        document.getElementById('scoreDisplay').textContent = score;
+        const container = document.getElementById('optionsContainer');
+        container.innerHTML = '';
+        answered = false;
+        document.getElementById('nextBtn').disabled = true;
+        const letters = ['A', 'B', 'C', 'D'];
+        q.options.forEach((option, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = `<span class="option-letter">${letters[idx]}</span><span>${option}</span>`;
+            btn.dataset.index = idx;
+            btn.onclick = () => selectOption(idx);
+            container.appendChild(btn);
+        });
+    }
+
+    function selectOption(index) {
+        if (answered) return;
+        answered = true;
+        const q = currentQuestions[currentIndex];
+        const options = document.querySelectorAll('.option-btn');
+        const isCorrect = index === q.correct_answer;
+        if (isCorrect) {
+            score++;
+            document.getElementById('scoreDisplay').textContent = score;
+        }
+        options.forEach((btn, idx) => {
+            btn.classList.add('disabled');
+            if (idx === q.correct_answer) btn.classList.add('correct');
+            else if (idx === index && !isCorrect) btn.classList.add('wrong');
+            if (idx === index) btn.classList.add('selected');
+        });
+        totalQuestionsAnswered++;
+        document.getElementById('nextBtn').disabled = false;
+        updateProfile();
+    }
+
+    function nextQuestion() {
+        if (!answered) return;
+        currentIndex++;
+        renderQuestion();
+    }
+
+    // ============ CERTIFICATE ============
+    function showCertificate() {
+        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
+            showToast('💎 Please pay K10 to view your certificate.', 'error');
+            showPremiumPopup();
+            return;
+        }
+        showView('certificateView');
+        if (currentUser) {
+            document.getElementById('certUsername').textContent = currentUser.username;
+            document.getElementById('certDate').textContent = new Date().toLocaleDateString();
+            const totalQ = allSubjects.reduce((sum, subject) => sum + 5, 0);
+            document.getElementById('certScore').textContent = `${Math.round((score / (totalQ || 1)) * 100)}%`;
+        }
+        if (typeof confetti !== 'undefined') {
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            setTimeout(() => confetti({ particleCount: 100, spread: 60, origin: { y: 0.4 } }), 300);
+        }
+    }
+
+    // ============ TEACHER DASHBOARD ============
+    function switchTeacherTab(tab) {
+        currentTeacherTab = tab;
+        document.querySelectorAll('#teacherView .subject-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('#teacherView .subject-tab').forEach(t => {
+            if (t.textContent.trim().toLowerCase().includes(tab)) {
+                t.classList.add('active');
+            }
+        });
+        document.getElementById('teacherProgressTab').style.display = tab === 'progress' ? 'block' : 'none';
+        document.getElementById('teacherStudentsTab').style.display = tab === 'students' ? 'block' : 'none';
+        document.getElementById('teacherSubjectsTab').style.display = tab === 'subjects' ? 'block' : 'none';
+        document.getElementById('teacherQuestionsTab').style.display = tab === 'questions' ? 'block' : 'none';
+        document.getElementById('teacherUploadTab').style.display = tab === 'upload' ? 'block' : 'none';
+        if (tab === 'subjects') updateTeacherSubjects();
+        if (tab === 'questions') loadQuestionsForTeacher();
+        if (tab === 'students') renderStudents();
+        if (tab === 'upload') updateUploadSubjectSelect();
+        if (tab === 'progress') renderProgress();
+    }
+
+    function updateTeacherDashboard() {
+        updateTeacherSubjects();
+        updateQuestionSubjectSelect();
+        updateUploadSubjectSelect();
+        renderStudents();
+        renderProgress();
+        document.getElementById('statStudents').textContent = allUsers.length;
+        document.getElementById('statSubjects').textContent = allSubjects.length;
+    }
+
+    // ============ STUDENT MANAGEMENT ============
+    function renderStudents() {
+        const list = document.getElementById('studentList');
+        const searchTerm = document.getElementById('studentSearch')?.value?.toLowerCase() || '';
+        const filtered = allUsers.filter(u => u.username.toLowerCase().includes(searchTerm));
+        if (filtered.length === 0) {
+            list.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
+            return;
+        }
+        list.innerHTML = '';
+        filtered.forEach(user => {
+            const div = document.createElement('div');
+            div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #dce4ec;display:flex;justify-content:space-between;align-items:center;';
+            const date = new Date(user.created_at).toLocaleDateString();
+            div.innerHTML = `
+                <div style="color:#1a2332;font-size:12px;">
+                    <span style="font-weight:600;color:#1a5276;">${user.username}</span>
+                    <span style="color:#94a3b8;font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
+                    <span style="color:#94a3b8;font-size:10px;margin-left:8px;">📅 ${date}</span>
+                </div>
+                <div onclick="deleteStudent('${user.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                    <i class="fas fa-trash"></i>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    function filterStudents() { renderStudents(); }
+    function showAddStudentForm() { document.getElementById('addStudentForm').style.display = 'block'; document.getElementById('studentUsername').focus(); }
+    function hideAddStudentForm() { document.getElementById('addStudentForm').style.display = 'none'; document.getElementById('studentUsername').value = ''; document.getElementById('studentPassword').value = ''; }
+
+    async function addStudent() {
+        const username = document.getElementById('studentUsername').value.trim();
+        const password = document.getElementById('studentPassword').value.trim();
+        if (!username || !password) {
+            showToast('Please enter username and password', 'error');
+            return;
+        }
+        if (username.length < 3 || password.length < 3) {
+            showToast('Username and password must be at least 3 characters', 'error');
+            return;
+        }
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Creating...';
+        try {
+            const exists = await checkUserExists(username);
+            if (exists) {
+                showToast('Username already exists', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Create';
+                return;
+            }
+            const newUser = await createUser(username, password);
+            if (newUser) {
+                showToast(`✅ Student "${username}" created! Password: ${password}`, 'success');
+                hideAddStudentForm();
+                await loadUsers();
+                renderStudents();
+                renderProgress();
+                document.getElementById('statStudents').textContent = allUsers.length;
+            }
+        } catch (error) {
+            showToast('Error creating student account', 'error');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Create';
+    }
+
+    async function deleteStudent(userId) {
+        if (!confirm('Delete this student account?')) return;
+        try {
+            const success = await deleteUser(userId);
+            if (success) {
+                showToast('Student deleted', 'info');
+                await loadUsers();
+                renderStudents();
+                renderProgress();
+                document.getElementById('statStudents').textContent = allUsers.length;
+            }
+        } catch (error) {
+            showToast('Error deleting student', 'error');
+        }
+    }
+
+    // ============ TEACHER SUBJECT MANAGEMENT ============
+    function updateTeacherSubjects() {
+        const list = document.getElementById('subjectList');
+        if (!allSubjects || allSubjects.length === 0) {
+            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
+            return;
+        }
+        list.innerHTML = '';
+        allSubjects.forEach(subject => {
+            const icon = subject.icon || getSubjectIcon(subject.name);
+            const div = document.createElement('div');
+            div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #dce4ec;display:flex;justify-content:space-between;align-items:center;';
+            div.innerHTML = `
+                <div>
+                    <div style="color:#1a2332;font-size:12px;"><i class="fas ${icon}" style="color:#1a5276;"></i> ${subject.name}</div>
+                    <div style="color:#94a3b8;font-size:10px;">${subject.color}</div>
+                </div>
+                <div onclick="deleteSubject('${subject.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                    <i class="fas fa-trash"></i>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    function showAddSubjectForm() { document.getElementById('addSubjectForm').style.display = 'block'; document.getElementById('subjectName').focus(); }
+    function hideAddSubjectForm() { document.getElementById('addSubjectForm').style.display = 'none'; document.getElementById('subjectName').value = ''; document.getElementById('subjectIcon').value = ''; document.getElementById('subjectColor').value = ''; }
+
+    async function addSubject() {
+        const name = document.getElementById('subjectName').value.trim();
+        let icon = document.getElementById('subjectIcon').value.trim();
+        if (!icon || icon === '') icon = getSubjectIcon(name);
+        let color = document.getElementById('subjectColor').value.trim();
+        if (!color || color === '') color = getSubjectColor(name);
+        if (!name) {
+            showToast('Please enter a subject name', 'error');
+            return;
+        }
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Saving...';
+        try {
+            const newSubject = await addSubjectToDB(name, icon, color);
+            if (newSubject) {
+                showToast(`✅ Subject "${name}" added!`, 'success');
+                hideAddSubjectForm();
+                await loadSubjects();
+                updateTeacherSubjects();
+                updateQuestionSubjectSelect();
+                updateUploadSubjectSelect();
+                document.getElementById('statSubjects').textContent = allSubjects.length;
+            }
+        } catch (error) {
+            showToast('Error adding subject. Please try again.', 'error');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Save';
+    }
+
+    async function deleteSubject(subjectId) {
+        if (!confirm('Delete this subject and all its questions?')) return;
+        try {
+            const success = await deleteSubjectFromDB(subjectId);
+            if (success) {
+                showToast('Subject deleted', 'info');
+                await loadSubjects();
+                updateTeacherSubjects();
+                updateQuestionSubjectSelect();
+                updateUploadSubjectSelect();
+                document.getElementById('statSubjects').textContent = allSubjects.length;
+            }
+        } catch (error) {
+            showToast('Error deleting subject', 'error');
+        }
+    }
+
+    // ============ TEACHER QUESTION MANAGEMENT ============
+    function updateQuestionSubjectSelect() {
+        const select = document.getElementById('questionSubjectSelect');
+        select.innerHTML = '<option value="">-- Select a subject --</option>';
+        allSubjects.forEach(subject => {
+            select.innerHTML += `<option value="${subject.id}">${subject.name}</option>`;
+        });
+    }
+
+    function updateUploadSubjectSelect() {
+        const select = document.getElementById('uploadSubjectSelect');
+        select.innerHTML = '<option value="">-- Select a subject --</option>';
+        allSubjects.forEach(subject => {
+            select.innerHTML += `<option value="${subject.id}">${subject.name}</option>`;
+        });
+    }
+
+    async function loadQuestionsForTeacher() {
+        const subjectId = document.getElementById('questionSubjectSelect').value;
+        if (!subjectId) {
+            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
+            return;
+        }
+        selectedSubjectId = subjectId;
+        const list = document.getElementById('teacherQuestionList');
+        list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        try {
+            const questions = await fetchQuestions(subjectId);
+            if (questions.length === 0) {
+                list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
+                return;
+            }
+            list.innerHTML = '';
+            questions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #dce4ec;display:flex;justify-content:space-between;align-items:center;';
+                div.innerHTML = `
+                    <div>
+                        <div style="color:#1a2332;font-size:12px;">${idx+1}. ${q.question}</div>
+                        <div style="color:#94a3b8;font-size:10px;">${q.options.join(' | ')}</div>
+                    </div>
+                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        } catch (error) {
+            console.error('Error loading questions:', error);
+            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
+        }
+    }
+
+    async function addQuestionTeacher() {
+        const subjectId = document.getElementById('questionSubjectSelect').value;
+        const question = document.getElementById('questionTextInput').value.trim();
+        const optionA = document.getElementById('optionA').value.trim();
+        const optionB = document.getElementById('optionB').value.trim();
+        const optionC = document.getElementById('optionC').value.trim();
+        const optionD = document.getElementById('optionD').value.trim();
+        const correctAnswer = parseInt(document.getElementById('correctAnswer').value);
+        if (!subjectId) {
+            showToast('Please select a subject', 'error');
+            return;
+        }
+        if (!question) {
+            showToast('Please enter a question', 'error');
+            return;
+        }
+        if (!optionA || !optionB || !optionC || !optionD) {
+            showToast('Please fill in all 4 options', 'error');
+            return;
+        }
+        const options = [optionA, optionB, optionC, optionD];
+        const btn = event.target;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Adding...';
+        try {
+            const newQuestion = await addQuestionToDB(subjectId, question, options, correctAnswer);
+            if (newQuestion) {
+                showToast('✅ Question added!', 'success');
+                document.getElementById('questionTextInput').value = '';
+                document.getElementById('optionA').value = '';
+                document.getElementById('optionB').value = '';
+                document.getElementById('optionC').value = '';
+                document.getElementById('optionD').value = '';
+                await loadQuestionsForTeacher();
+                updateTeacherSubjects();
+                let totalQ = 0;
+                for (const subject of allSubjects) {
+                    const qs = await fetchQuestions(subject.id);
+                    totalQ += qs.length;
+                }
+                document.getElementById('statQuestions').textContent = totalQ;
+            }
+        } catch (error) {
+            showToast('Error adding question. Please try again.', 'error');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> Add Question';
+    }
+
+    async function deleteQuestionTeacher(questionId) {
+        if (!confirm('Delete this question?')) return;
+        try {
+            const success = await deleteQuestionFromDB(questionId);
+            if (success) {
+                showToast('Question deleted', 'info');
+                await loadQuestionsForTeacher();
+                updateTeacherSubjects();
+                let totalQ = 0;
+                for (const subject of allSubjects) {
+                    const qs = await fetchQuestions(subject.id);
+                    totalQ += qs.length;
+                }
+                document.getElementById('statQuestions').textContent = totalQ;
+            }
+        } catch (error) {
+            showToast('Error deleting question', 'error');
+        }
+    }
+
+    function pickIcon() {
+        const icons = ['fa-atom', 'fa-flask', 'fa-calculator', 'fa-book-open', 'fa-globe-africa', 
+                       'fa-laptop-code', 'fa-church', 'fa-palette', 'fa-music', 'fa-robot',
+                       'fa-dna', 'fa-earth-africa', 'fa-microscope', 'fa-pencil', 'fa-ruler',
+                       'fa-vial', 'fa-gavel', 'fa-landmark', 'fa-running', 'fa-chart-line',
+                       'fa-coins', 'fa-pen-fancy', 'fa-language', 'fa-home'];
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        document.getElementById('subjectIcon').value = randomIcon;
+        showToast(`🎨 Icon set to: ${randomIcon}`, 'info');
+    }
+
+    // ============ BULK UPLOAD FUNCTIONS ============
+    function downloadTemplate() {
+        const headers = ['question', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer'];
+        const sampleData = [
+            ['What is 5+3?', '4', '5', '8', '10', 'C'],
+            ['What is the capital of Zambia?', 'Lusaka', 'Ndola', 'Kitwe', 'Livingstone', 'A'],
+            ['What is the chemical symbol for water?', 'H2O', 'CO2', 'NaCl', 'HCl', 'A']
+        ];
+        let csv = headers.join(',') + '\n';
+        sampleData.forEach(row => {
+            csv += row.join(',') + '\n';
+        });
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'questions_template.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('📥 Template downloaded!', 'success');
+    }
+
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const text = e.target.result;
+            const lines = text.split('\n').filter(line => line.trim());
+            if (lines.length < 2) {
+                showToast('⚠️ File is empty or invalid. Please use the template.', 'error');
+                return;
+            }
+            const headers = lines[0].toLowerCase().split(',').map(h => h.trim());
+            const required = ['question', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer'];
+            const missing = required.filter(r => !headers.includes(r));
+            if (missing.length > 0) {
+                showToast(`⚠️ Missing columns: ${missing.join(', ')}. Please use the template.`, 'error');
+                return;
+            }
+            uploadedData = [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim());
+                if (values.length >= 6) {
+                    const row = {};
+                    headers.forEach((h, idx) => {
+                        row[h] = values[idx] || '';
+                    });
+                    const correct = row.correct_answer.toUpperCase();
+                    if (['A', 'B', 'C', 'D'].includes(correct)) {
+                        row.correct_answer = correct;
+                        uploadedData.push(row);
+                    }
+                }
+            }
+            if (uploadedData.length === 0) {
+                showToast('⚠️ No valid questions found. Please check your file.', 'error');
+                return;
+            }
+            const preview = document.getElementById('uploadPreview');
+            let html = `<table>
+                <thead><tr>
+                    <th>#</th>
+                    <th>Question</th>
+                    <th>Options</th>
+                    <th>Answer</th>
+                </tr></thead><tbody>`;
+            uploadedData.slice(0, 10).forEach((row, idx) => {
+                const options = [row.option_a, row.option_b, row.option_c, row.option_d].join(' | ');
+                html += `<tr>
+                    <td>${idx + 1}</td>
+                    <td>${row.question.substring(0, 30)}${row.question.length > 30 ? '...' : ''}</td>
+                    <td style="font-size:10px;color:#94a3b8;">${options}</td>
+                    <td style="color:#1a5276;font-weight:700;">${row.correct_answer}</td>
+                </tr>`;
+            });
+            if (uploadedData.length > 10) {
+                html += `<tr><td colspan="4" style="text-align:center;color:#94a3b8;font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
+            }
+            html += `</tbody></table>
+                <div style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
+                    Found <strong style="color:#1a5276;">${uploadedData.length}</strong> questions ready to upload
+                </div>`;
+            preview.innerHTML = html;
+            preview.style.display = 'block';
+            document.getElementById('uploadBtn').style.display = 'block';
+            document.getElementById('uploadResult').style.display = 'none';
+            showToast(`📄 Loaded ${uploadedData.length} questions from file`, 'success');
+        };
+        reader.readAsText(file);
+    }
+
+    async function uploadQuestions() {
+        const subjectId = document.getElementById('uploadSubjectSelect').value;
+        if (!subjectId) {
+            showToast('⚠️ Please select a subject first', 'error');
+            return;
+        }
+        if (uploadedData.length === 0) {
+            showToast('⚠️ No questions to upload. Please load a file first.', 'error');
+            return;
+        }
+        const btn = document.getElementById('uploadBtn');
+        const progress = document.getElementById('uploadProgress');
+        const bar = document.getElementById('progressBarUpload');
+        const result = document.getElementById('uploadResult');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Uploading...';
+        progress.style.display = 'block';
+        result.style.display = 'none';
+        let successCount = 0;
+        let errorCount = 0;
+        const total = uploadedData.length;
+        const correctMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+        for (let i = 0; i < uploadedData.length; i++) {
+            const row = uploadedData[i];
+            const options = [row.option_a, row.option_b, row.option_c, row.option_d];
+            const correctIndex = correctMap[row.correct_answer] || 0;
+            try {
+                const payload = {
+                    subject_id: subjectId,
+                    question: row.question,
+                    options: options,
+                    correct_answer: correctIndex
+                };
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (response.ok) {
+                    successCount++;
+                } else {
+                    errorCount++;
+                }
+            } catch (error) {
+                errorCount++;
+            }
+            const progressPercent = ((i + 1) / total) * 100;
+            bar.style.width = `${progressPercent}%`;
+        }
+        result.className = 'upload-result ' + (errorCount === 0 ? 'success' : 'error');
+        result.innerHTML = `
+            <div class="result-text">
+                ${errorCount === 0 ? '✅' : '⚠️'} Upload complete!
+                <br/>
+                <span class="count">${successCount}</span> questions uploaded successfully
+                ${errorCount > 0 ? `<br/><span style="color:#ef4444;">${errorCount}</span> failed` : ''}
+            </div>
+        `;
+        result.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-upload"></i> Upload Questions';
+        setTimeout(() => { progress.style.display = 'none'; }, 2000);
+        if (successCount > 0) {
+            showToast(`✅ ${successCount} questions uploaded successfully!`, 'success');
+            await loadSubjects();
+            updateTeacherSubjects();
+            let totalQ = 0;
+            for (const subject of allSubjects) {
+                const qs = await fetchQuestions(subject.id);
+                totalQ += qs.length;
+            }
+            document.getElementById('statQuestions').textContent = totalQ;
+            document.getElementById('questionSubjectSelect').value = subjectId;
+            await loadQuestionsForTeacher();
+        }
+        uploadedData = [];
+        document.getElementById('uploadPreview').style.display = 'none';
+        document.getElementById('uploadBtn').style.display = 'none';
+        document.getElementById('fileInput').value = '';
+    }
+
+    // ============ INIT ============
+    async function init() {
+        checkAuth();
+        const mainContent = document.getElementById('mainContent');
+        mainContent.addEventListener('scroll', () => {
+            const fab = document.getElementById('fab');
+            if (mainContent.scrollTop > 200) {
+                fab.style.display = 'flex';
+            } else {
+                fab.style.display = 'none';
+            }
+        });
+        await loadSubjects();
+        await loadUsers();
+        await loadProgress();
+        console.log('🇿🇲 NorthernQuiz loaded!');
+        console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
+        console.log('📱 WhatsApp: 0966 011 066 for payments');
+        console.log('📊 Learner Progress tracking enabled!');
+    }
+
+    function checkAuth() {
+        const userData = localStorage.getItem('quizUser');
+        if (userData) {
+            try {
+                currentUser = JSON.parse(userData);
+                updateUserUI();
+                showView('subjectsView');
+                document.getElementById('freeTrialBanner').style.display = 'none';
+                const hasMembership = checkMembership();
+                if (!hasMembership && currentUser.role !== 'teacher') {
+                    setTimeout(() => {
+                        showPremiumPopup();
+                    }, 1500);
+                }
+            } catch (e) {
+                localStorage.removeItem('quizUser');
+                showView('loginView');
+            }
+        } else {
+            showView('loginView');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+
+    // ============ EXPOSE FUNCTIONS ============
+    window.login = login;
+    window.register = register;
+    window.showLogin = showLogin;
+    window.showRegister = showRegister;
+    window.logout = logout;
+    window.goToSubjects = goToSubjects;
+    window.startQuiz = startQuiz;
+    window.nextQuestion = nextQuestion;
+    window.showHelp = showHelp;
+    window.toggleUserMenu = toggleUserMenu;
+    window.navigateTo = navigateTo;
+    window.scrollToTop = scrollToTop;
+    window.showTeacherLogin = showTeacherLogin;
+    window.teacherLogin = teacherLogin;
+    window.logoutTeacher = logoutTeacher;
+    window.switchTeacherTab = switchTeacherTab;
+    window.showAddSubjectForm = showAddSubjectForm;
+    window.hideAddSubjectForm = hideAddSubjectForm;
+    window.addSubject = addSubject;
+    window.deleteSubject = deleteSubject;
+    window.updateTeacherSubjects = updateTeacherSubjects;
+    window.loadQuestionsForTeacher = loadQuestionsForTeacher;
+    window.addQuestionTeacher = addQuestionTeacher;
+    window.deleteQuestionTeacher = deleteQuestionTeacher;
+    window.updateQuestionSubjectSelect = updateQuestionSubjectSelect;
+    window.updateUploadSubjectSelect = updateUploadSubjectSelect;
+    window.showAddStudentForm = showAddStudentForm;
+    window.hideAddStudentForm = hideAddStudentForm;
+    window.addStudent = addStudent;
+    window.renderStudents = renderStudents;
+    window.deleteStudent = deleteStudent;
+    window.filterStudents = filterStudents;
+    window.pickIcon = pickIcon;
+    window.startFreeTrial = startFreeTrial;
+    window.downloadTemplate = downloadTemplate;
+    window.handleFileUpload = handleFileUpload;
+    window.uploadQuestions = uploadQuestions;
+    window.renderProgress = renderProgress;
+    window.filterProgress = filterProgress;
+    window.toggleProgressDetail = toggleProgressDetail;
+    window.saveProgress = saveProgress;
+    window.markSubjectComplete = markSubjectComplete;
+    window.getSubjectIcon = getSubjectIcon;
+    window.getSubjectColor = getSubjectColor;
+    window.updateProfile = updateProfile;
+    window.showFriends = showFriends;
+    window.renderFriends = renderFriends;
+    window.searchMembers = searchMembers;
+    window.addFriend = addFriend;
+    window.removeFriend = removeFriend;
+    window.openChat = openChat;
+    window.sendMessage = sendMessage;
+    window.renderChatMessages = renderChatMessages;
+    window.showToast = showToast;
+    window.showPremiumPopup = showPremiumPopup;
+    window.closePremiumPopup = closePremiumPopup;
+    window.openWhatsApp = openWhatsApp;
+    window.copyNumber = copyNumber;
+    window.checkMembership = checkMembership;
+    window.activateMembership = activateMembership;
+    window.startFreeTrial = function() {
+        showToast('🎯 Try 4 free questions (Q6-9 in ICT & Math)! Pay K10 to unlock all subjects.', 'info');
+    };
+</script>
+</body>
+</html>
