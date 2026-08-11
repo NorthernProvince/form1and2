@@ -8,246 +8,1551 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
-        /* ===== ALL STYLES ===== */
-        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-        body { font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background:#e8edf2; overflow:hidden; height:100vh; width:100vw; position:fixed; }
-        .app-container { max-width:430px; width:100%; height:100vh; height:100dvh; margin:0 auto; background:#f0f4f8; position:relative; overflow:hidden; display:flex; flex-direction:column; }
-        .app-header { background:#1a5276; padding:14px 16px 12px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; z-index:40; box-shadow:0 2px 10px rgba(26,82,118,0.3); }
-        .header-brand { display:flex; align-items:center; gap:10px; }
-        .brand-icon { width:38px; height:38px; background:white; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; box-shadow:0 2px 8px rgba(0,0,0,0.1); color:#1a5276; }
-        .brand-text { color:white; font-weight:700; font-size:20px; letter-spacing:-0.5px; }
-        .brand-text span { color:rgba(255,255,255,0.8); }
-        .header-actions { display:flex; align-items:center; gap:8px; }
-        .header-btn { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.15); border:none; color:white; font-size:15px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; cursor:pointer; }
-        .header-btn:active { transform:scale(0.92); background:rgba(255,255,255,0.25); }
-        .user-avatar { width:36px; height:36px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#1a5276; cursor:pointer; border:2px solid rgba(255,255,255,0.3); }
-        .main-content { flex:1; overflow-y:auto; overflow-x:hidden; padding:12px 12px 70px; -webkit-overflow-scrolling:touch; scroll-behavior:smooth; background:#f0f4f8; }
-        .main-content::-webkit-scrollbar { width:3px; }
-        .main-content::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
-        .bottom-nav { position:fixed; bottom:0; left:0; right:0; max-width:430px; margin:0 auto; background:white; border-top:1px solid #dce4ec; padding:4px 0 env(safe-area-inset-bottom); display:flex; justify-content:space-around; align-items:center; z-index:100; box-shadow:0 -2px 10px rgba(0,0,0,0.04); }
-        .nav-item { display:flex; flex-direction:column; align-items:center; gap:1px; background:none; border:none; color:#94a3b8; font-size:9px; padding:4px 8px; cursor:pointer; transition:all 0.3s; position:relative; min-width:44px; }
-        .nav-item i { font-size:20px; transition:all 0.3s; }
-        .nav-item.active { color:#1a5276; }
-        .nav-item.active i { transform:translateY(-2px); }
-        .nav-item.active::before { content:''; position:absolute; top:-4px; left:50%; transform:translateX(-50%); width:20px; height:3px; background:#1a5276; border-radius:3px; }
-        .nav-item:active { transform:scale(0.9); }
-        .view { display:none; animation:fadeSlideUp 0.3s cubic-bezier(0.16,1,0.3,1); }
-        .view.active { display:block; }
-        @keyframes fadeSlideUp { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
-        .glass-card { background:white; border-radius:16px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-        .subject-card { background:white; border-radius:16px; padding:16px 14px 14px; transition:all 0.3s cubic-bezier(0.16,1,0.3,1); cursor:pointer; border:1px solid #dce4ec; position:relative; overflow:hidden; min-height:130px; display:flex; flex-direction:column; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-        .subject-card:active { transform:scale(0.96); }
-        .subject-card .icon-wrapper { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:10px; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,0.08); color:white; position:relative; }
-        .subject-card .icon-wrapper i { font-size:24px; color:white; }
-        .subject-card .subject-name { color:#1a2332; font-weight:700; font-size:14px; line-height:1.2; margin-bottom:2px; }
-        .subject-card .subject-count { color:#94a3b8; font-size:10px; font-weight:500; }
-        .subject-card .check-mark { position:absolute; top:10px; right:10px; width:24px; height:24px; background:#22c55e; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; color:white; box-shadow:0 4px 12px rgba(34,197,94,0.3); }
-        .subject-card .mark-done-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:#1a5276; color:white; font-size:9px; font-weight:700; padding:4px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; border:none; box-shadow:0 2px 8px rgba(26,82,118,0.25); }
-        .subject-card .mark-done-btn:hover { background:#154360; }
-        .subject-card .mark-done-btn:active { transform:scale(0.95); }
-        .subject-card.completed .mark-done-btn { display:none; }
-        .subject-card .mark-done-btn i { margin-right:4px; }
-        .subject-card.locked { opacity:0.6; cursor:not-allowed; position:relative; }
-        .subject-card.locked::after { content:'🔒'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:30px; z-index:10; }
-        .subject-card.locked .icon-wrapper, .subject-card.locked .subject-name, .subject-card.locked .subject-count { filter:blur(2px); }
-        .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
-        .option-btn { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:13px; font-weight:500; transition:all 0.2s; cursor:pointer; width:100%; text-align:left; display:flex; align-items:center; gap:10px; }
-        .option-btn .option-letter { width:26px; height:26px; border-radius:50%; background:#e8edf2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#64748b; flex-shrink:0; }
-        .option-btn:active:not(.disabled) { transform:scale(0.98); }
-        .option-btn.correct { background:rgba(34,197,94,0.08); border-color:#22c55e; }
-        .option-btn.correct .option-letter { background:#22c55e; color:white; }
-        .option-btn.wrong { background:rgba(239,68,68,0.08); border-color:#ef4444; }
-        .option-btn.wrong .option-letter { background:#ef4444; color:white; }
-        .option-btn.selected { border-color:#1a5276; }
-        .option-btn.selected .option-letter { background:#1a5276; color:white; }
-        .option-btn.disabled { cursor:default; opacity:0.7; }
-        .question-card { background:white; border-radius:16px; padding:16px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-        .question-number { color:#94a3b8; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; }
-        .question-text { color:#1a2332; font-size:16px; font-weight:600; line-height:1.5; margin-top:6px; }
-        .progress-track { height:6px; background:#dce4ec; border-radius:4px; overflow:hidden; margin:4px 0; }
-        .progress-fill { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.6s cubic-bezier(0.16,1,0.3,1); }
-        .btn-primary { background:#1a5276; color:white; font-weight:700; padding:14px; border-radius:12px; border:none; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(26,82,118,0.25); }
-        .btn-primary:active { transform:scale(0.96); }
-        .btn-primary:disabled { opacity:0.6; cursor:not-allowed; }
-        .btn-secondary { background:#e8edf2; color:#1a2332; font-weight:600; padding:14px; border-radius:12px; border:1px solid #dce4ec; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
-        .btn-secondary:active { transform:scale(0.96); }
-        .btn-whatsapp { background:linear-gradient(135deg,#25D366,#128C7E); color:white; font-weight:700; padding:14px; border-radius:12px; border:none; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; }
-        .btn-whatsapp:active { transform:scale(0.96); }
-        .btn-whatsapp:disabled { opacity:0.6; cursor:not-allowed; }
-        .input-field { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:14px; width:100%; transition:all 0.3s; outline:none; }
-        .input-field:focus { border-color:#1a5276; box-shadow:0 0 0 3px rgba(26,82,118,0.08); }
-        .input-field::placeholder { color:#94a3b8; }
-        .badge { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
-        .badge-gold { background:rgba(26,82,118,0.1); color:#1a5276; }
-        .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#1a2332; padding:12px 24px; border-radius:12px; color:white; font-size:13px; z-index:500; display:none; max-width:360px; text-align:center; font-weight:500; box-shadow:0 8px 30px rgba(0,0,0,0.2); }
-        .toast.show { display:block; animation:fadeSlideUp 0.3s ease; }
-        .text-gold { color:#1a5276; }
-        .bg-gold { background:#1a5276; }
-        .divider { height:1px; background:#dce4ec; margin:10px 0; }
-        .certificate-card { background:linear-gradient(145deg,#f8fafc,#ffffff); border-radius:20px; padding:28px 20px; border:3px solid #d4af37; position:relative; overflow:hidden; }
-        .certificate-card::before { content:''; position:absolute; inset:6px; border:2px dashed rgba(212,175,55,0.3); border-radius:16px; pointer-events:none; }
-        @media (max-width:430px) { .subject-grid { gap:8px; } .subject-card { padding:12px 10px 10px; min-height:120px; } .subject-card .icon-wrapper { width:44px; height:44px; font-size:20px; } .subject-card .icon-wrapper i { font-size:20px; } .subject-card .subject-name { font-size:13px; } .question-text { font-size:15px; } .option-btn { padding:10px 12px; font-size:12px; } }
-        @media (min-width:431px) { .app-container { border-left:1px solid #dce4ec; border-right:1px solid #dce4ec; box-shadow:0 0 60px rgba(0,0,0,0.06); } }
-        .fab { position:fixed; bottom:72px; right:16px; max-width:430px; margin:0 auto; width:44px; height:44px; border-radius:50%; background:#1a5276; border:none; color:white; font-size:18px; cursor:pointer; box-shadow:0 8px 30px rgba(26,82,118,0.3); display:none; align-items:center; justify-content:center; z-index:50; transition:all 0.3s; }
-        .fab:active { transform:scale(0.9); }
-        .spinner { display:inline-block; width:18px; height:18px; border:3px solid rgba(255,255,255,0.1); border-top-color:#1a5276; border-radius:50%; animation:spin 0.8s linear infinite; }
-        @keyframes spin { to { transform:rotate(360deg); } }
-        .skeleton { background:linear-gradient(90deg,#dce4ec 25%,#e8edf2 50%,#dce4ec 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:16px; }
-        @keyframes shimmer { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
-        .teacher-login-btn { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2); color:white; padding:4px 10px; border-radius:6px; font-size:10px; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; gap:4px; }
-        .teacher-login-btn:active { transform:scale(0.95); background:rgba(255,255,255,0.25); }
-        .teacher-dashboard { background:white; border-radius:16px; padding:16px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-        .teacher-dashboard h2 { color:#1a2332; font-size:18px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
-        .teacher-dashboard h2 i { color:#1a5276; }
-        .profile-card { background:white; border-radius:16px; padding:20px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); text-align:center; }
-        .profile-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#1a5276,#2e86c1); display:flex; align-items:center; justify-content:center; font-size:32px; color:white; margin:0 auto 12px; box-shadow:0 4px 20px rgba(26,82,118,0.3); }
-        .profile-name { font-size:20px; font-weight:700; color:#1a2332; }
-        .profile-username { font-size:14px; color:#94a3b8; }
-        .profile-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px; }
-        .profile-stat { background:#e8edf2; border-radius:10px; padding:10px; text-align:center; }
-        .profile-stat .number { font-size:18px; font-weight:700; color:#1a5276; }
-        .profile-stat .label { font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; }
-        .friend-item { display:flex; align-items:center; gap:12px; padding:12px 14px; background:white; border-radius:12px; border:1px solid #dce4ec; margin-bottom:8px; cursor:pointer; transition:all 0.2s; }
-        .friend-item:active { transform:scale(0.97); background:#f0f4f8; }
-        .friend-avatar { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; color:white; flex-shrink:0; }
-        .friend-info { flex:1; }
-        .friend-name { font-weight:600; color:#1a2332; font-size:14px; }
-        .friend-status { font-size:11px; color:#94a3b8; }
-        .friend-status.online { color:#22c55e; }
-        .friend-status.offline { color:#94a3b8; }
-        .add-friend-btn { background:#1a5276; color:white; border:none; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; cursor:pointer; transition:all 0.2s; }
-        .add-friend-btn:active { transform:scale(0.95); }
-        .add-friend-btn.added { background:#22c55e; }
-        .chat-container { display:flex; flex-direction:column; height:100%; }
-        .chat-header { background:white; padding:12px 16px; border-bottom:1px solid #dce4ec; display:flex; align-items:center; gap:12px; border-radius:16px 16px 0 0; }
-        .chat-back { background:none; border:none; font-size:18px; color:#64748b; cursor:pointer; padding:4px; }
-        .chat-back:active { transform:scale(0.9); }
-        .chat-messages { flex:1; overflow-y:auto; padding:12px 16px; background:#f0f4f8; min-height:300px; max-height:400px; }
-        .chat-messages::-webkit-scrollbar { width:3px; }
-        .chat-messages::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
-        .message { margin-bottom:8px; max-width:80%; padding:10px 14px; border-radius:12px; font-size:13px; line-height:1.4; animation:fadeSlideUp 0.2s ease; }
-        .message.sent { background:#1a5276; color:white; margin-left:auto; border-bottom-right-radius:4px; }
-        .message.received { background:white; color:#1a2332; border:1px solid #dce4ec; border-bottom-left-radius:4px; }
-        .message .time { font-size:9px; opacity:0.7; margin-top:4px; display:block; }
-        .message.sent .time { color:rgba(255,255,255,0.7); }
-        .message.received .time { color:#94a3b8; }
-        .chat-input-area { display:flex; gap:8px; padding:10px 16px; background:white; border-top:1px solid #dce4ec; border-radius:0 0 16px 16px; }
-        .chat-input { flex:1; border:1px solid #dce4ec; border-radius:20px; padding:10px 16px; font-size:13px; outline:none; transition:all 0.2s; }
-        .chat-input:focus { border-color:#1a5276; }
-        .chat-send { background:#1a5276; color:white; border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; flex-shrink:0; }
-        .chat-send:active { transform:scale(0.9); }
-        .chat-send:disabled { opacity:0.5; cursor:not-allowed; }
-        .no-friends { text-align:center; padding:40px 20px; color:#94a3b8; }
-        .no-friends i { font-size:48px; margin-bottom:12px; color:#dce4ec; }
-        .no-friends h3 { color:#1a2332; margin-bottom:4px; }
-        .search-members { display:flex; gap:8px; margin-bottom:12px; }
-        .search-members .input-field { flex:1; padding:10px 14px; font-size:13px; }
-        .search-members .btn-primary { width:auto; padding:10px 16px; font-size:13px; flex-shrink:0; }
-        .member-result { display:flex; align-items:center; gap:12px; padding:12px 14px; background:white; border-radius:12px; border:1px solid #dce4ec; margin-bottom:8px; }
-        .member-avatar { width:40px; height:40px; border-radius:50%; background:#1a5276; display:flex; align-items:center; justify-content:center; font-size:16px; color:white; flex-shrink:0; }
-        .member-info { flex:1; }
-        .member-name { font-weight:600; color:#1a2332; font-size:14px; }
-        .member-status { font-size:11px; color:#94a3b8; }
-        .member-status.online { color:#22c55e; }
-        .member-status.offline { color:#94a3b8; }
-        .no-members { text-align:center; padding:40px 20px; color:#94a3b8; }
-        .no-members i { font-size:48px; margin-bottom:12px; color:#dce4ec; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0f;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+        }
+        .app-container {
+            max-width: 430px;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            margin: 0 auto;
+            background: #0a0a0f;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .app-header {
+            background: transparent;
+            padding: 14px 16px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            z-index: 40;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            color: white;
+        }
+        .brand-text {
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+        }
+        .brand-text span {
+            color: #8b5cf6;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            border: none;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .header-btn:active {
+            transform: scale(0.92);
+        }
+        .user-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: white;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 8px 12px 70px;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        .main-content::-webkit-scrollbar {
+            width: 3px;
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 430px;
+            margin: 0 auto;
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 4px 0 env(safe-area-inset-bottom);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.3);
+            font-size: 9px;
+            padding: 4px 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            min-width: 44px;
+        }
+        .nav-item i {
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        .nav-item.active {
+            color: #8b5cf6;
+        }
+        .nav-item.active i {
+            transform: translateY(-2px);
+        }
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: #8b5cf6;
+            border-radius: 2px;
+        }
+        .nav-item:active {
+            transform: scale(0.9);
+        }
+        .view {
+            display: none;
+            animation: fadeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .view.active {
+            display: block;
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .glass-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+        }
+        .subject-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 16px 14px 14px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+        }
+        .subject-card:active {
+            transform: scale(0.96);
+        }
+        .subject-card .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .subject-card .subject-name {
+            color: #f0f0f0;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+        .subject-card .subject-count {
+            color: rgba(255,255,255,0.3);
+            font-size: 10px;
+            font-weight: 500;
+        }
+        .subject-card .check-mark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(34,197,94,0.3);
+        }
+        .subject-card .mark-done-btn {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(99,102,241,0.2);
+            border: 1px solid rgba(99,102,241,0.3);
+            color: #8b5cf6;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            z-index: 10;
+            backdrop-filter: blur(4px);
+        }
+        .subject-card .mark-done-btn:hover {
+            background: rgba(99,102,241,0.3);
+        }
+        .subject-card .mark-done-btn:active {
+            transform: scale(0.95);
+        }
+        .subject-card.completed .mark-done-btn {
+            display: none;
+        }
+        .subject-card .mark-done-btn i {
+            margin-right: 4px;
+        }
+        .subject-card.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+            position: relative;
+        }
+        .subject-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            z-index: 10;
+        }
+        .subject-card.locked .icon-wrapper,
+        .subject-card.locked .subject-name,
+        .subject-card.locked .subject-count {
+            filter: blur(2px);
+        }
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .option-btn {
+            background: rgba(255,255,255,0.04);
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option-btn .option-letter {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.3);
+            flex-shrink: 0;
+        }
+        .option-btn:active:not(.disabled) {
+            transform: scale(0.98);
+        }
+        .option-btn.correct {
+            background: rgba(34,197,94,0.15);
+            border-color: #22c55e;
+        }
+        .option-btn.correct .option-letter {
+            background: #22c55e;
+            color: white;
+        }
+        .option-btn.wrong {
+            background: rgba(239,68,68,0.15);
+            border-color: #ef4444;
+        }
+        .option-btn.wrong .option-letter {
+            background: #ef4444;
+            color: white;
+        }
+        .option-btn.selected {
+            border-color: #8b5cf6;
+        }
+        .option-btn.selected .option-letter {
+            background: #8b5cf6;
+            color: white;
+        }
+        .option-btn.disabled {
+            cursor: default;
+            opacity: 0.6;
+        }
+        .question-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .question-number {
+            color: rgba(255,255,255,0.3);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .question-text {
+            color: #f0f0f0;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-top: 6px;
+        }
+        .progress-track {
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 4px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 4px;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.25);
+        }
+        .btn-primary:active {
+            transform: scale(0.96);
+        }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.8);
+            font-weight: 600;
+            padding: 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .btn-secondary:active {
+            transform: scale(0.96);
+        }
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-whatsapp:active {
+            transform: scale(0.96);
+        }
+        .btn-whatsapp:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .input-field {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: #f0f0f0;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .input-field:focus {
+            border-color: #8b5cf6;
+            background: rgba(255,255,255,0.08);
+        }
+        .input-field::placeholder {
+            color: rgba(255,255,255,0.2);
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 16px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-gold {
+            background: rgba(99,102,241,0.15);
+            color: #8b5cf6;
+        }
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10,10,15,0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: white;
+            font-size: 13px;
+            z-index: 500;
+            display: none;
+            max-width: 360px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            font-weight: 500;
+        }
+        .toast.show {
+            display: block;
+            animation: fadeSlideUp 0.3s ease;
+        }
+        .text-gold { color: #8b5cf6; }
+        .bg-gold { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 10px 0; }
+        .certificate-card {
+            background: linear-gradient(145deg, #1a1a2e, #0a0a0f);
+            border-radius: 20px;
+            padding: 28px 20px;
+            border: 3px solid #d4af37;
+            position: relative;
+            overflow: hidden;
+        }
+        .certificate-card::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 2px dashed rgba(212,175,55,0.3);
+            border-radius: 16px;
+            pointer-events: none;
+        }
+        @media (max-width: 430px) {
+            .subject-grid { gap: 8px; }
+            .subject-card { padding: 12px 10px 10px; min-height: 120px; }
+            .subject-card .icon-wrapper { width: 40px; height: 40px; font-size: 18px; }
+            .subject-card .subject-name { font-size: 13px; }
+            .question-text { font-size: 15px; }
+            .option-btn { padding: 10px 12px; font-size: 12px; }
+        }
+        @media (min-width: 431px) {
+            .app-container {
+                border-left: 1px solid rgba(255,255,255,0.05);
+                border-right: 1px solid rgba(255,255,255,0.05);
+                box-shadow: 0 0 60px rgba(0,0,0,0.5);
+            }
+        }
+        .fab {
+            position: fixed;
+            bottom: 72px;
+            right: 16px;
+            max-width: 430px;
+            margin: 0 auto;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(99,102,241,0.3);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            transition: all 0.3s;
+        }
+        .fab:active { transform: scale(0.9); }
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: #8b5cf6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 16px;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .teacher-login-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.4);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .teacher-login-btn:active {
+            transform: scale(0.95);
+        }
+        .free-trial-banner {
+            display: none !important;
+        }
+        .teacher-dashboard {
+            background: rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .teacher-dashboard h2 {
+            color: #f0f0f0;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .teacher-dashboard h2 i {
+            color: #8b5cf6;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            color: rgba(255,255,255,0.4);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .form-group .input-field {
+            background: rgba(255,255,255,0.04);
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: #f0f0f0;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .form-group .input-field:focus {
+            border-color: #8b5cf6;
+            background: rgba(255,255,255,0.07);
+        }
+        .form-group .input-field::placeholder {
+            color: rgba(255,255,255,0.2);
+        }
+        .form-group select {
+            background: rgba(255,255,255,0.04);
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 10px 14px;
+            color: #f0f0f0;
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.3)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+        .form-group select:focus {
+            border-color: #8b5cf6;
+            background: rgba(255,255,255,0.07);
+        }
+        .form-group select option {
+            background: #1a1a2e;
+            color: #f0f0f0;
+        }
+        .btn-teacher {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-teacher:active {
+            transform: scale(0.96);
+        }
+        .btn-teacher:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-teacher-secondary {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.6);
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.06);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-teacher-secondary:active {
+            transform: scale(0.96);
+        }
+        .btn-danger {
+            background: rgba(239,68,68,0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.2);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .btn-danger:active {
+            transform: scale(0.96);
+        }
+        .subject-tabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+        .subject-tabs::-webkit-scrollbar {
+            height: 2px;
+        }
+        .subject-tabs::-webkit-scrollbar-thumb {
+            background: rgba(99,102,241,0.3);
+            border-radius: 10px;
+        }
+        .subject-tab {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 6px 14px;
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        .subject-tab.active {
+            background: rgba(99,102,241,0.12);
+            border-color: #8b5cf6;
+            color: #8b5cf6;
+        }
+        .subject-tab:active {
+            transform: scale(0.95);
+        }
+        .stats-box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .stat-card .stat-number {
+            color: #8b5cf6;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .stat-card .stat-label {
+            color: rgba(255,255,255,0.3);
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .search-box {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: #f0f0f0;
+            font-size: 12px;
+            width: 100%;
+            outline: none;
+            margin-bottom: 8px;
+        }
+        .search-box:focus {
+            border-color: #8b5cf6;
+        }
+        .search-box::placeholder {
+            color: rgba(255,255,255,0.2);
+        }
 
-        /* Premium Overlay - Membership */
-        .premium-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); z-index:200; display:none; align-items:center; justify-content:center; padding:16px; max-width:430px; margin:0 auto; left:50%; transform:translateX(-50%); width:100%; height:100vh; height:100dvh; }
-        .premium-overlay.active { display:flex; }
-        .premium-card { background:white; border-radius:24px; padding:28px 20px 24px; width:100%; max-width:380px; border:1px solid #dce4ec; text-align:center; animation:popIn 0.4s cubic-bezier(0.16,1,0.3,1); max-height:94vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.15); }
-        .premium-card::-webkit-scrollbar { width:3px; }
-        .premium-card::-webkit-scrollbar-thumb { background:rgba(26,82,118,0.3); border-radius:10px; }
-        @keyframes popIn { from { opacity:0; transform:scale(0.95) translateY(15px); } to { opacity:1; transform:scale(1) translateY(0); } }
-        .premium-icon-wrapper { width:72px; height:72px; background:linear-gradient(135deg,#1a5276,#2e86c1); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 10px; box-shadow:0 6px 30px rgba(26,82,118,0.2); color:white; }
-        .premium-title { color:#1a2332; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
-        .premium-subtitle { color:#64748b; font-size:13px; margin-top:2px; }
-        .price-container { margin:12px 0 14px; }
-        .price-tag { font-size:44px; font-weight:800; color:#1a5276; line-height:1; }
-        .price-label { color:#94a3b8; font-size:12px; margin-top:2px; }
-        .payment-grid { display:flex; flex-direction:column; gap:8px; margin:12px 0; }
-        .payment-row { background:#e8edf2; border-radius:10px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between; border:1px solid #dce4ec; transition:all 0.2s; cursor:pointer; }
-        .payment-row:active { transform:scale(0.97); background:#dce4ec; }
-        .payment-left { display:flex; align-items:center; gap:10px; min-width:0; }
-        .payment-provider-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
-        .payment-details { text-align:left; min-width:0; }
-        .payment-number { color:#1a2332; font-weight:700; font-size:14px; font-family:'Courier New',monospace; letter-spacing:0.3px; white-space:nowrap; }
-        .payment-provider { color:#94a3b8; font-size:10px; font-weight:500; margin-top:1px; }
-        .copy-btn { background:#dce4ec; border:none; color:#64748b; padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; flex-shrink:0; font-weight:500; }
-        .copy-btn:active { transform:scale(0.92); background:rgba(26,82,118,0.08); color:#1a5276; }
-        .account-name-box { background:rgba(26,82,118,0.04); border:1px solid rgba(26,82,118,0.08); border-radius:10px; padding:10px; margin:10px 0 12px; }
-        .account-name-box .label { color:#94a3b8; font-size:9px; text-transform:uppercase; letter-spacing:0.5px; }
-        .account-name-box .name { color:#1a5276; font-weight:700; font-size:16px; margin-top:2px; }
-        .payment-instruction { color:#64748b; font-size:11px; text-align:center; margin-bottom:12px; line-height:1.4; }
-        .payment-instruction strong { color:#1a2332; font-weight:600; }
+        .progress-container {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .progress-container:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .progress-container .learner-name {
+            color: #8b5cf6;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .progress-container .progress-bar-bg {
+            height: 6px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 6px 0;
+        }
+        .progress-container .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        .progress-container .subject-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 8px;
+            font-weight: 600;
+            margin: 2px 3px 2px 0;
+            background: rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.3);
+        }
+        .progress-container .subject-badge.done {
+            background: rgba(34,197,94,0.12);
+            color: #22c55e;
+        }
+        .progress-container .subject-badge.pending {
+            background: rgba(99,102,241,0.08);
+            color: #8b5cf6;
+        }
+        .progress-container .last-active {
+            color: rgba(255,255,255,0.2);
+            font-size: 9px;
+        }
+        .progress-container .score-badge {
+            background: rgba(99,102,241,0.12);
+            color: #8b5cf6;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .progress-detail {
+            background: rgba(10,10,15,0.95);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            margin-top: 8px;
+            display: none;
+        }
+        .progress-detail.show {
+            display: block;
+            animation: fadeSlideUp 0.3s ease;
+        }
+        .progress-detail .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .progress-detail .detail-row .label {
+            color: rgba(255,255,255,0.3);
+            font-size: 11px;
+        }
+        .progress-detail .detail-row .value {
+            color: #f0f0f0;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .progress-detail .detail-row .value.gold {
+            color: #8b5cf6;
+        }
+        .progress-detail .detail-row .value.green {
+            color: #22c55e;
+        }
 
-        .stats-box { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:12px; }
-        .stat-card { background:#e8edf2; border-radius:10px; padding:10px; text-align:center; border:1px solid #dce4ec; }
-        .stat-card .stat-number { color:#1a5276; font-size:18px; font-weight:700; }
-        .stat-card .stat-label { color:#94a3b8; font-size:8px; text-transform:uppercase; letter-spacing:0.5px; }
-        .subject-tabs { display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:12px; }
-        .subject-tabs::-webkit-scrollbar { height:2px; }
-        .subject-tabs::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
-        .subject-tab { background:#e8edf2; border:1px solid #dce4ec; border-radius:8px; padding:6px 14px; color:#64748b; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; transition:all 0.3s; }
-        .subject-tab.active { background:#1a5276; border-color:#1a5276; color:white; }
-        .subject-tab:active { transform:scale(0.95); }
-        .progress-container { background:#e8edf2; border-radius:10px; padding:12px; margin-bottom:8px; border:1px solid #dce4ec; cursor:pointer; transition:all 0.3s; }
-        .progress-container:hover { background:#dce4ec; }
-        .progress-container .learner-name { color:#1a5276; font-weight:600; font-size:14px; }
-        .progress-container .progress-bar-bg { height:6px; background:#dce4ec; border-radius:4px; overflow:hidden; margin:6px 0; }
-        .progress-container .progress-bar-fill { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.6s ease; }
-        .progress-container .subject-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:8px; font-weight:600; margin:2px 3px 2px 0; background:#dce4ec; color:#64748b; }
-        .progress-container .subject-badge.done { background:rgba(34,197,94,0.1); color:#16a34a; }
-        .progress-container .subject-badge.pending { background:rgba(26,82,118,0.06); color:#1a5276; }
-        .progress-container .last-active { color:#94a3b8; font-size:9px; }
-        .progress-container .score-badge { background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 10px; border-radius:10px; font-size:11px; font-weight:700; }
-        .progress-detail { background:white; border-radius:10px; padding:12px; border:1px solid #dce4ec; margin-top:8px; display:none; }
-        .progress-detail.show { display:block; animation:fadeSlideUp 0.3s ease; }
-        .progress-detail .detail-row { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #e8edf2; }
-        .progress-detail .detail-row .label { color:#94a3b8; font-size:11px; }
-        .progress-detail .detail-row .value { color:#1a2332; font-size:11px; font-weight:600; }
-        .progress-detail .detail-row .value.gold { color:#1a5276; }
-        .progress-detail .detail-row .value.green { color:#16a34a; }
-        .search-box { background:white; border:1px solid #dce4ec; border-radius:8px; padding:6px 12px; color:#1a2332; font-size:12px; width:100%; outline:none; margin-bottom:8px; }
-        .search-box:focus { border-color:#1a5276; box-shadow:0 0 0 3px rgba(26,82,118,0.08); }
-        .search-box::placeholder { color:#94a3b8; }
-        .btn-teacher { background:#1a5276; color:white; font-weight:700; padding:12px; border-radius:12px; border:none; font-size:14px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 4px 15px rgba(26,82,118,0.15); }
-        .btn-teacher:active { transform:scale(0.96); }
-        .btn-teacher:disabled { opacity:0.6; cursor:not-allowed; }
-        .btn-teacher-secondary { background:#e8edf2; color:#1a2332; font-weight:600; padding:8px 14px; border-radius:8px; border:1px solid #dce4ec; font-size:12px; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:6px; }
-        .btn-teacher-secondary:active { transform:scale(0.96); }
-        .btn-danger { background:rgba(239,68,68,0.08); color:#ef4444; border:1px solid rgba(239,68,68,0.15); padding:6px 12px; border-radius:8px; cursor:pointer; transition:all 0.3s; font-size:12px; font-weight:600; }
-        .btn-danger:active { transform:scale(0.96); }
-        .upload-zone { border:2px dashed #dce4ec; border-radius:12px; padding:20px; text-align:center; transition:all 0.3s; cursor:pointer; background:#f0f4f8; }
-        .upload-zone:hover { border-color:#1a5276; background:rgba(26,82,118,0.02); }
-        .upload-zone.dragover { border-color:#1a5276; background:rgba(26,82,118,0.04); }
-        .upload-zone .upload-icon { font-size:40px; color:#94a3b8; margin-bottom:8px; }
-        .upload-zone .upload-text { color:#64748b; font-size:13px; }
-        .upload-zone .upload-text strong { color:#1a5276; }
-        .upload-preview { margin-top:12px; max-height:200px; overflow-y:auto; }
-        .upload-preview table { width:100%; font-size:11px; border-collapse:collapse; }
-        .upload-preview th { color:#94a3b8; text-align:left; padding:4px 6px; border-bottom:1px solid #dce4ec; font-weight:600; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; }
-        .upload-preview td { color:#64748b; padding:4px 6px; border-bottom:1px solid #e8edf2; font-size:11px; }
-        .upload-preview tr:hover td { background:#e8edf2; }
-        .upload-progress { margin-top:10px; height:4px; background:#dce4ec; border-radius:4px; overflow:hidden; display:none; }
-        .upload-progress .progress-bar { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.5s ease; width:0%; }
-        .upload-result { margin-top:10px; padding:10px; border-radius:8px; display:none; }
-        .upload-result.success { display:block; background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.15); }
-        .upload-result.error { display:block; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); }
-        .upload-result .result-text { color:#64748b; font-size:13px; }
-        .upload-result .result-text .count { color:#1a5276; font-weight:700; }
-        .form-group { margin-bottom:10px; }
-        .form-group label { color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:3px; }
-        .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-        .options-grid .input-field { font-size:13px; padding:8px 12px; }
-        .user-item { background:#e8edf2; border-radius:8px; padding:8px 12px; margin-bottom:4px; border:1px solid #dce4ec; display:flex; justify-content:space-between; align-items:center; }
-        .user-item .user-info { color:#1a2332; font-size:12px; }
-        .user-item .user-info .username { font-weight:600; color:#1a5276; }
-        .user-item .user-info .user-pass { color:#94a3b8; font-size:11px; margin-left:8px; font-family:'Courier New',monospace; }
-        .user-item .user-info .user-date { color:#94a3b8; font-size:10px; margin-left:8px; }
-        .user-item .user-delete { color:#94a3b8; cursor:pointer; padding:4px 8px; border-radius:6px; transition:all 0.2s; }
-        .user-item .user-delete:active { background:rgba(239,68,68,0.08); color:#ef4444; }
+        .user-item {
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            border: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-item .user-info {
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+        }
+        .user-item .user-info .username {
+            font-weight: 600;
+            color: #8b5cf6;
+        }
+        .user-item .user-info .user-pass {
+            color: rgba(255,255,255,0.3);
+            font-size: 11px;
+            margin-left: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .user-item .user-info .user-date {
+            color: rgba(255,255,255,0.2);
+            font-size: 10px;
+            margin-left: 8px;
+        }
+        .user-item .user-delete {
+            color: rgba(255,255,255,0.2);
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .user-item .user-delete:active {
+            background: rgba(239,68,68,0.15);
+            color: #ef4444;
+        }
+
+        .premium-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            max-width: 430px;
+            margin: 0 auto;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+        }
+        .premium-overlay.active {
+            display: flex;
+        }
+        .premium-card {
+            background: linear-gradient(145deg, #1a1a2e, #0a0a0f);
+            border-radius: 24px;
+            padding: 28px 20px 24px;
+            width: 100%;
+            max-width: 380px;
+            border: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 94vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .premium-card::-webkit-scrollbar {
+            width: 3px;
+        }
+        .premium-card::-webkit-scrollbar-thumb {
+            background: rgba(99,102,241,0.3);
+            border-radius: 10px;
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95) translateY(15px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .premium-icon-wrapper {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 10px;
+            box-shadow: 0 6px 30px rgba(99,102,241,0.2);
+            color: white;
+        }
+        .premium-title {
+            color: #f0f0f0;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .premium-subtitle {
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+            margin-top: 2px;
+        }
+        .price-container {
+            margin: 12px 0 14px;
+        }
+        .price-tag {
+            font-size: 44px;
+            font-weight: 800;
+            color: #8b5cf6;
+            line-height: 1;
+        }
+        .price-label {
+            color: rgba(255,255,255,0.3);
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        .payment-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .payment-row {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .payment-row:active {
+            transform: scale(0.97);
+            background: rgba(255,255,255,0.06);
+        }
+        .payment-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+        .payment-provider-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .payment-details {
+            text-align: left;
+            min-width: 0;
+        }
+        .payment-number {
+            color: #f0f0f0;
+            font-weight: 700;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+        .payment-provider {
+            color: rgba(255,255,255,0.3);
+            font-size: 10px;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+        .copy-btn {
+            background: rgba(255,255,255,0.06);
+            border: none;
+            color: rgba(255,255,255,0.4);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+            font-weight: 500;
+        }
+        .copy-btn:active {
+            transform: scale(0.92);
+            background: rgba(99,102,241,0.15);
+            color: #8b5cf6;
+        }
+        .account-name-box {
+            background: rgba(99,102,241,0.06);
+            border: 1px solid rgba(99,102,241,0.08);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0 12px;
+        }
+        .account-name-box .label {
+            color: rgba(255,255,255,0.3);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .account-name-box .name {
+            color: #8b5cf6;
+            font-weight: 700;
+            font-size: 16px;
+            margin-top: 2px;
+        }
+        .payment-instruction {
+            color: rgba(255,255,255,0.4);
+            font-size: 11px;
+            text-align: center;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .payment-instruction strong {
+            color: #f0f0f0;
+            font-weight: 600;
+        }
+
+        /* Friend & Chat Styles */
+        .friend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .friend-item:active {
+            transform: scale(0.97);
+            background: rgba(255,255,255,0.05);
+        }
+        .friend-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .friend-info {
+            flex: 1;
+        }
+        .friend-name {
+            font-weight: 600;
+            color: #f0f0f0;
+            font-size: 14px;
+        }
+        .friend-status {
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+        }
+        .friend-status.online {
+            color: #22c55e;
+        }
+        .friend-status.offline {
+            color: rgba(255,255,255,0.2);
+        }
+        .add-friend-btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .add-friend-btn:active {
+            transform: scale(0.95);
+        }
+        .add-friend-btn.added {
+            background: #22c55e;
+        }
+        .no-friends {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.3);
+        }
+        .no-friends i {
+            font-size: 48px;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.06);
+        }
+        .no-friends h3 {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 4px;
+        }
+        .member-result {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.04);
+            margin-bottom: 8px;
+        }
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .member-info {
+            flex: 1;
+        }
+        .member-name {
+            font-weight: 600;
+            color: #f0f0f0;
+            font-size: 14px;
+        }
+        .member-status {
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+        }
+        .member-status.online {
+            color: #22c55e;
+        }
+        .member-status.offline {
+            color: rgba(255,255,255,0.2);
+        }
+        .no-members {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.3);
+        }
+        .no-members i {
+            font-size: 48px;
+            margin-bottom: 12px;
+            color: rgba(255,255,255,0.06);
+        }
+        .search-members {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .search-members .input-field {
+            flex: 1;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+        .search-members .btn-primary {
+            width: auto;
+            padding: 10px 16px;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .chat-header {
+            background: rgba(255,255,255,0.04);
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 16px 16px 0 0;
+        }
+        .chat-back {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            padding: 4px;
+        }
+        .chat-back:active {
+            transform: scale(0.9);
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.02);
+            min-height: 300px;
+            max-height: 400px;
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 3px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(99,102,241,0.3);
+            border-radius: 10px;
+        }
+        .message {
+            margin-bottom: 8px;
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            animation: fadeSlideUp 0.2s ease;
+        }
+        .message.sent {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        .message.received {
+            background: rgba(255,255,255,0.06);
+            color: #f0f0f0;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-bottom-left-radius: 4px;
+        }
+        .message .time {
+            font-size: 9px;
+            opacity: 0.6;
+            margin-top: 4px;
+            display: block;
+        }
+        .message.sent .time {
+            color: rgba(255,255,255,0.6);
+        }
+        .message.received .time {
+            color: rgba(255,255,255,0.3);
+        }
+        .chat-input-area {
+            display: flex;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.03);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-radius: 0 0 16px 16px;
+        }
+        .chat-input {
+            flex: 1;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 10px 16px;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+            background: rgba(255,255,255,0.04);
+            color: #f0f0f0;
+        }
+        .chat-input:focus {
+            border-color: #8b5cf6;
+        }
+        .chat-input::placeholder {
+            color: rgba(255,255,255,0.2);
+        }
+        .chat-send {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .chat-send:active {
+            transform: scale(0.9);
+        }
+        .chat-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .profile-card {
+            background: rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+        }
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin: 0 auto 12px;
+            box-shadow: 0 4px 20px rgba(99,102,241,0.2);
+        }
+        .profile-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f0f0f0;
+        }
+        .profile-username {
+            font-size: 14px;
+            color: rgba(255,255,255,0.3);
+        }
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .profile-stat {
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+        .profile-stat .number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #8b5cf6;
+        }
+        .profile-stat .label {
+            font-size: 9px;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .upload-zone {
+            border: 2px dashed rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(255,255,255,0.02);
+        }
+        .upload-zone:hover {
+            border-color: rgba(99,102,241,0.3);
+            background: rgba(255,255,255,0.04);
+        }
+        .upload-zone.dragover {
+            border-color: #8b5cf6;
+            background: rgba(99,102,241,0.06);
+        }
+        .upload-zone .upload-icon {
+            font-size: 40px;
+            color: rgba(255,255,255,0.1);
+            margin-bottom: 8px;
+        }
+        .upload-zone .upload-text {
+            color: rgba(255,255,255,0.3);
+            font-size: 13px;
+        }
+        .upload-zone .upload-text strong {
+            color: #8b5cf6;
+        }
+        .upload-preview {
+            margin-top: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .upload-preview table {
+            width: 100%;
+            font-size: 11px;
+            border-collapse: collapse;
+        }
+        .upload-preview th {
+            color: rgba(255,255,255,0.3);
+            text-align: left;
+            padding: 4px 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .upload-preview td {
+            color: rgba(255,255,255,0.5);
+            padding: 4px 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            font-size: 11px;
+        }
+        .upload-preview tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+        .upload-progress {
+            margin-top: 10px;
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+            display: none;
+        }
+        .upload-progress .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        .upload-result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        .upload-result.success {
+            display: block;
+            background: rgba(34,197,94,0.08);
+            border: 1px solid rgba(34,197,94,0.12);
+        }
+        .upload-result.error {
+            display: block;
+            background: rgba(239,68,68,0.08);
+            border: 1px solid rgba(239,68,68,0.12);
+        }
+        .upload-result .result-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+        }
+        .upload-result .result-text .count {
+            color: #8b5cf6;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -275,28 +1580,28 @@
         <div class="view active" id="loginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-purple-500/20">
                         <i class="fas fa-user-graduate text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-2xl font-bold text-[#1a2332]">Welcome Back!</h2>
-                    <p class="text-gray-500 text-xs mt-1">Sign in to continue learning</p>
+                    <h2 class="text-white text-xl font-bold">Welcome Back!</h2>
+                    <p class="text-white/40 text-xs mt-1">Sign in to continue learning</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Username</label>
+                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Username</label>
                         <input id="loginUsername" type="text" placeholder="Enter username" class="input-field mt-1" />
                     </div>
                     <div>
-                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Password</label>
+                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Password</label>
                         <input id="loginPassword" type="password" placeholder="Enter password" class="input-field mt-1" />
                     </div>
                     <button onclick="login()" class="btn-primary mt-2" id="loginBtn">
                         <i class="fas fa-arrow-right"></i> Sign In
                     </button>
                     <div class="text-center mt-3">
-                        <p class="text-gray-500 text-xs">
+                        <p class="text-white/40 text-xs">
                             New to NorthernQuiz? 
-                            <span class="text-blue-700 font-semibold cursor-pointer" onclick="showRegister()">Create Account</span>
+                            <span class="text-purple-400 font-semibold cursor-pointer" onclick="showRegister()">Create Account</span>
                         </p>
                     </div>
                 </div>
@@ -307,28 +1612,28 @@
         <div class="view" id="registerView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-purple-500/20">
                         <i class="fas fa-user-plus text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-2xl font-bold text-[#1a2332]">Create Account</h2>
-                    <p class="text-gray-500 text-xs mt-1">Join NorthernQuiz for K10 membership</p>
+                    <h2 class="text-white text-xl font-bold">Create Account</h2>
+                    <p class="text-white/40 text-xs mt-1">Join NorthernQuiz</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Choose Username</label>
+                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Choose Username</label>
                         <input id="registerUsername" type="text" placeholder="Choose a username" class="input-field mt-1" />
                     </div>
                     <div>
-                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Choose Password</label>
+                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Choose Password</label>
                         <input id="registerPassword" type="password" placeholder="Choose a password" class="input-field mt-1" />
                     </div>
                     <button onclick="register()" class="btn-primary mt-2" id="registerBtn">
-                        <i class="fas fa-user-plus"></i> Create Account (K10)
+                        <i class="fas fa-user-plus"></i> Create Account
                     </button>
                     <div class="text-center mt-3">
-                        <p class="text-gray-500 text-xs">
+                        <p class="text-white/40 text-xs">
                             Already have an account? 
-                            <span class="text-blue-700 font-semibold cursor-pointer" onclick="showLogin()">Sign In</span>
+                            <span class="text-purple-400 font-semibold cursor-pointer" onclick="showLogin()">Sign In</span>
                         </p>
                     </div>
                 </div>
@@ -339,19 +1644,19 @@
         <div class="view" id="teacherLoginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-purple-500/20">
                         <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-2xl font-bold text-[#1a2332]">Teacher Login</h2>
-                    <p class="text-gray-500 text-xs mt-1">Manage students, subjects &amp; questions</p>
+                    <h2 class="text-white text-xl font-bold">Teacher Login</h2>
+                    <p class="text-white/40 text-xs mt-1">Manage students, subjects &amp; questions</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
+                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
                         <input id="teacherUsername" type="text" placeholder="Enter teacher username" class="input-field mt-1" value="teacher" />
                     </div>
                     <div>
-                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
+                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
                         <input id="teacherPassword" type="password" placeholder="Enter teacher password" class="input-field mt-1" value="teacher123" />
                     </div>
                     <button onclick="teacherLogin()" class="btn-primary mt-2" id="teacherLoginBtn">
@@ -368,10 +1673,10 @@
         <div class="view" id="subjectsView">
             <div class="flex items-center justify-between mb-3">
                 <div>
-                    <h2 class="text-xl font-bold text-[#1a2332]">My Subjects</h2>
-                    <p class="text-gray-500 text-xs" id="progressText">0 of 0 completed</p>
+                    <h2 class="text-white text-lg font-bold">My Subjects</h2>
+                    <p class="text-white/40 text-xs" id="progressText">0 of 0 completed</p>
                 </div>
-                <span class="badge badge-gold"><i class="fas fa-star"></i> Premium</span>
+                <span class="badge badge-gold"><i class="fas fa-star"></i> Free</span>
             </div>
             <div class="progress-track mb-3">
                 <div class="progress-fill" id="progressBar" style="width:0%"></div>
@@ -422,10 +1727,10 @@
         <div class="view" id="friendsView">
             <div class="flex items-center justify-between mb-3">
                 <div>
-                    <h2 class="text-xl font-bold text-[#1a2332]">My Friends</h2>
-                    <p class="text-gray-500 text-xs">Connect with other learners</p>
+                    <h2 class="text-white text-lg font-bold">My Friends</h2>
+                    <p class="text-white/40 text-xs">Connect with other learners</p>
                 </div>
-                <button onclick="showView('profileView')" class="text-gray-500 hover:text-gray-700 transition">
+                <button onclick="showView('profileView')" class="text-white/40 hover:text-white transition">
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
             </div>
@@ -453,7 +1758,7 @@
                         <i class="fas fa-arrow-left"></i>
                     </button>
                     <div style="flex:1;">
-                        <div style="font-weight:600; color:#1a2332;" id="chatFriendName">Friend</div>
+                        <div style="font-weight:600; color:#f0f0f0;" id="chatFriendName">Friend</div>
                         <div style="font-size:11px; color:#22c55e;" id="chatFriendStatus">Online</div>
                     </div>
                     <div class="profile-avatar" style="width:36px; height:36px; font-size:16px;">
@@ -475,11 +1780,11 @@
         <!-- QUIZ VIEW -->
         <div class="view" id="quizView">
             <div class="flex items-center justify-between mb-3">
-                <button onclick="goToSubjects()" class="text-gray-500 hover:text-gray-700 transition">
+                <button onclick="goToSubjects()" class="text-white/40 hover:text-white transition">
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
-                <span class="text-gray-500 text-xs" id="quizSubjectTitle">ICT</span>
-                <span class="text-gray-500 text-xs" id="questionCounter">1/1</span>
+                <span class="text-white/40 text-xs" id="quizSubjectTitle">ICT</span>
+                <span class="text-white/40 text-xs" id="questionCounter">1/1</span>
             </div>
             <div class="question-card">
                 <div class="flex items-center justify-between">
@@ -501,13 +1806,13 @@
                     <div class="text-5xl mb-2">🇿🇲</div>
                     <h2 class="text-xl font-bold text-gray-800">Certificate of Completion</h2>
                     <div class="divider"></div>
-                    <p class="text-gray-600 text-xs">This certifies that</p>
-                    <p class="text-2xl font-bold text-blue-700 mt-2" id="certUsername">Student</p>
-                    <p class="text-gray-600 text-xs mt-1">has successfully completed all subjects</p>
+                    <p class="text-gray-400 text-xs">This certifies that</p>
+                    <p class="text-2xl font-bold text-purple-400 mt-2" id="certUsername">Student</p>
+                    <p class="text-gray-400 text-xs mt-1">has successfully completed all subjects</p>
                     <div class="divider"></div>
-                    <div class="flex justify-around text-xs text-gray-500">
-                        <div><p>Date</p><p class="font-bold text-gray-700" id="certDate">2026-08-09</p></div>
-                        <div><p>Score</p><p class="font-bold text-gray-700" id="certScore">100%</p></div>
+                    <div class="flex justify-around text-xs text-gray-400">
+                        <div><p>Date</p><p class="font-bold text-gray-300" id="certDate">2026-08-09</p></div>
+                        <div><p>Score</p><p class="font-bold text-gray-300" id="certScore">100%</p></div>
                     </div>
                     <div class="divider"></div>
                     <div class="flex gap-2">
@@ -565,8 +1870,8 @@
 
                 <div id="teacherProgressTab">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#1a5276;"></i> Learner Progress</h3>
-                        <span style="color:#94a3b8;font-size:10px;">Click a learner for details</span>
+                        <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#8b5cf6;"></i> Learner Progress</h3>
+                        <span style="color:rgba(255,255,255,0.2);font-size:10px;">Click a learner for details</span>
                     </div>
                     <input id="progressSearch" type="text" placeholder="🔍 Search learners..." oninput="filterProgress()" class="search-box" />
                     <div id="progressList" style="max-height:400px;overflow-y:auto;"></div>
@@ -574,19 +1879,19 @@
 
                 <div id="teacherStudentsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#1a5276;"></i> Student Accounts</h3>
-                        <button onclick="showAddStudentForm()" style="background:#1a5276;color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
+                        <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#8b5cf6;"></i> Student Accounts</h3>
+                        <button onclick="showAddStudentForm()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
                             <i class="fas fa-user-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#1a5276;"></i> Create Student Account</h4>
+                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
+                        <h4 style="color:#f0f0f0;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#8b5cf6;"></i> Create Student Account</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
+                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
                             <input id="studentUsername" type="text" placeholder="Enter username" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
+                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
                             <input id="studentPassword" type="text" placeholder="Enter password" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="display:flex;gap:8px;">
@@ -604,29 +1909,29 @@
 
                 <div id="teacherSubjectsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#1a5276;"></i> Subjects</h3>
-                        <button onclick="showAddSubjectForm()" style="background:#1a5276;color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
+                        <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#8b5cf6;"></i> Subjects</h3>
+                        <button onclick="showAddSubjectForm()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#1a5276;"></i> New Subject</h4>
+                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
+                        <h4 style="color:#f0f0f0;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#8b5cf6;"></i> New Subject</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
+                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
                             <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
+                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
                             <div style="display:flex;gap:8px;">
                                 <input id="subjectIcon" type="text" placeholder="fa-atom" class="input-field" style="padding:8px 12px;font-size:13px;flex:1;" />
-                                <button onclick="pickIcon()" style="background:#dce4ec;color:#64748b;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid #dce4ec;font-size:12px;cursor:pointer;">
+                                <button onclick="pickIcon()" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);font-size:12px;cursor:pointer;">
                                     <i class="fas fa-random"></i>
                                 </button>
                             </div>
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
-                            <input id="subjectColor" type="text" placeholder="from-blue-500 to-blue-700" class="input-field" style="padding:8px 12px;font-size:13px;" />
+                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
+                            <input id="subjectColor" type="text" placeholder="from-purple-500 to-purple-700" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="display:flex;gap:8px;">
                             <button onclick="addSubject()" class="btn-teacher" style="flex:1;padding:8px;font-size:13px;">
@@ -641,21 +1946,21 @@
                 </div>
 
                 <div id="teacherQuestionsTab" style="display:none;">
-                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#1a5276;"></i> Manage Questions</h3>
+                    <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#8b5cf6;"></i> Manage Questions</h3>
                     <div style="margin-bottom:8px;">
-                        <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
-                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
+                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 12px;color:#f0f0f0;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
-                    <div style="margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#1a5276;"></i> Add Question</h4>
+                    <div style="margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
+                        <h4 style="color:#f0f0f0;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#8b5cf6;"></i> Add Question</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
+                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
                             <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
+                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
                             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                                 <input id="optionA" type="text" placeholder="A" class="input-field" style="padding:6px 10px;font-size:12px;" />
                                 <input id="optionB" type="text" placeholder="B" class="input-field" style="padding:6px 10px;font-size:12px;" />
@@ -664,8 +1969,8 @@
                             </div>
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
-                            <select id="correctAnswer" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
+                            <select id="correctAnswer" style="background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 12px;color:#f0f0f0;font-size:13px;width:100%;outline:none;appearance:none;">
                                 <option value="0">A</option>
                                 <option value="1">B</option>
                                 <option value="2">C</option>
@@ -680,29 +1985,29 @@
                 </div>
 
                 <div id="teacherUploadTab" style="display:none;">
-                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#1a5276;"></i> Bulk Upload Questions</h3>
-                    <div style="margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
-                        <p style="color:#64748b;font-size:11px;margin-bottom:8px;">
-                            <i class="fas fa-info-circle" style="color:#1a5276;"></i>
+                    <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#8b5cf6;"></i> Bulk Upload Questions</h3>
+                    <div style="margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.04);">
+                        <p style="color:rgba(255,255,255,0.3);font-size:11px;margin-bottom:8px;">
+                            <i class="fas fa-info-circle" style="color:#8b5cf6;"></i>
                             Upload a CSV file with your questions. The format should be:
                         </p>
-                        <div style="background:#dce4ec;border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:#64748b;overflow-x:auto;white-space:nowrap;">
+                        <div style="background:rgba(255,255,255,0.03);border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:rgba(255,255,255,0.3);overflow-x:auto;white-space:nowrap;">
                             question,option_a,option_b,option_c,option_d,correct_answer
                             <br/>What is 5+3?,4,5,8,10,C
                             <br/>What is the capital of Zambia?,Lusaka,Ndola,Kitwe,Livingstone,A
                         </div>
                         <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-                            <button onclick="downloadTemplate()" style="background:rgba(26,82,118,0.08);color:#1a5276;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(26,82,118,0.1);font-size:11px;cursor:pointer;">
+                            <button onclick="downloadTemplate()" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);font-size:11px;cursor:pointer;">
                                 <i class="fas fa-download"></i> Download Template
                             </button>
-                            <span style="color:#94a3b8;font-size:10px;display:flex;align-items:center;">
+                            <span style="color:rgba(255,255,255,0.2);font-size:10px;display:flex;align-items:center;">
                                 Correct answer: A, B, C, or D
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Select Subject</label>
-                        <select id="uploadSubjectSelect" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <select id="uploadSubjectSelect" style="background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 12px;color:#f0f0f0;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
@@ -745,30 +2050,30 @@
         </button>
     </div>
 
-    <!-- PREMIUM/MEMBERSHIP POPUP -->
+    <!-- PREMIUM POPUP -->
     <div class="premium-overlay" id="premiumOverlay">
         <div class="premium-card">
             <div class="premium-icon-wrapper"><i class="fas fa-crown"></i></div>
             <h3 class="premium-title">Unlock Full Access! 🎓</h3>
             <p class="premium-subtitle" id="premiumSubtitle">Pay K10 to access all subjects</p>
-            <div class="trial-complete-banner" style="background:linear-gradient(135deg,rgba(26,82,118,0.06),rgba(26,82,118,0.02));border:1px solid rgba(26,82,118,0.08);border-radius:10px;padding:12px;margin-bottom:14px;">
-                <div class="trial-title" style="color:#1a5276;font-weight:700;font-size:14px;">🎯 K10 Membership Required</div>
-                <div class="trial-text" style="color:#64748b;font-size:12px;margin-top:4px;">Pay K10 to unlock all subjects, track progress, and get your certificate!</div>
+            <div class="trial-complete-banner" style="background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(99,102,241,0.02));border:1px solid rgba(99,102,241,0.08);border-radius:10px;padding:12px;margin-bottom:14px;">
+                <div class="trial-title" style="color:#8b5cf6;font-weight:700;font-size:14px;">🎯 K10 Membership Required</div>
+                <div class="trial-text" style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px;">Pay K10 to unlock all subjects, track progress, and get your certificate!</div>
             </div>
             <div class="price-container">
                 <span class="price-tag">K10</span>
                 <p class="price-label">One-time payment · Lifetime access</p>
             </div>
-            <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1);border-radius:10px;padding:10px;margin-bottom:12px;">
-                <p style="color:#64748b;font-size:12px;">
-                    <i class="fas fa-info-circle" style="color:#1a5276;"></i>
-                    <strong>Pay via mobile money below</strong>, then WhatsApp your username and password to the teacher.
+            <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.08);border-radius:10px;padding:10px;margin-bottom:12px;">
+                <p style="color:rgba(255,255,255,0.4);font-size:12px;">
+                    <i class="fas fa-info-circle" style="color:#8b5cf6;"></i>
+                    <strong>Pay via mobile money below</strong>, then click "I've Paid" to activate instantly.
                 </p>
             </div>
             <div class="payment-grid">
                 <div class="payment-row" onclick="copyNumber('+260971130511')">
                     <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(26,82,118,0.08);color:#1a5276;"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="payment-provider-icon" style="background:rgba(99,102,241,0.08);color:#8b5cf6;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
                             <div class="payment-number">+260 971 130 511</div>
                             <div class="payment-provider">MTN / Airtel</div>
@@ -801,12 +2106,15 @@
                 <div class="label">Account Name</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
-            <p class="payment-instruction" style="color:#64748b;font-size:12px;margin-bottom:8px;">
+            <button onclick="activateMembership()" class="btn-primary" style="margin-bottom:10px; background:linear-gradient(135deg,#22c55e,#16a34a); box-shadow:0 4px 20px rgba(34,197,94,0.25);">
+                <i class="fas fa-check-circle"></i> ✅ I've Paid - Activate Now
+            </button>
+            <p class="payment-instruction" style="color:rgba(255,255,255,0.3);font-size:11px;text-align:center;margin-bottom:8px;">
                 <i class="fas fa-whatsapp" style="color:#25D366;"></i>
-                After payment, send <strong>Username &amp; Password</strong> via WhatsApp to <strong style="color:#25D366;">+260 966 011 066</strong>
+                Or send payment confirmation via WhatsApp to <strong style="color:#25D366;">+260 966 011 066</strong>
             </p>
-            <button onclick="openWhatsApp()" class="btn-whatsapp">
-                <i class="fab fa-whatsapp"></i> Send WhatsApp Message
+            <button onclick="openWhatsApp()" class="btn-whatsapp" style="margin-top:0px;">
+                <i class="fab fa-whatsapp"></i> WhatsApp Teacher
             </button>
             <button onclick="closePremiumPopup()" class="btn-secondary" style="margin-top:8px;">
                 <i class="fas fa-times"></i> Close
@@ -899,14 +2207,16 @@
 
     function getSubjectColor(name) {
         const colors = [
-            'from-blue-500 to-blue-700',
-            'from-blue-400 to-blue-600',
+            'from-purple-500 to-purple-700',
             'from-indigo-500 to-indigo-700',
+            'from-violet-500 to-violet-700',
+            'from-fuchsia-500 to-fuchsia-700',
+            'from-blue-500 to-blue-700',
             'from-cyan-500 to-cyan-700',
-            'from-sky-500 to-sky-700',
-            'from-blue-600 to-blue-800',
-            'from-indigo-400 to-indigo-600',
-            'from-cyan-400 to-cyan-600'
+            'from-pink-500 to-pink-700',
+            'from-rose-500 to-rose-700',
+            'from-emerald-500 to-emerald-700',
+            'from-teal-500 to-teal-700'
         ];
         let hash = 0;
         for (let i = 0; i < name.length; i++) {
@@ -926,23 +2236,19 @@
 
     function checkMembership() {
         if (!currentUser) return false;
-        // Check if user has paid membership in localStorage
         const membershipStatus = localStorage.getItem(`membership_${currentUser.id}`);
         if (membershipStatus === 'paid') {
             isPremium = true;
             return true;
         }
-        // Check if user object has premium flag
         if (currentUser.is_premium === true) {
             isPremium = true;
             return true;
         }
-        // Check if user is teacher
         if (currentUser.role === 'teacher') {
             isPremium = true;
             return true;
         }
-        // If already set in this session
         if (isPremium) {
             return true;
         }
@@ -954,17 +2260,15 @@
             showToast('Please login first', 'error');
             return;
         }
-        // Set premium in localStorage
         localStorage.setItem(`membership_${currentUser.id}`, 'paid');
-        // Update user object
         currentUser.is_premium = true;
         localStorage.setItem('quizUser', JSON.stringify(currentUser));
         isPremium = true;
-        showToast('✅ Membership activated! All subjects unlocked.', 'success');
+        showToast('✅ Membership Activated! All subjects are now unlocked!', 'success');
         closePremiumPopup();
-        // Refresh subjects to remove locks
         renderSubjects();
         updateProgress();
+        updateProfile();
     }
 
     function openWhatsApp() {
@@ -975,7 +2279,6 @@
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(url, '_blank');
         showToast('📱 Opening WhatsApp... Send your username & password', 'info');
-        // Simulate activation after WhatsApp is sent
         setTimeout(() => {
             if (currentUser) {
                 activateMembership();
@@ -1029,7 +2332,7 @@
             if (exists) {
                 showToast('Username already exists. Please choose another.', 'error');
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (K10)';
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
                 return;
             }
             
@@ -1038,16 +2341,13 @@
                 currentUser = { username: newUser.username, password: newUser.password, id: newUser.id, role: newUser.role || 'student', is_premium: false };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
-                showToast(`🎉 Welcome, ${username}! Please pay K10 to activate your account.`, 'success');
+                showToast(`🎉 Welcome, ${username}!`, 'success');
                 showView('subjectsView');
                 renderSubjects();
                 updateProgress();
                 updateProfile();
                 loadFriends();
                 loadChats();
-                setTimeout(() => {
-                    showPremiumPopup();
-                }, 1000);
             } else {
                 showToast('Error creating account. Please try again.', 'error');
             }
@@ -1056,7 +2356,7 @@
         }
         
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (K10)';
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
     }
 
     async function login() {
@@ -1086,7 +2386,6 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                // Check membership
                 const hasMembership = checkMembership();
                 if (!hasMembership && currentUser.role !== 'teacher') {
                     setTimeout(() => {
@@ -1290,7 +2589,7 @@
             const statusText = friend.online ? 'Online' : 'Offline';
             html += `
                 <div class="friend-item" onclick="openChat('${friend.id}')">
-                    <div class="friend-avatar" style="background:${friend.color || '#1a5276'}">
+                    <div class="friend-avatar" style="background:${friend.color || 'linear-gradient(135deg, #6366f1, #8b5cf6)'}">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="friend-info">
@@ -1311,7 +2610,7 @@
         const resultsContainer = document.getElementById('memberSearchResults');
         
         if (!searchTerm) {
-            resultsContainer.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">Enter a name to search</div>';
+            resultsContainer.innerHTML = '<div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px 0;font-size:13px;">Enter a name to search</div>';
             return;
         }
         
@@ -1333,7 +2632,7 @@
             return;
         }
         
-        let html = `<div style="margin-top:8px;"><h3 style="color:#1a2332;font-size:14px;font-weight:600;margin-bottom:8px;">Found ${availableUsers.length} learner${availableUsers.length > 1 ? 's' : ''}</h3></div>`;
+        let html = `<div style="margin-top:8px;"><h3 style="color:#f0f0f0;font-size:14px;font-weight:600;margin-bottom:8px;">Found ${availableUsers.length} learner${availableUsers.length > 1 ? 's' : ''}</h3></div>`;
         availableUsers.forEach(user => {
             const isFriend = friends.find(f => f.id === user.id);
             const status = user.online ? 'online' : 'offline';
@@ -1341,7 +2640,7 @@
             
             html += `
                 <div class="member-result">
-                    <div class="member-avatar" style="background:#1a5276;">
+                    <div class="member-avatar">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="member-info">
@@ -1373,7 +2672,7 @@
             id: userId,
             username: username,
             online: true,
-            color: '#1a5276'
+            color: 'linear-gradient(135deg, #6366f1, #8b5cf6)'
         };
         friends.push(newFriend);
         localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
@@ -1414,7 +2713,7 @@
         if (!currentChatFriend) return;
         document.getElementById('chatFriendName').textContent = currentChatFriend.username;
         document.getElementById('chatFriendStatus').textContent = currentChatFriend.online ? 'Online' : 'Offline';
-        document.getElementById('chatFriendStatus').style.color = currentChatFriend.online ? '#22c55e' : '#94a3b8';
+        document.getElementById('chatFriendStatus').style.color = currentChatFriend.online ? '#22c55e' : 'rgba(255,255,255,0.2)';
         showView('chatView');
         renderChatMessages();
     }
@@ -1425,8 +2724,8 @@
         const messages = chatMessages[chatId] || [];
         if (messages.length === 0) {
             container.innerHTML = `
-                <div style="text-align:center; padding:40px 0; color:#94a3b8;">
-                    <i class="fas fa-comment-dots" style="font-size:32px; display:block; margin-bottom:8px; color:#dce4ec;"></i>
+                <div style="text-align:center; padding:40px 0; color:rgba(255,255,255,0.2);">
+                    <i class="fas fa-comment-dots" style="font-size:32px; display:block; margin-bottom:8px; color:rgba(255,255,255,0.04);"></i>
                     <p>No messages yet</p>
                     <p style="font-size:11px;">Say hello to ${currentChatFriend.username}!</p>
                 </div>
@@ -1541,16 +2840,16 @@
     function showToast(message, type = 'info') {
         const toast = document.getElementById('toast');
         toast.textContent = message;
-        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
-                               type === 'success' ? 'rgba(34,197,94,0.95)' : 
-                               '#1a2332';
+        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.9)' : 
+                               type === 'success' ? 'rgba(34,197,94,0.9)' : 
+                               'rgba(10,10,15,0.95)';
         toast.classList.add('show');
         clearTimeout(toast._timeout);
         toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
     }
 
     function showHelp() { 
-        showToast('🎯 Pay K10 to unlock all subjects, track progress, and get your certificate!', 'info'); 
+        showToast('🎯 All subjects are FREE! Login to track your progress.', 'info'); 
     }
 
     function toggleUserMenu() {
@@ -1788,7 +3087,7 @@
         const filtered = students.filter(u => u.username.toLowerCase().includes(searchTerm));
         
         if (filtered.length === 0) {
-            container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
+            container.innerHTML = `<div style="color:rgba(255,255,255,0.2);text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
             document.getElementById('statCompleted').textContent = '0';
             return;
         }
@@ -1827,7 +3126,7 @@
                     <div>
                         <span class="learner-name">${user.username}</span>
                         <span class="last-active">• Joined: ${date}</span>
-                        <span style="color:#94a3b8;font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
+                        <span style="color:rgba(255,255,255,0.15);font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
                     </div>
                     <span class="score-badge">${hasProgress ? `${percentage}%` : '⏳ No progress yet'}</span>
                 </div>
@@ -1836,11 +3135,11 @@
                         <div class="progress-bar-fill" style="width:${percentage}%"></div>
                     </div>
                 ` : `
-                    <div style="height:6px;background:#dce4ec;border-radius:4px;margin:6px 0;"></div>
+                    <div style="height:6px;background:rgba(255,255,255,0.04);border-radius:4px;margin:6px 0;"></div>
                 `}
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div style="display:flex;flex-wrap:wrap;gap:2px;">${badgesHTML}</div>
-                    <span style="color:#94a3b8;font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
+                    <span style="color:rgba(255,255,255,0.15);font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
                 </div>
                 <div class="progress-detail" id="detail-${user.id}">
                     <div class="detail-row"><span class="label">Username</span><span class="value gold">${user.username}</span></div>
@@ -1851,7 +3150,7 @@
                         return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
                     }).join('') : `
                         <div class="detail-row" style="border-bottom:none;">
-                            <span class="label" style="color:#94a3b8;font-style:italic;">No subjects completed yet</span>
+                            <span class="label" style="color:rgba(255,255,255,0.15);font-style:italic;">No subjects completed yet</span>
                         </div>
                     `}
                 </div>
@@ -1921,39 +3220,37 @@
         }
     }
 
-    // ============ RENDER SUBJECTS - FIXED: Checks membership properly ============
+    // ============ RENDER SUBJECTS ============
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
         if (!allSubjects || allSubjects.length === 0) {
-            grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-gray-500 text-sm">No subjects available. Contact your teacher.</div>`;
+            grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-white/40 text-sm">No subjects available. Contact your teacher.</div>`;
             return;
         }
         
-        // Check membership status
         const hasMembership = checkMembership();
         
         allSubjects.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
-            // Subject is locked if NOT premium AND NOT teacher AND NOT completed
             const isLocked = !hasMembership && currentUser && currentUser.role !== 'teacher' && !isCompleted;
             
             const icon = subject.icon || getSubjectIcon(subject.name);
             const color = subject.color || getSubjectColor(subject.name);
             
             const card = document.createElement('div');
-            let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/30' : ''}`;
+            let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/20' : ''}`;
             if (isLocked && !isCompleted) cardClass += ' locked';
             card.className = cardClass;
-            card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
+            card.style.background = isCompleted ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.04)';
             
             let statusBadge = '';
             if (!isCompleted && isLocked) {
-                statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#1a5276;background:rgba(26,82,118,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 K10</div>`;
+                statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#8b5cf6;background:rgba(99,102,241,0.12);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 K10</div>`;
             }
             
             card.innerHTML = `
-                <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
+                <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#6366f1'}">
                     <i class="fas ${icon}"></i>
                 </div>
                 <div class="subject-name">${subject.name}</div>
@@ -2037,9 +3334,8 @@
         updateProfile();
     }
 
-    // ============ START QUIZ - FIXED ============
+    // ============ START QUIZ ============
     async function startQuiz(subjectId, subjectName) {
-        // Check membership before allowing quiz
         if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
             showToast('💎 Please pay K10 to access quizzes.', 'error');
             showPremiumPopup();
@@ -2184,21 +3480,21 @@
         const searchTerm = document.getElementById('studentSearch')?.value?.toLowerCase() || '';
         const filtered = allUsers.filter(u => u.username.toLowerCase().includes(searchTerm));
         if (filtered.length === 0) {
-            list.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
+            list.innerHTML = `<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
             return;
         }
         list.innerHTML = '';
         filtered.forEach(user => {
             const div = document.createElement('div');
-            div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #dce4ec;display:flex;justify-content:space-between;align-items:center;';
+            div.style.cssText = 'background:rgba(255,255,255,0.03);border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;';
             const date = new Date(user.created_at).toLocaleDateString();
             div.innerHTML = `
-                <div style="color:#1a2332;font-size:12px;">
-                    <span style="font-weight:600;color:#1a5276;">${user.username}</span>
-                    <span style="color:#94a3b8;font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
-                    <span style="color:#94a3b8;font-size:10px;margin-left:8px;">📅 ${date}</span>
+                <div style="color:rgba(255,255,255,0.7);font-size:12px;">
+                    <span style="font-weight:600;color:#8b5cf6;">${user.username}</span>
+                    <span style="color:rgba(255,255,255,0.2);font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
+                    <span style="color:rgba(255,255,255,0.15);font-size:10px;margin-left:8px;">📅 ${date}</span>
                 </div>
-                <div onclick="deleteStudent('${user.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                <div onclick="deleteStudent('${user.id}')" style="color:rgba(255,255,255,0.15);cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
                 </div>
             `;
@@ -2268,20 +3564,20 @@
     function updateTeacherSubjects() {
         const list = document.getElementById('subjectList');
         if (!allSubjects || allSubjects.length === 0) {
-            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
+            list.innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
             return;
         }
         list.innerHTML = '';
         allSubjects.forEach(subject => {
             const icon = subject.icon || getSubjectIcon(subject.name);
             const div = document.createElement('div');
-            div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #dce4ec;display:flex;justify-content:space-between;align-items:center;';
+            div.style.cssText = 'background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;';
             div.innerHTML = `
                 <div>
-                    <div style="color:#1a2332;font-size:12px;"><i class="fas ${icon}" style="color:#1a5276;"></i> ${subject.name}</div>
-                    <div style="color:#94a3b8;font-size:10px;">${subject.color}</div>
+                    <div style="color:rgba(255,255,255,0.7);font-size:12px;"><i class="fas ${icon}" style="color:#8b5cf6;"></i> ${subject.name}</div>
+                    <div style="color:rgba(255,255,255,0.2);font-size:10px;">${subject.color}</div>
                 </div>
-                <div onclick="deleteSubject('${subject.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                <div onclick="deleteSubject('${subject.id}')" style="color:rgba(255,255,255,0.15);cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
                 </div>
             `;
@@ -2360,28 +3656,28 @@
     async function loadQuestionsForTeacher() {
         const subjectId = document.getElementById('questionSubjectSelect').value;
         if (!subjectId) {
-            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
+            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
             return;
         }
         selectedSubjectId = subjectId;
         const list = document.getElementById('teacherQuestionList');
-        list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        list.innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
         try {
             const questions = await fetchQuestions(subjectId);
             if (questions.length === 0) {
-                list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
+                list.innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
                 return;
             }
             list.innerHTML = '';
             questions.forEach((q, idx) => {
                 const div = document.createElement('div');
-                div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #dce4ec;display:flex;justify-content:space-between;align-items:center;';
+                div.style.cssText = 'background:rgba(255,255,255,0.03);border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;';
                 div.innerHTML = `
                     <div>
-                        <div style="color:#1a2332;font-size:12px;">${idx+1}. ${q.question}</div>
-                        <div style="color:#94a3b8;font-size:10px;">${q.options.join(' | ')}</div>
+                        <div style="color:rgba(255,255,255,0.7);font-size:12px;">${idx+1}. ${q.question}</div>
+                        <div style="color:rgba(255,255,255,0.2);font-size:10px;">${q.options.join(' | ')}</div>
                     </div>
-                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:rgba(255,255,255,0.15);cursor:pointer;padding:4px 8px;border-radius:6px;">
                         <i class="fas fa-trash"></i>
                     </div>
                 `;
@@ -2389,7 +3685,7 @@
             });
         } catch (error) {
             console.error('Error loading questions:', error);
-            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
+            list.innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
         }
     }
 
@@ -2547,16 +3843,16 @@
                 html += `<tr>
                     <td>${idx + 1}</td>
                     <td>${row.question.substring(0, 30)}${row.question.length > 30 ? '...' : ''}</td>
-                    <td style="font-size:10px;color:#94a3b8;">${options}</td>
-                    <td style="color:#1a5276;font-weight:700;">${row.correct_answer}</td>
+                    <td style="font-size:10px;color:rgba(255,255,255,0.3);">${options}</td>
+                    <td style="color:#8b5cf6;font-weight:700;">${row.correct_answer}</td>
                 </tr>`;
             });
             if (uploadedData.length > 10) {
-                html += `<tr><td colspan="4" style="text-align:center;color:#94a3b8;font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
+                html += `<tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.15);font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
             }
             html += `</tbody></table>
-                <div style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
-                    Found <strong style="color:#1a5276;">${uploadedData.length}</strong> questions ready to upload
+                <div style="margin-top:8px;color:rgba(255,255,255,0.2);font-size:11px;text-align:center;">
+                    Found <strong style="color:#8b5cf6;">${uploadedData.length}</strong> questions ready to upload
                 </div>`;
             preview.innerHTML = html;
             preview.style.display = 'block';
@@ -2668,8 +3964,8 @@
         await loadSubjects();
         await loadUsers();
         await loadProgress();
-        console.log('🇿🇲 NorthernQuiz loaded - K10 Membership Required!');
-        console.log('💎 Pay K10 to unlock all features!');
+        console.log('🇿🇲 NorthernQuiz loaded - Dark Theme!');
+        console.log('🎯 All subjects FREE with K10 premium option!');
         console.log('👥 Profile & Friends system active!');
         console.log('💬 Chat messaging enabled!');
         console.log('📱 WhatsApp: +260 966 011 066');
@@ -2686,7 +3982,6 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                // Check membership
                 const hasMembership = checkMembership();
                 if (!hasMembership && currentUser.role !== 'teacher') {
                     setTimeout(() => {
