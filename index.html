@@ -16,7 +16,7 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #0a0a0f;
+            background: #e8edf2;
             overflow: hidden;
             height: 100vh;
             width: 100vw;
@@ -28,46 +28,47 @@
             height: 100vh;
             height: 100dvh;
             margin: 0 auto;
-            background: #0a0a0f;
+            background: #f0f4f8;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
         .app-header {
-            background: transparent;
-            padding: 14px 16px 10px;
+            background: #1a5276;
+            padding: 14px 16px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-shrink: 0;
             z-index: 40;
+            box-shadow: 0 2px 10px rgba(26, 82, 118, 0.3);
         }
         .header-brand {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            width: 38px;
+            height: 38px;
+            background: white;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
-            color: white;
+            font-size: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: #1a5276;
         }
         .brand-text {
             color: white;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 20px;
             letter-spacing: -0.5px;
         }
         .brand-text span {
-            color: #0ea5e9;
+            color: rgba(255,255,255,0.8);
         }
         .header-actions {
             display: flex;
@@ -75,13 +76,13 @@
             gap: 8px;
         }
         .header-btn {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.15);
             border: none;
-            color: rgba(255,255,255,0.6);
-            font-size: 14px;
+            color: white;
+            font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -90,34 +91,36 @@
         }
         .header-btn:active {
             transform: scale(0.92);
+            background: rgba(255,255,255,0.25);
         }
         .user-avatar {
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 13px;
-            color: white;
+            font-size: 14px;
+            color: #1a5276;
             cursor: pointer;
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
         }
         .main-content {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 8px 12px 70px;
+            padding: 12px 12px 70px;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
+            background: #f0f4f8;
         }
         .main-content::-webkit-scrollbar {
             width: 3px;
         }
         .main-content::-webkit-scrollbar-thumb {
-            background: rgba(14, 165, 233, 0.3);
+            background: #1a5276;
             border-radius: 10px;
         }
         .bottom-nav {
@@ -127,15 +130,14 @@
             right: 0;
             max-width: 430px;
             margin: 0 auto;
-            background: rgba(10, 10, 15, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255,255,255,0.05);
+            background: white;
+            border-top: 1px solid #dce4ec;
             padding: 4px 0 env(safe-area-inset-bottom);
             display: flex;
             justify-content: space-around;
             align-items: center;
             z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
         }
         .nav-item {
             display: flex;
@@ -144,7 +146,7 @@
             gap: 1px;
             background: none;
             border: none;
-            color: rgba(255,255,255,0.3);
+            color: #94a3b8;
             font-size: 9px;
             padding: 4px 8px;
             cursor: pointer;
@@ -153,11 +155,11 @@
             min-width: 44px;
         }
         .nav-item i {
-            font-size: 18px;
+            font-size: 20px;
             transition: all 0.3s;
         }
         .nav-item.active {
-            color: #0ea5e9;
+            color: #1a5276;
         }
         .nav-item.active i {
             transform: translateY(-2px);
@@ -168,10 +170,10 @@
             top: -4px;
             left: 50%;
             transform: translateX(-50%);
-            width: 16px;
-            height: 2px;
-            background: #0ea5e9;
-            border-radius: 2px;
+            width: 20px;
+            height: 3px;
+            background: #1a5276;
+            border-radius: 3px;
         }
         .nav-item:active {
             transform: scale(0.9);
@@ -188,49 +190,55 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .glass-card {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: white;
             border-radius: 16px;
+            border: 1px solid #dce4ec;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .subject-card {
-            background: rgba(255,255,255,0.04);
+            background: white;
             border-radius: 16px;
             padding: 16px 14px 14px;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid #dce4ec;
             position: relative;
             overflow: hidden;
             min-height: 130px;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .subject-card:active {
             transform: scale(0.96);
         }
         .subject-card .icon-wrapper {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 24px;
             margin-bottom: 10px;
             flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            color: white;
+            position: relative;
+        }
+        .subject-card .icon-wrapper i {
+            font-size: 24px;
+            color: white;
         }
         .subject-card .subject-name {
-            color: #f0f0f0;
-            font-weight: 600;
+            color: #1a2332;
+            font-weight: 700;
             font-size: 14px;
             line-height: 1.2;
             margin-bottom: 2px;
         }
         .subject-card .subject-count {
-            color: rgba(255,255,255,0.3);
+            color: #94a3b8;
             font-size: 10px;
             font-weight: 500;
         }
@@ -247,28 +255,28 @@
             justify-content: center;
             font-size: 11px;
             color: white;
-            box-shadow: 0 4px 12px rgba(34,197,94,0.3);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
         }
         .subject-card .mark-done-btn {
             position: absolute;
             bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(14, 165, 233, 0.2);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            color: #0ea5e9;
+            background: #1a5276;
+            color: white;
             font-size: 9px;
             font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
             white-space: nowrap;
             z-index: 10;
-            backdrop-filter: blur(4px);
+            border: none;
+            box-shadow: 0 2px 8px rgba(26, 82, 118, 0.25);
         }
         .subject-card .mark-done-btn:hover {
-            background: rgba(14, 165, 233, 0.3);
+            background: #154360;
         }
         .subject-card .mark-done-btn:active {
             transform: scale(0.95);
@@ -280,7 +288,7 @@
             margin-right: 4px;
         }
         .subject-card.locked {
-            opacity: 0.4;
+            opacity: 0.6;
             cursor: not-allowed;
             position: relative;
         }
@@ -290,7 +298,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 28px;
+            font-size: 30px;
             z-index: 10;
         }
         .subject-card.locked .icon-wrapper,
@@ -304,11 +312,11 @@
             gap: 10px;
         }
         .option-btn {
-            background: rgba(255,255,255,0.04);
-            border: 2px solid rgba(255,255,255,0.06);
+            background: white;
+            border: 2px solid #dce4ec;
             border-radius: 12px;
             padding: 12px 14px;
-            color: rgba(255,255,255,0.85);
+            color: #1a2332;
             font-size: 13px;
             font-weight: 500;
             transition: all 0.2s;
@@ -320,23 +328,23 @@
             gap: 10px;
         }
         .option-btn .option-letter {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.06);
+            background: #e8edf2;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 11px;
             font-weight: 700;
-            color: rgba(255,255,255,0.3);
+            color: #64748b;
             flex-shrink: 0;
         }
         .option-btn:active:not(.disabled) {
             transform: scale(0.98);
         }
         .option-btn.correct {
-            background: rgba(34,197,94,0.15);
+            background: rgba(34, 197, 94, 0.08);
             border-color: #22c55e;
         }
         .option-btn.correct .option-letter {
@@ -344,7 +352,7 @@
             color: white;
         }
         .option-btn.wrong {
-            background: rgba(239,68,68,0.15);
+            background: rgba(239, 68, 68, 0.08);
             border-color: #ef4444;
         }
         .option-btn.wrong .option-letter {
@@ -352,55 +360,56 @@
             color: white;
         }
         .option-btn.selected {
-            border-color: #0ea5e9;
+            border-color: #1a5276;
         }
         .option-btn.selected .option-letter {
-            background: #0ea5e9;
+            background: #1a5276;
             color: white;
         }
         .option-btn.disabled {
             cursor: default;
-            opacity: 0.6;
+            opacity: 0.7;
         }
         .question-card {
-            background: rgba(255,255,255,0.04);
+            background: white;
             border-radius: 16px;
             padding: 16px;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid #dce4ec;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .question-number {
-            color: rgba(255,255,255,0.3);
+            color: #94a3b8;
             font-size: 11px;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
         .question-text {
-            color: #f0f0f0;
+            color: #1a2332;
             font-size: 16px;
             font-weight: 600;
             line-height: 1.5;
             margin-top: 6px;
         }
         .progress-track {
-            height: 4px;
-            background: rgba(255,255,255,0.06);
+            height: 6px;
+            background: #dce4ec;
             border-radius: 4px;
             overflow: hidden;
             margin: 4px 0;
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #0ea5e9, #0284c7);
+            background: linear-gradient(90deg, #1a5276, #2e86c1);
             border-radius: 4px;
             transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn-primary {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: #1a5276;
             color: white;
             font-weight: 700;
             padding: 14px;
-            border-radius: 14px;
+            border-radius: 12px;
             border: none;
             font-size: 15px;
             cursor: pointer;
@@ -410,7 +419,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.25);
+            box-shadow: 0 4px 15px rgba(26, 82, 118, 0.25);
         }
         .btn-primary:active {
             transform: scale(0.96);
@@ -420,12 +429,12 @@
             cursor: not-allowed;
         }
         .btn-secondary {
-            background: rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.8);
+            background: #e8edf2;
+            color: #1a2332;
             font-weight: 600;
             padding: 14px;
-            border-radius: 14px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            border: 1px solid #dce4ec;
             font-size: 15px;
             cursor: pointer;
             transition: all 0.3s;
@@ -444,7 +453,7 @@
             color: white;
             font-weight: 700;
             padding: 14px;
-            border-radius: 14px;
+            border-radius: 12px;
             border: none;
             font-size: 15px;
             cursor: pointer;
@@ -463,45 +472,44 @@
             cursor: not-allowed;
         }
         .input-field {
-            background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(255,255,255,0.06);
+            background: white;
+            border: 2px solid #dce4ec;
             border-radius: 12px;
             padding: 12px 14px;
-            color: #f0f0f0;
+            color: #1a2332;
             font-size: 14px;
             width: 100%;
             transition: all 0.3s;
             outline: none;
         }
         .input-field:focus {
-            border-color: #0ea5e9;
-            background: rgba(255,255,255,0.08);
+            border-color: #1a5276;
+            box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.08);
         }
         .input-field::placeholder {
-            color: rgba(255,255,255,0.2);
+            color: #94a3b8;
         }
         .badge {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 3px 8px;
-            border-radius: 16px;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 9px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .badge-gold {
-            background: rgba(14, 165, 233, 0.15);
-            color: #0ea5e9;
+            background: rgba(26, 82, 118, 0.1);
+            color: #1a5276;
         }
         .toast {
             position: fixed;
             bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(10,10,15,0.95);
-            backdrop-filter: blur(20px);
+            background: #1a2332;
             padding: 12px 24px;
             border-radius: 12px;
             color: white;
@@ -510,18 +518,18 @@
             display: none;
             max-width: 360px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.06);
             font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
         }
         .toast.show {
             display: block;
             animation: fadeSlideUp 0.3s ease;
         }
-        .text-gold { color: #0ea5e9; }
-        .bg-gold { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
-        .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 10px 0; }
+        .text-gold { color: #1a5276; }
+        .bg-gold { background: #1a5276; }
+        .divider { height: 1px; background: #dce4ec; margin: 10px 0; }
         .certificate-card {
-            background: linear-gradient(145deg, #1a1a2e, #0a0a0f);
+            background: linear-gradient(145deg, #f8fafc, #ffffff);
             border-radius: 20px;
             padding: 28px 20px;
             border: 3px solid #d4af37;
@@ -539,16 +547,17 @@
         @media (max-width: 430px) {
             .subject-grid { gap: 8px; }
             .subject-card { padding: 12px 10px 10px; min-height: 120px; }
-            .subject-card .icon-wrapper { width: 40px; height: 40px; font-size: 18px; }
+            .subject-card .icon-wrapper { width: 44px; height: 44px; font-size: 20px; }
+            .subject-card .icon-wrapper i { font-size: 20px; }
             .subject-card .subject-name { font-size: 13px; }
             .question-text { font-size: 15px; }
             .option-btn { padding: 10px 12px; font-size: 12px; }
         }
         @media (min-width: 431px) {
             .app-container {
-                border-left: 1px solid rgba(255,255,255,0.05);
-                border-right: 1px solid rgba(255,255,255,0.05);
-                box-shadow: 0 0 60px rgba(0,0,0,0.5);
+                border-left: 1px solid #dce4ec;
+                border-right: 1px solid #dce4ec;
+                box-shadow: 0 0 60px rgba(0,0,0,0.06);
             }
         }
         .fab {
@@ -560,12 +569,12 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: #1a5276;
             border: none;
             color: white;
             font-size: 18px;
             cursor: pointer;
-            box-shadow: 0 8px 30px rgba(14, 165, 233, 0.3);
+            box-shadow: 0 8px 30px rgba(26, 82, 118, 0.3);
             display: none;
             align-items: center;
             justify-content: center;
@@ -577,14 +586,14 @@
             display: inline-block;
             width: 18px;
             height: 18px;
-            border: 3px solid rgba(255,255,255,0.05);
-            border-top-color: #0ea5e9;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #1a5276;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+            background: linear-gradient(90deg, #dce4ec 25%, #e8edf2 50%, #dce4ec 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
             border-radius: 16px;
@@ -594,9 +603,9 @@
             100% { background-position: 200% 0; }
         }
         .teacher-login-btn {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 10px;
@@ -608,18 +617,18 @@
         }
         .teacher-login-btn:active {
             transform: scale(0.95);
+            background: rgba(255,255,255,0.25);
         }
-        .free-trial-banner {
-            display: none !important;
-        }
+
         .teacher-dashboard {
-            background: rgba(255,255,255,0.04);
+            background: white;
             border-radius: 16px;
             padding: 16px;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid #dce4ec;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
         .teacher-dashboard h2 {
-            color: #f0f0f0;
+            color: #1a2332;
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 12px;
@@ -628,331 +637,280 @@
             gap: 8px;
         }
         .teacher-dashboard h2 i {
-            color: #0ea5e9;
+            color: #1a5276;
         }
-        .form-group {
-            margin-bottom: 10px;
+
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #dce4ec;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            text-align: center;
         }
-        .form-group label {
-            color: rgba(255,255,255,0.4);
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .form-group .input-field {
-            background: rgba(255,255,255,0.04);
-            border: 2px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 10px 14px;
-            color: #f0f0f0;
-            font-size: 14px;
-            width: 100%;
-            transition: all 0.3s;
-            outline: none;
-        }
-        .form-group .input-field:focus {
-            border-color: #0ea5e9;
-            background: rgba(255,255,255,0.07);
-        }
-        .form-group .input-field::placeholder {
-            color: rgba(255,255,255,0.2);
-        }
-        .form-group select {
-            background: rgba(255,255,255,0.04);
-            border: 2px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 10px 14px;
-            color: #f0f0f0;
-            font-size: 14px;
-            width: 100%;
-            transition: all 0.3s;
-            outline: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.3)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-        }
-        .form-group select:focus {
-            border-color: #0ea5e9;
-            background: rgba(255,255,255,0.07);
-        }
-        .form-group select option {
-            background: #1a1a2e;
-            color: #f0f0f0;
-        }
-        .btn-teacher {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a5276, #2e86c1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
             color: white;
+            margin: 0 auto 12px;
+            box-shadow: 0 4px 20px rgba(26, 82, 118, 0.3);
+        }
+        .profile-name {
+            font-size: 20px;
             font-weight: 700;
-            padding: 12px;
-            border-radius: 12px;
-            border: none;
+            color: #1a2332;
+        }
+        .profile-username {
             font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            color: #94a3b8;
         }
-        .btn-teacher:active {
-            transform: scale(0.96);
-        }
-        .btn-teacher:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .btn-teacher-secondary {
-            background: rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.6);
-            font-weight: 600;
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.06);
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-teacher-secondary:active {
-            transform: scale(0.96);
-        }
-        .btn-danger {
-            background: rgba(239,68,68,0.15);
-            color: #ef4444;
-            border: 1px solid rgba(239,68,68,0.2);
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .btn-danger:active {
-            transform: scale(0.96);
-        }
-        .subject-tabs {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            margin-bottom: 12px;
-        }
-        .subject-tabs::-webkit-scrollbar {
-            height: 2px;
-        }
-        .subject-tabs::-webkit-scrollbar-thumb {
-            background: rgba(14, 165, 233, 0.3);
-            border-radius: 10px;
-        }
-        .subject-tab {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 8px;
-            padding: 6px 14px;
-            color: rgba(255,255,255,0.4);
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s;
-        }
-        .subject-tab.active {
-            background: rgba(14, 165, 233, 0.12);
-            border-color: #0ea5e9;
-            color: #0ea5e9;
-        }
-        .subject-tab:active {
-            transform: scale(0.95);
-        }
-        .stats-box {
+        .profile-stats {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 16px;
         }
-        .stat-card {
-            background: rgba(255,255,255,0.03);
+        .profile-stat {
+            background: #e8edf2;
             border-radius: 10px;
             padding: 10px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.04);
         }
-        .stat-card .stat-number {
-            color: #0ea5e9;
+        .profile-stat .number {
             font-size: 18px;
             font-weight: 700;
+            color: #1a5276;
         }
-        .stat-card .stat-label {
-            color: rgba(255,255,255,0.3);
-            font-size: 8px;
+        .profile-stat .label {
+            font-size: 9px;
+            color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .search-box {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 8px;
-            padding: 6px 12px;
-            color: #f0f0f0;
-            font-size: 12px;
-            width: 100%;
-            outline: none;
-            margin-bottom: 8px;
-        }
-        .search-box:focus {
-            border-color: #0ea5e9;
-        }
-        .search-box::placeholder {
-            color: rgba(255,255,255,0.2);
-        }
 
-        .progress-container {
-            background: rgba(255,255,255,0.03);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 8px;
-            border: 1px solid rgba(255,255,255,0.04);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .progress-container:hover {
-            background: rgba(255,255,255,0.05);
-        }
-        .progress-container .learner-name {
-            color: #0ea5e9;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .progress-container .progress-bar-bg {
-            height: 6px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 6px 0;
-        }
-        .progress-container .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #0ea5e9, #0284c7);
-            border-radius: 4px;
-            transition: width 0.6s ease;
-        }
-        .progress-container .subject-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 8px;
-            font-weight: 600;
-            margin: 2px 3px 2px 0;
-            background: rgba(255,255,255,0.04);
-            color: rgba(255,255,255,0.3);
-        }
-        .progress-container .subject-badge.done {
-            background: rgba(34,197,94,0.12);
-            color: #22c55e;
-        }
-        .progress-container .subject-badge.pending {
-            background: rgba(14, 165, 233, 0.08);
-            color: #0ea5e9;
-        }
-        .progress-container .last-active {
-            color: rgba(255,255,255,0.2);
-            font-size: 9px;
-        }
-        .progress-container .score-badge {
-            background: rgba(14, 165, 233, 0.12);
-            color: #0ea5e9;
-            padding: 2px 10px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        .progress-detail {
-            background: rgba(10,10,15,0.95);
-            border-radius: 10px;
-            padding: 12px;
-            border: 1px solid rgba(255,255,255,0.06);
-            margin-top: 8px;
-            display: none;
-        }
-        .progress-detail.show {
-            display: block;
-            animation: fadeSlideUp 0.3s ease;
-        }
-        .progress-detail .detail-row {
+        .friend-item {
             display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-        }
-        .progress-detail .detail-row .label {
-            color: rgba(255,255,255,0.3);
-            font-size: 11px;
-        }
-        .progress-detail .detail-row .value {
-            color: #f0f0f0;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .progress-detail .detail-row .value.gold {
-            color: #0ea5e9;
-        }
-        .progress-detail .detail-row .value.green {
-            color: #22c55e;
-        }
-
-        .user-item {
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin-bottom: 4px;
-            border: 1px solid rgba(255,255,255,0.04);
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-        .user-item .user-info {
-            color: rgba(255,255,255,0.8);
-            font-size: 12px;
-        }
-        .user-item .user-info .username {
-            font-weight: 600;
-            color: #0ea5e9;
-        }
-        .user-item .user-info .user-pass {
-            color: rgba(255,255,255,0.3);
-            font-size: 11px;
-            margin-left: 8px;
-            font-family: 'Courier New', monospace;
-        }
-        .user-item .user-info .user-date {
-            color: rgba(255,255,255,0.2);
-            font-size: 10px;
-            margin-left: 8px;
-        }
-        .user-item .user-delete {
-            color: rgba(255,255,255,0.2);
+            gap: 12px;
+            padding: 12px 14px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #dce4ec;
+            margin-bottom: 8px;
             cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
             transition: all 0.2s;
         }
-        .user-item .user-delete:active {
-            background: rgba(239,68,68,0.15);
-            color: #ef4444;
+        .friend-item:active {
+            transform: scale(0.97);
+            background: #f0f4f8;
+        }
+        .friend-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .friend-info {
+            flex: 1;
+        }
+        .friend-name {
+            font-weight: 600;
+            color: #1a2332;
+            font-size: 14px;
+        }
+        .friend-status {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .friend-status.online {
+            color: #22c55e;
+        }
+        .friend-status.offline {
+            color: #94a3b8;
+        }
+        .add-friend-btn {
+            background: #1a5276;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .add-friend-btn:active {
+            transform: scale(0.95);
+        }
+        .add-friend-btn.added {
+            background: #22c55e;
+        }
+        .add-friend-btn.friend-request {
+            background: #f59e0b;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .chat-header {
+            background: white;
+            padding: 12px 16px;
+            border-bottom: 1px solid #dce4ec;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 16px 16px 0 0;
+        }
+        .chat-back {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #64748b;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .chat-back:active {
+            transform: scale(0.9);
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 16px;
+            background: #f0f4f8;
+            min-height: 300px;
+            max-height: 400px;
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 3px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #1a5276;
+            border-radius: 10px;
+        }
+        .message {
+            margin-bottom: 8px;
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            animation: fadeSlideUp 0.2s ease;
+        }
+        .message.sent {
+            background: #1a5276;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        .message.received {
+            background: white;
+            color: #1a2332;
+            border: 1px solid #dce4ec;
+            border-bottom-left-radius: 4px;
+        }
+        .message .time {
+            font-size: 9px;
+            opacity: 0.7;
+            margin-top: 4px;
+            display: block;
+        }
+        .message.sent .time {
+            color: rgba(255,255,255,0.7);
+        }
+        .message.received .time {
+            color: #94a3b8;
+        }
+        .chat-input-area {
+            display: flex;
+            gap: 8px;
+            padding: 10px 16px;
+            background: white;
+            border-top: 1px solid #dce4ec;
+            border-radius: 0 0 16px 16px;
+        }
+        .chat-input {
+            flex: 1;
+            border: 1px solid #dce4ec;
+            border-radius: 20px;
+            padding: 10px 16px;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .chat-input:focus {
+            border-color: #1a5276;
+        }
+        .chat-send {
+            background: #1a5276;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .chat-send:active {
+            transform: scale(0.9);
+        }
+        .chat-send:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .no-friends {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+        .no-friends i {
+            font-size: 48px;
+            margin-bottom: 12px;
+            color: #dce4ec;
+        }
+        .no-friends h3 {
+            color: #1a2332;
+            margin-bottom: 4px;
+        }
+
+        .search-members {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .search-members .input-field {
+            flex: 1;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+        .search-members .btn-primary {
+            width: auto;
+            padding: 10px 16px;
+            font-size: 13px;
+            flex-shrink: 0;
         }
 
         .premium-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             z-index: 200;
@@ -972,23 +930,23 @@
             display: flex;
         }
         .premium-card {
-            background: linear-gradient(145deg, #1a1a2e, #0a0a0f);
+            background: white;
             border-radius: 24px;
             padding: 28px 20px 24px;
             width: 100%;
             max-width: 380px;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid #dce4ec;
             text-align: center;
             animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             max-height: 94vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
         }
         .premium-card::-webkit-scrollbar {
             width: 3px;
         }
         .premium-card::-webkit-scrollbar-thumb {
-            background: rgba(14, 165, 233, 0.3);
+            background: rgba(26, 82, 118, 0.3);
             border-radius: 10px;
         }
         @keyframes popIn {
@@ -998,24 +956,24 @@
         .premium-icon-wrapper {
             width: 72px;
             height: 72px;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            background: linear-gradient(135deg, #1a5276, #2e86c1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
             margin: 0 auto 10px;
-            box-shadow: 0 6px 30px rgba(14, 165, 233, 0.2);
+            box-shadow: 0 6px 30px rgba(26, 82, 118, 0.2);
             color: white;
         }
         .premium-title {
-            color: #f0f0f0;
+            color: #1a2332;
             font-size: 22px;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
         .premium-subtitle {
-            color: rgba(255,255,255,0.4);
+            color: #64748b;
             font-size: 13px;
             margin-top: 2px;
         }
@@ -1025,11 +983,11 @@
         .price-tag {
             font-size: 44px;
             font-weight: 800;
-            color: #0ea5e9;
+            color: #1a5276;
             line-height: 1;
         }
         .price-label {
-            color: rgba(255,255,255,0.3);
+            color: #94a3b8;
             font-size: 12px;
             margin-top: 2px;
         }
@@ -1040,19 +998,19 @@
             margin: 12px 0;
         }
         .payment-row {
-            background: rgba(255,255,255,0.04);
+            background: #e8edf2;
             border-radius: 10px;
             padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid #dce4ec;
             transition: all 0.2s;
             cursor: pointer;
         }
         .payment-row:active {
             transform: scale(0.97);
-            background: rgba(255,255,255,0.06);
+            background: #dce4ec;
         }
         .payment-left {
             display: flex;
@@ -1075,7 +1033,7 @@
             min-width: 0;
         }
         .payment-number {
-            color: #f0f0f0;
+            color: #1a2332;
             font-weight: 700;
             font-size: 14px;
             font-family: 'Courier New', monospace;
@@ -1083,15 +1041,15 @@
             white-space: nowrap;
         }
         .payment-provider {
-            color: rgba(255,255,255,0.3);
+            color: #94a3b8;
             font-size: 10px;
             font-weight: 500;
             margin-top: 1px;
         }
         .copy-btn {
-            background: rgba(255,255,255,0.06);
+            background: #dce4ec;
             border: none;
-            color: rgba(255,255,255,0.4);
+            color: #64748b;
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 11px;
@@ -1105,385 +1063,298 @@
         }
         .copy-btn:active {
             transform: scale(0.92);
-            background: rgba(14, 165, 233, 0.15);
-            color: #0ea5e9;
+            background: rgba(26, 82, 118, 0.08);
+            color: #1a5276;
         }
         .account-name-box {
-            background: rgba(14, 165, 233, 0.06);
-            border: 1px solid rgba(14, 165, 233, 0.08);
+            background: rgba(26, 82, 118, 0.04);
+            border: 1px solid rgba(26, 82, 118, 0.08);
             border-radius: 10px;
             padding: 10px;
             margin: 10px 0 12px;
         }
         .account-name-box .label {
-            color: rgba(255,255,255,0.3);
+            color: #94a3b8;
             font-size: 9px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .account-name-box .name {
-            color: #0ea5e9;
+            color: #1a5276;
             font-weight: 700;
             font-size: 16px;
             margin-top: 2px;
         }
         .payment-instruction {
-            color: rgba(255,255,255,0.4);
+            color: #64748b;
             font-size: 11px;
             text-align: center;
             margin-bottom: 12px;
             line-height: 1.4;
         }
         .payment-instruction strong {
-            color: #f0f0f0;
+            color: #1a2332;
             font-weight: 600;
         }
 
-        /* Friend & Chat Styles */
-        .friend-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.04);
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .friend-item:active {
-            transform: scale(0.97);
-            background: rgba(255,255,255,0.05);
-        }
-        .friend-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: white;
-            flex-shrink: 0;
-        }
-        .friend-info {
-            flex: 1;
-        }
-        .friend-name {
-            font-weight: 600;
-            color: #f0f0f0;
-            font-size: 14px;
-        }
-        .friend-status {
-            font-size: 11px;
-            color: rgba(255,255,255,0.3);
-        }
-        .friend-status.online {
-            color: #22c55e;
-        }
-        .friend-status.offline {
-            color: rgba(255,255,255,0.2);
-        }
-        .add-friend-btn {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .add-friend-btn:active {
-            transform: scale(0.95);
-        }
-        .add-friend-btn.added {
-            background: #22c55e;
-        }
-        .no-friends {
-            text-align: center;
-            padding: 40px 20px;
-            color: rgba(255,255,255,0.3);
-        }
-        .no-friends i {
-            font-size: 48px;
-            margin-bottom: 12px;
-            color: rgba(255,255,255,0.06);
-        }
-        .no-friends h3 {
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 4px;
-        }
-        .member-result {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.04);
-            margin-bottom: 8px;
-        }
-        .member-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: white;
-            flex-shrink: 0;
-        }
-        .member-info {
-            flex: 1;
-        }
-        .member-name {
-            font-weight: 600;
-            color: #f0f0f0;
-            font-size: 14px;
-        }
-        .member-status {
-            font-size: 11px;
-            color: rgba(255,255,255,0.3);
-        }
-        .member-status.online {
-            color: #22c55e;
-        }
-        .member-status.offline {
-            color: rgba(255,255,255,0.2);
-        }
-        .no-members {
-            text-align: center;
-            padding: 40px 20px;
-            color: rgba(255,255,255,0.3);
-        }
-        .no-members i {
-            font-size: 48px;
-            margin-bottom: 12px;
-            color: rgba(255,255,255,0.06);
-        }
-        .search-members {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        .search-members .input-field {
-            flex: 1;
-            padding: 10px 14px;
-            font-size: 13px;
-        }
-        .search-members .btn-primary {
-            width: auto;
-            padding: 10px 16px;
-            font-size: 13px;
-            flex-shrink: 0;
-        }
-
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        .chat-header {
-            background: rgba(255,255,255,0.04);
-            padding: 12px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-radius: 16px 16px 0 0;
-        }
-        .chat-back {
-            background: none;
-            border: none;
-            font-size: 18px;
-            color: rgba(255,255,255,0.4);
-            cursor: pointer;
-            padding: 4px;
-        }
-        .chat-back:active {
-            transform: scale(0.9);
-        }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px 16px;
-            background: rgba(255,255,255,0.02);
-            min-height: 300px;
-            max-height: 400px;
-        }
-        .chat-messages::-webkit-scrollbar {
-            width: 3px;
-        }
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: rgba(14, 165, 233, 0.3);
-            border-radius: 10px;
-        }
-        .message {
-            margin-bottom: 8px;
-            max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 13px;
-            line-height: 1.4;
-            animation: fadeSlideUp 0.2s ease;
-        }
-        .message.sent {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 4px;
-        }
-        .message.received {
-            background: rgba(255,255,255,0.06);
-            color: #f0f0f0;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-bottom-left-radius: 4px;
-        }
-        .message .time {
-            font-size: 9px;
-            opacity: 0.6;
-            margin-top: 4px;
-            display: block;
-        }
-        .message.sent .time {
-            color: rgba(255,255,255,0.6);
-        }
-        .message.received .time {
-            color: rgba(255,255,255,0.3);
-        }
-        .chat-input-area {
-            display: flex;
-            gap: 8px;
-            padding: 10px 16px;
-            background: rgba(255,255,255,0.03);
-            border-top: 1px solid rgba(255,255,255,0.06);
-            border-radius: 0 0 16px 16px;
-        }
-        .chat-input {
-            flex: 1;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 20px;
-            padding: 10px 16px;
-            font-size: 13px;
-            outline: none;
-            transition: all 0.2s;
-            background: rgba(255,255,255,0.04);
-            color: #f0f0f0;
-        }
-        .chat-input:focus {
-            border-color: #0ea5e9;
-        }
-        .chat-input::placeholder {
-            color: rgba(255,255,255,0.2);
-        }
-        .chat-send {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-        .chat-send:active {
-            transform: scale(0.9);
-        }
-        .chat-send:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .profile-card {
-            background: rgba(255,255,255,0.04);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.06);
-            text-align: center;
-        }
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            color: white;
-            margin: 0 auto 12px;
-            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.2);
-        }
-        .profile-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: #f0f0f0;
-        }
-        .profile-username {
-            font-size: 14px;
-            color: rgba(255,255,255,0.3);
-        }
-        .profile-stats {
+        .stats-box {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 16px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 12px;
         }
-        .profile-stat {
-            background: rgba(255,255,255,0.04);
+        .stat-card {
+            background: #e8edf2;
             border-radius: 10px;
             padding: 10px;
             text-align: center;
+            border: 1px solid #dce4ec;
         }
-        .profile-stat .number {
+        .stat-card .stat-number {
+            color: #1a5276;
             font-size: 18px;
             font-weight: 700;
-            color: #0ea5e9;
         }
-        .profile-stat .label {
-            font-size: 9px;
-            color: rgba(255,255,255,0.3);
+        .stat-card .stat-label {
+            color: #94a3b8;
+            font-size: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
+        .subject-tabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+        .subject-tabs::-webkit-scrollbar {
+            height: 2px;
+        }
+        .subject-tabs::-webkit-scrollbar-thumb {
+            background: #1a5276;
+            border-radius: 10px;
+        }
+        .subject-tab {
+            background: #e8edf2;
+            border: 1px solid #dce4ec;
+            border-radius: 8px;
+            padding: 6px 14px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        .subject-tab.active {
+            background: #1a5276;
+            border-color: #1a5276;
+            color: white;
+        }
+        .subject-tab:active {
+            transform: scale(0.95);
+        }
+
+        .progress-container {
+            background: #e8edf2;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #dce4ec;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .progress-container:hover {
+            background: #dce4ec;
+        }
+        .progress-container .learner-name {
+            color: #1a5276;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .progress-container .progress-bar-bg {
+            height: 6px;
+            background: #dce4ec;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 6px 0;
+        }
+        .progress-container .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1a5276, #2e86c1);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        .progress-container .subject-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 8px;
+            font-weight: 600;
+            margin: 2px 3px 2px 0;
+            background: #dce4ec;
+            color: #64748b;
+        }
+        .progress-container .subject-badge.done {
+            background: rgba(34,197,94,0.1);
+            color: #16a34a;
+        }
+        .progress-container .subject-badge.pending {
+            background: rgba(26, 82, 118, 0.06);
+            color: #1a5276;
+        }
+        .progress-container .last-active {
+            color: #94a3b8;
+            font-size: 9px;
+        }
+        .progress-container .score-badge {
+            background: rgba(26, 82, 118, 0.08);
+            color: #1a5276;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .progress-detail {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #dce4ec;
+            margin-top: 8px;
+            display: none;
+        }
+        .progress-detail.show {
+            display: block;
+            animation: fadeSlideUp 0.3s ease;
+        }
+        .progress-detail .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid #e8edf2;
+        }
+        .progress-detail .detail-row .label {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+        .progress-detail .detail-row .value {
+            color: #1a2332;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .progress-detail .detail-row .value.gold {
+            color: #1a5276;
+        }
+        .progress-detail .detail-row .value.green {
+            color: #16a34a;
+        }
+
+        .search-box {
+            background: white;
+            border: 1px solid #dce4ec;
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: #1a2332;
+            font-size: 12px;
+            width: 100%;
+            outline: none;
+            margin-bottom: 8px;
+        }
+        .search-box:focus {
+            border-color: #1a5276;
+            box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.08);
+        }
+        .search-box::placeholder {
+            color: #94a3b8;
+        }
+
+        .btn-teacher {
+            background: #1a5276;
+            color: white;
+            font-weight: 700;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(26, 82, 118, 0.15);
+        }
+        .btn-teacher:active {
+            transform: scale(0.96);
+        }
+        .btn-teacher:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .btn-teacher-secondary {
+            background: #e8edf2;
+            color: #1a2332;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid #dce4ec;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-teacher-secondary:active {
+            transform: scale(0.96);
+        }
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.08);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .btn-danger:active {
+            transform: scale(0.96);
+        }
+
         .upload-zone {
-            border: 2px dashed rgba(255,255,255,0.06);
+            border: 2px dashed #dce4ec;
             border-radius: 12px;
             padding: 20px;
             text-align: center;
             transition: all 0.3s;
             cursor: pointer;
-            background: rgba(255,255,255,0.02);
+            background: #f0f4f8;
         }
         .upload-zone:hover {
-            border-color: rgba(14, 165, 233, 0.3);
-            background: rgba(255,255,255,0.04);
+            border-color: #1a5276;
+            background: rgba(26, 82, 118, 0.02);
         }
         .upload-zone.dragover {
-            border-color: #0ea5e9;
-            background: rgba(14, 165, 233, 0.06);
+            border-color: #1a5276;
+            background: rgba(26, 82, 118, 0.04);
         }
         .upload-zone .upload-icon {
             font-size: 40px;
-            color: rgba(255,255,255,0.1);
+            color: #94a3b8;
             margin-bottom: 8px;
         }
         .upload-zone .upload-text {
-            color: rgba(255,255,255,0.3);
+            color: #64748b;
             font-size: 13px;
         }
         .upload-zone .upload-text strong {
-            color: #0ea5e9;
+            color: #1a5276;
         }
         .upload-preview {
             margin-top: 12px;
@@ -1496,35 +1367,35 @@
             border-collapse: collapse;
         }
         .upload-preview th {
-            color: rgba(255,255,255,0.3);
+            color: #94a3b8;
             text-align: left;
             padding: 4px 6px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid #dce4ec;
             font-weight: 600;
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .upload-preview td {
-            color: rgba(255,255,255,0.5);
+            color: #64748b;
             padding: 4px 6px;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid #e8edf2;
             font-size: 11px;
         }
         .upload-preview tr:hover td {
-            background: rgba(255,255,255,0.02);
+            background: #e8edf2;
         }
         .upload-progress {
             margin-top: 10px;
             height: 4px;
-            background: rgba(255,255,255,0.06);
+            background: #dce4ec;
             border-radius: 4px;
             overflow: hidden;
             display: none;
         }
         .upload-progress .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #0ea5e9, #0284c7);
+            background: linear-gradient(90deg, #1a5276, #2e86c1);
             border-radius: 4px;
             transition: width 0.5s ease;
             width: 0%;
@@ -1537,21 +1408,135 @@
         }
         .upload-result.success {
             display: block;
-            background: rgba(34,197,94,0.08);
-            border: 1px solid rgba(34,197,94,0.12);
+            background: rgba(34,197,94,0.06);
+            border: 1px solid rgba(34,197,94,0.15);
         }
         .upload-result.error {
             display: block;
-            background: rgba(239,68,68,0.08);
-            border: 1px solid rgba(239,68,68,0.12);
+            background: rgba(239,68,68,0.06);
+            border: 1px solid rgba(239,68,68,0.15);
         }
         .upload-result .result-text {
-            color: rgba(255,255,255,0.6);
+            color: #64748b;
             font-size: 13px;
         }
         .upload-result .result-text .count {
-            color: #0ea5e9;
+            color: #1a5276;
             font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .options-grid .input-field {
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+
+        .user-item {
+            background: #e8edf2;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            border: 1px solid #dce4ec;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-item .user-info {
+            color: #1a2332;
+            font-size: 12px;
+        }
+        .user-item .user-info .username {
+            font-weight: 600;
+            color: #1a5276;
+        }
+        .user-item .user-info .user-pass {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-left: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        .user-item .user-info .user-date {
+            color: #94a3b8;
+            font-size: 10px;
+            margin-left: 8px;
+        }
+        .user-item .user-delete {
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .user-item .user-delete:active {
+            background: rgba(239,68,68,0.08);
+            color: #ef4444;
+        }
+
+        .member-result {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #dce4ec;
+            margin-bottom: 8px;
+        }
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1a5276;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .member-info {
+            flex: 1;
+        }
+        .member-name {
+            font-weight: 600;
+            color: #1a2332;
+            font-size: 14px;
+        }
+        .member-status {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .member-status.online {
+            color: #22c55e;
+        }
+        .member-status.offline {
+            color: #94a3b8;
+        }
+        .no-members {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+        .no-members i {
+            font-size: 48px;
+            margin-bottom: 12px;
+            color: #dce4ec;
         }
     </style>
 </head>
@@ -1580,28 +1565,28 @@
         <div class="view active" id="loginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-sky-500/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
                         <i class="fas fa-user-graduate text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-white text-xl font-bold">Welcome Back!</h2>
-                    <p class="text-white/40 text-xs mt-1">Sign in to continue learning</p>
+                    <h2 class="text-2xl font-bold text-[#1a2332]">Welcome Back!</h2>
+                    <p class="text-gray-500 text-xs mt-1">Sign in to continue learning</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Username</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Username</label>
                         <input id="loginUsername" type="text" placeholder="Enter username" class="input-field mt-1" />
                     </div>
                     <div>
-                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Password</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Password</label>
                         <input id="loginPassword" type="password" placeholder="Enter password" class="input-field mt-1" />
                     </div>
                     <button onclick="login()" class="btn-primary mt-2" id="loginBtn">
                         <i class="fas fa-arrow-right"></i> Sign In
                     </button>
                     <div class="text-center mt-3">
-                        <p class="text-white/40 text-xs">
+                        <p class="text-gray-500 text-xs">
                             New to NorthernQuiz? 
-                            <span class="text-sky-400 font-semibold cursor-pointer" onclick="showRegister()">Create Account</span>
+                            <span class="text-blue-700 font-semibold cursor-pointer" onclick="showRegister()">Create Account</span>
                         </p>
                     </div>
                 </div>
@@ -1612,28 +1597,28 @@
         <div class="view" id="registerView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-sky-500/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
                         <i class="fas fa-user-plus text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-white text-xl font-bold">Create Account</h2>
-                    <p class="text-white/40 text-xs mt-1">Join NorthernQuiz</p>
+                    <h2 class="text-2xl font-bold text-[#1a2332]">Create Account</h2>
+                    <p class="text-gray-500 text-xs mt-1">Join NorthernQuiz for K10 membership</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Choose Username</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Choose Username</label>
                         <input id="registerUsername" type="text" placeholder="Choose a username" class="input-field mt-1" />
                     </div>
                     <div>
-                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Choose Password</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Choose Password</label>
                         <input id="registerPassword" type="password" placeholder="Choose a password" class="input-field mt-1" />
                     </div>
                     <button onclick="register()" class="btn-primary mt-2" id="registerBtn">
-                        <i class="fas fa-user-plus"></i> Create Account
+                        <i class="fas fa-user-plus"></i> Create Account (K10)
                     </button>
                     <div class="text-center mt-3">
-                        <p class="text-white/40 text-xs">
+                        <p class="text-gray-500 text-xs">
                             Already have an account? 
-                            <span class="text-sky-400 font-semibold cursor-pointer" onclick="showLogin()">Sign In</span>
+                            <span class="text-blue-700 font-semibold cursor-pointer" onclick="showLogin()">Sign In</span>
                         </p>
                     </div>
                 </div>
@@ -1644,19 +1629,19 @@
         <div class="view" id="teacherLoginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-sky-500/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
                         <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-white text-xl font-bold">Teacher Login</h2>
-                    <p class="text-white/40 text-xs mt-1">Manage students, subjects &amp; questions</p>
+                    <h2 class="text-2xl font-bold text-[#1a2332]">Teacher Login</h2>
+                    <p class="text-gray-500 text-xs mt-1">Manage students, subjects &amp; questions</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
                         <input id="teacherUsername" type="text" placeholder="Enter teacher username" class="input-field mt-1" value="teacher" />
                     </div>
                     <div>
-                        <label class="text-white/40 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
                         <input id="teacherPassword" type="password" placeholder="Enter teacher password" class="input-field mt-1" value="teacher123" />
                     </div>
                     <button onclick="teacherLogin()" class="btn-primary mt-2" id="teacherLoginBtn">
@@ -1673,10 +1658,10 @@
         <div class="view" id="subjectsView">
             <div class="flex items-center justify-between mb-3">
                 <div>
-                    <h2 class="text-white text-lg font-bold">My Subjects</h2>
-                    <p class="text-white/40 text-xs" id="progressText">0 of 0 completed</p>
+                    <h2 class="text-xl font-bold text-[#1a2332]">My Subjects</h2>
+                    <p class="text-gray-500 text-xs" id="progressText">0 of 0 completed</p>
                 </div>
-                <span class="badge badge-gold"><i class="fas fa-star"></i> Free</span>
+                <span class="badge badge-gold"><i class="fas fa-star"></i> Premium</span>
             </div>
             <div class="progress-track mb-3">
                 <div class="progress-fill" id="progressBar" style="width:0%"></div>
@@ -1727,10 +1712,10 @@
         <div class="view" id="friendsView">
             <div class="flex items-center justify-between mb-3">
                 <div>
-                    <h2 class="text-white text-lg font-bold">My Friends</h2>
-                    <p class="text-white/40 text-xs">Connect with other learners</p>
+                    <h2 class="text-xl font-bold text-[#1a2332]">My Friends</h2>
+                    <p class="text-gray-500 text-xs">Connect with other learners</p>
                 </div>
-                <button onclick="showView('profileView')" class="text-white/40 hover:text-white transition">
+                <button onclick="showView('profileView')" class="text-gray-500 hover:text-gray-700 transition">
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
             </div>
@@ -1758,7 +1743,7 @@
                         <i class="fas fa-arrow-left"></i>
                     </button>
                     <div style="flex:1;">
-                        <div style="font-weight:600; color:#f0f0f0;" id="chatFriendName">Friend</div>
+                        <div style="font-weight:600; color:#1a2332;" id="chatFriendName">Friend</div>
                         <div style="font-size:11px; color:#22c55e;" id="chatFriendStatus">Online</div>
                     </div>
                     <div class="profile-avatar" style="width:36px; height:36px; font-size:16px;">
@@ -1780,11 +1765,11 @@
         <!-- QUIZ VIEW -->
         <div class="view" id="quizView">
             <div class="flex items-center justify-between mb-3">
-                <button onclick="goToSubjects()" class="text-white/40 hover:text-white transition">
+                <button onclick="goToSubjects()" class="text-gray-500 hover:text-gray-700 transition">
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
-                <span class="text-white/40 text-xs" id="quizSubjectTitle">ICT</span>
-                <span class="text-white/40 text-xs" id="questionCounter">1/1</span>
+                <span class="text-gray-500 text-xs" id="quizSubjectTitle">ICT</span>
+                <span class="text-gray-500 text-xs" id="questionCounter">1/1</span>
             </div>
             <div class="question-card">
                 <div class="flex items-center justify-between">
@@ -1806,13 +1791,13 @@
                     <div class="text-5xl mb-2">🇿🇲</div>
                     <h2 class="text-xl font-bold text-gray-800">Certificate of Completion</h2>
                     <div class="divider"></div>
-                    <p class="text-gray-400 text-xs">This certifies that</p>
-                    <p class="text-2xl font-bold text-sky-400 mt-2" id="certUsername">Student</p>
-                    <p class="text-gray-400 text-xs mt-1">has successfully completed all subjects</p>
+                    <p class="text-gray-600 text-xs">This certifies that</p>
+                    <p class="text-2xl font-bold text-blue-700 mt-2" id="certUsername">Student</p>
+                    <p class="text-gray-600 text-xs mt-1">has successfully completed all subjects</p>
                     <div class="divider"></div>
-                    <div class="flex justify-around text-xs text-gray-400">
-                        <div><p>Date</p><p class="font-bold text-gray-300" id="certDate">2026-08-09</p></div>
-                        <div><p>Score</p><p class="font-bold text-gray-300" id="certScore">100%</p></div>
+                    <div class="flex justify-around text-xs text-gray-500">
+                        <div><p>Date</p><p class="font-bold text-gray-700" id="certDate">2026-08-09</p></div>
+                        <div><p>Score</p><p class="font-bold text-gray-700" id="certScore">100%</p></div>
                     </div>
                     <div class="divider"></div>
                     <div class="flex gap-2">
@@ -1855,7 +1840,8 @@
                         <i class="fas fa-chart-line"></i> Progress
                     </button>
                     <button class="subject-tab" onclick="switchTeacherTab('students')">
-                        <i class="fas fa-users"></i> Students                    </button>
+                        <i class="fas fa-users"></i> Students
+                    </button>
                     <button class="subject-tab" onclick="switchTeacherTab('subjects')">
                         <i class="fas fa-book"></i> Subjects
                     </button>
@@ -1869,8 +1855,8 @@
 
                 <div id="teacherProgressTab">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#0ea5e9;"></i> Learner Progress</h3>
-                        <span style="color:rgba(255,255,255,0.2);font-size:10px;">Click a learner for details</span>
+                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#1a5276;"></i> Learner Progress</h3>
+                        <span style="color:#94a3b8;font-size:10px;">Click a learner for details</span>
                     </div>
                     <input id="progressSearch" type="text" placeholder="🔍 Search learners..." oninput="filterProgress()" class="search-box" />
                     <div id="progressList" style="max-height:400px;overflow-y:auto;"></div>
@@ -1878,19 +1864,19 @@
 
                 <div id="teacherStudentsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#0ea5e9;"></i> Student Accounts</h3>
-                        <button onclick="showAddStudentForm()" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
+                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#1a5276;"></i> Student Accounts</h3>
+                        <button onclick="showAddStudentForm()" style="background:#1a5276;color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
                             <i class="fas fa-user-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
-                        <h4 style="color:#f0f0f0;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#0ea5e9;"></i> Create Student Account</h4>
+                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
+                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#1a5276;"></i> Create Student Account</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
                             <input id="studentUsername" type="text" placeholder="Enter username" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
                             <input id="studentPassword" type="text" placeholder="Enter password" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="display:flex;gap:8px;">
@@ -1908,29 +1894,29 @@
 
                 <div id="teacherSubjectsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#0ea5e9;"></i> Subjects</h3>
-                        <button onclick="showAddSubjectForm()" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
+                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#1a5276;"></i> Subjects</h3>
+                        <button onclick="showAddSubjectForm()" style="background:#1a5276;color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
-                        <h4 style="color:#f0f0f0;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#0ea5e9;"></i> New Subject</h4>
+                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
+                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#1a5276;"></i> New Subject</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
                             <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
                             <div style="display:flex;gap:8px;">
                                 <input id="subjectIcon" type="text" placeholder="fa-atom" class="input-field" style="padding:8px 12px;font-size:13px;flex:1;" />
-                                <button onclick="pickIcon()" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);font-size:12px;cursor:pointer;">
+                                <button onclick="pickIcon()" style="background:#dce4ec;color:#64748b;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid #dce4ec;font-size:12px;cursor:pointer;">
                                     <i class="fas fa-random"></i>
                                 </button>
                             </div>
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
-                            <input id="subjectColor" type="text" placeholder="from-sky-500 to-sky-700" class="input-field" style="padding:8px 12px;font-size:13px;" />
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
+                            <input id="subjectColor" type="text" placeholder="from-blue-500 to-blue-700" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="display:flex;gap:8px;">
                             <button onclick="addSubject()" class="btn-teacher" style="flex:1;padding:8px;font-size:13px;">
@@ -1945,21 +1931,21 @@
                 </div>
 
                 <div id="teacherQuestionsTab" style="display:none;">
-                    <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#0ea5e9;"></i> Manage Questions</h3>
+                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#1a5276;"></i> Manage Questions</h3>
                     <div style="margin-bottom:8px;">
-                        <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
-                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 12px;color:#f0f0f0;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
+                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
-                    <div style="margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
-                        <h4 style="color:#f0f0f0;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#0ea5e9;"></i> Add Question</h4>
+                    <div style="margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
+                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#1a5276;"></i> Add Question</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
                             <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
                             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                                 <input id="optionA" type="text" placeholder="A" class="input-field" style="padding:6px 10px;font-size:12px;" />
                                 <input id="optionB" type="text" placeholder="B" class="input-field" style="padding:6px 10px;font-size:12px;" />
@@ -1968,8 +1954,8 @@
                             </div>
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
-                            <select id="correctAnswer" style="background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 12px;color:#f0f0f0;font-size:13px;width:100%;outline:none;appearance:none;">
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
+                            <select id="correctAnswer" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
                                 <option value="0">A</option>
                                 <option value="1">B</option>
                                 <option value="2">C</option>
@@ -1984,29 +1970,29 @@
                 </div>
 
                 <div id="teacherUploadTab" style="display:none;">
-                    <h3 style="color:#f0f0f0;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#0ea5e9;"></i> Bulk Upload Questions</h3>
-                    <div style="margin-bottom:10px;padding:12px;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.04);">
-                        <p style="color:rgba(255,255,255,0.3);font-size:11px;margin-bottom:8px;">
-                            <i class="fas fa-info-circle" style="color:#0ea5e9;"></i>
+                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#1a5276;"></i> Bulk Upload Questions</h3>
+                    <div style="margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
+                        <p style="color:#64748b;font-size:11px;margin-bottom:8px;">
+                            <i class="fas fa-info-circle" style="color:#1a5276;"></i>
                             Upload a CSV file with your questions. The format should be:
                         </p>
-                        <div style="background:rgba(255,255,255,0.03);border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:rgba(255,255,255,0.3);overflow-x:auto;white-space:nowrap;">
+                        <div style="background:#dce4ec;border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:#64748b;overflow-x:auto;white-space:nowrap;">
                             question,option_a,option_b,option_c,option_d,correct_answer
                             <br/>What is 5+3?,4,5,8,10,C
                             <br/>What is the capital of Zambia?,Lusaka,Ndola,Kitwe,Livingstone,A
                         </div>
                         <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-                            <button onclick="downloadTemplate()" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);font-size:11px;cursor:pointer;">
+                            <button onclick="downloadTemplate()" style="background:rgba(26,82,118,0.08);color:#1a5276;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(26,82,118,0.1);font-size:11px;cursor:pointer;">
                                 <i class="fas fa-download"></i> Download Template
                             </button>
-                            <span style="color:rgba(255,255,255,0.2);font-size:10px;display:flex;align-items:center;">
+                            <span style="color:#94a3b8;font-size:10px;display:flex;align-items:center;">
                                 Correct answer: A, B, C, or D
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Select Subject</label>
-                        <select id="uploadSubjectSelect" style="background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 12px;color:#f0f0f0;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <select id="uploadSubjectSelect" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
@@ -2049,30 +2035,30 @@
         </button>
     </div>
 
-    <!-- PREMIUM POPUP -->
+    <!-- PREMIUM/MEMBERSHIP POPUP -->
     <div class="premium-overlay" id="premiumOverlay">
         <div class="premium-card">
             <div class="premium-icon-wrapper"><i class="fas fa-crown"></i></div>
             <h3 class="premium-title">Unlock Full Access! 🎓</h3>
             <p class="premium-subtitle" id="premiumSubtitle">Pay K10 to access all subjects</p>
-            <div class="trial-complete-banner" style="background:linear-gradient(135deg,rgba(14,165,233,0.06),rgba(14,165,233,0.02));border:1px solid rgba(14,165,233,0.08);border-radius:10px;padding:12px;margin-bottom:14px;">
-                <div class="trial-title" style="color:#0ea5e9;font-weight:700;font-size:14px;">🎯 K10 Membership Required</div>
-                <div class="trial-text" style="color:rgba(255,255,255,0.4);font-size:12px;margin-top:4px;">Pay K10 to unlock all subjects, track progress, and get your certificate!</div>
+            <div class="trial-complete-banner" style="background:linear-gradient(135deg,rgba(26,82,118,0.06),rgba(26,82,118,0.02));border:1px solid rgba(26,82,118,0.08);border-radius:10px;padding:12px;margin-bottom:14px;">
+                <div class="trial-title" style="color:#1a5276;font-weight:700;font-size:14px;">🎯 K10 Membership Required</div>
+                <div class="trial-text" style="color:#64748b;font-size:12px;margin-top:4px;">Pay K10 to unlock all subjects, track progress, and get your certificate!</div>
             </div>
             <div class="price-container">
                 <span class="price-tag">K10</span>
                 <p class="price-label">One-time payment · Lifetime access</p>
             </div>
-            <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.08);border-radius:10px;padding:10px;margin-bottom:12px;">
-                <p style="color:rgba(255,255,255,0.4);font-size:12px;">
-                    <i class="fas fa-info-circle" style="color:#0ea5e9;"></i>
-                    <strong>Pay via mobile money below</strong>, then click "I've Paid" to activate instantly.
+            <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1);border-radius:10px;padding:10px;margin-bottom:12px;">
+                <p style="color:#64748b;font-size:12px;">
+                    <i class="fas fa-info-circle" style="color:#1a5276;"></i>
+                    <strong>Pay via mobile money below</strong>, then click "I've Paid" or WhatsApp your username and password to the teacher.
                 </p>
             </div>
             <div class="payment-grid">
                 <div class="payment-row" onclick="copyNumber('+260971130511')">
                     <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(14,165,233,0.08);color:#0ea5e9;"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="payment-provider-icon" style="background:rgba(26,82,118,0.08);color:#1a5276;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
                             <div class="payment-number">+260 971 130 511</div>
                             <div class="payment-provider">MTN / Airtel</div>
@@ -2105,10 +2091,11 @@
                 <div class="label">Account Name</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
-            <button onclick="activateMembership()" class="btn-primary" style="margin-bottom:10px; background:linear-gradient(135deg,#22c55e,#16a34a); box-shadow:0 4px 20px rgba(34,197,94,0.25);">
+            <!-- SELF-ACTIVATION BUTTON - FIXED -->
+            <button onclick="activateMembership()" class="btn-primary" style="margin-bottom:10px; background:#22c55e; box-shadow:0 4px 15px rgba(34,197,94,0.3);">
                 <i class="fas fa-check-circle"></i> ✅ I've Paid - Activate Now
             </button>
-            <p class="payment-instruction" style="color:rgba(255,255,255,0.3);font-size:11px;text-align:center;margin-bottom:8px;">
+            <p class="payment-instruction" style="color:#64748b;font-size:11px;text-align:center;margin-bottom:8px;">
                 <i class="fas fa-whatsapp" style="color:#25D366;"></i>
                 Or send payment confirmation via WhatsApp to <strong style="color:#25D366;">+260 966 011 066</strong>
             </p>
@@ -2206,14 +2193,14 @@
 
     function getSubjectColor(name) {
         const colors = [
-            'from-sky-500 to-sky-700',
-            'from-cyan-500 to-cyan-700',
             'from-blue-500 to-blue-700',
-            'from-indigo-500 to-indigo-700',
-            'from-sky-400 to-sky-600',
-            'from-cyan-400 to-cyan-600',
             'from-blue-400 to-blue-600',
-            'from-sky-600 to-sky-800'
+            'from-indigo-500 to-indigo-700',
+            'from-cyan-500 to-cyan-700',
+            'from-sky-500 to-sky-700',
+            'from-blue-600 to-blue-800',
+            'from-indigo-400 to-indigo-600',
+            'from-cyan-400 to-cyan-600'
         ];
         let hash = 0;
         for (let i = 0; i < name.length; i++) {
@@ -2222,7 +2209,7 @@
         return colors[hash];
     }
 
-    // ============ MEMBERSHIP FUNCTIONS ============
+    // ============ MEMBERSHIP FUNCTIONS - FIXED ============
     function showPremiumPopup() {
         document.getElementById('premiumOverlay').classList.add('active');
     }
@@ -2233,36 +2220,55 @@
 
     function checkMembership() {
         if (!currentUser) return false;
+        
+        // Check localStorage first
         const membershipStatus = localStorage.getItem(`membership_${currentUser.id}`);
         if (membershipStatus === 'paid') {
             isPremium = true;
             return true;
         }
+        
+        // Check user object
         if (currentUser.is_premium === true) {
             isPremium = true;
             return true;
         }
+        
+        // Check if user is teacher
         if (currentUser.role === 'teacher') {
             isPremium = true;
             return true;
         }
+        
+        // Check if already set in this session
         if (isPremium) {
             return true;
         }
+        
         return false;
     }
 
+    // ACTIVATE MEMBERSHIP - THIS IS THE KEY FIX
     function activateMembership() {
         if (!currentUser) {
             showToast('Please login first', 'error');
             return;
         }
+        
+        // Set premium in localStorage
         localStorage.setItem(`membership_${currentUser.id}`, 'paid');
+        
+        // Update user object
         currentUser.is_premium = true;
         localStorage.setItem('quizUser', JSON.stringify(currentUser));
+        
+        // Set the flag
         isPremium = true;
+        
         showToast('✅ Membership Activated! All subjects are now unlocked!', 'success');
         closePremiumPopup();
+        
+        // Immediately refresh subjects to remove locks
         renderSubjects();
         updateProgress();
         updateProfile();
@@ -2276,6 +2282,7 @@
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(url, '_blank');
         showToast('📱 Opening WhatsApp... Send your username & password', 'info');
+        // Auto-activate after sending WhatsApp (for self-activation)
         setTimeout(() => {
             if (currentUser) {
                 activateMembership();
@@ -2329,7 +2336,7 @@
             if (exists) {
                 showToast('Username already exists. Please choose another.', 'error');
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (K10)';
                 return;
             }
             
@@ -2338,13 +2345,16 @@
                 currentUser = { username: newUser.username, password: newUser.password, id: newUser.id, role: newUser.role || 'student', is_premium: false };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
-                showToast(`🎉 Welcome, ${username}!`, 'success');
+                showToast(`🎉 Welcome, ${username}! Please pay K10 to activate your account.`, 'success');
                 showView('subjectsView');
                 renderSubjects();
                 updateProgress();
                 updateProfile();
                 loadFriends();
                 loadChats();
+                setTimeout(() => {
+                    showPremiumPopup();
+                }, 1000);
             } else {
                 showToast('Error creating account. Please try again.', 'error');
             }
@@ -2353,7 +2363,7 @@
         }
         
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (K10)';
     }
 
     async function login() {
@@ -2373,7 +2383,9 @@
         try {
             const user = await authenticateUser(username, password);
             if (user) {
-                currentUser = { username: user.username, password: user.password, id: user.id, role: user.role || 'student', is_premium: user.is_premium || false };
+                // Check if user has premium in the database
+                const isUserPremium = user.is_premium || false;
+                currentUser = { username: user.username, password: user.password, id: user.id, role: user.role || 'student', is_premium: isUserPremium };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
                 showToast(`Welcome back, ${username}!`, 'success');
@@ -2383,6 +2395,7 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
+                // Check membership
                 const hasMembership = checkMembership();
                 if (!hasMembership && currentUser.role !== 'teacher') {
                     setTimeout(() => {
@@ -2586,1474 +2599,11 @@
             const statusText = friend.online ? 'Online' : 'Offline';
             html += `
                 <div class="friend-item" onclick="openChat('${friend.id}')">
-                    <div class="friend-avatar" style="background:${friend.color || 'linear-gradient(135deg, #0ea5e9, #0284c7)'}">
+                    <div class="friend-avatar" style="background:${friend.color || '#1a5276'}">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="friend-info">
                         <div class="friend-name">${friend.username}</div>
                         <div class="friend-status ${status}">${statusText}</div>
                     </div>
-                    <button class="add-friend-btn added" onclick="event.stopPropagation(); removeFriend('${friend.id}')">
-                        <i class="fas fa-check"></i> Friends
-                    </button>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    function searchMembers() {
-        const searchTerm = document.getElementById('searchMembersInput').value.trim().toLowerCase();
-        const resultsContainer = document.getElementById('memberSearchResults');
-        
-        if (!searchTerm) {
-            resultsContainer.innerHTML = '<div style="color:rgba(255,255,255,0.3);text-align:center;padding:20px 0;font-size:13px;">Enter a name to search</div>';
-            return;
-        }
-        
-        const availableUsers = allUsers.filter(u => 
-            u.id !== currentUser.id && 
-            u.role !== 'teacher' &&
-            u.username.toLowerCase().includes(searchTerm) &&
-            !friends.find(f => f.id === u.id)
-        );
-        
-        if (availableUsers.length === 0) {
-            resultsContainer.innerHTML = `
-                <div class="no-members">
-                    <i class="fas fa-search"></i>
-                    <h3>No Results Found</h3>
-                    <p style="font-size:13px;">No learners found matching "${searchTerm}"</p>
-                </div>
-            `;
-            return;
-        }
-        
-        let html = `<div style="margin-top:8px;"><h3 style="color:#f0f0f0;font-size:14px;font-weight:600;margin-bottom:8px;">Found ${availableUsers.length} learner${availableUsers.length > 1 ? 's' : ''}</h3></div>`;
-        availableUsers.forEach(user => {
-            const isFriend = friends.find(f => f.id === user.id);
-            const status = user.online ? 'online' : 'offline';
-            const statusText = user.online ? 'Online' : 'Offline';
-            
-            html += `
-                <div class="member-result">
-                    <div class="member-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="member-info">
-                        <div class="member-name">${user.username}</div>
-                        <div class="member-status ${status}">${statusText}</div>
-                    </div>
-                    <button class="add-friend-btn" onclick="addFriend('${user.id}', '${user.username}')">
-                        <i class="fas fa-user-plus"></i> Add Friend
-                    </button>
-                </div>
-            `;
-        });
-        resultsContainer.innerHTML = html;
-    }
-
-    function addFriend(userId, username) {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to add friends.', 'error');
-            showPremiumPopup();
-            return;
-        }
-        
-        if (friends.find(f => f.id === userId)) {
-            showToast('Already friends with ' + username, 'info');
-            return;
-        }
-        
-        const newFriend = {
-            id: userId,
-            username: username,
-            online: true,
-            color: 'linear-gradient(135deg, #0ea5e9, #0284c7)'
-        };
-        friends.push(newFriend);
-        localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
-        renderFriends();
-        updateProfile();
-        document.getElementById('memberSearchResults').innerHTML = '';
-        document.getElementById('searchMembersInput').value = '';
-        showToast(`✅ Added ${username} as a friend!`, 'success');
-    }
-
-    function removeFriend(friendId) {
-        friends = friends.filter(f => f.id !== friendId);
-        localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
-        renderFriends();
-        updateProfile();
-        showToast('Friend removed', 'info');
-    }
-
-    function loadFriends() {
-        if (currentUser) {
-            const stored = localStorage.getItem(`friends_${currentUser.id}`);
-            if (stored) {
-                try {
-                    friends = JSON.parse(stored);
-                } catch(e) { friends = []; }
-            }
-        }
-    }
-
-    // ============ CHAT FUNCTIONS ============
-    function openChat(friendId) {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to access Chat feature.', 'error');
-            showPremiumPopup();
-            return;
-        }
-        currentChatFriend = friends.find(f => f.id === friendId);
-        if (!currentChatFriend) return;
-        document.getElementById('chatFriendName').textContent = currentChatFriend.username;
-        document.getElementById('chatFriendStatus').textContent = currentChatFriend.online ? 'Online' : 'Offline';
-        document.getElementById('chatFriendStatus').style.color = currentChatFriend.online ? '#22c55e' : 'rgba(255,255,255,0.2)';
-        showView('chatView');
-        renderChatMessages();
-    }
-
-    function renderChatMessages() {
-        const container = document.getElementById('chatMessages');
-        const chatId = getChatId();
-        const messages = chatMessages[chatId] || [];
-        if (messages.length === 0) {
-            container.innerHTML = `
-                <div style="text-align:center; padding:40px 0; color:rgba(255,255,255,0.2);">
-                    <i class="fas fa-comment-dots" style="font-size:32px; display:block; margin-bottom:8px; color:rgba(255,255,255,0.04);"></i>
-                    <p>No messages yet</p>
-                    <p style="font-size:11px;">Say hello to ${currentChatFriend.username}!</p>
-                </div>
-            `;
-            return;
-        }
-        let html = '';
-        messages.forEach(msg => {
-            const isSent = msg.sender === currentUser.id;
-            html += `
-                <div class="message ${isSent ? 'sent' : 'received'}">
-                    ${msg.text}
-                    <span class="time">${msg.time}</span>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-        container.scrollTop = container.scrollHeight;
-    }
-
-    function getChatId() {
-        if (!currentUser || !currentChatFriend) return '';
-        const ids = [currentUser.id, currentChatFriend.id].sort();
-        return ids.join('_');
-    }
-
-    function sendMessage() {
-        const input = document.getElementById('chatInput');
-        const text = input.value.trim();
-        if (!text || !currentChatFriend) return;
-        const chatId = getChatId();
-        if (!chatMessages[chatId]) chatMessages[chatId] = [];
-        const now = new Date();
-        const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        chatMessages[chatId].push({
-            sender: currentUser.id,
-            text: text,
-            time: time,
-            timestamp: now.getTime()
-        });
-        localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
-        input.value = '';
-        renderChatMessages();
-        simulateReply();
-    }
-
-    function simulateReply() {
-        const replies = ['That\'s interesting!', 'I agree! 😊', 'Let\'s study together!', 'Great point!', 'I\'ll check that out.', 'Thanks for sharing!'];
-        setTimeout(() => {
-            const chatId = getChatId();
-            if (!chatMessages[chatId]) chatMessages[chatId] = [];
-            const now = new Date();
-            const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            chatMessages[chatId].push({
-                sender: currentChatFriend.id,
-                text: replies[Math.floor(Math.random() * replies.length)],
-                time: time,
-                timestamp: now.getTime()
-            });
-            localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
-            renderChatMessages();
-        }, 1000 + Math.random() * 2000);
-    }
-
-    function loadChats() {
-        if (currentUser) {
-            for (let key in localStorage) {
-                if (key.startsWith('chat_')) {
-                    try {
-                        const data = JSON.parse(localStorage.getItem(key));
-                        chatMessages[key.replace('chat_', '')] = data;
-                    } catch(e) {}
-                }
-            }
-        }
-    }
-
-    // ============ VIEW MANAGEMENT ============
-    function showView(viewId) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.querySelector(`.nav-item[data-view="${viewId}"]`)?.classList.add('active');
-        if (viewId === 'profileView') updateProfile();
-        if (viewId === 'friendsView') renderFriends();
-    }
-
-    function navigateTo(viewId) {
-        if (viewId === 'profileView' && !currentUser) {
-            showToast('Please login first', 'error');
-            return;
-        }
-        if (viewId === 'friendsView' && !currentUser) {
-            showToast('Please login first', 'error');
-            return;
-        }
-        showView(viewId);
-    }
-
-    function goToSubjects() {
-        closePremiumPopup();
-        showView('subjectsView');
-        renderSubjects();
-        updateProgress();
-    }
-
-    function scrollToTop() {
-        document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // ============ TOAST & HELP ============
-    function showToast(message, type = 'info') {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.9)' : 
-                               type === 'success' ? 'rgba(34,197,94,0.9)' : 
-                               'rgba(10,10,15,0.95)';
-        toast.classList.add('show');
-        clearTimeout(toast._timeout);
-        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
-    }
-
-    function showHelp() { 
-        showToast('🎯 All subjects are FREE! Login to track your progress.', 'info'); 
-    }
-
-    function toggleUserMenu() {
-        if (currentUser) {
-            const status = isPremium ? '✅ Premium' : '💎 Pay K10';
-            showToast(`👤 ${currentUser.username} - ${status}`, 'info');
-        }
-    }
-
-    // ============ SUPABASE FUNCTIONS ============
-    async function fetchAllUsers() {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?select=*&order=created_at.desc`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (error) {
-            console.error('Fetch users error:', error);
-        }
-        return [];
-    }
-
-    async function deleteUser(userId) {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?id=eq.${userId}`, {
-                method: 'DELETE',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            return response.ok;
-        } catch (error) {
-            console.error('Delete user error:', error);
-            return false;
-        }
-    }
-
-    async function fetchSubjects() {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?select=*&order=name.asc`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (error) {
-            console.error('Fetch subjects error:', error);
-        }
-        return [];
-    }
-
-    async function addSubjectToDB(name, icon, color) {
-        try {
-            const payload = { name, icon, color };
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}`, {
-                method: 'POST',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`,
-                    'Content-Type': 'application/json',
-                    'Prefer': 'return=representation'
-                },
-                body: JSON.stringify(payload)
-            });
-            if (response.ok) {
-                const data = await response.json();
-                return data[0];
-            }
-        } catch (error) {
-            console.error('Add subject error:', error);
-        }
-        return null;
-    }
-
-    async function deleteSubjectFromDB(subjectId) {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?id=eq.${subjectId}`, {
-                method: 'DELETE',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            return response.ok;
-        } catch (error) {
-            console.error('Delete subject error:', error);
-            return false;
-        }
-    }
-
-    async function fetchQuestions(subjectId) {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?subject_id=eq.${subjectId}&select=*`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (error) {
-            console.error('Fetch questions error:', error);
-        }
-        return [];
-    }
-
-    async function addQuestionToDB(subjectId, question, options, correct_answer) {
-        try {
-            const payload = { subject_id: subjectId, question, options, correct_answer };
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}`, {
-                method: 'POST',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`,
-                    'Content-Type': 'application/json',
-                    'Prefer': 'return=representation'
-                },
-                body: JSON.stringify(payload)
-            });
-            if (response.ok) {
-                const data = await response.json();
-                return data[0];
-            }
-        } catch (error) {
-            console.error('Add question error:', error);
-        }
-        return null;
-    }
-
-    async function deleteQuestionFromDB(questionId) {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?id=eq.${questionId}`, {
-                method: 'DELETE',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            return response.ok;
-        } catch (error) {
-            console.error('Delete question error:', error);
-            return false;
-        }
-    }
-
-    // ============ PROGRESS FUNCTIONS ============
-    async function loadProgress() {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?select=*`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                learnerProgress = {};
-                data.forEach(record => {
-                    if (!learnerProgress[record.user_id]) {
-                        learnerProgress[record.user_id] = [];
-                    }
-                    learnerProgress[record.user_id].push(record);
-                });
-            }
-        } catch (error) {
-            console.warn('⚠️ Could not load progress:', error);
-        }
-        renderProgress();
-    }
-
-    async function saveProgress(userId, subjectId, score, total) {
-        try {
-            const payload = {
-                user_id: userId,
-                subject_id: subjectId,
-                score: score,
-                total_questions: total,
-                completed_at: new Date().toISOString()
-            };
-            
-            const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=id`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
-            });
-            
-            if (checkResponse.ok) {
-                const existing = await checkResponse.json();
-                if (existing && existing.length > 0) {
-                    await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?id=eq.${existing[0].id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'apikey': SUPABASE_KEY,
-                            'Authorization': `Bearer ${SUPABASE_KEY}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    });
-                } else {
-                    await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}`, {
-                        method: 'POST',
-                        headers: {
-                            'apikey': SUPABASE_KEY,
-                            'Authorization': `Bearer ${SUPABASE_KEY}`,
-                            'Content-Type': 'application/json',
-                            'Prefer': 'return=representation'
-                        },
-                        body: JSON.stringify(payload)
-                    });
-                }
-                await loadProgress();
-            }
-        } catch (error) {
-            console.warn('⚠️ Could not save progress:', error);
-        }
-    }
-
-    function renderProgress() {
-        const container = document.getElementById('progressList');
-        if (!container) return;
-        
-        const searchTerm = document.getElementById('progressSearch')?.value?.toLowerCase() || '';
-        const students = allUsers.filter(u => u.role !== 'teacher');
-        const filtered = students.filter(u => u.username.toLowerCase().includes(searchTerm));
-        
-        if (filtered.length === 0) {
-            container.innerHTML = `<div style="color:rgba(255,255,255,0.2);text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
-            document.getElementById('statCompleted').textContent = '0';
-            return;
-        }
-        
-        let totalCompleted = 0;
-        container.innerHTML = '';
-        
-        filtered.forEach(user => {
-            const progress = learnerProgress[user.id] || [];
-            const completedSubjectIds = progress.map(p => p.subject_id);
-            const totalSubjects = allSubjects.length;
-            const completed = completedSubjectIds.length;
-            const percentage = totalSubjects > 0 ? Math.round((completed / totalSubjects) * 100) : 0;
-            
-            if (completed === totalSubjects && totalSubjects > 0) totalCompleted++;
-            
-            const div = document.createElement('div');
-            div.className = 'progress-container';
-            div.onclick = () => toggleProgressDetail(user.id);
-            
-            let badgesHTML = '';
-            if (allSubjects.length === 0) {
-                badgesHTML = `<span class="no-progress">No subjects available</span>`;
-            } else {
-                allSubjects.forEach(subject => {
-                    const isDone = completedSubjectIds.includes(subject.id);
-                    badgesHTML += `<span class="subject-badge ${isDone ? 'done' : 'pending'}">${isDone ? '✅' : '⬜'} ${subject.name}</span>`;
-                });
-            }
-            
-            const date = new Date(user.created_at).toLocaleDateString();
-            const hasProgress = progress.length > 0;
-            
-            div.innerHTML = `
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <div>
-                        <span class="learner-name">${user.username}</span>
-                        <span class="last-active">• Joined: ${date}</span>
-                        <span style="color:rgba(255,255,255,0.15);font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
-                    </div>
-                    <span class="score-badge">${hasProgress ? `${percentage}%` : '⏳ No progress yet'}</span>
-                </div>
-                ${hasProgress ? `
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="width:${percentage}%"></div>
-                    </div>
-                ` : `
-                    <div style="height:6px;background:rgba(255,255,255,0.04);border-radius:4px;margin:6px 0;"></div>
-                `}
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <div style="display:flex;flex-wrap:wrap;gap:2px;">${badgesHTML}</div>
-                    <span style="color:rgba(255,255,255,0.15);font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
-                </div>
-                <div class="progress-detail" id="detail-${user.id}">
-                    <div class="detail-row"><span class="label">Username</span><span class="value gold">${user.username}</span></div>
-                    <div class="detail-row"><span class="label">Subjects Completed</span><span class="value">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span></div>
-                    <div class="detail-row"><span class="label">Overall Score</span><span class="value gold">${hasProgress ? `${percentage}%` : 'N/A'}</span></div>
-                    ${hasProgress ? progress.map(p => {
-                        const subject = allSubjects.find(s => s.id === p.subject_id);
-                        return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
-                    }).join('') : `
-                        <div class="detail-row" style="border-bottom:none;">
-                            <span class="label" style="color:rgba(255,255,255,0.15);font-style:italic;">No subjects completed yet</span>
-                        </div>
-                    `}
-                </div>
-            `;
-            container.appendChild(div);
-        });
-        
-        document.getElementById('statCompleted').textContent = totalCompleted;
-    }
-
-    function toggleProgressDetail(userId) {
-        const detail = document.getElementById(`detail-${userId}`);
-        if (detail) {
-            detail.classList.toggle('show');
-        }
-    }
-
-    function filterProgress() {
-        renderProgress();
-    }
-
-    // ============ LOAD SUBJECTS & USERS ============
-    async function loadSubjects() {
-        try {
-            const subjects = await fetchSubjects();
-            if (subjects && subjects.length > 0) {
-                allSubjects = subjects.map(sub => {
-                    if (!sub.icon || sub.icon === 'fa-book' || sub.icon === '') {
-                        sub.icon = getSubjectIcon(sub.name);
-                    }
-                    if (!sub.color || sub.color === '') {
-                        sub.color = getSubjectColor(sub.name);
-                    }
-                    return sub;
-                });
-                renderSubjects();
-                updateProgress();
-                updateTeacherSubjects();
-                updateQuestionSubjectSelect();
-                updateUploadSubjectSelect();
-                document.getElementById('statSubjects').textContent = subjects.length;
-                let totalQ = 0;
-                for (const subject of subjects) {
-                    const qs = await fetchQuestions(subject.id);
-                    totalQ += qs.length;
-                }
-                document.getElementById('statQuestions').textContent = totalQ;
-            } else {
-                allSubjects = [];
-                renderSubjects();
-            }
-        } catch (error) {
-            console.error('Error loading subjects:', error);
-            showToast('Error loading subjects. Please refresh.', 'error');
-        }
-    }
-
-    async function loadUsers() {
-        try {
-            const users = await fetchAllUsers();
-            allUsers = users.filter(u => u.role !== 'teacher');
-            document.getElementById('statStudents').textContent = allUsers.length;
-            renderStudents();
-            renderProgress();
-        } catch (error) {
-            console.error('Error loading users:', error);
-        }
-    }
-
-    // ============ RENDER SUBJECTS ============
-    function renderSubjects() {
-        const grid = document.getElementById('subjectGrid');
-        grid.innerHTML = '';
-        if (!allSubjects || allSubjects.length === 0) {
-            grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-white/40 text-sm">No subjects available. Contact your teacher.</div>`;
-            return;
-        }
-        
-        const hasMembership = checkMembership();
-        
-        allSubjects.forEach(subject => {
-            const isCompleted = completedSubjects.has(subject.id);
-            const isLocked = !hasMembership && currentUser && currentUser.role !== 'teacher' && !isCompleted;
-            
-            const icon = subject.icon || getSubjectIcon(subject.name);
-            const color = subject.color || getSubjectColor(subject.name);
-            
-            const card = document.createElement('div');
-            let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/20' : ''}`;
-            if (isLocked && !isCompleted) cardClass += ' locked';
-            card.className = cardClass;
-            card.style.background = isCompleted ? 'rgba(34,197,94,0.06)' : 'rgba(255,255,255,0.04)';
-            
-            let statusBadge = '';
-            if (!isCompleted && isLocked) {
-                statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#0ea5e9;background:rgba(14,165,233,0.12);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 K10</div>`;
-            }
-            
-            card.innerHTML = `
-                <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#0ea5e9'}">
-                    <i class="fas ${icon}"></i>
-                </div>
-                <div class="subject-name">${subject.name}</div>
-                <div class="subject-count">Loading...</div>
-                ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
-                ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
-                ${statusBadge}
-            `;
-            
-            fetchQuestions(subject.id).then(questions => {
-                const countEl = card.querySelector('.subject-count');
-                if (countEl) {
-                    countEl.textContent = `${questions.length} questions`;
-                }
-            });
-            
-            card.onclick = async () => {
-                if (isCompleted) {
-                    showToast('✅ You already completed this subject!', 'info');
-                    return;
-                }
-                if (isLocked) {
-                    showToast('💎 Pay K10 to unlock this subject!', 'error');
-                    showPremiumPopup();
-                    return;
-                }
-                await startQuiz(subject.id, subject.name);
-            };
-            grid.appendChild(card);
-        });
-    }
-
-    function markSubjectComplete(subjectId) {
-        if (!currentUser) {
-            showToast('Please login first', 'error');
-            return;
-        }
-        if (!checkMembership() && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to mark subjects complete.', 'error');
-            showPremiumPopup();
-            return;
-        }
-        if (completedSubjects.has(subjectId)) {
-            showToast('Already completed', 'info');
-            return;
-        }
-        const subject = allSubjects.find(s => s.id === subjectId);
-        if (!subject) return;
-        
-        completedSubjects.add(subjectId);
-        const key = `completed_${currentUser.id}`;
-        const stored = JSON.parse(localStorage.getItem(key) || '[]');
-        if (!stored.includes(subjectId)) {
-            stored.push(subjectId);
-            localStorage.setItem(key, JSON.stringify(stored));
-        }
-        
-        if (currentUser && currentUser.id) {
-            saveProgress(currentUser.id, subjectId, 0, 0);
-        }
-        
-        renderSubjects();
-        updateProgress();
-        updateProfile();
-        showToast(`✅ "${subject.name}" marked as complete!`, 'success');
-    }
-
-    function updateProgress() {
-        if (currentUser) {
-            const key = `completed_${currentUser.id}`;
-            const stored = JSON.parse(localStorage.getItem(key) || '[]');
-            stored.forEach(id => completedSubjects.add(id));
-        }
-        const total = allSubjects.length;
-        const completed = completedSubjects.size;
-        document.getElementById('progressText').textContent = `${completed} of ${total} completed`;
-        document.getElementById('progressBar').style.width = total > 0 ? `${(completed / total) * 100}%` : '0%';
-        if (completed === total && total > 0 && checkMembership()) {
-            setTimeout(() => showCertificate(), 500);
-        }
-        updateProfile();
-    }
-
-    // ============ START QUIZ ============
-    async function startQuiz(subjectId, subjectName) {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to access quizzes.', 'error');
-            showPremiumPopup();
-            return;
-        }
-        try {
-            const questions = await fetchQuestions(subjectId);
-            if (!questions || questions.length === 0) {
-                showToast('No questions available for this subject.', 'error');
-                return;
-            }
-            currentSubject = subjectId;
-            currentQuestions = questions;
-            currentIndex = 0;
-            score = 0;
-            answered = false;
-            document.getElementById('quizSubjectTitle').textContent = subjectName;
-            document.getElementById('questionCounter').textContent = `${currentIndex+1}/${currentQuestions.length}`;
-            showView('quizView');
-            renderQuestion();
-        } catch (error) {
-            console.error('Error starting quiz:', error);
-            showToast('Error loading questions. Please try again.', 'error');
-        }
-    }
-
-    function renderQuestion() {
-        if (currentIndex >= currentQuestions.length) {
-            completedSubjects.add(currentSubject);
-            totalQuestionsAnswered += currentQuestions.length;
-            if (currentUser && currentUser.id) {
-                saveProgress(currentUser.id, currentSubject, score, currentQuestions.length);
-            }
-            updateProgress();
-            const subjectName = document.getElementById('quizSubjectTitle').textContent;
-            showToast(`🎉 Completed ${subjectName}!`, 'success');
-            goToSubjects();
-            return;
-        }
-        const q = currentQuestions[currentIndex];
-        document.getElementById('questionText').textContent = q.question;
-        const qNum = currentIndex + 1;
-        document.getElementById('qNum').textContent = qNum;
-        document.getElementById('questionCounter').textContent = `${qNum}/${currentQuestions.length}`;
-        document.getElementById('scoreDisplay').textContent = score;
-        const container = document.getElementById('optionsContainer');
-        container.innerHTML = '';
-        answered = false;
-        document.getElementById('nextBtn').disabled = true;
-        const letters = ['A', 'B', 'C', 'D'];
-        q.options.forEach((option, idx) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerHTML = `<span class="option-letter">${letters[idx]}</span><span>${option}</span>`;
-            btn.dataset.index = idx;
-            btn.onclick = () => selectOption(idx);
-            container.appendChild(btn);
-        });
-    }
-
-    function selectOption(index) {
-        if (answered) return;
-        answered = true;
-        const q = currentQuestions[currentIndex];
-        const options = document.querySelectorAll('.option-btn');
-        const isCorrect = index === q.correct_answer;
-        if (isCorrect) {
-            score++;
-            document.getElementById('scoreDisplay').textContent = score;
-        }
-        options.forEach((btn, idx) => {
-            btn.classList.add('disabled');
-            if (idx === q.correct_answer) btn.classList.add('correct');
-            else if (idx === index && !isCorrect) btn.classList.add('wrong');
-            if (idx === index) btn.classList.add('selected');
-        });
-        totalQuestionsAnswered++;
-        document.getElementById('nextBtn').disabled = false;
-        updateProfile();
-    }
-
-    function nextQuestion() {
-        if (!answered) return;
-        currentIndex++;
-        renderQuestion();
-    }
-
-    // ============ CERTIFICATE ============
-    function showCertificate() {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to view your certificate.', 'error');
-            showPremiumPopup();
-            return;
-        }
-        showView('certificateView');
-        if (currentUser) {
-            document.getElementById('certUsername').textContent = currentUser.username;
-            document.getElementById('certDate').textContent = new Date().toLocaleDateString();
-            const totalQ = allSubjects.reduce((sum, subject) => sum + 5, 0);
-            document.getElementById('certScore').textContent = `${Math.round((score / (totalQ || 1)) * 100)}%`;
-        }
-        if (typeof confetti !== 'undefined') {
-            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-            setTimeout(() => confetti({ particleCount: 100, spread: 60, origin: { y: 0.4 } }), 300);
-        }
-    }
-
-    // ============ TEACHER DASHBOARD ============
-    function switchTeacherTab(tab) {
-        currentTeacherTab = tab;
-        document.querySelectorAll('#teacherView .subject-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('#teacherView .subject-tab').forEach(t => {
-            if (t.textContent.trim().toLowerCase().includes(tab)) {
-                t.classList.add('active');
-            }
-        });
-        document.getElementById('teacherProgressTab').style.display = tab === 'progress' ? 'block' : 'none';
-        document.getElementById('teacherStudentsTab').style.display = tab === 'students' ? 'block' : 'none';
-        document.getElementById('teacherSubjectsTab').style.display = tab === 'subjects' ? 'block' : 'none';
-        document.getElementById('teacherQuestionsTab').style.display = tab === 'questions' ? 'block' : 'none';
-        document.getElementById('teacherUploadTab').style.display = tab === 'upload' ? 'block' : 'none';
-        if (tab === 'subjects') updateTeacherSubjects();
-        if (tab === 'questions') loadQuestionsForTeacher();
-        if (tab === 'students') renderStudents();
-        if (tab === 'upload') updateUploadSubjectSelect();
-        if (tab === 'progress') renderProgress();
-    }
-
-    function updateTeacherDashboard() {
-        updateTeacherSubjects();
-        updateQuestionSubjectSelect();
-        updateUploadSubjectSelect();
-        renderStudents();
-        renderProgress();
-        document.getElementById('statStudents').textContent = allUsers.length;
-        document.getElementById('statSubjects').textContent = allSubjects.length;
-    }
-
-    // ============ STUDENT MANAGEMENT ============
-    function renderStudents() {
-        const list = document.getElementById('studentList');
-        const searchTerm = document.getElementById('studentSearch')?.value?.toLowerCase() || '';
-        const filtered = allUsers.filter(u => u.username.toLowerCase().includes(searchTerm));
-        if (filtered.length === 0) {
-            list.innerHTML = `<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
-            return;
-        }
-        list.innerHTML = '';
-        filtered.forEach(user => {
-            const div = document.createElement('div');
-            div.style.cssText = 'background:rgba(255,255,255,0.03);border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;';
-            const date = new Date(user.created_at).toLocaleDateString();
-            div.innerHTML = `
-                <div style="color:rgba(255,255,255,0.7);font-size:12px;">
-                    <span style="font-weight:600;color:#0ea5e9;">${user.username}</span>
-                    <span style="color:rgba(255,255,255,0.2);font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
-                    <span style="color:rgba(255,255,255,0.15);font-size:10px;margin-left:8px;">📅 ${date}</span>
-                </div>
-                <div onclick="deleteStudent('${user.id}')" style="color:rgba(255,255,255,0.15);cursor:pointer;padding:4px 8px;border-radius:6px;">
-                    <i class="fas fa-trash"></i>
-                </div>
-            `;
-            list.appendChild(div);
-        });
-    }
-
-    function filterStudents() { renderStudents(); }
-    function showAddStudentForm() { document.getElementById('addStudentForm').style.display = 'block'; document.getElementById('studentUsername').focus(); }
-    function hideAddStudentForm() { document.getElementById('addStudentForm').style.display = 'none'; document.getElementById('studentUsername').value = ''; document.getElementById('studentPassword').value = ''; }
-
-    async function addStudent() {
-        const username = document.getElementById('studentUsername').value.trim();
-        const password = document.getElementById('studentPassword').value.trim();
-        if (!username || !password) {
-            showToast('Please enter username and password', 'error');
-            return;
-        }
-        if (username.length < 3 || password.length < 3) {
-            showToast('Username and password must be at least 3 characters', 'error');
-            return;
-        }
-        const btn = event.target;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Creating...';
-        try {
-            const exists = await checkUserExists(username);
-            if (exists) {
-                showToast('Username already exists', 'error');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-save"></i> Create';
-                return;
-            }
-            const newUser = await createUser(username, password);
-            if (newUser) {
-                showToast(`✅ Student "${username}" created! Password: ${password}`, 'success');
-                hideAddStudentForm();
-                await loadUsers();
-                renderStudents();
-                renderProgress();
-                document.getElementById('statStudents').textContent = allUsers.length;
-            }
-        } catch (error) {
-            showToast('Error creating student account', 'error');
-        }
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-save"></i> Create';
-    }
-
-    async function deleteStudent(userId) {
-        if (!confirm('Delete this student account?')) return;
-        try {
-            const success = await deleteUser(userId);
-            if (success) {
-                showToast('Student deleted', 'info');
-                await loadUsers();
-                renderStudents();
-                renderProgress();
-                document.getElementById('statStudents').textContent = allUsers.length;
-            }
-        } catch (error) {
-            showToast('Error deleting student', 'error');
-        }
-    }
-
-    // ============ TEACHER SUBJECT MANAGEMENT ============
-    function updateTeacherSubjects() {
-        const list = document.getElementById('subjectList');
-        if (!allSubjects || allSubjects.length === 0) {
-            list.innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
-            return;
-        }
-        list.innerHTML = '';
-        allSubjects.forEach(subject => {
-            const icon = subject.icon || getSubjectIcon(subject.name);
-            const div = document.createElement('div');
-            div.style.cssText = 'background:rgba(255,255,255,0.03);border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;';
-            div.innerHTML = `
-                <div>
-                    <div style="color:rgba(255,255,255,0.7);font-size:12px;"><i class="fas ${icon}" style="color:#0ea5e9;"></i> ${subject.name}</div>
-                    <div style="color:rgba(255,255,255,0.2);font-size:10px;">${subject.color}</div>
-                </div>
-                <div onclick="deleteSubject('${subject.id}')" style="color:rgba(255,255,255,0.15);cursor:pointer;padding:4px 8px;border-radius:6px;">
-                    <i class="fas fa-trash"></i>
-                </div>
-            `;
-            list.appendChild(div);
-        });
-    }
-
-    function showAddSubjectForm() { document.getElementById('addSubjectForm').style.display = 'block'; document.getElementById('subjectName').focus(); }
-    function hideAddSubjectForm() { document.getElementById('addSubjectForm').style.display = 'none'; document.getElementById('subjectName').value = ''; document.getElementById('subjectIcon').value = ''; document.getElementById('subjectColor').value = ''; }
-
-    async function addSubject() {
-        const name = document.getElementById('subjectName').value.trim();
-        let icon = document.getElementById('subjectIcon').value.trim();
-        if (!icon || icon === '') icon = getSubjectIcon(name);
-        let color = document.getElementById('subjectColor').value.trim();
-        if (!color || color === '') color = getSubjectColor(name);
-        if (!name) {
-            showToast('Please enter a subject name', 'error');
-            return;
-        }
-        const btn = event.target;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Saving...';
-        try {
-            const newSubject = await addSubjectToDB(name, icon, color);
-            if (newSubject) {
-                showToast(`✅ Subject "${name}" added!`, 'success');
-                hideAddSubjectForm();
-                await loadSubjects();
-                updateTeacherSubjects();
-                updateQuestionSubjectSelect();
-                updateUploadSubjectSelect();
-                document.getElementById('statSubjects').textContent = allSubjects.length;
-            }
-        } catch (error) {
-            showToast('Error adding subject. Please try again.', 'error');
-        }
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-save"></i> Save';
-    }
-
-    async function deleteSubject(subjectId) {
-        if (!confirm('Delete this subject and all its questions?')) return;
-        try {
-            const success = await deleteSubjectFromDB(subjectId);
-            if (success) {
-                showToast('Subject deleted', 'info');
-                await loadSubjects();
-                updateTeacherSubjects();
-                updateQuestionSubjectSelect();
-                updateUploadSubjectSelect();
-                document.getElementById('statSubjects').textContent = allSubjects.length;
-            }
-        } catch (error) {
-            showToast('Error deleting subject', 'error');
-        }
-    }
-
-    // ============ TEACHER QUESTION MANAGEMENT ============
-    function updateQuestionSubjectSelect() {
-        const select = document.getElementById('questionSubjectSelect');
-        select.innerHTML = '<option value="">-- Select a subject --</option>';
-        allSubjects.forEach(subject => {
-            select.innerHTML += `<option value="${subject.id}">${subject.name}</option>`;
-        });
-    }
-
-    function updateUploadSubjectSelect() {
-        const select = document.getElementById('uploadSubjectSelect');
-        select.innerHTML = '<option value="">-- Select a subject --</option>';
-        allSubjects.forEach(subject => {
-            select.innerHTML += `<option value="${subject.id}">${subject.name}</option>`;
-        });
-    }
-
-    async function loadQuestionsForTeacher() {
-        const subjectId = document.getElementById('questionSubjectSelect').value;
-        if (!subjectId) {
-            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
-            return;
-        }
-        selectedSubjectId = subjectId;
-        const list = document.getElementById('teacherQuestionList');
-        list.innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
-        try {
-            const questions = await fetchQuestions(subjectId);
-            if (questions.length === 0) {
-                list.innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
-                return;
-            }
-            list.innerHTML = '';
-            questions.forEach((q, idx) => {
-                const div = document.createElement('div');
-                div.style.cssText = 'background:rgba(255,255,255,0.03);border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;';
-                div.innerHTML = `
-                    <div>
-                        <div style="color:rgba(255,255,255,0.7);font-size:12px;">${idx+1}. ${q.question}</div>
-                        <div style="color:rgba(255,255,255,0.2);font-size:10px;">${q.options.join(' | ')}</div>
-                    </div>
-                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:rgba(255,255,255,0.15);cursor:pointer;padding:4px 8px;border-radius:6px;">
-                        <i class="fas fa-trash"></i>
-                    </div>
-                `;
-                list.appendChild(div);
-            });
-        } catch (error) {
-            console.error('Error loading questions:', error);
-            list.innerHTML = '<div style="color:rgba(255,255,255,0.2);text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
-        }
-    }
-
-    async function addQuestionTeacher() {
-        const subjectId = document.getElementById('questionSubjectSelect').value;
-        const question = document.getElementById('questionTextInput').value.trim();
-        const optionA = document.getElementById('optionA').value.trim();
-        const optionB = document.getElementById('optionB').value.trim();
-        const optionC = document.getElementById('optionC').value.trim();
-        const optionD = document.getElementById('optionD').value.trim();
-        const correctAnswer = parseInt(document.getElementById('correctAnswer').value);
-        if (!subjectId) {
-            showToast('Please select a subject', 'error');
-            return;
-        }
-        if (!question) {
-            showToast('Please enter a question', 'error');
-            return;
-        }
-        if (!optionA || !optionB || !optionC || !optionD) {
-            showToast('Please fill in all 4 options', 'error');
-            return;
-        }
-        const options = [optionA, optionB, optionC, optionD];
-        const btn = event.target;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Adding...';
-        try {
-            const newQuestion = await addQuestionToDB(subjectId, question, options, correctAnswer);
-            if (newQuestion) {
-                showToast('✅ Question added!', 'success');
-                document.getElementById('questionTextInput').value = '';
-                document.getElementById('optionA').value = '';
-                document.getElementById('optionB').value = '';
-                document.getElementById('optionC').value = '';
-                document.getElementById('optionD').value = '';
-                await loadQuestionsForTeacher();
-                updateTeacherSubjects();
-                let totalQ = 0;
-                for (const subject of allSubjects) {
-                    const qs = await fetchQuestions(subject.id);
-                    totalQ += qs.length;
-                }
-                document.getElementById('statQuestions').textContent = totalQ;
-            }
-        } catch (error) {
-            showToast('Error adding question. Please try again.', 'error');
-        }
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-save"></i> Add Question';
-    }
-
-    async function deleteQuestionTeacher(questionId) {
-        if (!confirm('Delete this question?')) return;
-        try {
-            const success = await deleteQuestionFromDB(questionId);
-            if (success) {
-                showToast('Question deleted', 'info');
-                await loadQuestionsForTeacher();
-                updateTeacherSubjects();
-                let totalQ = 0;
-                for (const subject of allSubjects) {
-                    const qs = await fetchQuestions(subject.id);
-                    totalQ += qs.length;
-                }
-                document.getElementById('statQuestions').textContent = totalQ;
-            }
-        } catch (error) {
-            showToast('Error deleting question', 'error');
-        }
-    }
-
-    function pickIcon() {
-        const icons = ['fa-atom', 'fa-flask', 'fa-calculator', 'fa-book-open', 'fa-globe-africa', 
-                       'fa-laptop-code', 'fa-church', 'fa-palette', 'fa-music', 'fa-robot',
-                       'fa-dna', 'fa-earth-africa', 'fa-microscope', 'fa-pencil', 'fa-ruler',
-                       'fa-vial', 'fa-gavel', 'fa-landmark', 'fa-running', 'fa-chart-line',
-                       'fa-coins', 'fa-pen-fancy', 'fa-language', 'fa-home'];
-        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-        document.getElementById('subjectIcon').value = randomIcon;
-        showToast(`🎨 Icon set to: ${randomIcon}`, 'info');
-    }
-
-    // ============ BULK UPLOAD FUNCTIONS ============
-    function downloadTemplate() {
-        const headers = ['question', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer'];
-        const sampleData = [
-            ['What is 5+3?', '4', '5', '8', '10', 'C'],
-            ['What is the capital of Zambia?', 'Lusaka', 'Ndola', 'Kitwe', 'Livingstone', 'A'],
-            ['What is the chemical symbol for water?', 'H2O', 'CO2', 'NaCl', 'HCl', 'A']
-        ];
-        let csv = headers.join(',') + '\n';
-        sampleData.forEach(row => {
-            csv += row.join(',') + '\n';
-        });
-        const blob = new Blob([csv], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'questions_template.csv';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('📥 Template downloaded!', 'success');
-    }
-
-    function handleFileUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const text = e.target.result;
-            const lines = text.split('\n').filter(line => line.trim());
-            if (lines.length < 2) {
-                showToast('⚠️ File is empty or invalid. Please use the template.', 'error');
-                return;
-            }
-            const headers = lines[0].toLowerCase().split(',').map(h => h.trim());
-            const required = ['question', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer'];
-            const missing = required.filter(r => !headers.includes(r));
-            if (missing.length > 0) {
-                showToast(`⚠️ Missing columns: ${missing.join(', ')}. Please use the template.`, 'error');
-                return;
-            }
-            uploadedData = [];
-            for (let i = 1; i < lines.length; i++) {
-                const values = lines[i].split(',').map(v => v.trim());
-                if (values.length >= 6) {
-                    const row = {};
-                    headers.forEach((h, idx) => {
-                        row[h] = values[idx] || '';
-                    });
-                    const correct = row.correct_answer.toUpperCase();
-                    if (['A', 'B', 'C', 'D'].includes(correct)) {
-                        row.correct_answer = correct;
-                        uploadedData.push(row);
-                    }
-                }
-            }
-            if (uploadedData.length === 0) {
-                showToast('⚠️ No valid questions found. Please check your file.', 'error');
-                return;
-            }
-            const preview = document.getElementById('uploadPreview');
-            let html = `<table>
-                <thead><tr>
-                    <th>#</th>
-                    <th>Question</th>
-                    <th>Options</th>
-                    <th>Answer</th>
-                </tr></thead><tbody>`;
-            uploadedData.slice(0, 10).forEach((row, idx) => {
-                const options = [row.option_a, row.option_b, row.option_c, row.option_d].join(' | ');
-                html += `<tr>
-                    <td>${idx + 1}</td>
-                    <td>${row.question.substring(0, 30)}${row.question.length > 30 ? '...' : ''}</td>
-                    <td style="font-size:10px;color:rgba(255,255,255,0.3);">${options}</td>
-                    <td style="color:#0ea5e9;font-weight:700;">${row.correct_answer}</td>
-                </tr>`;
-            });
-            if (uploadedData.length > 10) {
-                html += `<tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.15);font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
-            }
-            html += `</tbody></table>
-                <div style="margin-top:8px;color:rgba(255,255,255,0.2);font-size:11px;text-align:center;">
-                    Found <strong style="color:#0ea5e9;">${uploadedData.length}</strong> questions ready to upload
-                </div>`;
-            preview.innerHTML = html;
-            preview.style.display = 'block';
-            document.getElementById('uploadBtn').style.display = 'block';
-            document.getElementById('uploadResult').style.display = 'none';
-            showToast(`📄 Loaded ${uploadedData.length} questions from file`, 'success');
-        };
-        reader.readAsText(file);
-    }
-
-    async function uploadQuestions() {
-        const subjectId = document.getElementById('uploadSubjectSelect').value;
-        if (!subjectId) {
-            showToast('⚠️ Please select a subject first', 'error');
-            return;
-        }
-        if (uploadedData.length === 0) {
-            showToast('⚠️ No questions to upload. Please load a file first.', 'error');
-            return;
-        }
-        const btn = document.getElementById('uploadBtn');
-        const progress = document.getElementById('uploadProgress');
-        const bar = document.getElementById('progressBarUpload');
-        const result = document.getElementById('uploadResult');
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Uploading...';
-        progress.style.display = 'block';
-        result.style.display = 'none';
-        let successCount = 0;
-        let errorCount = 0;
-        const total = uploadedData.length;
-        const correctMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
-        for (let i = 0; i < uploadedData.length; i++) {
-            const row = uploadedData[i];
-            const options = [row.option_a, row.option_b, row.option_c, row.option_d];
-            const correctIndex = correctMap[row.correct_answer] || 0;
-            try {
-                const payload = {
-                    subject_id: subjectId,
-                    question: row.question,
-                    options: options,
-                    correct_answer: correctIndex
-                };
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}`, {
-                    method: 'POST',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=representation'
-                    },
-                    body: JSON.stringify(payload)
-                });
-                if (response.ok) {
-                    successCount++;
-                } else {
-                    errorCount++;
-                }
-            } catch (error) {
-                errorCount++;
-            }
-            const progressPercent = ((i + 1) / total) * 100;
-            bar.style.width = `${progressPercent}%`;
-        }
-        result.className = 'upload-result ' + (errorCount === 0 ? 'success' : 'error');
-        result.innerHTML = `
-            <div class="result-text">
-                ${errorCount === 0 ? '✅' : '⚠️'} Upload complete!
-                <br/>
-                <span class="count">${successCount}</span> questions uploaded successfully
-                ${errorCount > 0 ? `<br/><span style="color:#ef4444;">${errorCount}</span> failed` : ''}
-            </div>
-        `;
-        result.style.display = 'block';
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-upload"></i> Upload Questions';
-        setTimeout(() => { progress.style.display = 'none'; }, 2000);
-        if (successCount > 0) {
-            showToast(`✅ ${successCount} questions uploaded successfully!`, 'success');
-            await loadSubjects();
-            updateTeacherSubjects();
-            let totalQ = 0;
-            for (const subject of allSubjects) {
-                const qs = await fetchQuestions(subject.id);
-                totalQ += qs.length;
-            }
-            document.getElementById('statQuestions').textContent = totalQ;
-            document.getElementById('questionSubjectSelect').value = subjectId;
-            await loadQuestionsForTeacher();
-        }
-        uploadedData = [];
-        document.getElementById('uploadPreview').style.display = 'none';
-        document.getElementById('uploadBtn').style.display = 'none';
-        document.getElementById('fileInput').value = '';
-    }
-
-    // ============ INIT ============
-    async function init() {
-        checkAuth();
-        const mainContent = document.getElementById('mainContent');
-        mainContent.addEventListener('scroll', () => {
-            const fab = document.getElementById('fab');
-            if (mainContent.scrollTop > 200) {
-                fab.style.display = 'flex';
-            } else {
-                fab.style.display = 'none';
-            }
-        });
-        await loadSubjects();
-        await loadUsers();
-        await loadProgress();
-        console.log('🇿🇲 NorthernQuiz loaded - Sky Blue Theme!');
-        console.log('🎯 All subjects FREE with K10 premium option!');
-        console.log('👥 Profile & Friends system active!');
-        console.log('💬 Chat messaging enabled!');
-        console.log('📱 WhatsApp: +260 966 011 066');
-        console.log('📱 Payments: +260 971 130 511, +260 958 882 550, +260 763 209 826');
-    }
-
-    function checkAuth() {
-        const userData = localStorage.getItem('quizUser');
-        if (userData) {
-            try {
-                currentUser = JSON.parse(userData);
-                updateUserUI();
-                showView('subjectsView');
-                updateProfile();
-                loadFriends();
-                loadChats();
-                const hasMembership = checkMembership();
-                if (!hasMembership && currentUser.role !== 'teacher') {
-                    setTimeout(() => {
-                        showPremiumPopup();
-                    }, 1500);
-                }
-            } catch (e) {
-                localStorage.removeItem('quizUser');
-                showView('loginView');
-            }
-        } else {
-            showView('loginView');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', init);
-
-    // ============ EXPOSE FUNCTIONS ============
-    window.login = login;
-    window.register = register;
-    window.showLogin = showLogin;
-    window.showRegister = showRegister;
-    window.logout = logout;
-    window.goToSubjects = goToSubjects;
-    window.startQuiz = startQuiz;
-    window.nextQuestion = nextQuestion;
-    window.showHelp = showHelp;
-    window.toggleUserMenu = toggleUserMenu;
-    window.navigateTo = navigateTo;
-    window.scrollToTop = scrollToTop;
-    window.showTeacherLogin = showTeacherLogin;
-    window.teacherLogin = teacherLogin;
-    window.logoutTeacher = logoutTeacher;
-    window.switchTeacherTab = switchTeacherTab;
-    window.showAddSubjectForm = showAddSubjectForm;
-    window.hideAddSubjectForm = hideAddSubjectForm;
-    window.addSubject = addSubject;
-    window.deleteSubject = deleteSubject;
-    window.updateTeacherSubjects = updateTeacherSubjects;
-    window.loadQuestionsForTeacher = loadQuestionsForTeacher;
-    window.addQuestionTeacher = addQuestionTeacher;
-    window.deleteQuestionTeacher = deleteQuestionTeacher;
-    window.updateQuestionSubjectSelect = updateQuestionSubjectSelect;
-    window.updateUploadSubjectSelect = updateUploadSubjectSelect;
-    window.showAddStudentForm = showAddStudentForm;
-    window.hideAddStudentForm = hideAddStudentForm;
-    window.addStudent = addStudent;
-    window.renderStudents = renderStudents;
-    window.deleteStudent = deleteStudent;
-    window.filterStudents = filterStudents;
-    window.pickIcon = pickIcon;
-    window.downloadTemplate = downloadTemplate;
-    window.handleFileUpload = handleFileUpload;
-    window.uploadQuestions = uploadQuestions;
-    window.renderProgress = renderProgress;
-    window.filterProgress = filterProgress;
-    window.toggleProgressDetail = toggleProgressDetail;
-    window.saveProgress = saveProgress;
-    window.markSubjectComplete = markSubjectComplete;
-    window.updateProfile = updateProfile;
-    window.showFriends = showFriends;
-    window.renderFriends = renderFriends;
-    window.searchMembers = searchMembers;
-    window.addFriend = addFriend;
-    window.removeFriend = removeFriend;
-    window.openChat = openChat;
-    window.sendMessage = sendMessage;
-    window.renderChatMessages = renderChatMessages;
-    window.showToast = showToast;
-    window.showPremiumPopup = showPremiumPopup;
-    window.closePremiumPopup = closePremiumPopup;
-    window.openWhatsApp = openWhatsApp;
-    window.copyNumber = copyNumber;
-    window.checkMembership = checkMembership;
-    window.activateMembership = activateMembership;
-</script>
-</body>
-</html>
+                    <button class="add-friend-btn added" onclick
