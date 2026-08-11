@@ -16,7 +16,7 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #fce4ec;
+            background: #e8edf2;
             overflow: hidden;
             height: 100vh;
             width: 100vw;
@@ -28,7 +28,7 @@
             height: 100vh;
             height: 100dvh;
             margin: 0 auto;
-            background: linear-gradient(160deg, #fce4ec 0%, #f8d7e0 40%, #f3c4d0 100%);
+            background: linear-gradient(160deg, #f0f4f8 0%, #dce4ec 40%, #c8d4de 100%);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -42,7 +42,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.5);
             flex-shrink: 0;
             z-index: 40;
         }
@@ -54,23 +54,23 @@
         .brand-icon {
             width: 36px;
             height: 36px;
-            background: #e91e63;
+            background: #1a2332;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             color: white;
         }
         .brand-text {
-            color: #4a1a2c;
+            color: #1a2332;
             font-weight: 700;
             font-size: 18px;
             letter-spacing: -0.5px;
         }
         .brand-text span {
-            color: #e91e63;
+            color: #2563eb;
         }
         .header-actions {
             display: flex;
@@ -81,9 +81,9 @@
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            background: rgba(233, 30, 99, 0.08);
+            background: #f1f5f9;
             border: none;
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 14px;
             display: flex;
             align-items: center;
@@ -98,7 +98,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: #e91e63;
+            background: #1a2332;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -119,7 +119,7 @@
             width: 3px;
         }
         .main-content::-webkit-scrollbar-thumb {
-            background: rgba(233, 30, 99, 0.3);
+            background: rgba(26, 35, 50, 0.2);
             border-radius: 10px;
         }
         .bottom-nav {
@@ -132,7 +132,7 @@
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255,255,255,0.5);
             padding: 4px 0 env(safe-area-inset-bottom);
             display: flex;
             justify-content: space-around;
@@ -146,7 +146,7 @@
             gap: 1px;
             background: none;
             border: none;
-            color: rgba(74, 26, 44, 0.35);
+            color: rgba(26, 35, 50, 0.35);
             font-size: 9px;
             padding: 4px 8px;
             cursor: pointer;
@@ -159,7 +159,7 @@
             transition: all 0.3s;
         }
         .nav-item.active {
-            color: #e91e63;
+            color: #2563eb;
         }
         .nav-item.active i {
             transform: translateY(-2px);
@@ -172,7 +172,7 @@
             transform: translateX(-50%);
             width: 16px;
             height: 2px;
-            background: #e91e63;
+            background: #2563eb;
             border-radius: 2px;
         }
         .nav-item:active {
@@ -195,7 +195,7 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(233, 30, 99, 0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
         .subject-card {
             background: white;
@@ -203,13 +203,13 @@
             padding: 16px 14px 14px;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
-            border: 1px solid rgba(233, 30, 99, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.04);
             position: relative;
             overflow: hidden;
             min-height: 130px;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 2px 8px rgba(233, 30, 99, 0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
         .subject-card:active {
             transform: scale(0.96);
@@ -218,29 +218,29 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: #e91e63;
+            background: #1a2332;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
             margin-bottom: 10px;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(233, 30, 99, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
             color: white;
         }
         .subject-card .icon-wrapper i {
             color: white;
-            font-size: 18px;
+            font-size: 20px;
         }
         .subject-card .subject-name {
-            color: #4a1a2c;
+            color: #1a2332;
             font-weight: 700;
             font-size: 14px;
             line-height: 1.2;
             margin-bottom: 2px;
         }
         .subject-card .subject-count {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 10px;
             font-weight: 500;
         }
@@ -264,9 +264,9 @@
             bottom: 8px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(233, 30, 99, 0.08);
-            border: 1px solid rgba(233, 30, 99, 0.15);
-            color: #e91e63;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            color: #16a34a;
             font-size: 9px;
             font-weight: 700;
             padding: 4px 12px;
@@ -278,7 +278,7 @@
             backdrop-filter: blur(4px);
         }
         .subject-card .mark-done-btn:hover {
-            background: rgba(233, 30, 99, 0.15);
+            background: rgba(34, 197, 94, 0.2);
         }
         .subject-card .mark-done-btn:active {
             transform: scale(0.95);
@@ -309,7 +309,7 @@
             filter: blur(2px);
         }
         .subject-card.free {
-            border: 2px solid rgba(233, 30, 99, 0.2);
+            border: 2px solid rgba(34, 197, 94, 0.25);
             position: relative;
         }
         .subject-card.free::before {
@@ -319,8 +319,8 @@
             left: 8px;
             font-size: 9px;
             font-weight: 700;
-            color: #e91e63;
-            background: rgba(233, 30, 99, 0.06);
+            color: #16a34a;
+            background: rgba(34, 197, 94, 0.1);
             padding: 2px 10px;
             border-radius: 10px;
             z-index: 5;
@@ -332,10 +332,10 @@
         }
         .option-btn {
             background: white;
-            border: 2px solid #f3d0d8;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
             padding: 12px 14px;
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 13px;
             font-weight: 500;
             transition: all 0.2s;
@@ -350,13 +350,13 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: #fce4ec;
+            background: #1a2332;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 11px;
             font-weight: 700;
-            color: #b07a8a;
+            color: white;
             flex-shrink: 0;
         }
         .option-btn:active:not(.disabled) {
@@ -379,10 +379,10 @@
             color: white;
         }
         .option-btn.selected {
-            border-color: #e91e63;
+            border-color: #2563eb;
         }
         .option-btn.selected .option-letter {
-            background: #e91e63;
+            background: #2563eb;
             color: white;
         }
         .option-btn.disabled {
@@ -393,18 +393,18 @@
             background: white;
             border-radius: 16px;
             padding: 16px;
-            border: 1px solid #f3d0d8;
-            box-shadow: 0 2px 8px rgba(233, 30, 99, 0.04);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
         .question-number {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 11px;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
         .question-text {
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 16px;
             font-weight: 600;
             line-height: 1.5;
@@ -412,19 +412,19 @@
         }
         .progress-track {
             height: 4px;
-            background: #f3d0d8;
+            background: #e2e8f0;
             border-radius: 4px;
             overflow: hidden;
             margin: 4px 0;
         }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #e91e63, #c2185b);
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
             border-radius: 4px;
             transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn-primary {
-            background: #e91e63;
+            background: #1a2332;
             color: white;
             font-weight: 700;
             padding: 12px;
@@ -438,7 +438,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2);
+            box-shadow: 0 4px 15px rgba(26, 35, 50, 0.15);
         }
         .btn-primary:active {
             transform: scale(0.96);
@@ -449,11 +449,11 @@
         }
         .btn-secondary {
             background: rgba(255, 255, 255, 0.5);
-            color: #4a1a2c;
+            color: #1a2332;
             font-weight: 600;
             padding: 12px;
             border-radius: 12px;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s;
@@ -492,21 +492,21 @@
         }
         .input-field {
             background: white;
-            border: 2px solid #f3d0d8;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
             padding: 12px 14px;
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 14px;
             width: 100%;
             transition: all 0.3s;
             outline: none;
         }
         .input-field:focus {
-            border-color: #e91e63;
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.08);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         .input-field::placeholder {
-            color: #b07a8a;
+            color: #94a3b8;
         }
         .badge {
             display: inline-flex;
@@ -520,19 +520,19 @@
             letter-spacing: 0.5px;
         }
         .badge-gold {
-            background: rgba(233, 30, 99, 0.1);
-            color: #e91e63;
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
         }
         .badge-free {
-            background: rgba(233, 30, 99, 0.1);
-            color: #e91e63;
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
         }
         .toast {
             position: fixed;
             bottom: 80px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(74, 26, 44, 0.92);
+            background: rgba(26, 35, 50, 0.92);
             backdrop-filter: blur(20px);
             padding: 10px 20px;
             border-radius: 12px;
@@ -549,11 +549,11 @@
             display: block;
             animation: fadeSlideUp 0.3s ease;
         }
-        .text-gold { color: #e91e63; }
-        .bg-gold { background: #e91e63; }
-        .divider { height: 1px; background: #f3d0d8; margin: 10px 0; }
+        .text-gold { color: #2563eb; }
+        .bg-gold { background: #1a2332; }
+        .divider { height: 1px; background: #e2e8f0; margin: 10px 0; }
         .certificate-card {
-            background: linear-gradient(145deg, #fce4ec, #ffffff);
+            background: linear-gradient(145deg, #f8fafc, #ffffff);
             border-radius: 20px;
             padding: 28px 20px;
             border: 3px solid #d4af37;
@@ -572,7 +572,7 @@
             .subject-grid { gap: 8px; }
             .subject-card { padding: 12px 10px 10px; min-height: 120px; }
             .subject-card .icon-wrapper { width: 40px; height: 40px; font-size: 17px; }
-            .subject-card .icon-wrapper i { font-size: 16px; }
+            .subject-card .icon-wrapper i { font-size: 17px; }
             .subject-card .subject-name { font-size: 13px; }
             .question-text { font-size: 15px; }
             .option-btn { padding: 10px 12px; font-size: 12px; }
@@ -581,7 +581,7 @@
             .app-container {
                 border-left: 1px solid rgba(255,255,255,0.1);
                 border-right: 1px solid rgba(255,255,255,0.1);
-                box-shadow: 0 0 60px rgba(233, 30, 99, 0.04);
+                box-shadow: 0 0 60px rgba(0,0,0,0.06);
             }
         }
         .fab {
@@ -593,12 +593,12 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: #e91e63;
+            background: #1a2332;
             border: none;
             color: white;
             font-size: 18px;
             cursor: pointer;
-            box-shadow: 0 8px 30px rgba(233, 30, 99, 0.25);
+            box-shadow: 0 8px 30px rgba(26,35,50,0.25);
             display: none;
             align-items: center;
             justify-content: center;
@@ -611,13 +611,13 @@
             width: 18px;
             height: 18px;
             border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: #e91e63;
+            border-top-color: #1a2332;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .skeleton {
-            background: linear-gradient(90deg, #fce4ec 25%, #f8d7e0 50%, #fce4ec 75%);
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
             border-radius: 16px;
@@ -627,9 +627,9 @@
             100% { background-position: 200% 0; }
         }
         .teacher-login-btn {
-            background: rgba(233, 30, 99, 0.06);
-            border: 1px solid rgba(233, 30, 99, 0.1);
-            color: #4a1a2c;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            color: #1a2332;
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 10px;
@@ -643,8 +643,8 @@
             transform: scale(0.95);
         }
         .free-trial-banner {
-            background: linear-gradient(135deg, rgba(233, 30, 99, 0.04), rgba(233, 30, 99, 0.02));
-            border: 1px solid rgba(233, 30, 99, 0.08);
+            background: linear-gradient(135deg, rgba(26, 35, 50, 0.04), rgba(26, 35, 50, 0.02));
+            border: 1px solid rgba(26, 35, 50, 0.06);
             border-radius: 12px;
             padding: 10px 14px;
             margin-bottom: 12px;
@@ -653,15 +653,15 @@
             justify-content: space-between;
         }
         .free-trial-banner .free-text {
-            color: #7a4a5a;
+            color: #475569;
             font-size: 12px;
         }
         .free-trial-banner .free-text strong {
-            color: #e91e63;
+            color: #2563eb;
         }
         .free-trial-banner .free-count {
-            background: rgba(233, 30, 99, 0.06);
-            color: #e91e63;
+            background: rgba(26, 35, 50, 0.06);
+            color: #2563eb;
             padding: 2px 10px;
             border-radius: 20px;
             font-size: 12px;
@@ -676,11 +676,11 @@
             background: white;
             border-radius: 16px;
             padding: 16px;
-            border: 1px solid #f3d0d8;
-            box-shadow: 0 2px 8px rgba(233, 30, 99, 0.04);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
         .teacher-dashboard h2 {
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 12px;
@@ -689,13 +689,13 @@
             gap: 8px;
         }
         .teacher-dashboard h2 i {
-            color: #e91e63;
+            color: #2563eb;
         }
         .form-group {
             margin-bottom: 10px;
         }
         .form-group label {
-            color: #7a4a5a;
+            color: #64748b;
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
@@ -705,44 +705,44 @@
         }
         .form-group .input-field {
             background: white;
-            border: 2px solid #f3d0d8;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
             padding: 10px 14px;
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 14px;
             width: 100%;
             transition: all 0.3s;
             outline: none;
         }
         .form-group .input-field:focus {
-            border-color: #e91e63;
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.08);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         .form-group .input-field::placeholder {
-            color: #b07a8a;
+            color: #94a3b8;
         }
         .form-group select {
             background: white;
-            border: 2px solid #f3d0d8;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
             padding: 10px 14px;
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 14px;
             width: 100%;
             transition: all 0.3s;
             outline: none;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23b07a8a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 14px center;
         }
         .form-group select:focus {
-            border-color: #e91e63;
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.08);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         .form-group select option {
             background: white;
-            color: #4a1a2c;
+            color: #1a2332;
         }
         .options-grid {
             display: grid;
@@ -754,7 +754,7 @@
             padding: 8px 12px;
         }
         .btn-teacher {
-            background: #e91e63;
+            background: #1a2332;
             color: white;
             font-weight: 700;
             padding: 12px;
@@ -768,7 +768,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.15);
+            box-shadow: 0 4px 15px rgba(26, 35, 50, 0.12);
         }
         .btn-teacher:active {
             transform: scale(0.96);
@@ -778,12 +778,12 @@
             cursor: not-allowed;
         }
         .btn-teacher-secondary {
-            background: #fce4ec;
-            color: #4a1a2c;
+            background: #f1f5f9;
+            color: #1a2332;
             font-weight: 600;
             padding: 8px 14px;
             border-radius: 8px;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             font-size: 12px;
             cursor: pointer;
             transition: all 0.3s;
@@ -818,31 +818,31 @@
             width: 3px;
         }
         .question-list::-webkit-scrollbar-thumb {
-            background: rgba(233, 30, 99, 0.3);
+            background: rgba(26,35,50,0.2);
             border-radius: 10px;
         }
         .question-item {
-            background: #fce4ec;
+            background: #f8fafc;
             border-radius: 8px;
             padding: 10px 12px;
             margin-bottom: 6px;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .question-item .q-text {
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 12px;
             flex: 1;
         }
         .question-item .q-options {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 10px;
             margin-top: 2px;
         }
         .question-item .q-delete {
-            color: #b07a8a;
+            color: #94a3b8;
             cursor: pointer;
             padding: 4px 8px;
             border-radius: 6px;
@@ -863,15 +863,15 @@
             height: 2px;
         }
         .subject-tabs::-webkit-scrollbar-thumb {
-            background: rgba(233, 30, 99, 0.3);
+            background: rgba(26,35,50,0.2);
             border-radius: 10px;
         }
         .subject-tab {
-            background: #fce4ec;
-            border: 1px solid #f3d0d8;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 6px 14px;
-            color: #7a4a5a;
+            color: #64748b;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
@@ -879,19 +879,19 @@
             transition: all 0.3s;
         }
         .subject-tab.active {
-            background: rgba(233, 30, 99, 0.08);
-            border-color: #e91e63;
-            color: #e91e63;
+            background: rgba(26, 35, 50, 0.06);
+            border-color: #1a2332;
+            color: #1a2332;
         }
         .subject-tab:active {
             transform: scale(0.95);
         }
         .badge-count {
-            background: #fce4ec;
+            background: #f1f5f9;
             border-radius: 10px;
             padding: 1px 6px;
             font-size: 9px;
-            color: #b07a8a;
+            color: #94a3b8;
             margin-left: 4px;
         }
         .users-list {
@@ -902,40 +902,40 @@
             width: 3px;
         }
         .users-list::-webkit-scrollbar-thumb {
-            background: rgba(233, 30, 99, 0.3);
+            background: rgba(26,35,50,0.2);
             border-radius: 10px;
         }
         .user-item {
-            background: #fce4ec;
+            background: #f8fafc;
             border-radius: 8px;
             padding: 8px 12px;
             margin-bottom: 4px;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .user-item .user-info {
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 12px;
         }
         .user-item .user-info .username {
             font-weight: 600;
-            color: #e91e63;
+            color: #2563eb;
         }
         .user-item .user-info .user-pass {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 11px;
             margin-left: 8px;
             font-family: 'Courier New', monospace;
         }
         .user-item .user-info .user-date {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 10px;
             margin-left: 8px;
         }
         .user-item .user-delete {
-            color: #b07a8a;
+            color: #94a3b8;
             cursor: pointer;
             padding: 4px 8px;
             border-radius: 6px;
@@ -947,21 +947,21 @@
         }
         .search-box {
             background: white;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 6px 12px;
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 12px;
             width: 100%;
             outline: none;
             margin-bottom: 8px;
         }
         .search-box:focus {
-            border-color: #e91e63;
-            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.08);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         .search-box::placeholder {
-            color: #b07a8a;
+            color: #94a3b8;
         }
         .stats-box {
             display: grid;
@@ -970,68 +970,68 @@
             margin-bottom: 12px;
         }
         .stat-card {
-            background: #fce4ec;
+            background: #f8fafc;
             border-radius: 10px;
             padding: 10px;
             text-align: center;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
         }
         .stat-card .stat-number {
-            color: #e91e63;
+            color: #1a2332;
             font-size: 18px;
             font-weight: 700;
         }
         .stat-card .stat-label {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .trial-complete-banner {
-            background: linear-gradient(135deg, rgba(233, 30, 99, 0.04), rgba(233, 30, 99, 0.02));
-            border: 1px solid rgba(233, 30, 99, 0.08);
+            background: linear-gradient(135deg, rgba(26,35,50,0.04), rgba(26,35,50,0.02));
+            border: 1px solid rgba(26,35,50,0.06);
             border-radius: 10px;
             padding: 12px;
             margin-bottom: 14px;
         }
         .trial-complete-banner .trial-title {
-            color: #e91e63;
+            color: #1a2332;
             font-weight: 700;
             font-size: 14px;
         }
         .trial-complete-banner .trial-text {
-            color: #7a4a5a;
+            color: #64748b;
             font-size: 12px;
             margin-top: 4px;
         }
         .upload-zone {
-            border: 2px dashed #f3d0d8;
+            border: 2px dashed #e2e8f0;
             border-radius: 12px;
             padding: 20px;
             text-align: center;
             transition: all 0.3s;
             cursor: pointer;
-            background: #fce4ec;
+            background: #f8fafc;
         }
         .upload-zone:hover {
-            border-color: #e91e63;
-            background: rgba(233, 30, 99, 0.02);
+            border-color: #1a2332;
+            background: rgba(26,35,50,0.02);
         }
         .upload-zone.dragover {
-            border-color: #e91e63;
-            background: rgba(233, 30, 99, 0.04);
+            border-color: #1a2332;
+            background: rgba(26,35,50,0.04);
         }
         .upload-zone .upload-icon {
             font-size: 40px;
-            color: #b07a8a;
+            color: #94a3b8;
             margin-bottom: 8px;
         }
         .upload-zone .upload-text {
-            color: #7a4a5a;
+            color: #64748b;
             font-size: 13px;
         }
         .upload-zone .upload-text strong {
-            color: #e91e63;
+            color: #1a2332;
         }
         .upload-preview {
             margin-top: 12px;
@@ -1044,35 +1044,35 @@
             border-collapse: collapse;
         }
         .upload-preview th {
-            color: #b07a8a;
+            color: #94a3b8;
             text-align: left;
             padding: 4px 6px;
-            border-bottom: 1px solid #f3d0d8;
+            border-bottom: 1px solid #e2e8f0;
             font-weight: 600;
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .upload-preview td {
-            color: #7a4a5a;
+            color: #475569;
             padding: 4px 6px;
-            border-bottom: 1px solid #fce4ec;
+            border-bottom: 1px solid #f1f5f9;
             font-size: 11px;
         }
         .upload-preview tr:hover td {
-            background: #fce4ec;
+            background: #f8fafc;
         }
         .upload-progress {
             margin-top: 10px;
             height: 4px;
-            background: #f3d0d8;
+            background: #e2e8f0;
             border-radius: 4px;
             overflow: hidden;
             display: none;
         }
         .upload-progress .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #e91e63, #c2185b);
+            background: linear-gradient(90deg, #1a2332, #2d3a4f);
             border-radius: 4px;
             transition: width 0.5s ease;
             width: 0%;
@@ -1094,41 +1094,41 @@
             border: 1px solid rgba(239,68,68,0.15);
         }
         .upload-result .result-text {
-            color: #7a4a5a;
+            color: #475569;
             font-size: 13px;
         }
         .upload-result .result-text .count {
-            color: #e91e63;
+            color: #1a2332;
             font-weight: 700;
         }
 
         .progress-container {
-            background: #fce4ec;
+            background: #f8fafc;
             border-radius: 10px;
             padding: 12px;
             margin-bottom: 8px;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             cursor: pointer;
             transition: all 0.3s;
         }
         .progress-container:hover {
-            background: #f8d7e0;
+            background: #f1f5f9;
         }
         .progress-container .learner-name {
-            color: #e91e63;
+            color: #1a2332;
             font-weight: 600;
             font-size: 14px;
         }
         .progress-container .progress-bar-bg {
             height: 6px;
-            background: #f3d0d8;
+            background: #e2e8f0;
             border-radius: 4px;
             overflow: hidden;
             margin: 6px 0;
         }
         .progress-container .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #e91e63, #c2185b);
+            background: linear-gradient(90deg, #1a2332, #2d3a4f);
             border-radius: 4px;
             transition: width 0.6s ease;
         }
@@ -1139,31 +1139,31 @@
             font-size: 8px;
             font-weight: 600;
             margin: 2px 3px 2px 0;
-            background: #fce4ec;
-            color: #7a4a5a;
+            background: #f1f5f9;
+            color: #64748b;
         }
         .progress-container .subject-badge.done {
             background: rgba(34,197,94,0.1);
             color: #16a34a;
         }
         .progress-container .subject-badge.pending {
-            background: rgba(233, 30, 99, 0.06);
-            color: #e91e63;
+            background: rgba(26,35,50,0.06);
+            color: #1a2332;
         }
         .progress-container .last-active {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 9px;
         }
         .progress-container .score-badge {
-            background: rgba(233, 30, 99, 0.06);
-            color: #e91e63;
+            background: rgba(26,35,50,0.06);
+            color: #1a2332;
             padding: 2px 10px;
             border-radius: 10px;
             font-size: 11px;
             font-weight: 700;
         }
         .progress-container .no-progress {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 11px;
             font-style: italic;
         }
@@ -1171,7 +1171,7 @@
             background: white;
             border-radius: 10px;
             padding: 12px;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             margin-top: 8px;
             display: none;
         }
@@ -1183,19 +1183,19 @@
             display: flex;
             justify-content: space-between;
             padding: 4px 0;
-            border-bottom: 1px solid #fce4ec;
+            border-bottom: 1px solid #f1f5f9;
         }
         .progress-detail .detail-row .label {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 11px;
         }
         .progress-detail .detail-row .value {
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 11px;
             font-weight: 600;
         }
         .progress-detail .detail-row .value.gold {
-            color: #e91e63;
+            color: #2563eb;
         }
         .progress-detail .detail-row .value.green {
             color: #16a34a;
@@ -1204,7 +1204,7 @@
         .premium-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             z-index: 200;
@@ -1229,18 +1229,18 @@
             padding: 28px 20px 24px;
             width: 100%;
             max-width: 380px;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             text-align: center;
             animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             max-height: 94vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.08);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
         }
         .premium-card::-webkit-scrollbar {
             width: 3px;
         }
         .premium-card::-webkit-scrollbar-thumb {
-            background: rgba(233, 30, 99, 0.3);
+            background: rgba(26,35,50,0.2);
             border-radius: 10px;
         }
         @keyframes popIn {
@@ -1250,24 +1250,24 @@
         .premium-icon-wrapper {
             width: 72px;
             height: 72px;
-            background: #e91e63;
+            background: #1a2332;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
             margin: 0 auto 10px;
-            box-shadow: 0 6px 30px rgba(233, 30, 99, 0.2);
+            box-shadow: 0 6px 30px rgba(26,35,50,0.15);
             color: white;
         }
         .premium-title {
-            color: #4a1a2c;
+            color: #1a2332;
             font-size: 22px;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
         .premium-subtitle {
-            color: #7a4a5a;
+            color: #64748b;
             font-size: 13px;
             margin-top: 2px;
         }
@@ -1277,11 +1277,11 @@
         .price-tag {
             font-size: 44px;
             font-weight: 800;
-            color: #e91e63;
+            color: #1a2332;
             line-height: 1;
         }
         .price-label {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 12px;
             margin-top: 2px;
         }
@@ -1292,19 +1292,19 @@
             margin: 12px 0;
         }
         .payment-row {
-            background: #fce4ec;
+            background: #f8fafc;
             border-radius: 10px;
             padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #f3d0d8;
+            border: 1px solid #e2e8f0;
             transition: all 0.2s;
             cursor: pointer;
         }
         .payment-row:active {
             transform: scale(0.97);
-            background: #f8d7e0;
+            background: #f1f5f9;
         }
         .payment-left {
             display: flex;
@@ -1327,7 +1327,7 @@
             min-width: 0;
         }
         .payment-number {
-            color: #4a1a2c;
+            color: #1a2332;
             font-weight: 700;
             font-size: 14px;
             font-family: 'Courier New', monospace;
@@ -1335,15 +1335,15 @@
             white-space: nowrap;
         }
         .payment-provider {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 10px;
             font-weight: 500;
             margin-top: 1px;
         }
         .copy-btn {
-            background: #fce4ec;
+            background: #f1f5f9;
             border: none;
-            color: #7a4a5a;
+            color: #64748b;
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 11px;
@@ -1357,37 +1357,37 @@
         }
         .copy-btn:active {
             transform: scale(0.92);
-            background: rgba(233, 30, 99, 0.08);
-            color: #e91e63;
+            background: rgba(26,35,50,0.06);
+            color: #1a2332;
         }
         .account-name-box {
-            background: rgba(233, 30, 99, 0.04);
-            border: 1px solid rgba(233, 30, 99, 0.06);
+            background: rgba(26,35,50,0.04);
+            border: 1px solid rgba(26,35,50,0.06);
             border-radius: 10px;
             padding: 10px;
             margin: 10px 0 12px;
         }
         .account-name-box .label {
-            color: #b07a8a;
+            color: #94a3b8;
             font-size: 9px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         .account-name-box .name {
-            color: #e91e63;
+            color: #1a2332;
             font-weight: 700;
             font-size: 16px;
             margin-top: 2px;
         }
         .payment-instruction {
-            color: #7a4a5a;
+            color: #64748b;
             font-size: 11px;
             text-align: center;
             margin-bottom: 12px;
             line-height: 1.4;
         }
         .payment-instruction strong {
-            color: #4a1a2c;
+            color: #1a2332;
             font-weight: 600;
         }
     </style>
@@ -1417,28 +1417,28 @@
         <div class="view active" id="loginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-pink-500/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-slate-800/20">
                         <i class="fas fa-user-graduate text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-pink-800 text-xl font-bold">Welcome Back!</h2>
-                    <p class="text-pink-600/60 text-xs mt-1">Enter your username &amp; password</p>
+                    <h2 class="text-slate-800 text-xl font-bold">Welcome Back!</h2>
+                    <p class="text-slate-500 text-xs mt-1">Enter your username &amp; password</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-pink-700/60 text-[10px] font-semibold uppercase tracking-wider">Username</label>
+                        <label class="text-slate-600 text-[10px] font-semibold uppercase tracking-wider">Username</label>
                         <input id="loginUsername" type="text" placeholder="Enter username" class="input-field mt-1" />
                     </div>
                     <div>
-                        <label class="text-pink-700/60 text-[10px] font-semibold uppercase tracking-wider">Password</label>
+                        <label class="text-slate-600 text-[10px] font-semibold uppercase tracking-wider">Password</label>
                         <input id="loginPassword" type="password" placeholder="Enter password" class="input-field mt-1" />
                     </div>
                     <button onclick="login()" class="btn-primary mt-2" id="loginBtn">
                         <i class="fas fa-arrow-right"></i> Sign In
                     </button>
                     <div class="text-center mt-3">
-                        <p class="text-pink-600/60 text-xs">
+                        <p class="text-slate-500 text-xs">
                             No account? 
-                            <span class="text-pink-600 font-semibold cursor-pointer" onclick="startFreeTrial()">Try Free Questions</span>
+                            <span class="text-blue-600 font-semibold cursor-pointer" onclick="startFreeTrial()">Try Free Questions</span>
                         </p>
                     </div>
                 </div>
@@ -1449,19 +1449,19 @@
         <div class="view" id="teacherLoginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-pink-500/20">
+                    <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-slate-800/20">
                         <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-pink-800 text-xl font-bold">Teacher Login</h2>
-                    <p class="text-pink-600/60 text-xs mt-1">Manage students, subjects &amp; questions</p>
+                    <h2 class="text-slate-800 text-xl font-bold">Teacher Login</h2>
+                    <p class="text-slate-500 text-xs mt-1">Manage students, subjects &amp; questions</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-pink-700/60 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
+                        <label class="text-slate-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
                         <input id="teacherUsername" type="text" placeholder="Enter teacher username" class="input-field mt-1" value="teacher" />
                     </div>
                     <div>
-                        <label class="text-pink-700/60 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
+                        <label class="text-slate-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
                         <input id="teacherPassword" type="password" placeholder="Enter teacher password" class="input-field mt-1" value="teacher123" />
                     </div>
                     <button onclick="teacherLogin()" class="btn-primary mt-2" id="teacherLoginBtn">
@@ -1478,15 +1478,15 @@
         <div class="view" id="subjectsView">
             <div class="free-trial-banner" id="freeTrialBanner">
                 <div class="free-text">
-                    <i class="fas fa-gift text-pink-600"></i>
+                    <i class="fas fa-gift text-blue-600"></i>
                     <strong>Free Trial:</strong> <span id="freeTrialText">4 questions (Q6-9 in ICT & Math)</span>
                 </div>
                 <div class="free-count" id="freeTrialCount">4</div>
             </div>
             <div class="flex items-center justify-between mb-3">
                 <div>
-                    <h2 class="text-pink-800 text-lg font-bold">My Subjects</h2>
-                    <p class="text-pink-600/60 text-xs" id="progressText">0 of 0 completed</p>
+                    <h2 class="text-slate-800 text-lg font-bold">My Subjects</h2>
+                    <p class="text-slate-500 text-xs" id="progressText">0 of 0 completed</p>
                 </div>
                 <span class="badge badge-gold"><i class="fas fa-star"></i> Premium</span>
             </div>
@@ -1504,11 +1504,11 @@
         <!-- QUIZ VIEW -->
         <div class="view" id="quizView">
             <div class="flex items-center justify-between mb-3">
-                <button onclick="goToSubjects()" class="text-pink-600/60 hover:text-pink-700 transition">
+                <button onclick="goToSubjects()" class="text-slate-500 hover:text-slate-700 transition">
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
-                <span class="text-pink-600/60 text-xs" id="quizSubjectTitle">ICT</span>
-                <span class="text-pink-600/60 text-xs" id="questionCounter">6/4</span>
+                <span class="text-slate-500 text-xs" id="quizSubjectTitle">ICT</span>
+                <span class="text-slate-500 text-xs" id="questionCounter">6/4</span>
             </div>
             <div class="question-card">
                 <div class="flex items-center justify-between">
@@ -1531,7 +1531,7 @@
                     <h2 class="text-xl font-bold text-gray-800">Certificate of Completion</h2>
                     <div class="divider"></div>
                     <p class="text-gray-600 text-xs">This certifies that</p>
-                    <p class="text-2xl font-bold text-pink-600 mt-2" id="certUsername">Student</p>
+                    <p class="text-2xl font-bold text-blue-600 mt-2" id="certUsername">Student</p>
                     <p class="text-gray-600 text-xs mt-1">has successfully completed all subjects</p>
                     <div class="divider"></div>
                     <div class="flex justify-around text-xs text-gray-500">
@@ -1595,8 +1595,8 @@
                 <!-- LEARNER PROGRESS TAB -->
                 <div id="teacherProgressTab">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#4a1a2c;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#e91e63;"></i> Learner Progress</h3>
-                        <span style="color:#b07a8a;font-size:10px;">Click a learner for details</span>
+                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#2563eb;"></i> Learner Progress</h3>
+                        <span style="color:#94a3b8;font-size:10px;">Click a learner for details</span>
                     </div>
                     <input id="progressSearch" type="text" placeholder="🔍 Search learners..." oninput="filterProgress()" class="search-box" />
                     <div id="progressList" style="max-height:400px;overflow-y:auto;"></div>
@@ -1605,19 +1605,19 @@
                 <!-- STUDENTS TAB -->
                 <div id="teacherStudentsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#4a1a2c;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#e91e63;"></i> Student Accounts</h3>
-                        <button onclick="showAddStudentForm()" style="background:rgba(233,30,99,0.06);color:#e91e63;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(233,30,99,0.1);font-size:11px;cursor:pointer;">
+                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#2563eb;"></i> Student Accounts</h3>
+                        <button onclick="showAddStudentForm()" style="background:rgba(26,35,50,0.06);color:#1a2332;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(26,35,50,0.08);font-size:11px;cursor:pointer;">
                             <i class="fas fa-user-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:#fce4ec;border-radius:10px;border:1px solid #f3d0d8;">
-                        <h4 style="color:#4a1a2c;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#e91e63;"></i> Create Student Account</h4>
+                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
+                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#2563eb;"></i> Create Student Account</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
                             <input id="studentUsername" type="text" placeholder="Enter username" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
                             <input id="studentPassword" type="text" placeholder="Enter password" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="display:flex;gap:8px;">
@@ -1636,29 +1636,29 @@
                 <!-- SUBJECTS TAB -->
                 <div id="teacherSubjectsTab" style="display:none;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#4a1a2c;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#e91e63;"></i> Subjects</h3>
-                        <button onclick="showAddSubjectForm()" style="background:rgba(233,30,99,0.06);color:#e91e63;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(233,30,99,0.1);font-size:11px;cursor:pointer;">
+                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#2563eb;"></i> Subjects</h3>
+                        <button onclick="showAddSubjectForm()" style="background:rgba(26,35,50,0.06);color:#1a2332;font-weight:600;padding:4px 12px;border-radius:8px;border:1px solid rgba(26,35,50,0.08);font-size:11px;cursor:pointer;">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:#fce4ec;border-radius:10px;border:1px solid #f3d0d8;">
-                        <h4 style="color:#4a1a2c;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#e91e63;"></i> New Subject</h4>
+                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
+                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#2563eb;"></i> New Subject</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
                             <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
                             <div style="display:flex;gap:8px;">
                                 <input id="subjectIcon" type="text" placeholder="fa-atom" class="input-field" style="padding:8px 12px;font-size:13px;flex:1;" />
-                                <button onclick="pickIcon()" style="background:#fce4ec;color:#7a4a5a;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid #f3d0d8;font-size:12px;cursor:pointer;">
+                                <button onclick="pickIcon()" style="background:#f1f5f9;color:#64748b;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:12px;cursor:pointer;">
                                     <i class="fas fa-random"></i>
                                 </button>
                             </div>
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
-                            <input id="subjectColor" type="text" placeholder="from-pink-400 to-pink-600" class="input-field" style="padding:8px 12px;font-size:13px;" />
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
+                            <input id="subjectColor" type="text" placeholder="from-indigo-500 to-purple-600" class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="display:flex;gap:8px;">
                             <button onclick="addSubject()" class="btn-teacher" style="flex:1;padding:8px;font-size:13px;">
@@ -1674,21 +1674,21 @@
 
                 <!-- QUESTIONS TAB -->
                 <div id="teacherQuestionsTab" style="display:none;">
-                    <h3 style="color:#4a1a2c;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#e91e63;"></i> Manage Questions</h3>
+                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#2563eb;"></i> Manage Questions</h3>
                     <div style="margin-bottom:8px;">
-                        <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
-                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:white;border:2px solid #f3d0d8;border-radius:12px;padding:8px 12px;color:#4a1a2c;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
+                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
-                    <div style="margin-bottom:10px;padding:12px;background:#fce4ec;border-radius:10px;border:1px solid #f3d0d8;">
-                        <h4 style="color:#4a1a2c;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#e91e63;"></i> Add Question</h4>
+                    <div style="margin-bottom:10px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
+                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#2563eb;"></i> Add Question</h4>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
                             <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" style="padding:8px 12px;font-size:13px;" />
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
                             <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                                 <input id="optionA" type="text" placeholder="A" class="input-field" style="padding:6px 10px;font-size:12px;" />
                                 <input id="optionB" type="text" placeholder="B" class="input-field" style="padding:6px 10px;font-size:12px;" />
@@ -1697,8 +1697,8 @@
                             </div>
                         </div>
                         <div style="margin-bottom:8px;">
-                            <label style="color:#7a4a5a;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
-                            <select id="correctAnswer" style="background:white;border:2px solid #f3d0d8;border-radius:12px;padding:8px 12px;color:#4a1a2c;font-size:13px;width:100%;outline:none;appearance:none;">
+                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
+                            <select id="correctAnswer" style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
                                 <option value="0">A</option>
                                 <option value="1">B</option>
                                 <option value="2">C</option>
@@ -1714,29 +1714,29 @@
 
                 <!-- BULK UPLOAD TAB -->
                 <div id="teacherUploadTab" style="display:none;">
-                    <h3 style="color:#4a1a2c;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#e91e63;"></i> Bulk Upload Questions</h3>
-                    <div style="margin-bottom:10px;padding:12px;background:#fce4ec;border-radius:10px;border:1px solid #f3d0d8;">
-                        <p style="color:#7a4a5a;font-size:11px;margin-bottom:8px;">
-                            <i class="fas fa-info-circle" style="color:#e91e63;"></i>
+                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#2563eb;"></i> Bulk Upload Questions</h3>
+                    <div style="margin-bottom:10px;padding:12px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">
+                        <p style="color:#64748b;font-size:11px;margin-bottom:8px;">
+                            <i class="fas fa-info-circle" style="color:#2563eb;"></i>
                             Upload a CSV file with your questions. The format should be:
                         </p>
-                        <div style="background:#f8d7e0;border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:#7a4a5a;overflow-x:auto;white-space:nowrap;">
+                        <div style="background:#f1f5f9;border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:#64748b;overflow-x:auto;white-space:nowrap;">
                             question,option_a,option_b,option_c,option_d,correct_answer
                             <br/>What is 5+3?,4,5,8,10,C
                             <br/>What is the capital of Zambia?,Lusaka,Ndola,Kitwe,Livingstone,A
                         </div>
                         <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-                            <button onclick="downloadTemplate()" style="background:rgba(233,30,99,0.06);color:#e91e63;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(233,30,99,0.1);font-size:11px;cursor:pointer;">
+                            <button onclick="downloadTemplate()" style="background:rgba(26,35,50,0.06);color:#1a2332;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(26,35,50,0.08);font-size:11px;cursor:pointer;">
                                 <i class="fas fa-download"></i> Download Template
                             </button>
-                            <span style="color:#b07a8a;font-size:10px;display:flex;align-items:center;">
+                            <span style="color:#94a3b8;font-size:10px;display:flex;align-items:center;">
                                 Correct answer: A, B, C, or D
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Select Subject</label>
-                        <select id="uploadSubjectSelect" style="background:white;border:2px solid #f3d0d8;border-radius:12px;padding:8px 12px;color:#4a1a2c;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <select id="uploadSubjectSelect" style="background:white;border:2px solid #e2e8f0;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
@@ -1794,15 +1794,15 @@
                 <p class="price-label">One-time payment · Lifetime access</p>
             </div>
             <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1);border-radius:10px;padding:10px;margin-bottom:12px;">
-                <p style="color:#7a4a5a;font-size:12px;">
-                    <i class="fas fa-info-circle" style="color:#e91e63;"></i>
+                <p style="color:#64748b;font-size:12px;">
+                    <i class="fas fa-info-circle" style="color:#2563eb;"></i>
                     After payment, <strong>send a WhatsApp message</strong> with your desired username &amp; password. The teacher will create your account.
                 </p>
             </div>
             <div class="payment-grid">
                 <div class="payment-row" onclick="copyNumber('0971130511')">
                     <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(233,30,99,0.08);color:#e91e63;"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="payment-provider-icon" style="background:rgba(26,35,50,0.06);color:#1a2332;"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
                             <div class="payment-number">0971 130 511</div>
                             <div class="payment-provider">MTN / Airtel</div>
@@ -1835,7 +1835,7 @@
                 <div class="label">Account Name</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
-            <p class="payment-instruction" style="color:#7a4a5a;font-size:12px;margin-bottom:12px;">
+            <p class="payment-instruction" style="color:#64748b;font-size:12px;margin-bottom:12px;">
                 <i class="fas fa-whatsapp" style="color:#25D366;"></i>
                 Send your <strong>desired username &amp; password</strong> via WhatsApp to <strong style="color:#25D366;">0966 011 066</strong>
             </p>
@@ -1934,18 +1934,18 @@
 
     function getSubjectColor(name) {
         const colors = [
-            'from-pink-400 to-pink-600',
-            'from-rose-400 to-rose-600',
-            'from-fuchsia-400 to-fuchsia-600',
-            'from-purple-400 to-purple-600',
-            'from-red-400 to-red-600',
-            'from-orange-400 to-orange-600',
-            'from-amber-400 to-amber-600',
-            'from-yellow-400 to-yellow-600',
-            'from-lime-400 to-lime-600',
-            'from-green-400 to-green-600',
-            'from-emerald-400 to-emerald-600',
-            'from-teal-400 to-teal-600'
+            'from-blue-500 to-blue-600',
+            'from-purple-500 to-purple-600',
+            'from-green-500 to-green-600',
+            'from-red-500 to-red-600',
+            'from-yellow-500 to-yellow-600',
+            'from-pink-500 to-pink-600',
+            'from-indigo-500 to-indigo-600',
+            'from-orange-500 to-orange-600',
+            'from-teal-500 to-teal-600',
+            'from-cyan-500 to-cyan-600',
+            'from-rose-500 to-rose-600',
+            'from-amber-500 to-amber-600'
         ];
         let hash = 0;
         for (let i = 0; i < name.length; i++) {
@@ -2057,7 +2057,7 @@
         toast.textContent = message;
         toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
                                type === 'success' ? 'rgba(34,197,94,0.95)' : 
-                               'rgba(74,26,44,0.92)';
+                               'rgba(26,35,50,0.92)';
         toast.classList.add('show');
         clearTimeout(toast._timeout);
         toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
@@ -2597,7 +2597,7 @@
         );
         
         if (filtered.length === 0) {
-            container.innerHTML = `<div style="color:#b07a8a;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
+            container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
             document.getElementById('statCompleted').textContent = '0';
             return;
         }
@@ -2639,7 +2639,7 @@
                     <div>
                         <span class="learner-name">${user.username}</span>
                         <span class="last-active">• Joined: ${date}</span>
-                        <span style="color:#b07a8a;font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
+                        <span style="color:#94a3b8;font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
                     </div>
                     <span class="score-badge">${progressStatus}</span>
                 </div>
@@ -2648,13 +2648,13 @@
                         <div class="progress-bar-fill" style="width:${percentage}%"></div>
                     </div>
                 ` : `
-                    <div style="height:6px;background:#f3d0d8;border-radius:4px;margin:6px 0;"></div>
+                    <div style="height:6px;background:#e2e8f0;border-radius:4px;margin:6px 0;"></div>
                 `}
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div style="display:flex;flex-wrap:wrap;gap:2px;">
                         ${badgesHTML}
                     </div>
-                    <span style="color:#b07a8a;font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
+                    <span style="color:#94a3b8;font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
                 </div>
                 <div class="progress-detail" id="detail-${user.id}">
                     <div class="detail-row"><span class="label">Username</span><span class="value gold">${user.username}</span></div>
@@ -2666,7 +2666,7 @@
                         return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
                     }).join('') : `
                         <div class="detail-row" style="border-bottom:none;">
-                            <span class="label" style="color:#b07a8a;font-style:italic;">No subjects completed yet</span>
+                            <span class="label" style="color:#94a3b8;font-style:italic;">No subjects completed yet</span>
                         </div>
                     `}
                 </div>
@@ -2742,7 +2742,7 @@
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
         if (!allSubjects || allSubjects.length === 0) {
-            grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-pink-600/60 text-sm">No subjects available. Contact your teacher.</div>`;
+            grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-slate-500 text-sm">No subjects available. Contact your teacher.</div>`;
             return;
         }
         allSubjects.forEach(subject => {
@@ -2768,9 +2768,9 @@
                     statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 Locked</div>`;
                 } else if (hasFreeTrial) {
                     const remaining = MAX_FREE_QUESTIONS - freeQuestionsUsed;
-                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#22c55e;background:rgba(34,197,94,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 ${remaining} left</div>`;
+                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#16a34a;background:rgba(34,197,94,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🎯 ${remaining} left</div>`;
                 } else if (trialUsed) {
-                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#e91e63;background:rgba(233,30,99,0.06);padding:2px 10px;border-radius:10px;white-space:nowrap;">💎 Pay K10</div>`;
+                    statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#2563eb;background:rgba(26,35,50,0.06);padding:2px 10px;border-radius:10px;white-space:nowrap;">💎 Pay K10</div>`;
                 }
             }
             
@@ -3036,21 +3036,21 @@
         const searchTerm = document.getElementById('studentSearch')?.value?.toLowerCase() || '';
         const filtered = allUsers.filter(u => u.username.toLowerCase().includes(searchTerm));
         if (filtered.length === 0) {
-            list.innerHTML = `<div style="color:#b07a8a;text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
+            list.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
             return;
         }
         list.innerHTML = '';
         filtered.forEach(user => {
             const div = document.createElement('div');
-            div.style.cssText = 'background:#fce4ec;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #f3d0d8;display:flex;justify-content:space-between;align-items:center;';
+            div.style.cssText = 'background:#f8fafc;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;';
             const date = new Date(user.created_at).toLocaleDateString();
             div.innerHTML = `
-                <div style="color:#4a1a2c;font-size:12px;">
-                    <span style="font-weight:600;color:#e91e63;">${user.username}</span>
-                    <span style="color:#b07a8a;font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
-                    <span style="color:#b07a8a;font-size:10px;margin-left:8px;">📅 ${date}</span>
+                <div style="color:#1a2332;font-size:12px;">
+                    <span style="font-weight:600;color:#2563eb;">${user.username}</span>
+                    <span style="color:#94a3b8;font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
+                    <span style="color:#94a3b8;font-size:10px;margin-left:8px;">📅 ${date}</span>
                 </div>
-                <div onclick="deleteStudent('${user.id}')" style="color:#b07a8a;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                <div onclick="deleteStudent('${user.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
                 </div>
             `;
@@ -3131,7 +3131,7 @@
     function updateTeacherSubjects() {
         const list = document.getElementById('subjectList');
         if (!allSubjects || allSubjects.length === 0) {
-            list.innerHTML = '<div style="color:#b07a8a;text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
+            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">No subjects yet. Add one!</div>';
             return;
         }
         list.innerHTML = '';
@@ -3139,13 +3139,13 @@
             const icon = subject.icon || getSubjectIcon(subject.name);
             const isFree = FREE_SUBJECTS.includes(subject.name);
             const div = document.createElement('div');
-            div.style.cssText = 'background:#fce4ec;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #f3d0d8;display:flex;justify-content:space-between;align-items:center;';
+            div.style.cssText = 'background:#f8fafc;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;';
             div.innerHTML = `
                 <div>
-                    <div style="color:#4a1a2c;font-size:12px;"><i class="fas ${icon}" style="color:#e91e63;"></i> ${subject.name} ${isFree ? '🎯' : ''}</div>
-                    <div style="color:#b07a8a;font-size:10px;">${subject.color} ${isFree ? '(Free Trial: Q6-9)' : ''}</div>
+                    <div style="color:#1a2332;font-size:12px;"><i class="fas ${icon}" style="color:#1a2332;"></i> ${subject.name} ${isFree ? '🎯' : ''}</div>
+                    <div style="color:#94a3b8;font-size:10px;">${subject.color} ${isFree ? '(Free Trial: Q6-9)' : ''}</div>
                 </div>
-                <div onclick="deleteSubject('${subject.id}')" style="color:#b07a8a;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                <div onclick="deleteSubject('${subject.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
                     <i class="fas fa-trash"></i>
                 </div>
             `;
@@ -3233,30 +3233,30 @@
     async function loadQuestionsForTeacher() {
         const subjectId = document.getElementById('questionSubjectSelect').value;
         if (!subjectId) {
-            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:#b07a8a;text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
+            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
             return;
         }
         selectedSubjectId = subjectId;
         const list = document.getElementById('teacherQuestionList');
-        list.innerHTML = '<div style="color:#b07a8a;text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
         try {
             const questions = await fetchQuestions(subjectId);
             if (questions.length === 0) {
-                list.innerHTML = '<div style="color:#b07a8a;text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
+                list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">No questions yet. Add one above!</div>';
                 return;
             }
             list.innerHTML = '';
             questions.forEach((q, idx) => {
                 const div = document.createElement('div');
-                div.style.cssText = 'background:#fce4ec;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #f3d0d8;display:flex;justify-content:space-between;align-items:center;';
+                div.style.cssText = 'background:#f8fafc;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;';
                 const qNum = idx + 1;
                 const isFree = FREE_QUESTION_IDS.includes(qNum) && FREE_SUBJECTS.includes(document.getElementById('questionSubjectSelect').options[document.getElementById('questionSubjectSelect').selectedIndex]?.text || '');
                 div.innerHTML = `
                     <div>
-                        <div style="color:#4a1a2c;font-size:12px;">${qNum}. ${q.question} ${isFree ? '🎯' : ''}</div>
-                        <div style="color:#b07a8a;font-size:10px;">${q.options.join(' | ')} ${isFree ? '(Free)' : ''}</div>
+                        <div style="color:#1a2332;font-size:12px;">${qNum}. ${q.question} ${isFree ? '🎯' : ''}</div>
+                        <div style="color:#94a3b8;font-size:10px;">${q.options.join(' | ')} ${isFree ? '(Free)' : ''}</div>
                     </div>
-                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:#b07a8a;cursor:pointer;padding:4px 8px;border-radius:6px;">
+                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
                         <i class="fas fa-trash"></i>
                     </div>
                 `;
@@ -3264,7 +3264,7 @@
             });
         } catch (error) {
             console.error('Error loading questions:', error);
-            list.innerHTML = '<div style="color:#b07a8a;text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
+            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
         }
     }
 
@@ -3422,16 +3422,16 @@
                 html += `<tr>
                     <td>${idx + 1}</td>
                     <td>${row.question.substring(0, 30)}${row.question.length > 30 ? '...' : ''}</td>
-                    <td style="font-size:10px;color:#b07a8a;">${options}</td>
-                    <td style="color:#e91e63;font-weight:700;">${row.correct_answer}</td>
+                    <td style="font-size:10px;color:#94a3b8;">${options}</td>
+                    <td style="color:#1a2332;font-weight:700;">${row.correct_answer}</td>
                 </tr>`;
             });
             if (uploadedData.length > 10) {
-                html += `<tr><td colspan="4" style="text-align:center;color:#b07a8a;font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
+                html += `<tr><td colspan="4" style="text-align:center;color:#94a3b8;font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
             }
             html += `</tbody></table>
-                <div style="margin-top:8px;color:#b07a8a;font-size:11px;text-align:center;">
-                    Found <strong style="color:#e91e63;">${uploadedData.length}</strong> questions ready to upload
+                <div style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
+                    Found <strong style="color:#1a2332;">${uploadedData.length}</strong> questions ready to upload
                 </div>`;
             preview.innerHTML = html;
             preview.style.display = 'block';
