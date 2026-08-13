@@ -917,7 +917,7 @@
         return colors[hash];
     }
 
-    // ============ MEMBERSHIP FUNCTIONS - FIXED ============
+    // ============ MEMBERSHIP FUNCTIONS ============
     function showPremiumPopup() {
         document.getElementById('premiumOverlay').classList.add('active');
     }
@@ -929,26 +929,22 @@
     function checkMembership() {
         if (!currentUser) return false;
         
-        // Check localStorage first
         const membershipStatus = localStorage.getItem(`membership_${currentUser.id}`);
         if (membershipStatus === 'paid') {
             isPremium = true;
             return true;
         }
         
-        // Check user object
         if (currentUser.is_premium === true) {
             isPremium = true;
             return true;
         }
         
-        // Check if user is teacher
         if (currentUser.role === 'teacher') {
             isPremium = true;
             return true;
         }
         
-        // Check if already set in this session
         if (isPremium) {
             return true;
         }
@@ -956,27 +952,19 @@
         return false;
     }
 
-    // ACTIVATE MEMBERSHIP - THIS IS THE KEY FIX
     function activateMembership() {
         if (!currentUser) {
             showToast('Please login first', 'error');
             return;
         }
         
-        // Set premium in localStorage
         localStorage.setItem(`membership_${currentUser.id}`, 'paid');
-        
-        // Update user object
         currentUser.is_premium = true;
         localStorage.setItem('quizUser', JSON.stringify(currentUser));
-        
-        // Set the flag
         isPremium = true;
         
         showToast('✅ Membership Activated! All subjects are now unlocked!', 'success');
         closePremiumPopup();
-        
-        // Immediately refresh subjects to remove locks
         renderSubjects();
         updateProgress();
         updateProfile();
@@ -990,7 +978,6 @@
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(url, '_blank');
         showToast('📱 Opening WhatsApp... Send your username & password', 'info');
-        // Auto-activate after sending WhatsApp (for self-activation)
         setTimeout(() => {
             if (currentUser) {
                 activateMembership();
@@ -1091,7 +1078,6 @@
         try {
             const user = await authenticateUser(username, password);
             if (user) {
-                // Check if user has premium in the database
                 const isUserPremium = user.is_premium || false;
                 currentUser = { username: user.username, password: user.password, id: user.id, role: user.role || 'student', is_premium: isUserPremium };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
@@ -1103,7 +1089,6 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                // Check membership
                 const hasMembership = checkMembership();
                 if (!hasMembership && currentUser.role !== 'teacher') {
                     setTimeout(() => {
@@ -1748,23 +1733,26 @@
         renderProgress();
     }
 
-    async function saveProgress(userId, subjectId, score, total) {
+    // ============ UPDATED saveProgress with resume support ============
+    async function saveProgress(userId, subjectId, score, total, lastIndex = null, status = 'completed') {
         try {
             const payload = {
                 user_id: userId,
                 subject_id: subjectId,
                 score: score,
                 total_questions: total,
+                status: status,
                 completed_at: new Date().toISOString()
             };
-            
+            if (lastIndex !== null) payload.last_question_index = lastIndex;
+
             const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=id`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
                     'Authorization': `Bearer ${SUPABASE_KEY}`
                 }
             });
-            
+
             if (checkResponse.ok) {
                 const existing = await checkResponse.json();
                 if (existing && existing.length > 0) {
@@ -1794,6 +1782,25 @@
         } catch (error) {
             console.warn('⚠️ Could not save progress:', error);
         }
+    }
+
+    // ============ NEW: getResumePoint - fetches saved position ============
+    async function getResumePoint(userId, subjectId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=last_question_index,score,status`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data && data.length > 0 ? data[0] : null;
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not fetch resume point:', error);
+        }
+        return null;
     }
 
     function renderProgress() {
@@ -1865,7 +1872,8 @@
                     <div class="detail-row"><span class="label">Overall Score</span><span class="value gold">${hasProgress ? `${percentage}%` : 'N/A'}</span></div>
                     ${hasProgress ? progress.map(p => {
                         const subject = allSubjects.find(s => s.id === p.subject_id);
-                        return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
+                        const statusText = p.status === 'in_progress' ? ' (in progress)' : '';
+                        return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}${statusText}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
                     }).join('') : `
                         <div class="detail-row" style="border-bottom:none;">
                             <span class="label" style="color:#94a3b8;font-style:italic;">No subjects completed yet</span>
@@ -1967,6 +1975,21 @@
                 statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#1a5276;background:rgba(26,82,118,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 K10</div>`;
             }
             
+            // Check if there's a resume point
+            let resumeBadge = '';
+            if (currentUser && !isCompleted && !isLocked) {
+                // We'll check for resume point asynchronously
+                getResumePoint(currentUser.id, subject.id).then(resume => {
+                    if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
+                        const badge = card.querySelector('.resume-badge');
+                        if (badge) {
+                            badge.textContent = `▶️ Resume (Q${resume.last_question_index + 1})`;
+                            badge.style.display = 'inline-block';
+                        }
+                    }
+                });
+            }
+            
             card.innerHTML = `
                 <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
                     <i class="fas ${icon}"></i>
@@ -1976,6 +1999,7 @@
                 ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
                 ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
                 ${statusBadge}
+                <span class="resume-badge" style="position:absolute;top:10px;left:10px;font-size:8px;background:rgba(26,82,118,0.1);color:#1a5276;padding:2px 8px;border-radius:10px;display:none;"></span>
             `;
             
             fetchQuestions(subject.id).then(questions => {
@@ -2027,7 +2051,7 @@
         }
         
         if (currentUser && currentUser.id) {
-            saveProgress(currentUser.id, subjectId, 0, 0);
+            saveProgress(currentUser.id, subjectId, 0, 0, null, 'completed');
         }
         
         renderSubjects();
@@ -2052,7 +2076,7 @@
         updateProfile();
     }
 
-    // ============ START QUIZ ============
+    // ============ UPDATED START QUIZ with resume support ============
     async function startQuiz(subjectId, subjectName) {
         if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
             showToast('💎 Please pay K10 to access quizzes.', 'error');
@@ -2067,11 +2091,23 @@
             }
             currentSubject = subjectId;
             currentQuestions = questions;
-            currentIndex = 0;
             score = 0;
             answered = false;
+            currentIndex = 0;
+
+            // RESUME: check for saved position if exists
+            if (currentUser && currentUser.id) {
+                const resume = await getResumePoint(currentUser.id, subjectId);
+                if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
+                    currentIndex = Math.min(resume.last_question_index, currentQuestions.length - 1);
+                    score = resume.score || 0;
+                    showToast(`▶️ Resuming from question ${currentIndex + 1}`, 'info');
+                }
+            }
+
             document.getElementById('quizSubjectTitle').textContent = subjectName;
             document.getElementById('questionCounter').textContent = `${currentIndex+1}/${currentQuestions.length}`;
+            document.getElementById('scoreDisplay').textContent = score;
             showView('quizView');
             renderQuestion();
         } catch (error) {
@@ -2080,12 +2116,14 @@
         }
     }
 
+    // ============ UPDATED renderQuestion with save on completion ============
     function renderQuestion() {
         if (currentIndex >= currentQuestions.length) {
             completedSubjects.add(currentSubject);
             totalQuestionsAnswered += currentQuestions.length;
             if (currentUser && currentUser.id) {
-                saveProgress(currentUser.id, currentSubject, score, currentQuestions.length);
+                // Save as completed with full length
+                saveProgress(currentUser.id, currentSubject, score, currentQuestions.length, currentQuestions.length, 'completed');
             }
             updateProgress();
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
@@ -2114,6 +2152,7 @@
         });
     }
 
+    // ============ UPDATED selectOption with auto-save ============
     function selectOption(index) {
         if (answered) return;
         answered = true;
@@ -2133,6 +2172,11 @@
         totalQuestionsAnswered++;
         document.getElementById('nextBtn').disabled = false;
         updateProfile();
+
+        // NEW: persist position after every answer
+        if (currentUser && currentUser.id) {
+            saveProgress(currentUser.id, currentSubject, score, currentQuestions.length, currentIndex + 1, 'in_progress');
+        }
     }
 
     function nextQuestion() {
@@ -2683,9 +2727,8 @@
         await loadUsers();
         await loadProgress();
         console.log('🇿🇲 NorthernQuiz loaded!');
-        console.log('🎯 Free trial: 4 questions (Q6-9 in ICT & Mathematics)');
         console.log('📱 WhatsApp: 0966 011 066 for payments');
-        console.log('📊 Learner Progress tracking enabled!');
+        console.log('📊 Learner Progress tracking enabled with resume support!');
     }
 
     function checkAuth() {
@@ -2695,7 +2738,6 @@
                 currentUser = JSON.parse(userData);
                 updateUserUI();
                 showView('subjectsView');
-                document.getElementById('freeTrialBanner').style.display = 'none';
                 const hasMembership = checkMembership();
                 if (!hasMembership && currentUser.role !== 'teacher') {
                     setTimeout(() => {
@@ -2754,6 +2796,7 @@
     window.filterProgress = filterProgress;
     window.toggleProgressDetail = toggleProgressDetail;
     window.saveProgress = saveProgress;
+    window.getResumePoint = getResumePoint;
     window.markSubjectComplete = markSubjectComplete;
     window.getSubjectIcon = getSubjectIcon;
     window.getSubjectColor = getSubjectColor;
