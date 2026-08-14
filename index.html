@@ -46,12 +46,12 @@
         .subject-card .mark-done-btn:active { transform:scale(0.95); }
         .subject-card.completed .mark-done-btn { display:none; }
         .subject-card .mark-done-btn i { margin-right:4px; }
-        .subject-card.locked { opacity:0.7; cursor:pointer; position:relative; }
+        .subject-card.locked { opacity:0.6; cursor:pointer; position:relative; }
         .subject-card.locked .icon-wrapper,
         .subject-card.locked .subject-name,
-        .subject-card.locked .subject-count { filter:none; }
-        .subject-card.locked .lock-overlay { position:absolute; inset:0; background:rgba(255,255,255,0.3); backdrop-filter:blur(2px); border-radius:16px; display:flex; align-items:center; justify-content:center; z-index:5; }
-        .subject-card.locked .lock-overlay i { font-size:28px; color:#1a5276; opacity:0.7; }
+        .subject-card.locked .subject-count { filter:blur(3px); }
+        .subject-card.locked .lock-overlay { position:absolute; inset:0; background:rgba(255,255,255,0.1); backdrop-filter:blur(2px); border-radius:16px; display:flex; align-items:center; justify-content:center; z-index:5; }
+        .subject-card.locked .lock-overlay i { font-size:32px; color:#1a5276; opacity:0.5; }
         .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
         .option-btn { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:13px; font-weight:500; transition:all 0.2s; cursor:pointer; width:100%; text-align:left; display:flex; align-items:center; gap:10px; }
         .option-btn .option-letter { width:26px; height:26px; border-radius:50%; background:#e8edf2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#64748b; flex-shrink:0; }
@@ -164,7 +164,6 @@
         .payment-provider-icon.mtn { background:rgba(26,82,118,0.08); color:#1a5276; }
         .payment-provider-icon.airtel { background:rgba(52,211,153,0.08); color:#34d399; }
         .payment-provider-icon.zamtel { background:rgba(251,146,60,0.08); color:#fb923c; }
-        .payment-provider-icon.whatsapp { background:rgba(37,211,102,0.08); color:#25D366; }
         .payment-details { text-align:left; min-width:0; }
         .payment-number { color:#1a2332; font-weight:700; font-size:15px; font-family:'Courier New',monospace; letter-spacing:0.5px; }
         .payment-provider-name { color:#94a3b8; font-size:10px; font-weight:500; margin-top:1px; }
@@ -179,9 +178,7 @@
         .btn-whatsapp-premium:active { transform:scale(0.96); }
         .btn-close-premium { background:#f1f5f9; color:#64748b; font-weight:600; padding:12px; border-radius:12px; border:1px solid #e8edf2; font-size:14px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px; }
         .btn-close-premium:active { transform:scale(0.96); background:#e8edf2; }
-        .badge-premium { display:inline-block; background:rgba(34,197,94,0.08); color:#16a34a; font-weight:700; font-size:10px; padding:2px 12px; border-radius:20px; }
         .resume-badge { position:absolute; top:8px; left:8px; font-size:8px; background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 8px; border-radius:10px; display:none; z-index:6; }
-        .subject-card.locked .lock-icon { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:32px; color:#1a5276; opacity:0.4; z-index:6; }
     </style>
 </head>
 <body>
@@ -1896,7 +1893,7 @@
         }
     }
 
-    // ============ RENDER SUBJECTS - Clean, no K10 labels, no blur ============
+    // ============ RENDER SUBJECTS - Original design, clean without K10 ============
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
@@ -1918,7 +1915,7 @@
             let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/30' : ''}`;
             if (isLocked && !isCompleted) {
                 cardClass += ' locked';
-                // Add a lock overlay instead of blurring
+                // Add lock overlay for locked subjects
                 card.innerHTML = `
                     <div class="lock-overlay">
                         <i class="fas fa-lock"></i>
@@ -1929,7 +1926,7 @@
                     <div class="subject-name">${subject.name}</div>
                     <div class="subject-count">Loading...</div>
                     ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
-                    <span class="resume-badge" style="position:absolute;top:8px;left:8px;font-size:8px;background:rgba(26,82,118,0.08);color:#1a5276;padding:2px 8px;border-radius:10px;display:none;"></span>
+                    <span class="resume-badge"></span>
                 `;
             } else {
                 card.className = cardClass;
@@ -1942,7 +1939,7 @@
                     <div class="subject-count">Loading...</div>
                     ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
                     ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
-                    <span class="resume-badge" style="position:absolute;top:8px;left:8px;font-size:8px;background:rgba(26,82,118,0.08);color:#1a5276;padding:2px 8px;border-radius:10px;display:none;"></span>
+                    <span class="resume-badge"></span>
                 `;
             }
             
