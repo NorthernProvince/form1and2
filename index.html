@@ -46,11 +46,12 @@
         .subject-card .mark-done-btn:active { transform:scale(0.95); }
         .subject-card.completed .mark-done-btn { display:none; }
         .subject-card .mark-done-btn i { margin-right:4px; }
-        .subject-card.locked { opacity:0.6; cursor:not-allowed; position:relative; }
-        .subject-card.locked::after { content:'🔒'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:30px; z-index:10; }
+        .subject-card.locked { opacity:0.6; cursor:pointer; position:relative; }
         .subject-card.locked .icon-wrapper,
         .subject-card.locked .subject-name,
-        .subject-card.locked .subject-count { filter:blur(2px); }
+        .subject-card.locked .subject-count { filter:blur(3px); }
+        .subject-card.locked .lock-overlay { position:absolute; inset:0; background:rgba(255,255,255,0.1); backdrop-filter:blur(2px); border-radius:16px; display:flex; align-items:center; justify-content:center; z-index:5; }
+        .subject-card.locked .lock-overlay i { font-size:32px; color:#1a5276; opacity:0.5; }
         .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
         .option-btn { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:13px; font-weight:500; transition:all 0.2s; cursor:pointer; width:100%; text-align:left; display:flex; align-items:center; gap:10px; }
         .option-btn .option-letter { width:26px; height:26px; border-radius:50%; background:#e8edf2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#64748b; flex-shrink:0; }
@@ -72,7 +73,7 @@
         .btn-primary:disabled { opacity:0.6; cursor:not-allowed; }
         .btn-secondary { background:#e8edf2; color:#1a2332; font-weight:600; padding:14px; border-radius:12px; border:1px solid #dce4ec; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
         .btn-secondary:active { transform:scale(0.96); }
-        .btn-whatsapp { background:linear-gradient(135deg,#25D366,#128C7E); color:white; font-weight:700; padding:14px; border-radius:12px; border:none; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; }
+        .btn-whatsapp { background:#25D366; color:white; font-weight:700; padding:14px; border-radius:12px; border:none; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; }
         .btn-whatsapp:active { transform:scale(0.96); }
         .btn-whatsapp:disabled { opacity:0.6; cursor:not-allowed; }
         .input-field { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:14px; width:100%; transition:all 0.3s; outline:none; }
@@ -145,108 +146,56 @@
         .search-members { display:flex; gap:8px; margin-bottom:12px; }
         .search-members .input-field { flex:1; padding:10px 14px; font-size:13px; }
         .search-members .btn-primary { width:auto; padding:10px 16px; font-size:13px; flex-shrink:0; }
-        .premium-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); z-index:200; display:none; align-items:center; justify-content:center; padding:16px; max-width:430px; margin:0 auto; left:50%; transform:translateX(-50%); width:100%; height:100vh; height:100dvh; }
+        
+        /* FULL SCREEN PREMIUM POPUP */
+        .premium-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:200; display:none; align-items:center; justify-content:center; padding:0; max-width:430px; margin:0 auto; left:50%; transform:translateX(-50%); width:100%; height:100vh; height:100dvh; }
         .premium-overlay.active { display:flex; }
-        .premium-card { background:white; border-radius:24px; padding:28px 20px 24px; width:100%; max-width:380px; border:1px solid #dce4ec; text-align:center; animation:popIn 0.4s cubic-bezier(0.16,1,0.3,1); max-height:94vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.15); }
+        .premium-card { background:white; border-radius:0; padding:20px 20px 30px; width:100%; height:100vh; height:100dvh; max-height:100vh; border:none; text-align:center; animation:popIn 0.3s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; box-shadow:none; display:flex; flex-direction:column; }
         .premium-card::-webkit-scrollbar { width:3px; }
         .premium-card::-webkit-scrollbar-thumb { background:rgba(26,82,118,0.3); border-radius:10px; }
-        @keyframes popIn { from { opacity:0; transform:scale(0.95) translateY(15px); } to { opacity:1; transform:scale(1) translateY(0); } }
-        .premium-icon-wrapper { width:72px; height:72px; background:linear-gradient(135deg,#1a5276,#2e86c1); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 10px; box-shadow:0 6px 30px rgba(26,82,118,0.2); color:white; }
-        .premium-title { color:#1a2332; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
-        .premium-subtitle { color:#64748b; font-size:13px; margin-top:2px; }
-        .price-container { margin:12px 0 14px; }
-        .price-tag { font-size:44px; font-weight:800; color:#1a5276; line-height:1; }
-        .price-label { color:#94a3b8; font-size:12px; margin-top:2px; }
-        .payment-grid { display:flex; flex-direction:column; gap:8px; margin:12px 0; }
-        .payment-row { background:#e8edf2; border-radius:10px; padding:8px 12px; display:flex; align-items:center; justify-content:space-between; border:1px solid #dce4ec; transition:all 0.2s; cursor:pointer; }
-        .payment-row:active { transform:scale(0.97); background:#dce4ec; }
-        .payment-left { display:flex; align-items:center; gap:10px; min-width:0; }
-        .payment-provider-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
-        .payment-details { text-align:left; min-width:0; }
-        .payment-number { color:#1a2332; font-weight:700; font-size:14px; font-family:'Courier New',monospace; letter-spacing:0.3px; white-space:nowrap; }
-        .payment-provider { color:#94a3b8; font-size:10px; font-weight:500; margin-top:1px; }
-        .copy-btn { background:#dce4ec; border:none; color:#64748b; padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; flex-shrink:0; font-weight:500; }
-        .copy-btn:active { transform:scale(0.92); background:rgba(26,82,118,0.08); color:#1a5276; }
-        .account-name-box { background:rgba(26,82,118,0.04); border:1px solid rgba(26,82,118,0.08); border-radius:10px; padding:10px; margin:10px 0 12px; }
-        .account-name-box .label { color:#94a3b8; font-size:9px; text-transform:uppercase; letter-spacing:0.5px; }
-        .account-name-box .name { color:#1a5276; font-weight:700; font-size:16px; margin-top:2px; }
-        .payment-instruction { color:#64748b; font-size:11px; text-align:center; margin-bottom:12px; line-height:1.4; }
+        @keyframes popIn { from { opacity:0; transform:scale(0.98) translateY(10px); } to { opacity:1; transform:scale(1) translateY(0); } }
+        
+        .premium-header { background:linear-gradient(135deg,#1a5276,#2e86c1); margin:-20px -20px 16px; padding:30px 20px 24px; border-bottom-left-radius:30px; border-bottom-right-radius:30px; flex-shrink:0; }
+        .premium-icon-wrapper { width:70px; height:70px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); color:#1a5276; }
+        .premium-title { color:white; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
+        .premium-subtitle { color:rgba(255,255,255,0.8); font-size:13px; margin-top:2px; }
+        
+        .price-badge { display:inline-block; background:white; color:#1a5276; font-weight:800; font-size:18px; padding:4px 20px; border-radius:30px; margin:6px 0 12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
+        
+        .features-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#f8fafc; border-radius:12px; padding:10px 12px; margin-bottom:12px; flex-shrink:0; border:1px solid #e8edf2; }
+        .feature-item { display:flex; align-items:center; gap:6px; font-size:10px; color:#1a2332; text-align:left; }
+        .feature-item i { color:#22c55e; font-size:12px; width:16px; text-align:center; }
+        
+        .payment-label { color:#64748b; font-size:11px; font-weight:600; text-align:left; margin:0 0 6px; text-transform:uppercase; letter-spacing:0.5px; }
+        .payment-grid { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; flex-shrink:0; }
+        .payment-row { background:#f8fafc; border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; border:1px solid #e8edf2; transition:all 0.2s; cursor:pointer; }
+        .payment-row:active { transform:scale(0.98); background:#e8edf2; }
+        .payment-left { display:flex; align-items:center; gap:12px; min-width:0; }
+        .payment-provider-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+        .payment-provider-icon.mtn { background:rgba(26,82,118,0.08); color:#1a5276; }
+        .payment-provider-icon.airtel { background:rgba(52,211,153,0.08); color:#34d399; }
+        .payment-provider-icon.zamtel { background:rgba(251,146,60,0.08); color:#fb923c; }
+        .payment-number { color:#1a2332; font-weight:700; font-size:14px; font-family:'Courier New',monospace; letter-spacing:0.5px; }
+        .payment-provider-name { color:#94a3b8; font-size:9px; font-weight:500; }
+        .copy-btn { background:#dce4ec; border:none; color:#64748b; padding:4px 10px; border-radius:6px; font-size:10px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; flex-shrink:0; font-weight:500; }
+        .copy-btn:active { transform:scale(0.92); background:#1a5276; color:white; }
+        
+        .account-name-box { background:rgba(26,82,118,0.04); border:1px solid rgba(26,82,118,0.08); border-radius:8px; padding:8px 12px; margin-bottom:10px; flex-shrink:0; }
+        .account-name-box .label { color:#94a3b8; font-size:8px; text-transform:uppercase; letter-spacing:0.5px; }
+        .account-name-box .name { color:#1a5276; font-weight:700; font-size:16px; }
+        
+        .payment-instruction { color:#64748b; font-size:11px; text-align:center; margin:4px 0 8px; line-height:1.4; flex-shrink:0; }
         .payment-instruction strong { color:#1a2332; font-weight:600; }
-        .stats-box { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:12px; }
-        .stat-card { background:#e8edf2; border-radius:10px; padding:10px; text-align:center; border:1px solid #dce4ec; }
-        .stat-card .stat-number { color:#1a5276; font-size:18px; font-weight:700; }
-        .stat-card .stat-label { color:#94a3b8; font-size:8px; text-transform:uppercase; letter-spacing:0.5px; }
-        .subject-tabs { display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:12px; }
-        .subject-tabs::-webkit-scrollbar { height:2px; }
-        .subject-tabs::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
-        .subject-tab { background:#e8edf2; border:1px solid #dce4ec; border-radius:8px; padding:6px 14px; color:#64748b; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; transition:all 0.3s; }
-        .subject-tab.active { background:#1a5276; border-color:#1a5276; color:white; }
-        .subject-tab:active { transform:scale(0.95); }
-        .progress-container { background:#e8edf2; border-radius:10px; padding:12px; margin-bottom:8px; border:1px solid #dce4ec; cursor:pointer; transition:all 0.3s; }
-        .progress-container:hover { background:#dce4ec; }
-        .progress-container .learner-name { color:#1a5276; font-weight:600; font-size:14px; }
-        .progress-container .progress-bar-bg { height:6px; background:#dce4ec; border-radius:4px; overflow:hidden; margin:6px 0; }
-        .progress-container .progress-bar-fill { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.6s ease; }
-        .progress-container .subject-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:8px; font-weight:600; margin:2px 3px 2px 0; background:#dce4ec; color:#64748b; }
-        .progress-container .subject-badge.done { background:rgba(34,197,94,0.1); color:#16a34a; }
-        .progress-container .subject-badge.pending { background:rgba(26,82,118,0.06); color:#1a5276; }
-        .progress-container .last-active { color:#94a3b8; font-size:9px; }
-        .progress-container .score-badge { background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 10px; border-radius:10px; font-size:11px; font-weight:700; }
-        .progress-detail { background:white; border-radius:10px; padding:12px; border:1px solid #dce4ec; margin-top:8px; display:none; }
-        .progress-detail.show { display:block; animation:fadeSlideUp 0.3s ease; }
-        .progress-detail .detail-row { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #e8edf2; }
-        .progress-detail .detail-row .label { color:#94a3b8; font-size:11px; }
-        .progress-detail .detail-row .value { color:#1a2332; font-size:11px; font-weight:600; }
-        .progress-detail .detail-row .value.gold { color:#1a5276; }
-        .progress-detail .detail-row .value.green { color:#16a34a; }
-        .search-box { background:white; border:1px solid #dce4ec; border-radius:8px; padding:6px 12px; color:#1a2332; font-size:12px; width:100%; outline:none; margin-bottom:8px; }
-        .search-box:focus { border-color:#1a5276; box-shadow:0 0 0 3px rgba(26,82,118,0.08); }
-        .search-box::placeholder { color:#94a3b8; }
-        .btn-teacher { background:#1a5276; color:white; font-weight:700; padding:12px; border-radius:12px; border:none; font-size:14px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 4px 15px rgba(26,82,118,0.15); }
-        .btn-teacher:active { transform:scale(0.96); }
-        .btn-teacher:disabled { opacity:0.6; cursor:not-allowed; }
-        .btn-teacher-secondary { background:#e8edf2; color:#1a2332; font-weight:600; padding:8px 14px; border-radius:8px; border:1px solid #dce4ec; font-size:12px; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:6px; }
-        .btn-teacher-secondary:active { transform:scale(0.96); }
-        .btn-danger { background:rgba(239,68,68,0.08); color:#ef4444; border:1px solid rgba(239,68,68,0.15); padding:6px 12px; border-radius:8px; cursor:pointer; transition:all 0.3s; font-size:12px; font-weight:600; }
-        .btn-danger:active { transform:scale(0.96); }
-        .upload-zone { border:2px dashed #dce4ec; border-radius:12px; padding:20px; text-align:center; transition:all 0.3s; cursor:pointer; background:#f0f4f8; }
-        .upload-zone:hover { border-color:#1a5276; background:rgba(26,82,118,0.02); }
-        .upload-zone.dragover { border-color:#1a5276; background:rgba(26,82,118,0.04); }
-        .upload-zone .upload-icon { font-size:40px; color:#94a3b8; margin-bottom:8px; }
-        .upload-zone .upload-text { color:#64748b; font-size:13px; }
-        .upload-zone .upload-text strong { color:#1a5276; }
-        .upload-preview { margin-top:12px; max-height:200px; overflow-y:auto; }
-        .upload-preview table { width:100%; font-size:11px; border-collapse:collapse; }
-        .upload-preview th { color:#94a3b8; text-align:left; padding:4px 6px; border-bottom:1px solid #dce4ec; font-weight:600; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; }
-        .upload-preview td { color:#64748b; padding:4px 6px; border-bottom:1px solid #e8edf2; font-size:11px; }
-        .upload-preview tr:hover td { background:#e8edf2; }
-        .upload-progress { margin-top:10px; height:4px; background:#dce4ec; border-radius:4px; overflow:hidden; display:none; }
-        .upload-progress .progress-bar { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.5s ease; width:0%; }
-        .upload-result { margin-top:10px; padding:10px; border-radius:8px; display:none; }
-        .upload-result.success { display:block; background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.15); }
-        .upload-result.error { display:block; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); }
-        .upload-result .result-text { color:#64748b; font-size:13px; }
-        .upload-result .result-text .count { color:#1a5276; font-weight:700; }
-        .form-group { margin-bottom:10px; }
-        .form-group label { color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:3px; }
-        .options-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-        .options-grid .input-field { font-size:13px; padding:8px 12px; }
-        .user-item { background:#e8edf2; border-radius:8px; padding:8px 12px; margin-bottom:4px; border:1px solid #dce4ec; display:flex; justify-content:space-between; align-items:center; }
-        .user-item .user-info { color:#1a2332; font-size:12px; }
-        .user-item .user-info .username { font-weight:600; color:#1a5276; }
-        .user-item .user-info .user-pass { color:#94a3b8; font-size:11px; margin-left:8px; font-family:'Courier New',monospace; }
-        .user-item .user-info .user-date { color:#94a3b8; font-size:10px; margin-left:8px; }
-        .user-item .user-delete { color:#94a3b8; cursor:pointer; padding:4px 8px; border-radius:6px; transition:all 0.2s; }
-        .user-item .user-delete:active { background:rgba(239,68,68,0.08); color:#ef4444; }
-        .member-result { display:flex; align-items:center; gap:12px; padding:12px 14px; background:white; border-radius:12px; border:1px solid #dce4ec; margin-bottom:8px; }
-        .member-avatar { width:40px; height:40px; border-radius:50%; background:#1a5276; display:flex; align-items:center; justify-content:center; font-size:16px; color:white; flex-shrink:0; }
-        .member-info { flex:1; }
-        .member-name { font-weight:600; color:#1a2332; font-size:14px; }
-        .member-status { font-size:11px; color:#94a3b8; }
-        .member-status.online { color:#22c55e; }
-        .member-status.offline { color:#94a3b8; }
-        .no-members { text-align:center; padding:40px 20px; color:#94a3b8; }
-        .no-members i { font-size:48px; margin-bottom:12px; color:#dce4ec; }
+        
+        .btn-whatsapp-premium { background:#25D366; color:white; font-weight:700; padding:12px; border-radius:10px; border:none; font-size:14px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(37,211,102,0.25); flex-shrink:0; }
+        .btn-whatsapp-premium:active { transform:scale(0.96); }
+        .btn-close-premium { background:#f1f5f9; color:#64748b; font-weight:600; padding:10px; border-radius:10px; border:1px solid #e8edf2; font-size:13px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px; flex-shrink:0; }
+        .btn-close-premium:active { transform:scale(0.96); background:#e8edf2; }
+        
+        .premium-spacer { flex:1; min-height:4px; }
+        .resume-badge { position:absolute; top:8px; left:8px; font-size:8px; background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 8px; border-radius:10px; display:none; z-index:6; }
+        
+        .subject-card.locked .lock-overlay i { font-size:32px; color:#1a5276; opacity:0.5; }
     </style>
 </head>
 <body>
@@ -744,72 +693,83 @@
         </button>
     </div>
 
-    <!-- PREMIUM/MEMBERSHIP POPUP -->
+    <!-- FULL SCREEN PREMIUM POPUP -->
     <div class="premium-overlay" id="premiumOverlay">
         <div class="premium-card">
-            <div class="premium-icon-wrapper"><i class="fas fa-crown"></i></div>
-            <h3 class="premium-title">Unlock Full Access! 🎓</h3>
-            <p class="premium-subtitle" id="premiumSubtitle">Pay K10 to access all subjects</p>
-            <div class="trial-complete-banner" style="background:linear-gradient(135deg,rgba(26,82,118,0.06),rgba(26,82,118,0.02));border:1px solid rgba(26,82,118,0.08);border-radius:10px;padding:12px;margin-bottom:14px;">
-                <div class="trial-title" style="color:#1a5276;font-weight:700;font-size:14px;">🎯 K10 Membership Required</div>
-                <div class="trial-text" style="color:#64748b;font-size:12px;margin-top:4px;">Pay K10 to unlock all subjects, track progress, and get your certificate!</div>
+            <!-- Premium Header -->
+            <div class="premium-header">
+                <div class="premium-icon-wrapper"><i class="fas fa-crown"></i></div>
+                <h3 class="premium-title">Unlock Full Access</h3>
+                <p class="premium-subtitle">Get unlimited access to all subjects, quizzes, and your certificate</p>
+                <div class="price-badge">K10 · Lifetime Access</div>
             </div>
-            <div class="price-container">
-                <span class="price-tag">K10</span>
-                <p class="price-label">One-time payment · Lifetime access</p>
+            
+            <!-- Features -->
+            <div class="features-grid">
+                <div class="feature-item"><i class="fas fa-check-circle"></i> All subjects unlocked</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Track your progress</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Completion certificate</div>
+                <div class="feature-item"><i class="fas fa-check-circle"></i> Unlimited quiz attempts</div>
             </div>
-            <div style="background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1);border-radius:10px;padding:10px;margin-bottom:12px;">
-                <p style="color:#64748b;font-size:12px;">
-                    <i class="fas fa-info-circle" style="color:#1a5276;"></i>
-                    <strong>Pay via mobile money below</strong>, then send your username and payment confirmation to the teacher via WhatsApp. Your account will be activated once verified by the teacher.
-                </p>
-            </div>
+
+            <!-- Payment Options -->
+            <div class="payment-label"><i class="fas fa-mobile-alt"></i> Pay via Mobile Money</div>
             <div class="payment-grid">
                 <div class="payment-row" onclick="copyNumber('+260971130511')">
                     <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(26,82,118,0.08);color:#1a5276;"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="payment-provider-icon mtn"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
                             <div class="payment-number">+260 971 130 511</div>
-                            <div class="payment-provider">MTN / Airtel</div>
+                            <div class="payment-provider-name">MTN Mobile Money</div>
                         </div>
                     </div>
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260971130511')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
                 <div class="payment-row" onclick="copyNumber('+260958882550')">
                     <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(52,211,153,0.08);color:#34d399;"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="payment-provider-icon airtel"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
                             <div class="payment-number">+260 958 882 550</div>
-                            <div class="payment-provider">MTN / Airtel</div>
+                            <div class="payment-provider-name">Airtel Money</div>
                         </div>
                     </div>
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260958882550')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
                 <div class="payment-row" onclick="copyNumber('+260763209826')">
                     <div class="payment-left">
-                        <div class="payment-provider-icon" style="background:rgba(251,146,60,0.08);color:#fb923c;"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="payment-provider-icon zamtel"><i class="fas fa-mobile-alt"></i></div>
                         <div class="payment-details">
                             <div class="payment-number">+260 763 209 826</div>
-                            <div class="payment-provider">Zamtel</div>
+                            <div class="payment-provider-name">Zamtel Kwacha</div>
                         </div>
                     </div>
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260763209826')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
             </div>
+
+            <!-- Account Holder -->
             <div class="account-name-box">
-                <div class="label">Account Name</div>
+                <div class="label">Account Holder</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
-            <p class="payment-instruction" style="color:#64748b;font-size:11px;text-align:center;margin-bottom:8px;">
-                <i class="fas fa-whatsapp" style="color:#25D366;"></i>
-                After paying, send your payment confirmation via WhatsApp to <strong style="color:#25D366;">+260 966 011 066</strong>. The teacher will activate your account.
+
+            <!-- Instruction -->
+            <p class="payment-instruction">
+                <i class="fas fa-info-circle" style="color:#1a5276;margin-right:4px;"></i>
+                After payment, send your <strong>username</strong> and payment confirmation via WhatsApp. The teacher will activate your account.
             </p>
-            <button onclick="openWhatsApp()" class="btn-whatsapp" style="margin-top:0px;">
-                <i class="fab fa-whatsapp"></i> WhatsApp Teacher
+
+            <!-- WhatsApp Button -->
+            <button onclick="openWhatsApp()" class="btn-whatsapp-premium">
+                <i class="fab fa-whatsapp"></i> WhatsApp Teacher for Activation
             </button>
-            <button onclick="closePremiumPopup()" class="btn-secondary" style="margin-top:8px;">
+            
+            <!-- Close Button -->
+            <button onclick="closePremiumPopup()" class="btn-close-premium">
                 <i class="fas fa-times"></i> Close
             </button>
+            
+            <div class="premium-spacer"></div>
         </div>
     </div>
 
@@ -943,9 +903,6 @@
         return false;
     }
 
-    // Teacher-only: grant or revoke a student's premium access.
-    // This is the ONLY way membership gets activated now — students
-    // can no longer self-activate from the app.
     async function updateUserPremiumStatus(userId, isPremiumValue) {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?id=eq.${userId}`, {
@@ -988,7 +945,7 @@
     function openWhatsApp() {
         const phoneNumber = '+260966011066';
         const username = currentUser ? currentUser.username : '(Your username)';
-        const message = `Hello, I have paid K10 for NorthernQuiz Premium.\n\nUsername: ${username}\nPassword: (Enter your password)\n\nPlease activate my account. Thank you!`;
+        const message = `Hello, I have paid K10 for NorthernQuiz Premium.\n\nUsername: ${username}\n\nPlease activate my account. Thank you!`;
         const encodedMessage = encodeURIComponent(message);
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(url, '_blank');
@@ -1743,7 +1700,6 @@
         renderProgress();
     }
 
-    // ============ UPDATED saveProgress with resume support ============
     async function saveProgress(userId, subjectId, score, total, lastIndex = null, status = 'completed') {
         try {
             const payload = {
@@ -1794,7 +1750,6 @@
         }
     }
 
-    // ============ NEW: getResumePoint - fetches saved position ============
     async function getResumePoint(userId, subjectId) {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=last_question_index,score,status`, {
@@ -1976,41 +1931,46 @@
             
             const card = document.createElement('div');
             let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/30' : ''}`;
-            if (isLocked && !isCompleted) cardClass += ' locked';
-            card.className = cardClass;
-            card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
-            
-            let statusBadge = '';
-            if (!isCompleted && isLocked) {
-                statusBadge = `<div style="position:absolute;bottom:8px;right:50%;transform:translateX(50%);font-size:10px;color:#1a5276;background:rgba(26,82,118,0.08);padding:2px 10px;border-radius:10px;white-space:nowrap;">🔒 K10</div>`;
+            if (isLocked && !isCompleted) {
+                cardClass += ' locked';
+                card.innerHTML = `
+                    <div class="lock-overlay">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="subject-name">${subject.name}</div>
+                    <div class="subject-count">Loading...</div>
+                    ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
+                    <span class="resume-badge"></span>
+                `;
+            } else {
+                card.className = cardClass;
+                card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
+                card.innerHTML = `
+                    <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="subject-name">${subject.name}</div>
+                    <div class="subject-count">Loading...</div>
+                    ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
+                    ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
+                    <span class="resume-badge"></span>
+                `;
             }
             
-            // Check if there's a resume point
-            let resumeBadge = '';
             if (currentUser && !isCompleted && !isLocked) {
-                // We'll check for resume point asynchronously
                 getResumePoint(currentUser.id, subject.id).then(resume => {
                     if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
                         const badge = card.querySelector('.resume-badge');
                         if (badge) {
-                            badge.textContent = `▶️ Resume (Q${resume.last_question_index + 1})`;
+                            badge.textContent = `▶️ Q${resume.last_question_index + 1}`;
                             badge.style.display = 'inline-block';
                         }
                     }
                 });
             }
-            
-            card.innerHTML = `
-                <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
-                    <i class="fas ${icon}"></i>
-                </div>
-                <div class="subject-name">${subject.name}</div>
-                <div class="subject-count">Loading...</div>
-                ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
-                ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
-                ${statusBadge}
-                <span class="resume-badge" style="position:absolute;top:10px;left:10px;font-size:8px;background:rgba(26,82,118,0.1);color:#1a5276;padding:2px 8px;border-radius:10px;display:none;"></span>
-            `;
             
             fetchQuestions(subject.id).then(questions => {
                 const countEl = card.querySelector('.subject-count');
@@ -2086,7 +2046,7 @@
         updateProfile();
     }
 
-    // ============ UPDATED START QUIZ with resume support ============
+    // ============ QUIZ FUNCTIONS ============
     async function startQuiz(subjectId, subjectName) {
         if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
             showToast('💎 Please pay K10 to access quizzes.', 'error');
@@ -2105,7 +2065,6 @@
             answered = false;
             currentIndex = 0;
 
-            // RESUME: check for saved position if exists
             if (currentUser && currentUser.id) {
                 const resume = await getResumePoint(currentUser.id, subjectId);
                 if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
@@ -2126,13 +2085,11 @@
         }
     }
 
-    // ============ UPDATED renderQuestion with save on completion ============
     function renderQuestion() {
         if (currentIndex >= currentQuestions.length) {
             completedSubjects.add(currentSubject);
             totalQuestionsAnswered += currentQuestions.length;
             if (currentUser && currentUser.id) {
-                // Save as completed with full length
                 saveProgress(currentUser.id, currentSubject, score, currentQuestions.length, currentQuestions.length, 'completed');
             }
             updateProgress();
@@ -2162,7 +2119,6 @@
         });
     }
 
-    // ============ UPDATED selectOption with auto-save ============
     function selectOption(index) {
         if (answered) return;
         answered = true;
@@ -2183,7 +2139,6 @@
         document.getElementById('nextBtn').disabled = false;
         updateProfile();
 
-        // NEW: persist position after every answer
         if (currentUser && currentUser.id) {
             saveProgress(currentUser.id, currentSubject, score, currentQuestions.length, currentIndex + 1, 'in_progress');
         }
@@ -2840,7 +2795,7 @@
     window.teacherGrantPremium = teacherGrantPremium;
     window.teacherRevokePremium = teacherRevokePremium;
     window.startFreeTrial = function() {
-        showToast('🎯 Try 4 free questions (Q6-9 in ICT & Math)! Pay K10 to unlock all subjects.', 'info');
+        showToast('🎯 Pay K10 to unlock all subjects!', 'info');
     };
 </script>
 </body>
