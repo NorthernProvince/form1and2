@@ -34,10 +34,13 @@
         .view.active { display:block; }
         @keyframes fadeSlideUp { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
         .glass-card { background:white; border-radius:16px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-        .subject-card { background:white; border-radius:16px; padding:16px 14px 14px; transition:all 0.3s cubic-bezier(0.16,1,0.3,1); cursor:pointer; border:1px solid #dce4ec; position:relative; overflow:hidden; min-height:130px; display:flex; flex-direction:column; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+        
+        /* PROFESSIONAL SUBJECT CARDS */
+        .subject-card { background:white; border-radius:16px; padding:16px 14px 14px; transition:all 0.3s cubic-bezier(0.16,1,0.3,1); cursor:pointer; border:1px solid #e8edf2; position:relative; overflow:hidden; min-height:130px; display:flex; flex-direction:column; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
         .subject-card:active { transform:scale(0.96); }
-        .subject-card .icon-wrapper { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:10px; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,0.08); color:white; position:relative; }
-        .subject-card .icon-wrapper i { font-size:24px; color:white; }
+        .subject-card .icon-wrapper { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,0.08); color:white; position:relative; transition:transform 0.3s; }
+        .subject-card:hover .icon-wrapper { transform:scale(1.05); }
+        .subject-card .icon-wrapper i { font-size:26px; color:white; }
         .subject-card .subject-name { color:#1a2332; font-weight:700; font-size:14px; line-height:1.2; margin-bottom:2px; }
         .subject-card .subject-count { color:#94a3b8; font-size:10px; font-weight:500; }
         .subject-card .check-mark { position:absolute; top:10px; right:10px; width:24px; height:24px; background:#22c55e; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; color:white; box-shadow:0 4px 12px rgba(34,197,94,0.3); }
@@ -46,13 +49,15 @@
         .subject-card .mark-done-btn:active { transform:scale(0.95); }
         .subject-card.completed .mark-done-btn { display:none; }
         .subject-card .mark-done-btn i { margin-right:4px; }
-        .subject-card.locked { opacity:0.6; cursor:pointer; position:relative; }
+        .subject-card.locked { opacity:0.7; cursor:pointer; position:relative; }
         .subject-card.locked .icon-wrapper,
         .subject-card.locked .subject-name,
-        .subject-card.locked .subject-count { filter:blur(3px); }
-        .subject-card.locked .lock-overlay { position:absolute; inset:0; background:rgba(255,255,255,0.1); backdrop-filter:blur(2px); border-radius:16px; display:flex; align-items:center; justify-content:center; z-index:5; }
-        .subject-card.locked .lock-overlay i { font-size:32px; color:#1a5276; opacity:0.5; }
+        .subject-card.locked .subject-count { filter:blur(2px); }
+        .subject-card.locked .lock-overlay { position:absolute; inset:0; background:rgba(255,255,255,0.15); backdrop-filter:blur(3px); border-radius:16px; display:flex; align-items:center; justify-content:center; z-index:5; flex-direction:column; gap:4px; }
+        .subject-card.locked .lock-overlay i { font-size:32px; color:#1a5276; opacity:0.6; }
+        .subject-card.locked .lock-overlay .lock-text { font-size:10px; color:#1a5276; font-weight:600; background:rgba(255,255,255,0.7); padding:2px 12px; border-radius:10px; }
         .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+        
         .option-btn { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:13px; font-weight:500; transition:all 0.2s; cursor:pointer; width:100%; text-align:left; display:flex; align-items:center; gap:10px; }
         .option-btn .option-letter { width:26px; height:26px; border-radius:50%; background:#e8edf2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#64748b; flex-shrink:0; }
         .option-btn:active:not(.disabled) { transform:scale(0.98); }
@@ -88,7 +93,7 @@
         .divider { height:1px; background:#dce4ec; margin:10px 0; }
         .certificate-card { background:linear-gradient(145deg,#f8fafc,#ffffff); border-radius:20px; padding:28px 20px; border:3px solid #d4af37; position:relative; overflow:hidden; }
         .certificate-card::before { content:''; position:absolute; inset:6px; border:2px dashed rgba(212,175,55,0.3); border-radius:16px; pointer-events:none; }
-        @media (max-width:430px) { .subject-grid { gap:8px; } .subject-card { padding:12px 10px 10px; min-height:120px; } .subject-card .icon-wrapper { width:44px; height:44px; font-size:20px; } .subject-card .icon-wrapper i { font-size:20px; } .subject-card .subject-name { font-size:13px; } .question-text { font-size:15px; } .option-btn { padding:10px 12px; font-size:12px; } }
+        @media (max-width:430px) { .subject-grid { gap:8px; } .subject-card { padding:12px 10px 10px; min-height:120px; } .subject-card .icon-wrapper { width:48px; height:48px; font-size:22px; } .subject-card .icon-wrapper i { font-size:22px; } .subject-card .subject-name { font-size:13px; } .question-text { font-size:15px; } .option-btn { padding:10px 12px; font-size:12px; } }
         @media (min-width:431px) { .app-container { border-left:1px solid #dce4ec; border-right:1px solid #dce4ec; box-shadow:0 0 60px rgba(0,0,0,0.06); } }
         .fab { position:fixed; bottom:72px; right:16px; max-width:430px; margin:0 auto; width:44px; height:44px; border-radius:50%; background:#1a5276; border:none; color:white; font-size:18px; cursor:pointer; box-shadow:0 8px 30px rgba(26,82,118,0.3); display:none; align-items:center; justify-content:center; z-index:50; transition:all 0.3s; }
         .fab:active { transform:scale(0.9); }
@@ -195,7 +200,11 @@
         .premium-spacer { flex:1; min-height:4px; }
         .resume-badge { position:absolute; top:8px; left:8px; font-size:8px; background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 8px; border-radius:10px; display:none; z-index:6; }
         
-        .subject-card.locked .lock-overlay i { font-size:32px; color:#1a5276; opacity:0.5; }
+        /* Subject header area */
+        .subjects-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+        .subjects-title { font-size:18px; font-weight:700; color:#1a2332; }
+        .subjects-title i { color:#1a5276; margin-right:8px; }
+        .subjects-stats { font-size:11px; color:#94a3b8; }
     </style>
 </head>
 <body>
@@ -312,14 +321,11 @@
             </div>
         </div>
 
-        <!-- SUBJECTS VIEW -->
+        <!-- SUBJECTS VIEW - Professional Design -->
         <div class="view" id="subjectsView">
-            <div class="flex items-center justify-between mb-3">
-                <div>
-                    <h2 class="text-xl font-bold text-[#1a2332]">My Subjects</h2>
-                    <p class="text-gray-500 text-xs" id="progressText">0 of 0 completed</p>
-                </div>
-                <span class="badge badge-gold"><i class="fas fa-star"></i> Premium</span>
+            <div class="subjects-header">
+                <div class="subjects-title"><i class="fas fa-book-open"></i> My Subjects</div>
+                <div class="subjects-stats" id="progressText">0 of 0 completed</div>
             </div>
             <div class="progress-track mb-3">
                 <div class="progress-fill" id="progressBar" style="width:0%"></div>
@@ -696,7 +702,6 @@
     <!-- FULL SCREEN PREMIUM POPUP -->
     <div class="premium-overlay" id="premiumOverlay">
         <div class="premium-card">
-            <!-- Premium Header -->
             <div class="premium-header">
                 <div class="premium-icon-wrapper"><i class="fas fa-crown"></i></div>
                 <h3 class="premium-title">Unlock Full Access</h3>
@@ -704,7 +709,6 @@
                 <div class="price-badge">K10 · Lifetime Access</div>
             </div>
             
-            <!-- Features -->
             <div class="features-grid">
                 <div class="feature-item"><i class="fas fa-check-circle"></i> All subjects unlocked</div>
                 <div class="feature-item"><i class="fas fa-check-circle"></i> Track your progress</div>
@@ -712,7 +716,6 @@
                 <div class="feature-item"><i class="fas fa-check-circle"></i> Unlimited quiz attempts</div>
             </div>
 
-            <!-- Payment Options -->
             <div class="payment-label"><i class="fas fa-mobile-alt"></i> Pay via Mobile Money</div>
             <div class="payment-grid">
                 <div class="payment-row" onclick="copyNumber('+260971130511')">
@@ -747,24 +750,20 @@
                 </div>
             </div>
 
-            <!-- Account Holder -->
             <div class="account-name-box">
                 <div class="label">Account Holder</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
 
-            <!-- Instruction -->
             <p class="payment-instruction">
                 <i class="fas fa-info-circle" style="color:#1a5276;margin-right:4px;"></i>
                 After payment, send your <strong>username</strong> and payment confirmation via WhatsApp. The teacher will activate your account.
             </p>
 
-            <!-- WhatsApp Button -->
             <button onclick="openWhatsApp()" class="btn-whatsapp-premium">
                 <i class="fab fa-whatsapp"></i> WhatsApp Teacher for Activation
             </button>
             
-            <!-- Close Button -->
             <button onclick="closePremiumPopup()" class="btn-close-premium">
                 <i class="fas fa-times"></i> Close
             </button>
@@ -1911,7 +1910,7 @@
         }
     }
 
-    // ============ RENDER SUBJECTS ============
+    // ============ RENDER SUBJECTS - Professional with clear icons ============
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
@@ -1931,35 +1930,40 @@
             
             const card = document.createElement('div');
             let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/30' : ''}`;
+            
+            // Build card content
+            let cardContent = `
+                <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="subject-name">${subject.name}</div>
+                <div class="subject-count">Loading...</div>
+                ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
+                ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
+                <span class="resume-badge"></span>
+            `;
+            
             if (isLocked && !isCompleted) {
                 cardClass += ' locked';
-                card.innerHTML = `
+                cardContent = `
                     <div class="lock-overlay">
                         <i class="fas fa-lock"></i>
+                        <span class="lock-text">🔒 Locked</span>
                     </div>
                     <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
                         <i class="fas ${icon}"></i>
                     </div>
                     <div class="subject-name">${subject.name}</div>
                     <div class="subject-count">Loading...</div>
-                    ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
-                    <span class="resume-badge"></span>
-                `;
-            } else {
-                card.className = cardClass;
-                card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
-                card.innerHTML = `
-                    <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
-                        <i class="fas ${icon}"></i>
-                    </div>
-                    <div class="subject-name">${subject.name}</div>
-                    <div class="subject-count">Loading...</div>
-                    ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
-                    ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
                     <span class="resume-badge"></span>
                 `;
             }
             
+            card.className = cardClass;
+            card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
+            card.innerHTML = cardContent;
+            
+            // Check for resume point
             if (currentUser && !isCompleted && !isLocked) {
                 getResumePoint(currentUser.id, subject.id).then(resume => {
                     if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
