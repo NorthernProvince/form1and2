@@ -35,7 +35,7 @@
         @keyframes fadeSlideUp { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
         .glass-card { background:white; border-radius:16px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
         
-        /* PROFESSIONAL SUBJECT CARDS - NO BLUR */
+        /* PROFESSIONAL SUBJECT CARDS */
         .subject-card { background:white; border-radius:16px; padding:16px 14px 14px; transition:all 0.3s cubic-bezier(0.16,1,0.3,1); cursor:pointer; border:1px solid #e8edf2; position:relative; overflow:hidden; min-height:130px; display:flex; flex-direction:column; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
         .subject-card:active { transform:scale(0.96); }
         .subject-card .icon-wrapper { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,0.08); color:white; position:relative; transition:transform 0.3s; }
@@ -50,17 +50,13 @@
         .subject-card.completed .mark-done-btn { display:none; }
         .subject-card .mark-done-btn i { margin-right:4px; }
         
-        /* LOCKED STATE - CLEAR WITH GOLD LOCK */
-        .subject-card.locked { opacity:1; cursor:pointer; position:relative; border-color:rgba(212,175,55,0.3); }
+        /* LOCKED STATE - SINGLE CLEAN GOLD LOCK */
+        .subject-card.locked { opacity:1; cursor:pointer; position:relative; }
         .subject-card.locked .gold-lock { position:absolute; top:10px; right:10px; width:28px; height:28px; background:linear-gradient(135deg,#d4af37,#f5d76e); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; color:white; box-shadow:0 2px 10px rgba(212,175,55,0.4); z-index:6; }
         .subject-card.locked .gold-lock i { font-size:12px; color:white; }
-        .subject-card.locked .lock-overlay { position:absolute; inset:0; background:rgba(255,255,255,0.5); backdrop-filter:none; border-radius:16px; display:flex; align-items:center; justify-content:center; z-index:5; flex-direction:column; gap:4px; }
-        .subject-card.locked .lock-overlay .lock-text { font-size:11px; color:#d4af37; font-weight:700; background:rgba(255,255,255,0.85); padding:4px 16px; border-radius:20px; border:1.5px solid rgba(212,175,55,0.4); letter-spacing:0.5px; }
-        .subject-card.locked .lock-overlay .lock-subtext { font-size:8px; color:#94a3b8; font-weight:500; margin-top:2px; }
-        .subject-card.locked .icon-wrapper { opacity:0.7; }
-        .subject-card.locked .subject-name { opacity:0.7; }
-        .subject-card.locked .subject-count { opacity:0.6; }
-        .subject-card.locked .lock-icon-big { font-size:32px; color:#d4af37; opacity:0.8; }
+        .subject-card.locked .icon-wrapper { opacity:0.6; }
+        .subject-card.locked .subject-name { opacity:0.6; }
+        .subject-card.locked .subject-count { opacity:0.5; }
         
         .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
         
@@ -326,7 +322,7 @@
             </div>
         </div>
 
-        <!-- SUBJECTS VIEW - Professional Design -->
+        <!-- SUBJECTS VIEW -->
         <div class="view" id="subjectsView">
             <div class="subjects-header">
                 <div class="subjects-title"><i class="fas fa-book-open"></i> My Subjects</div>
@@ -1915,7 +1911,7 @@
         }
     }
 
-    // ============ RENDER SUBJECTS - No blur, clear gold locks ============
+    // ============ RENDER SUBJECTS - Clean single gold lock ============
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
@@ -1942,11 +1938,6 @@
                 cardClass += ' locked';
                 cardContent = `
                     <div class="gold-lock"><i class="fas fa-lock"></i></div>
-                    <div class="lock-overlay">
-                        <i class="fas fa-lock lock-icon-big"></i>
-                        <span class="lock-text">🔒 Locked</span>
-                        <span class="lock-subtext">Pay K10 to unlock</span>
-                    </div>
                     <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
                         <i class="fas ${icon}"></i>
                     </div>
