@@ -154,58 +154,62 @@
         .search-members .input-field { flex:1; padding:10px 14px; font-size:13px; }
         .search-members .btn-primary { width:auto; padding:10px 16px; font-size:13px; flex-shrink:0; }
         
-        /* FULL SCREEN PREMIUM POPUP */
-        .premium-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:200; display:none; align-items:center; justify-content:center; padding:0; max-width:430px; margin:0 auto; left:50%; transform:translateX(-50%); width:100%; height:100vh; height:100dvh; }
-        .premium-overlay.active { display:flex; }
-        .premium-card { background:white; border-radius:0; padding:20px 20px 30px; width:100%; height:100vh; height:100dvh; max-height:100vh; border:none; text-align:center; animation:popIn 0.3s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; box-shadow:none; display:flex; flex-direction:column; }
-        .premium-card::-webkit-scrollbar { width:3px; }
-        .premium-card::-webkit-scrollbar-thumb { background:rgba(26,82,118,0.3); border-radius:10px; }
-        @keyframes popIn { from { opacity:0; transform:scale(0.98) translateY(10px); } to { opacity:1; transform:scale(1) translateY(0); } }
+        /* DONATION POPUP - PROFESSIONAL */
+        .donation-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:200; display:none; align-items:center; justify-content:center; padding:0; max-width:430px; margin:0 auto; left:50%; transform:translateX(-50%); width:100%; height:100vh; height:100dvh; }
+        .donation-overlay.active { display:flex; }
+        .donation-card { background:white; border-radius:0; padding:20px 20px 30px; width:100%; height:100vh; height:100dvh; max-height:100vh; border:none; text-align:center; animation:popIn 0.3s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; box-shadow:none; display:flex; flex-direction:column; }
+        .donation-card::-webkit-scrollbar { width:3px; }
+        .donation-card::-webkit-scrollbar-thumb { background:rgba(26,82,118,0.3); border-radius:10px; }
         
-        .premium-header { background:linear-gradient(135deg,#1a5276,#2e86c1); margin:-20px -20px 16px; padding:30px 20px 24px; border-bottom-left-radius:30px; border-bottom-right-radius:30px; flex-shrink:0; }
-        .premium-icon-wrapper { width:70px; height:70px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); color:#1a5276; }
-        .premium-title { color:white; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
-        .premium-subtitle { color:rgba(255,255,255,0.8); font-size:13px; margin-top:2px; }
+        .donation-header { background:linear-gradient(135deg,#1a5276,#2e86c1); margin:-20px -20px 16px; padding:30px 20px 24px; border-bottom-left-radius:30px; border-bottom-right-radius:30px; flex-shrink:0; }
+        .donation-icon-wrapper { width:70px; height:70px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); color:#1a5276; }
+        .donation-title { color:white; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
+        .donation-subtitle { color:rgba(255,255,255,0.8); font-size:13px; margin-top:2px; }
         
-        .price-badge { display:inline-block; background:white; color:#1a5276; font-weight:800; font-size:18px; padding:4px 20px; border-radius:30px; margin:6px 0 12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
+        .donation-amount-badge { display:inline-block; background:white; color:#1a5276; font-weight:800; font-size:16px; padding:4px 20px; border-radius:30px; margin:6px 0 12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
         
-        .features-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#f8fafc; border-radius:12px; padding:10px 12px; margin-bottom:12px; flex-shrink:0; border:1px solid #e8edf2; }
-        .feature-item { display:flex; align-items:center; gap:6px; font-size:10px; color:#1a2332; text-align:left; }
-        .feature-item i { color:#22c55e; font-size:12px; width:16px; text-align:center; }
+        .donation-benefits { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#f8fafc; border-radius:12px; padding:10px 12px; margin-bottom:12px; flex-shrink:0; border:1px solid #e8edf2; }
+        .donation-benefit { display:flex; align-items:center; gap:6px; font-size:10px; color:#1a2332; text-align:left; }
+        .donation-benefit i { color:#22c55e; font-size:12px; width:16px; text-align:center; }
         
-        .payment-label { color:#64748b; font-size:11px; font-weight:600; text-align:left; margin:0 0 6px; text-transform:uppercase; letter-spacing:0.5px; }
-        .payment-grid { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; flex-shrink:0; }
-        .payment-row { background:#f8fafc; border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; border:1px solid #e8edf2; transition:all 0.2s; cursor:pointer; }
-        .payment-row:active { transform:scale(0.98); background:#e8edf2; }
-        .payment-left { display:flex; align-items:center; gap:12px; min-width:0; }
-        .payment-provider-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
-        .payment-provider-icon.mtn { background:rgba(26,82,118,0.08); color:#1a5276; }
-        .payment-provider-icon.airtel { background:rgba(52,211,153,0.08); color:#34d399; }
-        .payment-provider-icon.zamtel { background:rgba(251,146,60,0.08); color:#fb923c; }
-        .payment-number { color:#1a2332; font-weight:700; font-size:14px; font-family:'Courier New',monospace; letter-spacing:0.5px; }
-        .payment-provider-name { color:#94a3b8; font-size:9px; font-weight:500; }
-        .copy-btn { background:#dce4ec; border:none; color:#64748b; padding:4px 10px; border-radius:6px; font-size:10px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; flex-shrink:0; font-weight:500; }
-        .copy-btn:active { transform:scale(0.92); background:#1a5276; color:white; }
+        .donation-payment-label { color:#64748b; font-size:11px; font-weight:600; text-align:left; margin:0 0 6px; text-transform:uppercase; letter-spacing:0.5px; }
+        .donation-payment-grid { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; flex-shrink:0; }
+        .donation-payment-row { background:#f8fafc; border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; border:1px solid #e8edf2; transition:all 0.2s; cursor:pointer; }
+        .donation-payment-row:active { transform:scale(0.98); background:#e8edf2; }
+        .donation-payment-left { display:flex; align-items:center; gap:12px; min-width:0; }
+        .donation-payment-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+        .donation-payment-icon.mtn { background:rgba(26,82,118,0.08); color:#1a5276; }
+        .donation-payment-icon.airtel { background:rgba(52,211,153,0.08); color:#34d399; }
+        .donation-payment-icon.zamtel { background:rgba(251,146,60,0.08); color:#fb923c; }
+        .donation-payment-number { color:#1a2332; font-weight:700; font-size:14px; font-family:'Courier New',monospace; letter-spacing:0.5px; }
+        .donation-payment-provider { color:#94a3b8; font-size:9px; font-weight:500; }
         
-        .account-name-box { background:rgba(26,82,118,0.04); border:1px solid rgba(26,82,118,0.08); border-radius:8px; padding:8px 12px; margin-bottom:10px; flex-shrink:0; }
-        .account-name-box .label { color:#94a3b8; font-size:8px; text-transform:uppercase; letter-spacing:0.5px; }
-        .account-name-box .name { color:#1a5276; font-weight:700; font-size:16px; }
+        .donation-account-box { background:rgba(26,82,118,0.04); border:1px solid rgba(26,82,118,0.08); border-radius:8px; padding:8px 12px; margin-bottom:10px; flex-shrink:0; }
+        .donation-account-box .label { color:#94a3b8; font-size:8px; text-transform:uppercase; letter-spacing:0.5px; }
+        .donation-account-box .name { color:#1a5276; font-weight:700; font-size:16px; }
         
-        .payment-instruction { color:#64748b; font-size:11px; text-align:center; margin:4px 0 8px; line-height:1.4; flex-shrink:0; }
-        .payment-instruction strong { color:#1a2332; font-weight:600; }
+        .donation-instruction { color:#64748b; font-size:11px; text-align:center; margin:4px 0 8px; line-height:1.4; flex-shrink:0; }
+        .donation-instruction strong { color:#1a2332; font-weight:600; }
         
-        .btn-whatsapp-premium { background:#25D366; color:white; font-weight:700; padding:12px; border-radius:10px; border:none; font-size:14px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(37,211,102,0.25); flex-shrink:0; }
-        .btn-whatsapp-premium:active { transform:scale(0.96); }
-        .btn-close-premium { background:#f1f5f9; color:#64748b; font-weight:600; padding:10px; border-radius:10px; border:1px solid #e8edf2; font-size:13px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px; flex-shrink:0; }
-        .btn-close-premium:active { transform:scale(0.96); background:#e8edf2; }
+        .btn-donation-whatsapp { background:#25D366; color:white; font-weight:700; padding:12px; border-radius:10px; border:none; font-size:14px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(37,211,102,0.25); flex-shrink:0; }
+        .btn-donation-whatsapp:active { transform:scale(0.96); }
+        .btn-donation-close { background:#f1f5f9; color:#64748b; font-weight:600; padding:10px; border-radius:10px; border:1px solid #e8edf2; font-size:13px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px; flex-shrink:0; }
+        .btn-donation-close:active { transform:scale(0.96); background:#e8edf2; }
         
-        .premium-spacer { flex:1; min-height:4px; }
+        .donation-spacer { flex:1; min-height:4px; }
         .resume-badge { position:absolute; top:8px; left:8px; font-size:8px; background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 8px; border-radius:10px; display:none; z-index:6; }
         
         .subjects-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
         .subjects-title { font-size:18px; font-weight:700; color:#1a2332; }
         .subjects-title i { color:#1a5276; margin-right:8px; }
         .subjects-stats { font-size:11px; color:#94a3b8; }
+
+        /* Professional Admin Stats */
+        .admin-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px; }
+        .admin-stat-card { background:white; border-radius:12px; padding:12px 8px; text-align:center; border:1px solid #e8edf2; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+        .admin-stat-card .admin-stat-number { font-size:22px; font-weight:800; color:#1a5276; }
+        .admin-stat-card .admin-stat-label { font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+        .admin-stat-card .admin-stat-icon { font-size:16px; color:#1a5276; opacity:0.3; margin-bottom:4px; }
     </style>
 </head>
 <body>
@@ -269,7 +273,7 @@
                         <i class="fas fa-user-plus text-2xl text-white"></i>
                     </div>
                     <h2 class="text-2xl font-bold text-[#1a2332]">Create Account</h2>
-                    <p class="text-gray-500 text-xs mt-1">Join NorthernQuiz for K10 membership</p>
+                    <p class="text-gray-500 text-xs mt-1">Join NorthernQuiz - Free Learning Platform</p>
                 </div>
                 <div class="space-y-3">
                     <div>
@@ -281,7 +285,7 @@
                         <input id="registerPassword" type="password" placeholder="Choose a password" class="input-field mt-1" />
                     </div>
                     <button onclick="register()" class="btn-primary mt-2" id="registerBtn">
-                        <i class="fas fa-user-plus"></i> Create Account (K10)
+                        <i class="fas fa-user-plus"></i> Create Account (Free)
                     </button>
                     <div class="text-center mt-3">
                         <p class="text-gray-500 text-xs">
@@ -293,27 +297,27 @@
             </div>
         </div>
 
-        <!-- TEACHER LOGIN VIEW -->
+        <!-- TEACHER/ADMIN LOGIN VIEW -->
         <div class="view" id="teacherLoginView">
             <div class="glass-card p-5" style="margin-top:16px;">
                 <div class="text-center mb-6">
                     <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
                         <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
                     </div>
-                    <h2 class="text-2xl font-bold text-[#1a2332]">Teacher Login</h2>
+                    <h2 class="text-2xl font-bold text-[#1a2332]">Admin Login</h2>
                     <p class="text-gray-500 text-xs mt-1">Manage students, subjects &amp; questions</p>
                 </div>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Username</label>
-                        <input id="teacherUsername" type="text" placeholder="Enter teacher username" class="input-field mt-1" value="teacher" />
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Admin Username</label>
+                        <input id="teacherUsername" type="text" placeholder="Enter admin username" class="input-field mt-1" value="admin" />
                     </div>
                     <div>
-                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Teacher Password</label>
-                        <input id="teacherPassword" type="password" placeholder="Enter teacher password" class="input-field mt-1" value="teacher123" />
+                        <label class="text-gray-600 text-[10px] font-semibold uppercase tracking-wider">Admin Password</label>
+                        <input id="teacherPassword" type="password" placeholder="Enter admin password" class="input-field mt-1" value="admin123" />
                     </div>
                     <button onclick="teacherLogin()" class="btn-primary mt-2" id="teacherLoginBtn">
-                        <i class="fas fa-sign-in-alt"></i> Teacher Sign In
+                        <i class="fas fa-sign-in-alt"></i> Admin Sign In
                     </button>
                     <button onclick="showView('loginView')" class="btn-secondary mt-2">
                         <i class="fas fa-arrow-left"></i> Back
@@ -370,6 +374,9 @@
                         <i class="fas fa-users"></i> Friends
                     </button>
                 </div>
+                <button onclick="showDonationPopup()" style="margin-top:12px; background:linear-gradient(135deg,#d4af37,#f5d76e); color:#1a5276; font-weight:700; padding:10px; border-radius:12px; border:none; font-size:13px; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(212,175,55,0.25);">
+                    <i class="fas fa-heart"></i> Support NorthernQuiz
+                </button>
             </div>
         </div>
 
@@ -473,31 +480,36 @@
             </div>
         </div>
 
-        <!-- TEACHER DASHBOARD -->
+        <!-- ADMIN DASHBOARD - PROFESSIONAL -->
         <div class="view" id="teacherView">
             <div class="teacher-dashboard">
                 <div class="flex items-center justify-between mb-3">
-                    <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h2>
+                    <h2><i class="fas fa-chalkboard-teacher"></i> Admin Dashboard</h2>
                     <button onclick="logoutTeacher()" class="btn-danger" style="padding:4px 12px;font-size:11px;">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </div>
-                <div class="stats-box">
-                    <div class="stat-card">
-                        <div class="stat-number" id="statStudents">0</div>
-                        <div class="stat-label">Students</div>
+                <!-- Professional Stats -->
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="admin-stat-number" id="statStudents">0</div>
+                        <div class="admin-stat-label">Students</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statSubjects">0</div>
-                        <div class="stat-label">Subjects</div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon"><i class="fas fa-book"></i></div>
+                        <div class="admin-stat-number" id="statSubjects">0</div>
+                        <div class="admin-stat-label">Subjects</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statQuestions">0</div>
-                        <div class="stat-label">Questions</div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon"><i class="fas fa-question-circle"></i></div>
+                        <div class="admin-stat-number" id="statQuestions">0</div>
+                        <div class="admin-stat-label">Questions</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statCompleted">0</div>
-                        <div class="stat-label">Completed</div>
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="admin-stat-number" id="statCompleted">0</div>
+                        <div class="admin-stat-label">Completed</div>
                     </div>
                 </div>
                 <div style="display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;">
@@ -700,76 +712,76 @@
         </button>
     </div>
 
-    <!-- FULL SCREEN PREMIUM POPUP -->
-    <div class="premium-overlay" id="premiumOverlay">
-        <div class="premium-card">
-            <div class="premium-header">
-                <div class="premium-icon-wrapper"><i class="fas fa-crown"></i></div>
-                <h3 class="premium-title">Unlock Full Access</h3>
-                <p class="premium-subtitle">Get unlimited access to all subjects, quizzes, and your certificate</p>
-                <div class="price-badge">K10 · Lifetime Access</div>
+    <!-- DONATION POPUP -->
+    <div class="donation-overlay" id="donationOverlay">
+        <div class="donation-card">
+            <div class="donation-header">
+                <div class="donation-icon-wrapper"><i class="fas fa-heart"></i></div>
+                <h3 class="donation-title">Support NorthernQuiz</h3>
+                <p class="donation-subtitle">Your donation helps keep this platform free for everyone</p>
+                <div class="donation-amount-badge">❤️ Any Amount · Your Support Matters</div>
             </div>
             
-            <div class="features-grid">
-                <div class="feature-item"><i class="fas fa-check-circle"></i> All subjects unlocked</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Track your progress</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Completion certificate</div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i> Unlimited quiz attempts</div>
+            <div class="donation-benefits">
+                <div class="donation-benefit"><i class="fas fa-check-circle"></i> Keep platform free</div>
+                <div class="donation-benefit"><i class="fas fa-check-circle"></i> Support development</div>
+                <div class="donation-benefit"><i class="fas fa-check-circle"></i> Help students learn</div>
+                <div class="donation-benefit"><i class="fas fa-check-circle"></i> ❤️ Show your support</div>
             </div>
 
-            <div class="payment-label"><i class="fas fa-mobile-alt"></i> Pay via Mobile Money</div>
-            <div class="payment-grid">
-                <div class="payment-row" onclick="copyNumber('+260971130511')">
-                    <div class="payment-left">
-                        <div class="payment-provider-icon mtn"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="payment-details">
-                            <div class="payment-number">+260 971 130 511</div>
-                            <div class="payment-provider-name">MTN Mobile Money</div>
+            <div class="donation-payment-label"><i class="fas fa-mobile-alt"></i> Donate via Mobile Money</div>
+            <div class="donation-payment-grid">
+                <div class="donation-payment-row" onclick="copyNumber('+260971130511')">
+                    <div class="donation-payment-left">
+                        <div class="donation-payment-icon mtn"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="donation-payment-details">
+                            <div class="donation-payment-number">+260 971 130 511</div>
+                            <div class="donation-payment-provider">MTN Mobile Money</div>
                         </div>
                     </div>
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260971130511')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
-                <div class="payment-row" onclick="copyNumber('+260958882550')">
-                    <div class="payment-left">
-                        <div class="payment-provider-icon airtel"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="payment-details">
-                            <div class="payment-number">+260 958 882 550</div>
-                            <div class="payment-provider-name">Airtel Money</div>
+                <div class="donation-payment-row" onclick="copyNumber('+260958882550')">
+                    <div class="donation-payment-left">
+                        <div class="donation-payment-icon airtel"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="donation-payment-details">
+                            <div class="donation-payment-number">+260 958 882 550</div>
+                            <div class="donation-payment-provider">Airtel Money</div>
                         </div>
                     </div>
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260958882550')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
-                <div class="payment-row" onclick="copyNumber('+260763209826')">
-                    <div class="payment-left">
-                        <div class="payment-provider-icon zamtel"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="payment-details">
-                            <div class="payment-number">+260 763 209 826</div>
-                            <div class="payment-provider-name">Zamtel Kwacha</div>
+                <div class="donation-payment-row" onclick="copyNumber('+260763209826')">
+                    <div class="donation-payment-left">
+                        <div class="donation-payment-icon zamtel"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="donation-payment-details">
+                            <div class="donation-payment-number">+260 763 209 826</div>
+                            <div class="donation-payment-provider">Zamtel Kwacha</div>
                         </div>
                     </div>
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260763209826')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
             </div>
 
-            <div class="account-name-box">
+            <div class="donation-account-box">
                 <div class="label">Account Holder</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
 
-            <p class="payment-instruction">
+            <p class="donation-instruction">
                 <i class="fas fa-info-circle" style="color:#1a5276;margin-right:4px;"></i>
-                After payment, send your <strong>username</strong> and payment confirmation via WhatsApp. The teacher will activate your account.
+                Send any amount via mobile money to support NorthernQuiz. Every contribution helps keep this platform <strong>FREE</strong> for all learners!
             </p>
 
-            <button onclick="openWhatsApp()" class="btn-whatsapp-premium">
-                <i class="fab fa-whatsapp"></i> WhatsApp Teacher for Activation
+            <button onclick="openWhatsAppDonation()" class="btn-donation-whatsapp">
+                <i class="fab fa-whatsapp"></i> WhatsApp for Support
             </button>
             
-            <button onclick="closePremiumPopup()" class="btn-close-premium">
+            <button onclick="closeDonationPopup()" class="btn-donation-close">
                 <i class="fas fa-times"></i> Close
             </button>
             
-            <div class="premium-spacer"></div>
+            <div class="donation-spacer"></div>
         </div>
     </div>
 
@@ -874,15 +886,25 @@
         return colors[hash];
     }
 
+    // ============ DONATION FUNCTIONS ============
+    function showDonationPopup() {
+        document.getElementById('donationOverlay').classList.add('active');
+    }
+
+    function closeDonationPopup() {
+        document.getElementById('donationOverlay').classList.remove('active');
+    }
+
+    function openWhatsAppDonation() {
+        const phoneNumber = '+260966011066';
+        const message = `Hello, I would like to support NorthernQuiz with a donation.\n\nThank you for keeping this platform free for all learners! ❤️`;
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+        window.open(url, '_blank');
+        showToast('📱 Opening WhatsApp... Thank you for your support! ❤️', 'success');
+    }
+
     // ============ MEMBERSHIP FUNCTIONS ============
-    function showPremiumPopup() {
-        document.getElementById('premiumOverlay').classList.add('active');
-    }
-
-    function closePremiumPopup() {
-        document.getElementById('premiumOverlay').classList.remove('active');
-    }
-
     function checkMembership() {
         if (!currentUser) return false;
 
@@ -900,7 +922,9 @@
             return true;
         }
 
-        return false;
+        // All users are premium - free platform
+        isPremium = true;
+        return true;
     }
 
     async function updateUserPremiumStatus(userId, isPremiumValue) {
@@ -945,11 +969,12 @@
     function openWhatsApp() {
         const phoneNumber = '+260966011066';
         const username = currentUser ? currentUser.username : '(Your username)';
-        const message = `Hello, I have paid K10 for NorthernQuiz Premium.\n\nUsername: ${username}\n\nPlease activate my account. Thank you!`;
+        const message = `Hello, I have donated to support NorthernQuiz.\n\nUsername: ${username}\n\nThank you for keeping this platform free! ❤️`;
         const encodedMessage = encodeURIComponent(message);
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         window.open(url, '_blank');
-        showToast('📱 Opening WhatsApp... The teacher will activate your account once payment is confirmed.', 'info');
+        showToast('📱 Opening WhatsApp... Thank you for your support! ❤️', 'success');
+        closeDonationPopup();
     }
 
     function copyNumber(number) {
@@ -998,16 +1023,16 @@
             if (exists) {
                 showToast('Username already exists. Please choose another.', 'error');
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (K10)';
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (Free)';
                 return;
             }
             
             const newUser = await createUser(username, password);
             if (newUser) {
-                currentUser = { username: newUser.username, password: newUser.password, id: newUser.id, role: newUser.role || 'student', is_premium: false };
+                currentUser = { username: newUser.username, password: newUser.password, id: newUser.id, role: newUser.role || 'student', is_premium: true };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
-                showToast(`🎉 Welcome, ${username}! Please pay K10 to activate your account.`, 'success');
+                showToast(`🎉 Welcome, ${username}! All subjects are FREE!`, 'success');
                 showView('subjectsView');
                 renderSubjects();
                 updateProgress();
@@ -1015,8 +1040,8 @@
                 loadFriends();
                 loadChats();
                 setTimeout(() => {
-                    showPremiumPopup();
-                }, 1000);
+                    showDonationPopup();
+                }, 2000);
             } else {
                 showToast('Error creating account. Please try again.', 'error');
             }
@@ -1025,7 +1050,7 @@
         }
         
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (K10)';
+        btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (Free)';
     }
 
     async function login() {
@@ -1045,7 +1070,7 @@
         try {
             const user = await authenticateUser(username, password);
             if (user) {
-                const isUserPremium = user.is_premium || false;
+                const isUserPremium = user.is_premium || true;
                 currentUser = { username: user.username, password: user.password, id: user.id, role: user.role || 'student', is_premium: isUserPremium };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
@@ -1056,12 +1081,9 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                const hasMembership = checkMembership();
-                if (!hasMembership && currentUser.role !== 'teacher') {
-                    setTimeout(() => {
-                        showPremiumPopup();
-                    }, 1000);
-                }
+                setTimeout(() => {
+                    showDonationPopup();
+                }, 3000);
             } else {
                 const exists = await checkUserExists(username);
                 if (exists) {
@@ -1080,7 +1102,7 @@
 
     async function createUser(username, password) {
         try {
-            const payload = { username, password, role: 'student', is_premium: false };
+            const payload = { username, password, role: 'student', is_premium: true };
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}`, {
                 method: 'POST',
                 headers: {
@@ -1163,7 +1185,7 @@
         }
     }
 
-    // ============ TEACHER FUNCTIONS ============
+    // ============ TEACHER/ADMIN FUNCTIONS ============
     function showTeacherLogin() {
         if (isTeacherLoggedIn) {
             showView('teacherView');
@@ -1178,7 +1200,7 @@
         const password = document.getElementById('teacherPassword').value.trim();
         const loginBtn = document.getElementById('teacherLoginBtn');
         if (!username || !password) {
-            showToast('Please enter teacher credentials', 'error');
+            showToast('Please enter admin credentials', 'error');
             return;
         }
         try {
@@ -1192,29 +1214,29 @@
                 const data = await response.json();
                 if (data.length > 0 && data[0].password === password && data[0].role === 'teacher') {
                     isTeacherLoggedIn = true;
-                    showToast('👨‍🏫 Welcome Teacher!', 'success');
+                    showToast('👨‍🏫 Welcome Admin!', 'success');
                     showView('teacherView');
                     updateTeacherDashboard();
                     return;
                 }
             }
         } catch (error) {
-            console.error('Teacher login error:', error);
+            console.error('Admin login error:', error);
         }
-        if (username === 'teacher' && password === 'teacher123') {
+        if (username === 'admin' && password === 'admin123') {
             isTeacherLoggedIn = true;
-            showToast('👨‍🏫 Welcome Teacher!', 'success');
+            showToast('👨‍🏫 Welcome Admin!', 'success');
             showView('teacherView');
             updateTeacherDashboard();
             return;
         }
-        showToast('Invalid teacher credentials', 'error');
+        showToast('Invalid admin credentials', 'error');
     }
 
     function logoutTeacher() {
         isTeacherLoggedIn = false;
         showView('loginView');
-        showToast('Logged out of teacher mode', 'info');
+        showToast('Logged out of admin mode', 'info');
     }
 
     // ============ PROFILE FUNCTIONS ============
@@ -1230,11 +1252,6 @@
 
     // ============ FRIENDS FUNCTIONS ============
     function showFriends() {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to access Friends feature.', 'error');
-            showPremiumPopup();
-            return;
-        }
         showView('friendsView');
         renderFriends();
         document.getElementById('memberSearchResults').innerHTML = '';
@@ -1327,12 +1344,6 @@
     }
 
     function addFriend(userId, username) {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to add friends.', 'error');
-            showPremiumPopup();
-            return;
-        }
-        
         if (friends.find(f => f.id === userId)) {
             showToast('Already friends with ' + username, 'info');
             return;
@@ -1374,11 +1385,6 @@
 
     // ============ CHAT FUNCTIONS ============
     function openChat(friendId) {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to access Chat feature.', 'error');
-            showPremiumPopup();
-            return;
-        }
         currentChatFriend = friends.find(f => f.id === friendId);
         if (!currentChatFriend) return;
         document.getElementById('chatFriendName').textContent = currentChatFriend.username;
@@ -1496,7 +1502,7 @@
     }
 
     function goToSubjects() {
-        closePremiumPopup();
+        closeDonationPopup();
         showView('subjectsView');
         renderSubjects();
         updateProgress();
@@ -1519,12 +1525,12 @@
     }
 
     function showHelp() { 
-        showToast('🎯 Pay K10 to unlock all subjects, track progress, and get your certificate!', 'info'); 
+        showToast('❤️ NorthernQuiz is FREE! Support us with a donation if you can.', 'info'); 
     }
 
     function toggleUserMenu() {
         if (currentUser) {
-            const status = isPremium ? '✅ Premium' : '💎 Pay K10';
+            const status = '❤️ Free';
             showToast(`👤 ${currentUser.username} - ${status}`, 'info');
         }
     }
@@ -1911,7 +1917,7 @@
         }
     }
 
-    // ============ RENDER SUBJECTS - Clean single gold lock ============
+    // ============ RENDER SUBJECTS - All unlocked (free) ============
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
@@ -1920,11 +1926,11 @@
             return;
         }
         
-        const hasMembership = checkMembership();
+        // All subjects are unlocked - platform is FREE
+        const hasMembership = true;
         
         allSubjects.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
-            const isLocked = !hasMembership && currentUser && currentUser.role !== 'teacher' && !isCompleted;
             
             const icon = subject.icon || getSubjectIcon(subject.name);
             const color = subject.color || getSubjectColor(subject.name);
@@ -1932,38 +1938,23 @@
             const card = document.createElement('div');
             let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/30' : ''}`;
             
-            let cardContent = '';
-            
-            if (isLocked && !isCompleted) {
-                cardClass += ' locked';
-                cardContent = `
-                    <div class="gold-lock"><i class="fas fa-lock"></i></div>
-                    <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
-                        <i class="fas ${icon}"></i>
-                    </div>
-                    <div class="subject-name">${subject.name}</div>
-                    <div class="subject-count">Loading...</div>
-                    <span class="resume-badge"></span>
-                `;
-            } else {
-                cardContent = `
-                    <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
-                        <i class="fas ${icon}"></i>
-                    </div>
-                    <div class="subject-name">${subject.name}</div>
-                    <div class="subject-count">Loading...</div>
-                    ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
-                    ${!isCompleted && !isLocked ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
-                    <span class="resume-badge"></span>
-                `;
-            }
+            let cardContent = `
+                <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="subject-name">${subject.name}</div>
+                <div class="subject-count">Loading...</div>
+                ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
+                ${!isCompleted ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
+                <span class="resume-badge"></span>
+            `;
             
             card.className = cardClass;
             card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
             card.innerHTML = cardContent;
             
             // Check for resume point
-            if (currentUser && !isCompleted && !isLocked) {
+            if (currentUser && !isCompleted) {
                 getResumePoint(currentUser.id, subject.id).then(resume => {
                     if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
                         const badge = card.querySelector('.resume-badge');
@@ -1987,11 +1978,6 @@
                     showToast('✅ You already completed this subject!', 'info');
                     return;
                 }
-                if (isLocked) {
-                    showToast('💎 Pay K10 to unlock this subject!', 'error');
-                    showPremiumPopup();
-                    return;
-                }
                 await startQuiz(subject.id, subject.name);
             };
             grid.appendChild(card);
@@ -2001,11 +1987,6 @@
     function markSubjectComplete(subjectId) {
         if (!currentUser) {
             showToast('Please login first', 'error');
-            return;
-        }
-        if (!checkMembership() && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to mark subjects complete.', 'error');
-            showPremiumPopup();
             return;
         }
         if (completedSubjects.has(subjectId)) {
@@ -2043,7 +2024,7 @@
         const completed = completedSubjects.size;
         document.getElementById('progressText').textContent = `${completed} of ${total} completed`;
         document.getElementById('progressBar').style.width = total > 0 ? `${(completed / total) * 100}%` : '0%';
-        if (completed === total && total > 0 && checkMembership()) {
+        if (completed === total && total > 0) {
             setTimeout(() => showCertificate(), 500);
         }
         updateProfile();
@@ -2051,11 +2032,6 @@
 
     // ============ QUIZ FUNCTIONS ============
     async function startQuiz(subjectId, subjectName) {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to access quizzes.', 'error');
-            showPremiumPopup();
-            return;
-        }
         try {
             const questions = await fetchQuestions(subjectId);
             if (!questions || questions.length === 0) {
@@ -2155,11 +2131,6 @@
 
     // ============ CERTIFICATE ============
     function showCertificate() {
-        if (!checkMembership() && currentUser && currentUser.role !== 'teacher') {
-            showToast('💎 Please pay K10 to view your certificate.', 'error');
-            showPremiumPopup();
-            return;
-        }
         showView('certificateView');
         if (currentUser) {
             document.getElementById('certUsername').textContent = currentUser.username;
@@ -2231,13 +2202,10 @@
                     </div>
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
-                    <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;${isPrem ? 'background:rgba(34,197,94,0.12);color:#16a34a;' : 'background:rgba(148,163,184,0.15);color:#64748b;'}">
-                        ${isPrem ? '✅ Premium' : '⏳ Not Paid'}
+                    <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(34,197,94,0.12);color:#16a34a;">
+                        ✅ Free Access
                     </span>
-                    ${isPrem
-                        ? `<button onclick="teacherRevokePremium('${user.id}','${user.username}')" style="background:rgba(239,68,68,0.08);color:#ef4444;border:1px solid rgba(239,68,68,0.15);padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;cursor:pointer;">Revoke</button>`
-                        : `<button onclick="teacherGrantPremium('${user.id}','${user.username}')" style="background:#1a5276;color:white;border:none;padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;cursor:pointer;">Grant Premium</button>`
-                    }
+                    <button onclick="teacherRevokePremium('${user.id}','${user.username}')" style="background:rgba(239,68,68,0.08);color:#ef4444;border:1px solid rgba(239,68,68,0.15);padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;cursor:pointer;">Revoke</button>
                 </div>
             `;
             list.appendChild(div);
@@ -2707,7 +2675,8 @@
         await loadUsers();
         await loadProgress();
         console.log('🇿🇲 NorthernQuiz loaded!');
-        console.log('📱 WhatsApp: 0966 011 066 for payments');
+        console.log('❤️ NorthernQuiz is FREE! Support us with a donation if you can.');
+        console.log('📱 WhatsApp: 0966 011 066 for support');
         console.log('📊 Learner Progress tracking enabled with resume support!');
     }
 
@@ -2718,12 +2687,9 @@
                 currentUser = JSON.parse(userData);
                 updateUserUI();
                 showView('subjectsView');
-                const hasMembership = checkMembership();
-                if (!hasMembership && currentUser.role !== 'teacher') {
-                    setTimeout(() => {
-                        showPremiumPopup();
-                    }, 1500);
-                }
+                setTimeout(() => {
+                    showDonationPopup();
+                }, 2000);
             } catch (e) {
                 localStorage.removeItem('quizUser');
                 showView('loginView');
@@ -2790,15 +2756,16 @@
     window.sendMessage = sendMessage;
     window.renderChatMessages = renderChatMessages;
     window.showToast = showToast;
-    window.showPremiumPopup = showPremiumPopup;
-    window.closePremiumPopup = closePremiumPopup;
+    window.showDonationPopup = showDonationPopup;
+    window.closeDonationPopup = closeDonationPopup;
+    window.openWhatsAppDonation = openWhatsAppDonation;
     window.openWhatsApp = openWhatsApp;
     window.copyNumber = copyNumber;
     window.checkMembership = checkMembership;
     window.teacherGrantPremium = teacherGrantPremium;
     window.teacherRevokePremium = teacherRevokePremium;
     window.startFreeTrial = function() {
-        showToast('🎯 Pay K10 to unlock all subjects!', 'info');
+        showToast('❤️ NorthernQuiz is FREE! Support us with a donation if you can.', 'info');
     };
 </script>
 </body>
