@@ -44,17 +44,12 @@
         .subject-card .subject-name { color:#1a2332; font-weight:700; font-size:14px; line-height:1.2; margin-bottom:2px; }
         .subject-card .subject-count { color:#94a3b8; font-size:10px; font-weight:500; }
         .subject-card .check-mark { position:absolute; top:10px; right:10px; width:24px; height:24px; background:#22c55e; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; color:white; box-shadow:0 4px 12px rgba(34,197,94,0.3); }
-        .subject-card .mark-done-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:#1a5276; color:white; font-size:9px; font-weight:700; padding:4px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; border:none; box-shadow:0 2px 8px rgba(26,82,118,0.25); }
-        .subject-card .mark-done-btn:hover { background:#154360; }
-        .subject-card .mark-done-btn:active { transform:scale(0.95); }
-        .subject-card.completed .mark-done-btn { display:none; }
-        .subject-card .mark-done-btn i { margin-right:4px; }
         .subject-card .select-subject-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:#22c55e; color:white; font-size:9px; font-weight:700; padding:4px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; border:none; box-shadow:0 2px 8px rgba(34,197,94,0.25); }
         .subject-card .select-subject-btn:active { transform:scale(0.95); }
-        .subject-card.selected .select-subject-btn { background:#22c55e; }
         .subject-card.selected { border-color:#22c55e; background:rgba(34,197,94,0.04); }
         .subject-card .remove-subject-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:#ef4444; color:white; font-size:9px; font-weight:700; padding:4px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; border:none; box-shadow:0 2px 8px rgba(239,68,68,0.25); }
         .subject-card .remove-subject-btn:active { transform:scale(0.95); }
+        .subject-card .completed-badge { position:absolute; top:10px; right:10px; font-size:9px; background:rgba(34,197,94,0.12); color:#16a34a; padding:2px 10px; border-radius:10px; font-weight:600; }
         
         .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
         
@@ -132,6 +127,16 @@
         .profile-stat { background:#e8edf2; border-radius:10px; padding:10px; text-align:center; }
         .profile-stat .number { font-size:18px; font-weight:700; color:#1a5276; }
         .profile-stat .label { font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; }
+        
+        /* MY SUBJECTS - SELECTED SUBJECTS LIST */
+        .selected-subject-item { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:white; border-radius:10px; border:1px solid #e8edf2; margin-bottom:6px; }
+        .selected-subject-item .subject-info { display:flex; align-items:center; gap:10px; }
+        .selected-subject-item .subject-info .icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; color:white; }
+        .selected-subject-item .subject-info .name { font-weight:600; color:#1a2332; font-size:13px; }
+        .selected-subject-item .subject-info .status { font-size:10px; padding:1px 8px; border-radius:10px; }
+        .selected-subject-item .subject-info .status.done { background:rgba(34,197,94,0.1); color:#16a34a; }
+        .selected-subject-item .subject-info .status.pending { background:rgba(251,191,36,0.1); color:#d97706; }
+        
         .friend-item { display:flex; align-items:center; gap:12px; padding:12px 14px; background:white; border-radius:12px; border:1px solid #dce4ec; margin-bottom:8px; cursor:pointer; transition:all 0.2s; }
         .friend-item:active { transform:scale(0.97); background:#f0f4f8; }
         .friend-avatar { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; color:white; flex-shrink:0; }
@@ -338,25 +343,21 @@
             </div>
         </div>
 
-        <!-- SUBJECTS VIEW -->
+        <!-- SUBJECTS VIEW - Selection Only -->
         <div class="view" id="subjectsView">
             <div class="subjects-header">
-                <div class="subjects-title"><i class="fas fa-book-open"></i> My Subjects</div>
-                <div class="subjects-stats" id="progressText">0 of 0 selected</div>
+                <div class="subjects-title"><i class="fas fa-book-open"></i> Select Subjects</div>
+                <div class="subjects-stats" id="progressText">0 selected</div>
             </div>
             
-            <!-- Subject Selection Banner -->
             <div class="subject-selection-banner">
                 <div class="info">
                     <i class="fas fa-info-circle" style="color:#1a5276;"></i>
-                    Select the subjects you want to study. Complete all selected to earn your certificate!
+                    Choose the subjects you want to study. Go to <strong>Profile</strong> to start learning!
                 </div>
                 <button class="btn-select-all" onclick="selectAllSubjects()">Select All</button>
             </div>
             
-            <div class="progress-track mb-3">
-                <div class="progress-fill" id="progressBar" style="width:0%"></div>
-            </div>
             <div class="subject-grid" id="subjectGrid">
                 <div class="skeleton" style="height:120px;"></div>
                 <div class="skeleton" style="height:120px;"></div>
@@ -365,7 +366,7 @@
             </div>
         </div>
 
-        <!-- PROFILE VIEW -->
+        <!-- PROFILE VIEW - Learning Hub -->
         <div class="view" id="profileView">
             <div class="profile-card">
                 <div class="profile-avatar" id="profileAvatar">
@@ -388,9 +389,18 @@
                         <div class="label">Friends</div>
                     </div>
                 </div>
+                
+                <!-- Selected Subjects List -->
+                <div style="margin-top:16px; text-align:left;">
+                    <p style="font-size:11px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">My Selected Subjects</p>
+                    <div id="selectedSubjectsList">
+                        <div style="text-align:center; color:#94a3b8; font-size:12px; padding:12px 0;">No subjects selected. Go to Subjects tab to choose.</div>
+                    </div>
+                </div>
+                
                 <div style="margin-top:16px; display:flex; gap:8px;">
                     <button onclick="showView('subjectsView')" class="btn-secondary" style="flex:1; padding:10px; font-size:13px;">
-                        <i class="fas fa-book"></i> Subjects
+                        <i class="fas fa-book"></i> Select Subjects
                     </button>
                     <button onclick="showFriends()" class="btn-primary" style="flex:1; padding:10px; font-size:13px;">
                         <i class="fas fa-users"></i> Friends
@@ -459,7 +469,7 @@
         <!-- QUIZ VIEW -->
         <div class="view" id="quizView">
             <div class="flex items-center justify-between mb-3">
-                <button onclick="goToSubjects()" class="text-gray-500 hover:text-gray-700 transition">
+                <button onclick="goToProfile()" class="text-gray-500 hover:text-gray-700 transition">
                     <i class="fas fa-arrow-left text-lg"></i>
                 </button>
                 <span class="text-gray-500 text-xs" id="quizSubjectTitle">ICT</span>
@@ -511,7 +521,7 @@
                     <div class="divider"></div>
                     <div class="flex gap-2">
                         <button onclick="window.print()" class="btn-primary flex-1 text-sm py-2"><i class="fas fa-print"></i> Print</button>
-                        <button onclick="goToSubjects()" class="btn-secondary flex-1 text-sm py-2"><i class="fas fa-home"></i> Home</button>
+                        <button onclick="goToProfile()" class="btn-secondary flex-1 text-sm py-2"><i class="fas fa-home"></i> Profile</button>
                     </div>
                 </div>
             </div>
@@ -732,9 +742,6 @@
     <!-- Bottom Navigation -->
     <div class="bottom-nav" id="bottomNav">
         <button class="nav-item active" data-view="subjectsView" onclick="navigateTo('subjectsView')">
-            <i class="fas fa-home"></i><span>Home</span>
-        </button>
-        <button class="nav-item" data-view="subjectsView" onclick="navigateTo('subjectsView')">
             <i class="fas fa-book"></i><span>Subjects</span>
         </button>
         <button class="nav-item" data-view="profileView" onclick="navigateTo('profileView')">
@@ -840,7 +847,7 @@
     let score = 0;
     let answered = false;
     let completedSubjects = new Set();
-    let selectedSubjects = new Set(); // Subjects the learner has chosen
+    let selectedSubjects = new Set();
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
     let isTeacherLoggedIn = false;
@@ -1280,6 +1287,51 @@
         document.getElementById('statSubjectsSelected').textContent = selectedSubjects.size;
         document.getElementById('statSubjectsCompleted').textContent = completedSubjects.size;
         document.getElementById('statFriends').textContent = friends.length;
+        renderSelectedSubjects();
+    }
+
+    function renderSelectedSubjects() {
+        const container = document.getElementById('selectedSubjectsList');
+        if (!container) return;
+        
+        if (selectedSubjects.size === 0) {
+            container.innerHTML = `<div style="text-align:center; color:#94a3b8; font-size:12px; padding:12px 0;">No subjects selected. Go to Subjects tab to choose.</div>`;
+            return;
+        }
+        
+        let html = '';
+        const selectedList = allSubjects.filter(s => selectedSubjects.has(s.id));
+        selectedList.forEach(subject => {
+            const isCompleted = completedSubjects.has(subject.id);
+            const icon = subject.icon || getSubjectIcon(subject.name);
+            const color = subject.color || getSubjectColor(subject.name);
+            const statusClass = isCompleted ? 'done' : 'pending';
+            const statusText = isCompleted ? '✅ Done' : '⏳ Pending';
+            
+            html += `
+                <div class="selected-subject-item" onclick="${isCompleted ? `showCertificateWithScores()` : `startQuiz('${subject.id}', '${subject.name}')`}" style="cursor:pointer;">
+                    <div class="subject-info">
+                        <div class="icon" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div>
+                            <div class="name">${subject.name}</div>
+                            <span class="status ${statusClass}">${statusText}</span>
+                        </div>
+                    </div>
+                    <div>
+                        ${isCompleted ? `<i class="fas fa-check-circle" style="color:#22c55e;"></i>` : `<i class="fas fa-chevron-right" style="color:#94a3b8;"></i>`}
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function goToProfile() {
+        showView('profileView');
+        updateProfile();
+        renderSelectedSubjects();
     }
 
     // ============ FRIENDS FUNCTIONS ============
@@ -1517,7 +1569,10 @@
         document.getElementById(viewId).classList.add('active');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.querySelector(`.nav-item[data-view="${viewId}"]`)?.classList.add('active');
-        if (viewId === 'profileView') updateProfile();
+        if (viewId === 'profileView') {
+            updateProfile();
+            renderSelectedSubjects();
+        }
         if (viewId === 'friendsView') renderFriends();
     }
 
@@ -1557,7 +1612,7 @@
     }
 
     function showHelp() { 
-        showToast('📚 Select your subjects, complete them, and earn your certificate!', 'info'); 
+        showToast('📚 Select your subjects, then go to Profile to start learning!', 'info'); 
     }
 
     function toggleUserMenu() {
@@ -1990,16 +2045,16 @@
             showToast('Subject removed from your selection', 'info');
         } else {
             selectedSubjects.add(subjectId);
-            showToast('Subject added to your selection!', 'success');
+            showToast('Subject added to your selection! Go to Profile to start learning.', 'success');
         }
         
-        // Save selection to localStorage
         const key = `selected_${currentUser.id}`;
         localStorage.setItem(key, JSON.stringify([...selectedSubjects]));
         
         renderSubjects();
         updateProgress();
         updateProfile();
+        renderSelectedSubjects();
     }
 
     function selectAllSubjects() {
@@ -2018,7 +2073,8 @@
         renderSubjects();
         updateProgress();
         updateProfile();
-        showToast(`✅ All ${allSubjects.length} subjects selected!`, 'success');
+        renderSelectedSubjects();
+        showToast(`✅ All ${allSubjects.length} subjects selected! Go to Profile to start learning.`, 'success');
     }
 
     function loadSelectedSubjects() {
@@ -2057,9 +2113,13 @@
             else if (isSelected) cardClass += ' selected';
             
             let actionButton = '';
+            let statusBadge = '';
+            
             if (isSelectedAndCompleted) {
-                actionButton = `<div class="check-mark"><i class="fas fa-check"></i></div>`;
+                statusBadge = `<div class="completed-badge">✅ Done</div>`;
+                actionButton = `<div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:8px;color:#16a34a;font-weight:600;white-space:nowrap;">View Certificate</div>`;
             } else if (isSelected) {
+                statusBadge = `<div class="completed-badge" style="background:rgba(26,82,118,0.08);color:#1a5276;">📘 Selected</div>`;
                 actionButton = `
                     <button class="remove-subject-btn" onclick="event.stopPropagation(); toggleSubjectSelection('${subject.id}')">
                         <i class="fas fa-times"></i> Remove
@@ -2071,13 +2131,6 @@
                         <i class="fas fa-plus"></i> Select
                     </button>
                 `;
-            }
-            
-            let statusBadge = '';
-            if (isSelectedAndCompleted) {
-                statusBadge = `<div style="position:absolute;top:10px;right:10px;font-size:9px;background:rgba(34,197,94,0.1);color:#16a34a;padding:2px 10px;border-radius:10px;">✅ Done</div>`;
-            } else if (isSelected) {
-                statusBadge = `<div style="position:absolute;top:10px;right:10px;font-size:9px;background:rgba(26,82,118,0.08);color:#1a5276;padding:2px 10px;border-radius:10px;">📘 Selected</div>`;
             }
             
             card.className = cardClass;
@@ -2093,18 +2146,20 @@
                 <span class="resume-badge"></span>
             `;
             
-            // If selected and completed, make it clickable to view certificate
             if (isSelectedAndCompleted) {
                 card.onclick = () => {
                     showCertificateWithScores();
                 };
             } else if (isSelected && !isCompleted) {
-                card.onclick = async () => {
-                    await startQuiz(subject.id, subject.name);
+                card.onclick = () => {
+                    showToast('📚 Go to Profile to start learning!', 'info');
+                    showView('profileView');
+                    updateProfile();
+                    renderSelectedSubjects();
                 };
             } else {
                 card.onclick = () => {
-                    showToast('📚 Select this subject to start learning!', 'info');
+                    showToast('📚 Select this subject to add it to your learning list!', 'info');
                 };
             }
             
@@ -2119,42 +2174,6 @@
         });
     }
 
-    // ============ MARK SUBJECT COMPLETE ============
-    function markSubjectComplete(subjectId) {
-        if (!currentUser) {
-            showToast('Please login first', 'error');
-            return;
-        }
-        if (completedSubjects.has(subjectId)) {
-            showToast('Already completed', 'info');
-            return;
-        }
-        const subject = allSubjects.find(s => s.id === subjectId);
-        if (!subject) return;
-        
-        // Check if there's actual progress for this subject (quiz attempted)
-        const progress = learnerProgress[currentUser.id] || [];
-        const hasRealProgress = progress.some(p => p.subject_id === subjectId && p.total_questions > 0);
-        
-        if (!hasRealProgress) {
-            showToast('⚠️ Please complete the quiz first before marking as complete!', 'error');
-            return;
-        }
-        
-        completedSubjects.add(subjectId);
-        const key = `completed_${currentUser.id}`;
-        const stored = JSON.parse(localStorage.getItem(key) || '[]');
-        if (!stored.includes(subjectId)) {
-            stored.push(subjectId);
-            localStorage.setItem(key, JSON.stringify(stored));
-        }
-        
-        renderSubjects();
-        updateProgress();
-        updateProfile();
-        showToast(`✅ "${subject.name}" marked as complete!`, 'success');
-    }
-
     function updateProgress() {
         if (currentUser) {
             const key = `completed_${currentUser.id}`;
@@ -2165,8 +2184,7 @@
         const selected = selectedSubjects.size;
         const completed = [...selectedSubjects].filter(id => completedSubjects.has(id)).length;
         
-        document.getElementById('progressText').textContent = `${completed} of ${selected} completed`;
-        document.getElementById('progressBar').style.width = selected > 0 ? `${(completed / selected) * 100}%` : '0%';
+        document.getElementById('progressText').textContent = `${selected} selected`;
         
         // Check if all selected subjects are completed
         if (selected > 0 && completed === selected) {
@@ -2175,7 +2193,7 @@
         updateProfile();
     }
 
-    // ============ CERTIFICATE WITH FRESH DATA ============
+    // ============ CERTIFICATE ============
     async function showCertificateWithScores() {
         if (!currentUser) return;
         
@@ -2188,7 +2206,6 @@
         let subjectDetails = [];
         let completedCount = 0;
         
-        // Only include selected subjects that have actual quiz attempts
         const selectedIds = new Set(selectedSubjects);
         const validProgress = freshProgress.filter(p => selectedIds.has(p.subject_id) && p.total_questions > 0);
         
@@ -2210,7 +2227,6 @@
                 totalQuestions += subProgress.total_questions;
                 completedCount++;
             } else if (completedSubjects.has(subject.id)) {
-                // Marked complete but no score - show as completed but no score
                 subjectDetails.push({
                     name: subject.name,
                     score: 0,
@@ -2271,9 +2287,8 @@
 
     // ============ QUIZ FUNCTIONS ============
     async function startQuiz(subjectId, subjectName) {
-        // Check if subject is selected
         if (!selectedSubjects.has(subjectId)) {
-            showToast('📚 Please select this subject first!', 'error');
+            showToast('📚 Please select this subject first in the Subjects tab!', 'error');
             return;
         }
         
@@ -2319,7 +2334,7 @@
             updateProgress();
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
             showToast(`🎉 Completed ${subjectName}! Score: ${score}/${currentQuestions.length}`, 'success');
-            goToSubjects();
+            goToProfile();
             return;
         }
         const q = currentQuestions[currentIndex];
@@ -2908,8 +2923,9 @@
         renderSubjects();
         updateProgress();
         updateProfile();
+        renderSelectedSubjects();
         console.log('🇿🇲 NorthernQuiz loaded!');
-        console.log('📚 Learners can select their own subjects!');
+        console.log('📚 Select subjects in the Subjects tab, then learn from Profile!');
         console.log('📱 WhatsApp: 0966 011 066 for support');
     }
 
@@ -2941,6 +2957,7 @@
     window.showRegister = showRegister;
     window.logout = logout;
     window.goToSubjects = goToSubjects;
+    window.goToProfile = goToProfile;
     window.startQuiz = startQuiz;
     window.nextQuestion = nextQuestion;
     window.showHelp = showHelp;
@@ -2977,10 +2994,10 @@
     window.saveProgress = saveProgress;
     window.fetchFreshProgress = fetchFreshProgress;
     window.getResumePoint = getResumePoint;
-    window.markSubjectComplete = markSubjectComplete;
     window.getSubjectIcon = getSubjectIcon;
     window.getSubjectColor = getSubjectColor;
     window.updateProfile = updateProfile;
+    window.renderSelectedSubjects = renderSelectedSubjects;
     window.showFriends = showFriends;
     window.renderFriends = renderFriends;
     window.searchMembers = searchMembers;
@@ -3002,7 +3019,7 @@
     window.toggleSubjectSelection = toggleSubjectSelection;
     window.selectAllSubjects = selectAllSubjects;
     window.startFreeTrial = function() {
-        showToast('📚 Select your subjects and start learning!', 'info');
+        showToast('📚 Select your subjects in the Subjects tab, then go to Profile to start learning!', 'info');
     };
 </script>
 </body>
