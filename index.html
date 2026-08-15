@@ -50,14 +50,6 @@
         .subject-card.completed .mark-done-btn { display:none; }
         .subject-card .mark-done-btn i { margin-right:4px; }
         
-        /* LOCKED STATE - SINGLE CLEAN GOLD LOCK */
-        .subject-card.locked { opacity:1; cursor:pointer; position:relative; }
-        .subject-card.locked .gold-lock { position:absolute; top:10px; right:10px; width:28px; height:28px; background:linear-gradient(135deg,#d4af37,#f5d76e); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; color:white; box-shadow:0 2px 10px rgba(212,175,55,0.4); z-index:6; }
-        .subject-card.locked .gold-lock i { font-size:12px; color:white; }
-        .subject-card.locked .icon-wrapper { opacity:0.6; }
-        .subject-card.locked .subject-name { opacity:0.6; }
-        .subject-card.locked .subject-count { opacity:0.5; }
-        
         .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
         
         .option-btn { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:13px; font-weight:500; transition:all 0.2s; cursor:pointer; width:100%; text-align:left; display:flex; align-items:center; gap:10px; }
@@ -93,9 +85,27 @@
         .text-gold { color:#1a5276; }
         .bg-gold { background:#1a5276; }
         .divider { height:1px; background:#dce4ec; margin:10px 0; }
+        
+        /* PROFESSIONAL CERTIFICATE CARD */
         .certificate-card { background:linear-gradient(145deg,#f8fafc,#ffffff); border-radius:20px; padding:28px 20px; border:3px solid #d4af37; position:relative; overflow:hidden; }
         .certificate-card::before { content:''; position:absolute; inset:6px; border:2px dashed rgba(212,175,55,0.3); border-radius:16px; pointer-events:none; }
-        @media (max-width:430px) { .subject-grid { gap:8px; } .subject-card { padding:12px 10px 10px; min-height:120px; } .subject-card .icon-wrapper { width:48px; height:48px; font-size:22px; } .subject-card .icon-wrapper i { font-size:22px; } .subject-card .subject-name { font-size:13px; } .question-text { font-size:15px; } .option-btn { padding:10px 12px; font-size:12px; } }
+        .certificate-title { font-size:22px; font-weight:800; color:#1a2332; letter-spacing:1px; }
+        .certificate-subtitle { font-size:11px; color:#64748b; }
+        .certificate-score { font-size:48px; font-weight:800; color:#1a5276; }
+        .certificate-score-label { font-size:11px; color:#94a3b8; }
+        .certificate-grade { display:inline-block; padding:4px 20px; border-radius:20px; font-size:14px; font-weight:700; }
+        .certificate-grade.excellent { background:rgba(34,197,94,0.12); color:#16a34a; }
+        .certificate-grade.good { background:rgba(59,130,246,0.12); color:#2563eb; }
+        .certificate-grade.average { background:rgba(251,191,36,0.12); color:#d97706; }
+        .certificate-grade.poor { background:rgba(239,68,68,0.12); color:#dc2626; }
+        .certificate-subject-item { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #e8edf2; font-size:12px; }
+        .certificate-subject-item .subject { color:#1a2332; font-weight:500; }
+        .certificate-subject-item .subject-score { color:#1a5276; font-weight:700; }
+        .certificate-subject-item .subject-status { font-size:10px; padding:1px 8px; border-radius:10px; }
+        .certificate-subject-item .subject-status.pass { background:rgba(34,197,94,0.1); color:#16a34a; }
+        .certificate-subject-item .subject-status.fail { background:rgba(239,68,68,0.1); color:#dc2626; }
+        
+        @media (max-width:430px) { .subject-grid { gap:8px; } .subject-card { padding:12px 10px 10px; min-height:120px; } .subject-card .icon-wrapper { width:48px; height:48px; font-size:22px; } .subject-card .icon-wrapper i { font-size:22px; } .subject-card .subject-name { font-size:13px; } .question-text { font-size:15px; } .option-btn { padding:10px 12px; font-size:12px; } .certificate-score { font-size:36px; } }
         @media (min-width:431px) { .app-container { border-left:1px solid #dce4ec; border-right:1px solid #dce4ec; box-shadow:0 0 60px rgba(0,0,0,0.06); } }
         .fab { position:fixed; bottom:72px; right:16px; max-width:430px; margin:0 auto; width:44px; height:44px; border-radius:50%; background:#1a5276; border:none; color:white; font-size:18px; cursor:pointer; box-shadow:0 8px 30px rgba(26,82,118,0.3); display:none; align-items:center; justify-content:center; z-index:50; transition:all 0.3s; }
         .fab:active { transform:scale(0.9); }
@@ -154,24 +164,21 @@
         .search-members .input-field { flex:1; padding:10px 14px; font-size:13px; }
         .search-members .btn-primary { width:auto; padding:10px 16px; font-size:13px; flex-shrink:0; }
         
-        /* DONATION POPUP - PROFESSIONAL */
+        /* DONATION POPUP */
         .donation-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:200; display:none; align-items:center; justify-content:center; padding:0; max-width:430px; margin:0 auto; left:50%; transform:translateX(-50%); width:100%; height:100vh; height:100dvh; }
         .donation-overlay.active { display:flex; }
         .donation-card { background:white; border-radius:0; padding:20px 20px 30px; width:100%; height:100vh; height:100dvh; max-height:100vh; border:none; text-align:center; animation:popIn 0.3s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; box-shadow:none; display:flex; flex-direction:column; }
         .donation-card::-webkit-scrollbar { width:3px; }
         .donation-card::-webkit-scrollbar-thumb { background:rgba(26,82,118,0.3); border-radius:10px; }
-        
+        @keyframes popIn { from { opacity:0; transform:scale(0.98) translateY(10px); } to { opacity:1; transform:scale(1) translateY(0); } }
         .donation-header { background:linear-gradient(135deg,#1a5276,#2e86c1); margin:-20px -20px 16px; padding:30px 20px 24px; border-bottom-left-radius:30px; border-bottom-right-radius:30px; flex-shrink:0; }
         .donation-icon-wrapper { width:70px; height:70px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); color:#1a5276; }
         .donation-title { color:white; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
         .donation-subtitle { color:rgba(255,255,255,0.8); font-size:13px; margin-top:2px; }
-        
         .donation-amount-badge { display:inline-block; background:white; color:#1a5276; font-weight:800; font-size:16px; padding:4px 20px; border-radius:30px; margin:6px 0 12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
-        
         .donation-benefits { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#f8fafc; border-radius:12px; padding:10px 12px; margin-bottom:12px; flex-shrink:0; border:1px solid #e8edf2; }
         .donation-benefit { display:flex; align-items:center; gap:6px; font-size:10px; color:#1a2332; text-align:left; }
         .donation-benefit i { color:#22c55e; font-size:12px; width:16px; text-align:center; }
-        
         .donation-payment-label { color:#64748b; font-size:11px; font-weight:600; text-align:left; margin:0 0 6px; text-transform:uppercase; letter-spacing:0.5px; }
         .donation-payment-grid { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; flex-shrink:0; }
         .donation-payment-row { background:#f8fafc; border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; border:1px solid #e8edf2; transition:all 0.2s; cursor:pointer; }
@@ -183,28 +190,21 @@
         .donation-payment-icon.zamtel { background:rgba(251,146,60,0.08); color:#fb923c; }
         .donation-payment-number { color:#1a2332; font-weight:700; font-size:14px; font-family:'Courier New',monospace; letter-spacing:0.5px; }
         .donation-payment-provider { color:#94a3b8; font-size:9px; font-weight:500; }
-        
         .donation-account-box { background:rgba(26,82,118,0.04); border:1px solid rgba(26,82,118,0.08); border-radius:8px; padding:8px 12px; margin-bottom:10px; flex-shrink:0; }
         .donation-account-box .label { color:#94a3b8; font-size:8px; text-transform:uppercase; letter-spacing:0.5px; }
         .donation-account-box .name { color:#1a5276; font-weight:700; font-size:16px; }
-        
         .donation-instruction { color:#64748b; font-size:11px; text-align:center; margin:4px 0 8px; line-height:1.4; flex-shrink:0; }
         .donation-instruction strong { color:#1a2332; font-weight:600; }
-        
         .btn-donation-whatsapp { background:#25D366; color:white; font-weight:700; padding:12px; border-radius:10px; border:none; font-size:14px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(37,211,102,0.25); flex-shrink:0; }
         .btn-donation-whatsapp:active { transform:scale(0.96); }
         .btn-donation-close { background:#f1f5f9; color:#64748b; font-weight:600; padding:10px; border-radius:10px; border:1px solid #e8edf2; font-size:13px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px; flex-shrink:0; }
         .btn-donation-close:active { transform:scale(0.96); background:#e8edf2; }
-        
         .donation-spacer { flex:1; min-height:4px; }
         .resume-badge { position:absolute; top:8px; left:8px; font-size:8px; background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 8px; border-radius:10px; display:none; z-index:6; }
-        
         .subjects-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
         .subjects-title { font-size:18px; font-weight:700; color:#1a2332; }
         .subjects-title i { color:#1a5276; margin-right:8px; }
         .subjects-stats { font-size:11px; color:#94a3b8; }
-
-        /* Professional Admin Stats */
         .admin-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px; }
         .admin-stat-card { background:white; border-radius:12px; padding:12px 8px; text-align:center; border:1px solid #e8edf2; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
         .admin-stat-card .admin-stat-number { font-size:22px; font-weight:800; color:#1a5276; }
@@ -456,20 +456,37 @@
             </button>
         </div>
 
-        <!-- CERTIFICATE VIEW -->
+        <!-- CERTIFICATE VIEW - Professional -->
         <div class="view" id="certificateView">
             <div class="certificate-card">
                 <div class="text-center">
-                    <div class="text-5xl mb-2">Northern Quiz</div>
-                    <h2 class="text-xl font-bold text-gray-800">Certificate of Completion</h2>
+                    <div style="font-size:40px; margin-bottom:6px;">🏆</div>
+                    <h2 class="certificate-title">Certificate of Completion</h2>
                     <div class="divider"></div>
-                    <p class="text-gray-600 text-xs">This certifies that</p>
+                    <p class="certificate-subtitle">This certifies that</p>
                     <p class="text-2xl font-bold text-blue-700 mt-2" id="certUsername">Student</p>
-                    <p class="text-gray-600 text-xs mt-1">has successfully completed all subjects</p>
+                    <p class="certificate-subtitle mt-1">has successfully completed all subjects</p>
+                    <div class="divider"></div>
+                    
+                    <!-- Average Score Display -->
+                    <div class="mt-2">
+                        <div class="certificate-score" id="certAverageScore">0%</div>
+                        <div class="certificate-score-label">Overall Average Score</div>
+                        <div class="mt-2" id="certGrade"></div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <!-- Subject Breakdown -->
+                    <div style="text-align:left; margin-top:8px;">
+                        <p style="font-size:11px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Subject Breakdown</p>
+                        <div id="certSubjectBreakdown"></div>
+                    </div>
+                    
                     <div class="divider"></div>
                     <div class="flex justify-around text-xs text-gray-500">
                         <div><p>Date</p><p class="font-bold text-gray-700" id="certDate">2026-08-09</p></div>
-                        <div><p>Score</p><p class="font-bold text-gray-700" id="certScore">100%</p></div>
+                        <div><p>Subjects</p><p class="font-bold text-gray-700" id="certTotalSubjects">0</p></div>
                     </div>
                     <div class="divider"></div>
                     <div class="flex gap-2">
@@ -480,7 +497,7 @@
             </div>
         </div>
 
-        <!-- ADMIN DASHBOARD - PROFESSIONAL -->
+        <!-- ADMIN DASHBOARD -->
         <div class="view" id="teacherView">
             <div class="teacher-dashboard">
                 <div class="flex items-center justify-between mb-3">
@@ -489,7 +506,6 @@
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </div>
-                <!-- Professional Stats -->
                 <div class="admin-stats-grid">
                     <div class="admin-stat-card">
                         <div class="admin-stat-icon"><i class="fas fa-users"></i></div>
@@ -821,6 +837,9 @@
     const QUESTIONS_TABLE = 'questions';
     const PROGRESS_TABLE = 'learner_progress';
 
+    // ============ SUBJECT SCORES ============
+    let subjectScores = {};
+
     // ============ SUBJECT ICON MAP ============
     const subjectIcons = {
         'mathematics': 'fa-calculator',
@@ -907,22 +926,17 @@
     // ============ MEMBERSHIP FUNCTIONS ============
     function checkMembership() {
         if (!currentUser) return false;
-
         if (currentUser.is_premium === true) {
             isPremium = true;
             return true;
         }
-
         if (currentUser.role === 'teacher') {
             isPremium = true;
             return true;
         }
-
         if (isPremium) {
             return true;
         }
-
-        // All users are premium - free platform
         isPremium = true;
         return true;
     }
@@ -1718,6 +1732,14 @@
             };
             if (lastIndex !== null) payload.last_question_index = lastIndex;
 
+            // Save subject score for certificate
+            if (currentUser && currentUser.id === userId && status === 'completed') {
+                const subject = allSubjects.find(s => s.id === subjectId);
+                if (subject) {
+                    subjectScores[subjectId] = { score: score, total: total, name: subject.name };
+                }
+            }
+
             const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=id`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
@@ -1817,6 +1839,18 @@
             const date = new Date(user.created_at).toLocaleDateString();
             const hasProgress = progress.length > 0;
             
+            // Calculate average score for this user
+            let avgScore = 0;
+            if (hasProgress) {
+                let totalScore = 0;
+                let totalQuestions = 0;
+                progress.forEach(p => {
+                    totalScore += p.score;
+                    totalQuestions += p.total_questions;
+                });
+                avgScore = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
+            }
+            
             div.innerHTML = `
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div>
@@ -1824,7 +1858,7 @@
                         <span class="last-active">• Joined: ${date}</span>
                         <span style="color:#94a3b8;font-size:9px;margin-left:6px;">${hasProgress ? `${completed} subjects done` : 'No subjects yet'}</span>
                     </div>
-                    <span class="score-badge">${hasProgress ? `${percentage}%` : '⏳ No progress yet'}</span>
+                    <span class="score-badge">${hasProgress ? `${avgScore}%` : '⏳ No progress yet'}</span>
                 </div>
                 ${hasProgress ? `
                     <div class="progress-bar-bg">
@@ -1840,11 +1874,12 @@
                 <div class="progress-detail" id="detail-${user.id}">
                     <div class="detail-row"><span class="label">Username</span><span class="value gold">${user.username}</span></div>
                     <div class="detail-row"><span class="label">Subjects Completed</span><span class="value">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span></div>
-                    <div class="detail-row"><span class="label">Overall Score</span><span class="value gold">${hasProgress ? `${percentage}%` : 'N/A'}</span></div>
+                    <div class="detail-row"><span class="label">Average Score</span><span class="value gold">${hasProgress ? `${avgScore}%` : 'N/A'}</span></div>
                     ${hasProgress ? progress.map(p => {
                         const subject = allSubjects.find(s => s.id === p.subject_id);
                         const statusText = p.status === 'in_progress' ? ' (in progress)' : '';
-                        return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}${statusText}</span><span class="value green">${p.score}/${p.total_questions}</span></div>`;
+                        const pct = p.total_questions > 0 ? Math.round((p.score / p.total_questions) * 100) : 0;
+                        return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}${statusText}</span><span class="value green">${pct}% (${p.score}/${p.total_questions})</span></div>`;
                     }).join('') : `
                         <div class="detail-row" style="border-bottom:none;">
                             <span class="label" style="color:#94a3b8;font-style:italic;">No subjects completed yet</span>
@@ -1917,7 +1952,7 @@
         }
     }
 
-    // ============ RENDER SUBJECTS - All unlocked (free) ============
+    // ============ RENDER SUBJECTS ============
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
         grid.innerHTML = '';
@@ -1925,9 +1960,6 @@
             grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-gray-500 text-sm">No subjects available. Contact your teacher.</div>`;
             return;
         }
-        
-        // All subjects are unlocked - platform is FREE
-        const hasMembership = true;
         
         allSubjects.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
@@ -1953,7 +1985,6 @@
             card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
             card.innerHTML = cardContent;
             
-            // Check for resume point
             if (currentUser && !isCompleted) {
                 getResumePoint(currentUser.id, subject.id).then(resume => {
                     if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
@@ -2025,9 +2056,85 @@
         document.getElementById('progressText').textContent = `${completed} of ${total} completed`;
         document.getElementById('progressBar').style.width = total > 0 ? `${(completed / total) * 100}%` : '0%';
         if (completed === total && total > 0) {
-            setTimeout(() => showCertificate(), 500);
+            setTimeout(() => showCertificateWithScores(), 500);
         }
         updateProfile();
+    }
+
+    // ============ CERTIFICATE WITH AVERAGE SCORES ============
+    function showCertificateWithScores() {
+        if (!currentUser) return;
+        
+        // Load subject scores from progress
+        const progress = learnerProgress[currentUser.id] || [];
+        let totalScore = 0;
+        let totalQuestions = 0;
+        let subjectDetails = [];
+        let completedSubjectCount = 0;
+        
+        allSubjects.forEach(subject => {
+            const subProgress = progress.find(p => p.subject_id === subject.id);
+            if (subProgress) {
+                const pct = subProgress.total_questions > 0 ? Math.round((subProgress.score / subProgress.total_questions) * 100) : 0;
+                subjectDetails.push({
+                    name: subject.name,
+                    score: subProgress.score,
+                    total: subProgress.total_questions,
+                    percentage: pct,
+                    passed: pct >= 50
+                });
+                totalScore += subProgress.score;
+                totalQuestions += subProgress.total_questions;
+                completedSubjectCount++;
+            }
+        });
+        
+        const averagePct = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
+        
+        // Update certificate
+        document.getElementById('certUsername').textContent = currentUser.username;
+        document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('certTotalSubjects').textContent = completedSubjectCount;
+        document.getElementById('certAverageScore').textContent = averagePct + '%';
+        
+        // Grade
+        let gradeClass = 'average';
+        let gradeText = 'Average';
+        if (averagePct >= 80) { gradeClass = 'excellent'; gradeText = 'Excellent! 🌟'; }
+        else if (averagePct >= 60) { gradeClass = 'good'; gradeText = 'Good! 👍'; }
+        else if (averagePct >= 40) { gradeClass = 'average'; gradeText = 'Average 📚'; }
+        else { gradeClass = 'poor'; gradeText = 'Needs Improvement 💪'; }
+        
+        document.getElementById('certGrade').innerHTML = `<span class="certificate-grade ${gradeClass}">${gradeText}</span>`;
+        
+        // Subject breakdown
+        let breakdownHTML = '';
+        if (subjectDetails.length === 0) {
+            breakdownHTML = `<div style="text-align:center;color:#94a3b8;font-size:12px;">No subject scores available</div>`;
+        } else {
+            subjectDetails.forEach(s => {
+                const statusClass = s.passed ? 'pass' : 'fail';
+                const statusText = s.passed ? '✅ Pass' : '❌ Fail';
+                breakdownHTML += `
+                    <div class="certificate-subject-item">
+                        <span class="subject">${s.name}</span>
+                        <span>
+                            <span class="subject-score">${s.percentage}%</span>
+                            <span class="subject-status ${statusClass}">${statusText}</span>
+                        </span>
+                    </div>
+                `;
+            });
+        }
+        document.getElementById('certSubjectBreakdown').innerHTML = breakdownHTML;
+        
+        showView('certificateView');
+        
+        // Confetti
+        if (typeof confetti !== 'undefined') {
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            setTimeout(() => confetti({ particleCount: 100, spread: 60, origin: { y: 0.4 } }), 300);
+        }
     }
 
     // ============ QUIZ FUNCTIONS ============
@@ -2127,21 +2234,6 @@
         if (!answered) return;
         currentIndex++;
         renderQuestion();
-    }
-
-    // ============ CERTIFICATE ============
-    function showCertificate() {
-        showView('certificateView');
-        if (currentUser) {
-            document.getElementById('certUsername').textContent = currentUser.username;
-            document.getElementById('certDate').textContent = new Date().toLocaleDateString();
-            const totalQ = allSubjects.reduce((sum, subject) => sum + 5, 0);
-            document.getElementById('certScore').textContent = `${Math.round((score / (totalQ || 1)) * 100)}%`;
-        }
-        if (typeof confetti !== 'undefined') {
-            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-            setTimeout(() => confetti({ particleCount: 100, spread: 60, origin: { y: 0.4 } }), 300);
-        }
     }
 
     // ============ TEACHER DASHBOARD ============
@@ -2764,6 +2856,7 @@
     window.checkMembership = checkMembership;
     window.teacherGrantPremium = teacherGrantPremium;
     window.teacherRevokePremium = teacherRevokePremium;
+    window.showCertificateWithScores = showCertificateWithScores;
     window.startFreeTrial = function() {
         showToast('❤️ NorthernQuiz is FREE! Support us with a donation if you can.', 'info');
     };
