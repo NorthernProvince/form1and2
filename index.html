@@ -116,9 +116,6 @@
         @keyframes shimmer { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
         .teacher-login-btn { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2); color:white; padding:4px 10px; border-radius:6px; font-size:10px; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; gap:4px; }
         .teacher-login-btn:active { transform:scale(0.95); background:rgba(255,255,255,0.25); }
-        .teacher-dashboard { background:white; border-radius:16px; padding:16px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-        .teacher-dashboard h2 { color:#1a2332; font-size:18px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
-        .teacher-dashboard h2 i { color:#1a5276; }
         .profile-card { background:white; border-radius:16px; padding:20px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); text-align:center; }
         .profile-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#1a5276,#2e86c1); display:flex; align-items:center; justify-content:center; font-size:32px; color:white; margin:0 auto 12px; box-shadow:0 4px 20px rgba(26,82,118,0.3); }
         .profile-name { font-size:20px; font-weight:700; color:#1a2332; }
@@ -128,7 +125,6 @@
         .profile-stat .number { font-size:18px; font-weight:700; color:#1a5276; }
         .profile-stat .label { font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; }
         
-        /* MY SUBJECTS - SELECTED SUBJECTS LIST */
         .selected-subject-item { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:white; border-radius:10px; border:1px solid #e8edf2; margin-bottom:6px; }
         .selected-subject-item .subject-info { display:flex; align-items:center; gap:10px; }
         .selected-subject-item .subject-info .icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; color:white; }
@@ -216,17 +212,108 @@
         .subjects-title { font-size:18px; font-weight:700; color:#1a2332; }
         .subjects-title i { color:#1a5276; margin-right:8px; }
         .subjects-stats { font-size:11px; color:#94a3b8; }
-        .admin-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px; }
-        .admin-stat-card { background:white; border-radius:12px; padding:12px 8px; text-align:center; border:1px solid #e8edf2; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-        .admin-stat-card .admin-stat-number { font-size:22px; font-weight:800; color:#1a5276; }
-        .admin-stat-card .admin-stat-label { font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
-        .admin-stat-card .admin-stat-icon { font-size:16px; color:#1a5276; opacity:0.3; margin-bottom:4px; }
-        
         .subject-selection-banner { background:white; border-radius:12px; padding:12px 16px; border:1px solid #e8edf2; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; }
         .subject-selection-banner .info { font-size:12px; color:#64748b; }
         .subject-selection-banner .info strong { color:#1a5276; }
         .subject-selection-banner .btn-select-all { background:#1a5276; color:white; border:none; padding:6px 14px; border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; }
         .subject-selection-banner .btn-select-all:active { transform:scale(0.95); }
+
+        /* ============ PROFESSIONAL ADMIN DASHBOARD ============ */
+        .admin-dashboard { background:white; border-radius:16px; padding:16px; border:1px solid #e8edf2; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+        .admin-dashboard .admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+        .admin-dashboard .admin-header h2 { font-size:18px; font-weight:700; color:#1a2332; display:flex; align-items:center; gap:8px; }
+        .admin-dashboard .admin-header h2 i { color:#1a5276; font-size:20px; }
+        .admin-dashboard .admin-header .logout-btn { background:rgba(239,68,68,0.08); color:#ef4444; border:1px solid rgba(239,68,68,0.12); padding:6px 14px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; }
+        .admin-dashboard .admin-header .logout-btn:active { transform:scale(0.95); }
+        
+        .admin-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:16px; }
+        .admin-stat { background:#f8fafc; border-radius:12px; padding:14px 10px; text-align:center; border:1px solid #e8edf2; transition:all 0.2s; }
+        .admin-stat .icon { font-size:22px; color:#1a5276; opacity:0.4; margin-bottom:4px; }
+        .admin-stat .number { font-size:24px; font-weight:800; color:#1a2332; }
+        .admin-stat .label { font-size:10px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+        
+        .admin-tabs { display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:16px; border-bottom:1px solid #e8edf2; }
+        .admin-tabs::-webkit-scrollbar { height:2px; }
+        .admin-tabs::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
+        .admin-tab { background:transparent; border:none; padding:8px 16px; border-radius:10px; font-size:12px; font-weight:600; color:#94a3b8; cursor:pointer; transition:all 0.3s; white-space:nowrap; display:flex; align-items:center; gap:6px; }
+        .admin-tab:hover { color:#1a2332; background:#e8edf2; }
+        .admin-tab.active { background:#1a5276; color:white; box-shadow:0 2px 10px rgba(26,82,118,0.2); }
+        .admin-tab i { font-size:14px; }
+        
+        .admin-tab-content { display:none; animation:fadeSlideUp 0.3s ease; }
+        .admin-tab-content.active { display:block; }
+        
+        .admin-tab-content h3 { font-size:14px; font-weight:600; color:#1a2332; display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+        .admin-tab-content h3 i { color:#1a5276; }
+        
+        .admin-search { width:100%; padding:8px 12px; border:1px solid #e8edf2; border-radius:8px; font-size:12px; outline:none; margin-bottom:10px; background:white; }
+        .admin-search:focus { border-color:#1a5276; box-shadow:0 0 0 3px rgba(26,82,118,0.06); }
+        
+        .admin-list { max-height:350px; overflow-y:auto; }
+        .admin-list::-webkit-scrollbar { width:3px; }
+        .admin-list::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
+        
+        .admin-item { background:#f8fafc; border-radius:8px; padding:10px 12px; margin-bottom:6px; border:1px solid #e8edf2; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s; }
+        .admin-item .left { display:flex; align-items:center; gap:10px; min-width:0; }
+        .admin-item .left .info .name { font-size:13px; font-weight:600; color:#1a2332; }
+        .admin-item .left .info .details { font-size:11px; color:#94a3b8; margin-top:1px; }
+        .admin-item .left .avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; color:white; flex-shrink:0; }
+        .admin-item .actions { display:flex; gap:4px; align-items:center; }
+        .admin-item .actions .btn-small { padding:4px 10px; border-radius:6px; font-size:10px; font-weight:600; border:none; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; }
+        .admin-item .actions .btn-small:active { transform:scale(0.95); }
+        .admin-item .actions .btn-success { background:rgba(34,197,94,0.1); color:#16a34a; }
+        .admin-item .actions .btn-danger { background:rgba(239,68,68,0.08); color:#ef4444; }
+        .admin-item .actions .btn-primary { background:rgba(26,82,118,0.08); color:#1a5276; }
+        .admin-item .actions .btn-delete { background:transparent; color:#94a3b8; border:none; font-size:14px; cursor:pointer; padding:4px; }
+        .admin-item .actions .btn-delete:active { color:#ef4444; }
+        
+        .admin-add-form { background:#e8edf2; border-radius:10px; padding:12px; margin-bottom:10px; display:none; border:1px solid #dce4ec; }
+        .admin-add-form .form-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+        .admin-add-form .form-row input, .admin-add-form .form-row select { flex:1; min-width:100px; padding:8px 12px; border:1px solid #dce4ec; border-radius:8px; font-size:12px; outline:none; background:white; }
+        .admin-add-form .form-row input:focus, .admin-add-form .form-row select:focus { border-color:#1a5276; }
+        .admin-add-form .form-actions { display:flex; gap:8px; }
+        .admin-add-form .form-actions .btn-save { background:#1a5276; color:white; border:none; padding:6px 16px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px; }
+        .admin-add-form .form-actions .btn-save:active { transform:scale(0.95); }
+        .admin-add-form .form-actions .btn-cancel { background:#e8edf2; color:#64748b; border:1px solid #dce4ec; padding:6px 16px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; }
+        .admin-add-form .form-actions .btn-cancel:active { transform:scale(0.95); }
+        
+        .progress-container { background:#e8edf2; border-radius:10px; padding:12px; margin-bottom:8px; border:1px solid #dce4ec; cursor:pointer; transition:all 0.3s; }
+        .progress-container:hover { background:#dce4ec; }
+        .progress-container .learner-name { color:#1a5276; font-weight:600; font-size:14px; }
+        .progress-container .progress-bar-bg { height:6px; background:#dce4ec; border-radius:4px; overflow:hidden; margin:6px 0; }
+        .progress-container .progress-bar-fill { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.6s ease; }
+        .progress-container .subject-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:8px; font-weight:600; margin:2px 3px 2px 0; background:#dce4ec; color:#64748b; }
+        .progress-container .subject-badge.done { background:rgba(34,197,94,0.1); color:#16a34a; }
+        .progress-container .subject-badge.pending { background:rgba(26,82,118,0.06); color:#1a5276; }
+        .progress-container .last-active { color:#94a3b8; font-size:9px; }
+        .progress-container .score-badge { background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 10px; border-radius:10px; font-size:11px; font-weight:700; }
+        .progress-detail { background:white; border-radius:10px; padding:12px; border:1px solid #dce4ec; margin-top:8px; display:none; }
+        .progress-detail.show { display:block; animation:fadeSlideUp 0.3s ease; }
+        .progress-detail .detail-row { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #e8edf2; font-size:11px; }
+        .progress-detail .detail-row .label { color:#94a3b8; }
+        .progress-detail .detail-row .value { color:#1a2332; font-weight:600; }
+        .progress-detail .detail-row .value.gold { color:#1a5276; }
+        .progress-detail .detail-row .value.green { color:#16a34a; }
+        
+        .upload-zone { border:2px dashed #dce4ec; border-radius:12px; padding:20px; text-align:center; transition:all 0.3s; cursor:pointer; background:#f8fafc; }
+        .upload-zone:hover { border-color:#1a5276; background:rgba(26,82,118,0.02); }
+        .upload-zone .upload-icon { font-size:36px; color:#94a3b8; margin-bottom:6px; }
+        .upload-zone .upload-text { color:#64748b; font-size:12px; }
+        .upload-zone .upload-text strong { color:#1a5276; }
+        .upload-preview { margin-top:12px; max-height:180px; overflow-y:auto; }
+        .upload-preview table { width:100%; font-size:11px; border-collapse:collapse; }
+        .upload-preview th { color:#94a3b8; text-align:left; padding:4px 6px; border-bottom:1px solid #dce4ec; font-weight:600; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; }
+        .upload-preview td { color:#64748b; padding:4px 6px; border-bottom:1px solid #e8edf2; font-size:11px; }
+        .upload-preview tr:hover td { background:#e8edf2; }
+        .upload-progress { margin-top:10px; height:4px; background:#dce4ec; border-radius:4px; overflow:hidden; display:none; }
+        .upload-progress .progress-bar { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.5s ease; width:0%; }
+        .upload-result { margin-top:10px; padding:10px; border-radius:8px; display:none; }
+        .upload-result.success { display:block; background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.15); }
+        .upload-result.error { display:block; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); }
+        .upload-result .result-text { color:#64748b; font-size:12px; }
+        .upload-result .result-text .count { color:#1a5276; font-weight:700; }
+        .form-group { margin-bottom:10px; }
+        .form-group label { color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:3px; }
     </style>
 </head>
 <body>
@@ -343,13 +430,12 @@
             </div>
         </div>
 
-        <!-- SUBJECTS VIEW - Selection Only -->
+        <!-- SUBJECTS VIEW -->
         <div class="view" id="subjectsView">
             <div class="subjects-header">
                 <div class="subjects-title"><i class="fas fa-book-open"></i> Select Subjects</div>
                 <div class="subjects-stats" id="progressText">0 selected</div>
             </div>
-            
             <div class="subject-selection-banner">
                 <div class="info">
                     <i class="fas fa-info-circle" style="color:#1a5276;"></i>
@@ -357,7 +443,6 @@
                 </div>
                 <button class="btn-select-all" onclick="selectAllSubjects()">Select All</button>
             </div>
-            
             <div class="subject-grid" id="subjectGrid">
                 <div class="skeleton" style="height:120px;"></div>
                 <div class="skeleton" style="height:120px;"></div>
@@ -366,7 +451,7 @@
             </div>
         </div>
 
-        <!-- PROFILE VIEW - Learning Hub -->
+        <!-- PROFILE VIEW -->
         <div class="view" id="profileView">
             <div class="profile-card">
                 <div class="profile-avatar" id="profileAvatar">
@@ -389,15 +474,12 @@
                         <div class="label">Friends</div>
                     </div>
                 </div>
-                
-                <!-- Selected Subjects List -->
                 <div style="margin-top:16px; text-align:left;">
                     <p style="font-size:11px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">My Selected Subjects</p>
                     <div id="selectedSubjectsList">
                         <div style="text-align:center; color:#94a3b8; font-size:12px; padding:12px 0;">No subjects selected. Go to Subjects tab to choose.</div>
                     </div>
                 </div>
-                
                 <div style="margin-top:16px; display:flex; gap:8px;">
                     <button onclick="showView('subjectsView')" class="btn-secondary" style="flex:1; padding:10px; font-size:13px;">
                         <i class="fas fa-book"></i> Select Subjects
@@ -499,20 +581,16 @@
                     <p class="text-2xl font-bold text-blue-700 mt-2" id="certUsername">Student</p>
                     <p class="certificate-subtitle mt-1" id="certCompletionText">has successfully completed all selected subjects</p>
                     <div class="divider"></div>
-                    
                     <div class="mt-2">
                         <div class="certificate-score" id="certAverageScore">0%</div>
                         <div class="certificate-score-label">Overall Average Score</div>
                         <div class="mt-2" id="certGrade"></div>
                     </div>
-                    
                     <div class="divider"></div>
-                    
                     <div style="text-align:left; margin-top:8px;">
                         <p style="font-size:11px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Subject Breakdown</p>
                         <div id="certSubjectBreakdown"></div>
                     </div>
-                    
                     <div class="divider"></div>
                     <div class="flex justify-around text-xs text-gray-500">
                         <div><p>Date</p><p class="font-bold text-gray-700" id="certDate">2026-08-09</p></div>
@@ -527,195 +605,159 @@
             </div>
         </div>
 
-        <!-- ADMIN DASHBOARD -->
+        <!-- PROFESSIONAL ADMIN DASHBOARD -->
         <div class="view" id="teacherView">
-            <div class="teacher-dashboard">
-                <div class="flex items-center justify-between mb-3">
+            <div class="admin-dashboard">
+                <div class="admin-header">
                     <h2><i class="fas fa-chalkboard-teacher"></i> Admin Dashboard</h2>
-                    <button onclick="logoutTeacher()" class="btn-danger" style="padding:4px 12px;font-size:11px;">
+                    <button class="logout-btn" onclick="logoutTeacher()">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </div>
-                <div class="admin-stats-grid">
-                    <div class="admin-stat-card">
-                        <div class="admin-stat-icon"><i class="fas fa-users"></i></div>
-                        <div class="admin-stat-number" id="statStudents">0</div>
-                        <div class="admin-stat-label">Students</div>
+                
+                <div class="admin-stats">
+                    <div class="admin-stat">
+                        <div class="icon"><i class="fas fa-users"></i></div>
+                        <div class="number" id="statStudents">0</div>
+                        <div class="label">Students</div>
                     </div>
-                    <div class="admin-stat-card">
-                        <div class="admin-stat-icon"><i class="fas fa-book"></i></div>
-                        <div class="admin-stat-number" id="statSubjects">0</div>
-                        <div class="admin-stat-label">Subjects</div>
+                    <div class="admin-stat">
+                        <div class="icon"><i class="fas fa-book"></i></div>
+                        <div class="number" id="statSubjects">0</div>
+                        <div class="label">Subjects</div>
                     </div>
-                    <div class="admin-stat-card">
-                        <div class="admin-stat-icon"><i class="fas fa-question-circle"></i></div>
-                        <div class="admin-stat-number" id="statQuestions">0</div>
-                        <div class="admin-stat-label">Questions</div>
+                    <div class="admin-stat">
+                        <div class="icon"><i class="fas fa-question-circle"></i></div>
+                        <div class="number" id="statQuestions">0</div>
+                        <div class="label">Questions</div>
                     </div>
-                    <div class="admin-stat-card">
-                        <div class="admin-stat-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="admin-stat-number" id="statCompleted">0</div>
-                        <div class="admin-stat-label">Completed</div>
+                    <div class="admin-stat">
+                        <div class="icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="number" id="statCompleted">0</div>
+                        <div class="label">Completed</div>
                     </div>
                 </div>
-                <div style="display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;">
-                    <button class="subject-tab active" onclick="switchTeacherTab('progress')">
+                
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="progress" onclick="switchAdminTab('progress')">
                         <i class="fas fa-chart-line"></i> Progress
                     </button>
-                    <button class="subject-tab" onclick="switchTeacherTab('students')">
+                    <button class="admin-tab" data-tab="students" onclick="switchAdminTab('students')">
                         <i class="fas fa-users"></i> Students
                     </button>
-                    <button class="subject-tab" onclick="switchTeacherTab('subjects')">
+                    <button class="admin-tab" data-tab="subjects" onclick="switchAdminTab('subjects')">
                         <i class="fas fa-book"></i> Subjects
                     </button>
-                    <button class="subject-tab" onclick="switchTeacherTab('questions')">
+                    <button class="admin-tab" data-tab="questions" onclick="switchAdminTab('questions')">
                         <i class="fas fa-question-circle"></i> Questions
                     </button>
-                    <button class="subject-tab" onclick="switchTeacherTab('upload')">
-                        <i class="fas fa-upload"></i> Bulk Upload
+                    <button class="admin-tab" data-tab="upload" onclick="switchAdminTab('upload')">
+                        <i class="fas fa-upload"></i> Upload
                     </button>
                 </div>
 
-                <div id="teacherProgressTab">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-chart-line" style="color:#1a5276;"></i> Learner Progress</h3>
-                        <span style="color:#94a3b8;font-size:10px;">Click a learner for details</span>
-                    </div>
-                    <input id="progressSearch" type="text" placeholder="🔍 Search learners..." oninput="filterProgress()" class="search-box" />
-                    <div id="progressList" style="max-height:400px;overflow-y:auto;"></div>
+                <!-- Progress Tab -->
+                <div class="admin-tab-content active" id="tab-progress">
+                    <h3><i class="fas fa-chart-line"></i> Learner Progress</h3>
+                    <input id="progressSearch" type="text" placeholder="🔍 Search learners..." oninput="filterProgress()" class="admin-search" />
+                    <div id="progressList" class="admin-list"></div>
                 </div>
 
-                <div id="teacherStudentsTab" style="display:none;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-users" style="color:#1a5276;"></i> Student Accounts</h3>
-                        <button onclick="showAddStudentForm()" style="background:#1a5276;color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
+                <!-- Students Tab -->
+                <div class="admin-tab-content" id="tab-students">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                        <h3><i class="fas fa-users"></i> Student Accounts</h3>
+                        <button onclick="toggleAddStudent()" style="background:#1a5276;color:white;font-weight:600;padding:6px 14px;border-radius:8px;border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;">
                             <i class="fas fa-user-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addStudentForm" style="display:none;margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-user-plus" style="color:#1a5276;"></i> Create Student Account</h4>
-                        <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Username</label>
-                            <input id="studentUsername" type="text" placeholder="Enter username" class="input-field" style="padding:8px 12px;font-size:13px;" />
+                    <div class="admin-add-form" id="addStudentForm">
+                        <div class="form-row">
+                            <input id="studentUsername" type="text" placeholder="Username" />
+                            <input id="studentPassword" type="text" placeholder="Password" />
                         </div>
-                        <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Password</label>
-                            <input id="studentPassword" type="text" placeholder="Enter password" class="input-field" style="padding:8px 12px;font-size:13px;" />
-                        </div>
-                        <div style="display:flex;gap:8px;">
-                            <button onclick="addStudent()" class="btn-teacher" style="flex:1;padding:8px;font-size:13px;">
-                                <i class="fas fa-save"></i> Create
-                            </button>
-                            <button onclick="hideAddStudentForm()" class="btn-teacher-secondary" style="padding:8px 16px;font-size:13px;">
-                                Cancel
-                            </button>
+                        <div class="form-actions">
+                            <button class="btn-save" onclick="addStudent()"><i class="fas fa-save"></i> Create</button>
+                            <button class="btn-cancel" onclick="toggleAddStudent()">Cancel</button>
                         </div>
                     </div>
-                    <input id="studentSearch" type="text" placeholder="🔍 Search students..." oninput="filterStudents()" class="search-box" />
-                    <div id="studentList" style="max-height:250px;overflow-y:auto;"></div>
+                    <input id="studentSearch" type="text" placeholder="🔍 Search students..." oninput="filterStudents()" class="admin-search" />
+                    <div id="studentList" class="admin-list"></div>
                 </div>
 
-                <div id="teacherSubjectsTab" style="display:none;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <h3 style="color:#1a2332;font-size:13px;font-weight:600;"><i class="fas fa-list" style="color:#1a5276;"></i> Subjects</h3>
-                        <button onclick="showAddSubjectForm()" style="background:#1a5276;color:white;font-weight:600;padding:4px 12px;border-radius:8px;border:none;font-size:11px;cursor:pointer;">
+                <!-- Subjects Tab -->
+                <div class="admin-tab-content" id="tab-subjects">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                        <h3><i class="fas fa-book"></i> Subjects</h3>
+                        <button onclick="toggleAddSubject()" style="background:#1a5276;color:white;font-weight:600;padding:6px 14px;border-radius:8px;border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;">
                             <i class="fas fa-plus"></i> Add
                         </button>
                     </div>
-                    <div id="addSubjectForm" style="display:none;margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#1a5276;"></i> New Subject</h4>
-                        <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Subject Name</label>
-                            <input id="subjectName" type="text" placeholder="e.g., Physics" class="input-field" style="padding:8px 12px;font-size:13px;" />
+                    <div class="admin-add-form" id="addSubjectForm">
+                        <div class="form-row">
+                            <input id="subjectName" type="text" placeholder="Subject name" />
+                            <input id="subjectIcon" type="text" placeholder="Icon (fa-atom)" style="flex:0.7;" />
+                            <input id="subjectColor" type="text" placeholder="Color (from-blue-500 to-blue-700)" style="flex:1;" />
                         </div>
-                        <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Icon</label>
-                            <div style="display:flex;gap:8px;">
-                                <input id="subjectIcon" type="text" placeholder="fa-atom" class="input-field" style="padding:8px 12px;font-size:13px;flex:1;" />
-                                <button onclick="pickIcon()" style="background:#dce4ec;color:#64748b;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid #dce4ec;font-size:12px;cursor:pointer;">
-                                    <i class="fas fa-random"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Color</label>
-                            <input id="subjectColor" type="text" placeholder="from-blue-500 to-blue-700" class="input-field" style="padding:8px 12px;font-size:13px;" />
-                        </div>
-                        <div style="display:flex;gap:8px;">
-                            <button onclick="addSubject()" class="btn-teacher" style="flex:1;padding:8px;font-size:13px;">
-                                <i class="fas fa-save"></i> Save
-                            </button>
-                            <button onclick="hideAddSubjectForm()" class="btn-teacher-secondary" style="padding:8px 16px;font-size:13px;">
-                                Cancel
-                            </button>
+                        <div class="form-actions">
+                            <button class="btn-save" onclick="addSubject()"><i class="fas fa-save"></i> Save</button>
+                            <button class="btn-cancel" onclick="toggleAddSubject()">Cancel</button>
                         </div>
                     </div>
-                    <div id="subjectList" style="max-height:250px;overflow-y:auto;"></div>
+                    <div id="subjectList" class="admin-list"></div>
                 </div>
 
-                <div id="teacherQuestionsTab" style="display:none;">
-                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-list" style="color:#1a5276;"></i> Manage Questions</h3>
-                    <div style="margin-bottom:8px;">
-                        <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Select Subject</label>
-                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                <!-- Questions Tab -->
+                <div class="admin-tab-content" id="tab-questions">
+                    <h3><i class="fas fa-question-circle"></i> Manage Questions</h3>
+                    <div class="form-group">
+                        <label>Select Subject</label>
+                        <select id="questionSubjectSelect" onchange="loadQuestionsForTeacher()" style="width:100%;padding:8px 12px;border:1px solid #dce4ec;border-radius:8px;font-size:12px;outline:none;background:white;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
-                    <div style="margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
-                        <h4 style="color:#1a2332;font-size:12px;font-weight:600;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#1a5276;"></i> Add Question</h4>
-                        <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Question</label>
-                            <input id="questionTextInput" type="text" placeholder="Enter your question..." class="input-field" style="padding:8px 12px;font-size:13px;" />
+                    <div style="background:#e8edf2;border-radius:10px;padding:12px;margin-bottom:10px;border:1px solid #dce4ec;">
+                        <h4 style="font-size:12px;font-weight:600;color:#1a2332;margin-bottom:8px;"><i class="fas fa-plus-circle" style="color:#1a5276;"></i> Add Question</h4>
+                        <div style="margin-bottom:6px;">
+                            <input id="questionTextInput" type="text" placeholder="Enter your question..." style="width:100%;padding:8px 12px;border:1px solid #dce4ec;border-radius:8px;font-size:12px;outline:none;background:white;" />
                         </div>
-                        <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Options</label>
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-                                <input id="optionA" type="text" placeholder="A" class="input-field" style="padding:6px 10px;font-size:12px;" />
-                                <input id="optionB" type="text" placeholder="B" class="input-field" style="padding:6px 10px;font-size:12px;" />
-                                <input id="optionC" type="text" placeholder="C" class="input-field" style="padding:6px 10px;font-size:12px;" />
-                                <input id="optionD" type="text" placeholder="D" class="input-field" style="padding:6px 10px;font-size:12px;" />
-                            </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+                            <input id="optionA" type="text" placeholder="A" style="padding:6px 10px;border:1px solid #dce4ec;border-radius:6px;font-size:12px;outline:none;background:white;" />
+                            <input id="optionB" type="text" placeholder="B" style="padding:6px 10px;border:1px solid #dce4ec;border-radius:6px;font-size:12px;outline:none;background:white;" />
+                            <input id="optionC" type="text" placeholder="C" style="padding:6px 10px;border:1px solid #dce4ec;border-radius:6px;font-size:12px;outline:none;background:white;" />
+                            <input id="optionD" type="text" placeholder="D" style="padding:6px 10px;border:1px solid #dce4ec;border-radius:6px;font-size:12px;outline:none;background:white;" />
                         </div>
-                        <div style="margin-bottom:8px;">
-                            <label style="color:#64748b;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">Correct Answer</label>
-                            <select id="correctAnswer" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+                            <label style="font-size:11px;font-weight:600;color:#64748b;">Correct:</label>
+                            <select id="correctAnswer" style="padding:6px 10px;border:1px solid #dce4ec;border-radius:6px;font-size:12px;outline:none;background:white;">
                                 <option value="0">A</option>
                                 <option value="1">B</option>
                                 <option value="2">C</option>
                                 <option value="3">D</option>
                             </select>
+                            <button onclick="addQuestionTeacher()" style="background:#1a5276;color:white;border:none;padding:6px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;margin-left:auto;">
+                                <i class="fas fa-save"></i> Add
+                            </button>
                         </div>
-                        <button onclick="addQuestionTeacher()" class="btn-teacher" style="padding:8px;font-size:13px;">
-                            <i class="fas fa-save"></i> Add Question
-                        </button>
                     </div>
-                    <div id="teacherQuestionList" style="max-height:200px;overflow-y:auto;"></div>
+                    <div id="teacherQuestionList" class="admin-list"></div>
                 </div>
 
-                <div id="teacherUploadTab" style="display:none;">
-                    <h3 style="color:#1a2332;font-size:13px;font-weight:600;margin-bottom:8px;"><i class="fas fa-upload" style="color:#1a5276;"></i> Bulk Upload Questions</h3>
-                    <div style="margin-bottom:10px;padding:12px;background:#e8edf2;border-radius:10px;border:1px solid #dce4ec;">
-                        <p style="color:#64748b;font-size:11px;margin-bottom:8px;">
+                <!-- Upload Tab -->
+                <div class="admin-tab-content" id="tab-upload">
+                    <h3><i class="fas fa-upload"></i> Bulk Upload Questions</h3>
+                    <div style="background:#e8edf2;border-radius:10px;padding:12px;margin-bottom:10px;border:1px solid #dce4ec;">
+                        <p style="color:#64748b;font-size:11px;margin-bottom:6px;">
                             <i class="fas fa-info-circle" style="color:#1a5276;"></i>
-                            Upload a CSV file with your questions. The format should be:
+                            Upload a CSV file. Format: question,option_a,option_b,option_c,option_d,correct_answer
                         </p>
-                        <div style="background:#dce4ec;border-radius:6px;padding:8px;font-family:monospace;font-size:10px;color:#64748b;overflow-x:auto;white-space:nowrap;">
-                            question,option_a,option_b,option_c,option_d,correct_answer
-                            <br/>What is 5+3?,4,5,8,10,C
-                            <br/>What is the capital of Zambia?,Lusaka,Ndola,Kitwe,Livingstone,A
-                        </div>
-                        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
-                            <button onclick="downloadTemplate()" style="background:rgba(26,82,118,0.08);color:#1a5276;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(26,82,118,0.1);font-size:11px;cursor:pointer;">
-                                <i class="fas fa-download"></i> Download Template
-                            </button>
-                            <span style="color:#94a3b8;font-size:10px;display:flex;align-items:center;">
-                                Correct answer: A, B, C, or D
-                            </span>
-                        </div>
+                        <button onclick="downloadTemplate()" style="background:rgba(26,82,118,0.08);color:#1a5276;font-weight:600;padding:4px 12px;border-radius:6px;border:1px solid rgba(26,82,118,0.1);font-size:11px;cursor:pointer;">
+                            <i class="fas fa-download"></i> Download Template
+                        </button>
                     </div>
                     <div class="form-group">
                         <label>Select Subject</label>
-                        <select id="uploadSubjectSelect" style="background:white;border:2px solid #dce4ec;border-radius:12px;padding:8px 12px;color:#1a2332;font-size:13px;width:100%;outline:none;appearance:none;">
+                        <select id="uploadSubjectSelect" style="width:100%;padding:8px 12px;border:1px solid #dce4ec;border-radius:8px;font-size:12px;outline:none;background:white;">
                             <option value="">-- Select a subject --</option>
                         </select>
                     </div>
@@ -731,7 +773,7 @@
                         <div class="progress-bar" id="progressBarUpload"></div>
                     </div>
                     <div class="upload-result" id="uploadResult"></div>
-                    <button onclick="uploadQuestions()" id="uploadBtn" class="btn-teacher" style="margin-top:10px;display:none;">
+                    <button onclick="uploadQuestions()" id="uploadBtn" class="btn-teacher" style="margin-top:10px;display:none;width:100%;padding:10px;background:#1a5276;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:none;align-items:center;justify-content:center;gap:6px;">
                         <i class="fas fa-upload"></i> Upload Questions
                     </button>
                 </div>
@@ -764,14 +806,12 @@
                 <p class="donation-subtitle">Your donation helps keep this platform free for everyone</p>
                 <div class="donation-amount-badge">❤️ Any Amount · Your Support Matters</div>
             </div>
-            
             <div class="donation-benefits">
                 <div class="donation-benefit"><i class="fas fa-check-circle"></i> Keep platform free</div>
                 <div class="donation-benefit"><i class="fas fa-check-circle"></i> Support development</div>
                 <div class="donation-benefit"><i class="fas fa-check-circle"></i> Help students learn</div>
                 <div class="donation-benefit"><i class="fas fa-check-circle"></i> ❤️ Show your support</div>
             </div>
-
             <div class="donation-payment-label"><i class="fas fa-mobile-alt"></i> Donate via Mobile Money</div>
             <div class="donation-payment-grid">
                 <div class="donation-payment-row" onclick="copyNumber('+260971130511')">
@@ -805,25 +845,20 @@
                     <button class="copy-btn" onclick="event.stopPropagation();copyNumber('+260763209826')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
             </div>
-
             <div class="donation-account-box">
                 <div class="label">Account Holder</div>
                 <div class="name">Chaiwa Justine</div>
             </div>
-
             <p class="donation-instruction">
                 <i class="fas fa-info-circle" style="color:#1a5276;margin-right:4px;"></i>
                 Send any amount via mobile money to support NorthernQuiz. Every contribution helps keep this platform <strong>FREE</strong> for all learners!
             </p>
-
             <button onclick="openWhatsAppDonation()" class="btn-donation-whatsapp">
                 <i class="fab fa-whatsapp"></i> WhatsApp for Support
             </button>
-            
             <button onclick="closeDonationPopup()" class="btn-donation-close">
                 <i class="fas fa-times"></i> Close
             </button>
-            
             <div class="donation-spacer"></div>
         </div>
     </div>
@@ -851,7 +886,7 @@
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
     let isTeacherLoggedIn = false;
-    let currentTeacherTab = 'progress';
+    let currentAdminTab = 'progress';
     let selectedSubjectId = null;
     let allUsers = [];
     let uploadedData = [];
@@ -1276,6 +1311,37 @@
         isTeacherLoggedIn = false;
         showView('loginView');
         showToast('Logged out of admin mode', 'info');
+    }
+
+    // ============ ADMIN TAB MANAGEMENT ============
+    function switchAdminTab(tab) {
+        currentAdminTab = tab;
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelector(`.admin-tab[data-tab="${tab}"]`)?.classList.add('active');
+        document.getElementById(`tab-${tab}`)?.classList.add('active');
+        
+        if (tab === 'subjects') updateTeacherSubjects();
+        if (tab === 'questions') loadQuestionsForTeacher();
+        if (tab === 'students') renderStudents();
+        if (tab === 'upload') updateUploadSubjectSelect();
+        if (tab === 'progress') renderProgress();
+    }
+
+    function toggleAddStudent() {
+        const form = document.getElementById('addStudentForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        if (form.style.display === 'block') {
+            document.getElementById('studentUsername').focus();
+        }
+    }
+
+    function toggleAddSubject() {
+        const form = document.getElementById('addSubjectForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        if (form.style.display === 'block') {
+            document.getElementById('subjectName').focus();
+        }
     }
 
     // ============ PROFILE FUNCTIONS ============
@@ -2186,7 +2252,6 @@
         
         document.getElementById('progressText').textContent = `${selected} selected`;
         
-        // Check if all selected subjects are completed
         if (selected > 0 && completed === selected) {
             setTimeout(() => showCertificateWithScores(), 500);
         }
@@ -2390,26 +2455,6 @@
     }
 
     // ============ TEACHER DASHBOARD ============
-    function switchTeacherTab(tab) {
-        currentTeacherTab = tab;
-        document.querySelectorAll('#teacherView .subject-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('#teacherView .subject-tab').forEach(t => {
-            if (t.textContent.trim().toLowerCase().includes(tab)) {
-                t.classList.add('active');
-            }
-        });
-        document.getElementById('teacherProgressTab').style.display = tab === 'progress' ? 'block' : 'none';
-        document.getElementById('teacherStudentsTab').style.display = tab === 'students' ? 'block' : 'none';
-        document.getElementById('teacherSubjectsTab').style.display = tab === 'subjects' ? 'block' : 'none';
-        document.getElementById('teacherQuestionsTab').style.display = tab === 'questions' ? 'block' : 'none';
-        document.getElementById('teacherUploadTab').style.display = tab === 'upload' ? 'block' : 'none';
-        if (tab === 'subjects') updateTeacherSubjects();
-        if (tab === 'questions') loadQuestionsForTeacher();
-        if (tab === 'students') renderStudents();
-        if (tab === 'upload') updateUploadSubjectSelect();
-        if (tab === 'progress') renderProgress();
-    }
-
     function updateTeacherDashboard() {
         updateTeacherSubjects();
         updateQuestionSubjectSelect();
@@ -2420,102 +2465,6 @@
         document.getElementById('statSubjects').textContent = allSubjects.length;
     }
 
-    // ============ STUDENT MANAGEMENT ============
-    function renderStudents() {
-        const list = document.getElementById('studentList');
-        const searchTerm = document.getElementById('studentSearch')?.value?.toLowerCase() || '';
-        const filtered = allUsers.filter(u => u.username.toLowerCase().includes(searchTerm));
-        if (filtered.length === 0) {
-            list.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
-            return;
-        }
-        list.innerHTML = '';
-        filtered.forEach(user => {
-            const div = document.createElement('div');
-            div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #dce4ec;';
-            const date = new Date(user.created_at).toLocaleDateString();
-            const isPrem = user.is_premium === true;
-            div.innerHTML = `
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <div style="color:#1a2332;font-size:12px;">
-                        <span style="font-weight:600;color:#1a5276;">${user.username}</span>
-                        <span style="color:#94a3b8;font-size:11px;margin-left:8px;font-family:'Courier New',monospace;">🔑 ${user.password}</span>
-                        <span style="color:#94a3b8;font-size:10px;margin-left:8px;">📅 ${date}</span>
-                    </div>
-                    <div onclick="deleteStudent('${user.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
-                        <i class="fas fa-trash"></i>
-                    </div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
-                    <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(34,197,94,0.12);color:#16a34a;">
-                        ✅ Free Access
-                    </span>
-                    <button onclick="teacherRevokePremium('${user.id}','${user.username}')" style="background:rgba(239,68,68,0.08);color:#ef4444;border:1px solid rgba(239,68,68,0.15);padding:4px 10px;border-radius:8px;font-size:10px;font-weight:600;cursor:pointer;">Revoke</button>
-                </div>
-            `;
-            list.appendChild(div);
-        });
-    }
-
-    function filterStudents() { renderStudents(); }
-    function showAddStudentForm() { document.getElementById('addStudentForm').style.display = 'block'; document.getElementById('studentUsername').focus(); }
-    function hideAddStudentForm() { document.getElementById('addStudentForm').style.display = 'none'; document.getElementById('studentUsername').value = ''; document.getElementById('studentPassword').value = ''; }
-
-    async function addStudent() {
-        const username = document.getElementById('studentUsername').value.trim();
-        const password = document.getElementById('studentPassword').value.trim();
-        if (!username || !password) {
-            showToast('Please enter username and password', 'error');
-            return;
-        }
-        if (username.length < 3 || password.length < 3) {
-            showToast('Username and password must be at least 3 characters', 'error');
-            return;
-        }
-        const btn = event.target;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Creating...';
-        try {
-            const exists = await checkUserExists(username);
-            if (exists) {
-                showToast('Username already exists', 'error');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-save"></i> Create';
-                return;
-            }
-            const newUser = await createUser(username, password);
-            if (newUser) {
-                showToast(`✅ Student "${username}" created! Password: ${password}`, 'success');
-                hideAddStudentForm();
-                await loadUsers();
-                renderStudents();
-                renderProgress();
-                document.getElementById('statStudents').textContent = allUsers.length;
-            }
-        } catch (error) {
-            showToast('Error creating student account', 'error');
-        }
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-save"></i> Create';
-    }
-
-    async function deleteStudent(userId) {
-        if (!confirm('Delete this student account?')) return;
-        try {
-            const success = await deleteUser(userId);
-            if (success) {
-                showToast('Student deleted', 'info');
-                await loadUsers();
-                renderStudents();
-                renderProgress();
-                document.getElementById('statStudents').textContent = allUsers.length;
-            }
-        } catch (error) {
-            showToast('Error deleting student', 'error');
-        }
-    }
-
-    // ============ TEACHER SUBJECT MANAGEMENT ============
     function updateTeacherSubjects() {
         const list = document.getElementById('subjectList');
         if (!allSubjects || allSubjects.length === 0) {
@@ -2526,70 +2475,55 @@
         allSubjects.forEach(subject => {
             const icon = subject.icon || getSubjectIcon(subject.name);
             const div = document.createElement('div');
-            div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:10px 12px;margin-bottom:6px;border:1px solid #dce4ec;display:flex;justify-content:space-between;align-items:center;';
+            div.className = 'admin-item';
             div.innerHTML = `
-                <div>
-                    <div style="color:#1a2332;font-size:12px;"><i class="fas ${icon}" style="color:#1a5276;"></i> ${subject.name}</div>
-                    <div style="color:#94a3b8;font-size:10px;">${subject.color}</div>
+                <div class="left">
+                    <i class="fas ${icon}" style="color:#1a5276;font-size:16px;"></i>
+                    <div class="info">
+                        <div class="name">${subject.name}</div>
+                        <div class="details">${subject.color}</div>
+                    </div>
                 </div>
-                <div onclick="deleteSubject('${subject.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
-                    <i class="fas fa-trash"></i>
+                <div class="actions">
+                    <button class="btn-delete" onclick="deleteSubject('${subject.id}')"><i class="fas fa-trash"></i></button>
                 </div>
             `;
             list.appendChild(div);
         });
     }
 
-    function showAddSubjectForm() { document.getElementById('addSubjectForm').style.display = 'block'; document.getElementById('subjectName').focus(); }
-    function hideAddSubjectForm() { document.getElementById('addSubjectForm').style.display = 'none'; document.getElementById('subjectName').value = ''; document.getElementById('subjectIcon').value = ''; document.getElementById('subjectColor').value = ''; }
-
-    async function addSubject() {
-        const name = document.getElementById('subjectName').value.trim();
-        let icon = document.getElementById('subjectIcon').value.trim();
-        if (!icon || icon === '') icon = getSubjectIcon(name);
-        let color = document.getElementById('subjectColor').value.trim();
-        if (!color || color === '') color = getSubjectColor(name);
-        if (!name) {
-            showToast('Please enter a subject name', 'error');
+    function renderStudents() {
+        const list = document.getElementById('studentList');
+        const searchTerm = document.getElementById('studentSearch')?.value?.toLowerCase() || '';
+        const filtered = allUsers.filter(u => u.username.toLowerCase().includes(searchTerm));
+        if (filtered.length === 0) {
+            list.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">${allUsers.length === 0 ? 'No students yet. Create one above!' : 'No students match your search.'}</div>`;
             return;
         }
-        const btn = event.target;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Saving...';
-        try {
-            const newSubject = await addSubjectToDB(name, icon, color);
-            if (newSubject) {
-                showToast(`✅ Subject "${name}" added!`, 'success');
-                hideAddSubjectForm();
-                await loadSubjects();
-                updateTeacherSubjects();
-                updateQuestionSubjectSelect();
-                updateUploadSubjectSelect();
-                document.getElementById('statSubjects').textContent = allSubjects.length;
-            }
-        } catch (error) {
-            showToast('Error adding subject. Please try again.', 'error');
-        }
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-save"></i> Save';
+        list.innerHTML = '';
+        filtered.forEach(user => {
+            const date = new Date(user.created_at).toLocaleDateString();
+            const isPrem = user.is_premium === true;
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            div.innerHTML = `
+                <div class="left">
+                    <div class="avatar" style="background:#1a5276;"><i class="fas fa-user"></i></div>
+                    <div class="info">
+                        <div class="name">${user.username}</div>
+                        <div class="details">🔑 ${user.password} · 📅 ${date}</div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <span style="font-size:10px;font-weight:600;color:#16a34a;background:rgba(34,197,94,0.08);padding:2px 8px;border-radius:10px;margin-right:4px;">Free</span>
+                    <button class="btn-delete" onclick="deleteStudent('${user.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            list.appendChild(div);
+        });
     }
 
-    async function deleteSubject(subjectId) {
-        if (!confirm('Delete this subject and all its questions?')) return;
-        try {
-            const success = await deleteSubjectFromDB(subjectId);
-            if (success) {
-                showToast('Subject deleted', 'info');
-                await loadSubjects();
-                updateTeacherSubjects();
-                updateQuestionSubjectSelect();
-                updateUploadSubjectSelect();
-                document.getElementById('statSubjects').textContent = allSubjects.length;
-            }
-        } catch (error) {
-            showToast('Error deleting subject', 'error');
-        }
-    }
+    function filterStudents() { renderStudents(); }
 
     // ============ TEACHER QUESTION MANAGEMENT ============
     function updateQuestionSubjectSelect() {
@@ -2610,12 +2544,11 @@
 
     async function loadQuestionsForTeacher() {
         const subjectId = document.getElementById('questionSubjectSelect').value;
+        const list = document.getElementById('teacherQuestionList');
         if (!subjectId) {
-            document.getElementById('teacherQuestionList').innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
+            list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Select a subject to see questions</div>';
             return;
         }
-        selectedSubjectId = subjectId;
-        const list = document.getElementById('teacherQuestionList');
         list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
         try {
             const questions = await fetchQuestions(subjectId);
@@ -2626,102 +2559,23 @@
             list.innerHTML = '';
             questions.forEach((q, idx) => {
                 const div = document.createElement('div');
-                div.style.cssText = 'background:#e8edf2;border-radius:8px;padding:8px 12px;margin-bottom:4px;border:1px solid #dce4ec;display:flex;justify-content:space-between;align-items:center;';
+                div.className = 'admin-item';
                 div.innerHTML = `
-                    <div>
-                        <div style="color:#1a2332;font-size:12px;">${idx+1}. ${q.question}</div>
-                        <div style="color:#94a3b8;font-size:10px;">${q.options.join(' | ')}</div>
+                    <div class="left">
+                        <div class="info">
+                            <div class="name">${idx+1}. ${q.question}</div>
+                            <div class="details">${q.options.join(' | ')}</div>
+                        </div>
                     </div>
-                    <div onclick="deleteQuestionTeacher('${q.id}')" style="color:#94a3b8;cursor:pointer;padding:4px 8px;border-radius:6px;">
-                        <i class="fas fa-trash"></i>
+                    <div class="actions">
+                        <button class="btn-delete" onclick="deleteQuestionTeacher('${q.id}')"><i class="fas fa-trash"></i></button>
                     </div>
                 `;
                 list.appendChild(div);
             });
         } catch (error) {
-            console.error('Error loading questions:', error);
             list.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:16px 0;font-size:13px;">Error loading questions.</div>';
         }
-    }
-
-    async function addQuestionTeacher() {
-        const subjectId = document.getElementById('questionSubjectSelect').value;
-        const question = document.getElementById('questionTextInput').value.trim();
-        const optionA = document.getElementById('optionA').value.trim();
-        const optionB = document.getElementById('optionB').value.trim();
-        const optionC = document.getElementById('optionC').value.trim();
-        const optionD = document.getElementById('optionD').value.trim();
-        const correctAnswer = parseInt(document.getElementById('correctAnswer').value);
-        if (!subjectId) {
-            showToast('Please select a subject', 'error');
-            return;
-        }
-        if (!question) {
-            showToast('Please enter a question', 'error');
-            return;
-        }
-        if (!optionA || !optionB || !optionC || !optionD) {
-            showToast('Please fill in all 4 options', 'error');
-            return;
-        }
-        const options = [optionA, optionB, optionC, optionD];
-        const btn = event.target;
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span> Adding...';
-        try {
-            const newQuestion = await addQuestionToDB(subjectId, question, options, correctAnswer);
-            if (newQuestion) {
-                showToast('✅ Question added!', 'success');
-                document.getElementById('questionTextInput').value = '';
-                document.getElementById('optionA').value = '';
-                document.getElementById('optionB').value = '';
-                document.getElementById('optionC').value = '';
-                document.getElementById('optionD').value = '';
-                await loadQuestionsForTeacher();
-                updateTeacherSubjects();
-                let totalQ = 0;
-                for (const subject of allSubjects) {
-                    const qs = await fetchQuestions(subject.id);
-                    totalQ += qs.length;
-                }
-                document.getElementById('statQuestions').textContent = totalQ;
-            }
-        } catch (error) {
-            showToast('Error adding question. Please try again.', 'error');
-        }
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-save"></i> Add Question';
-    }
-
-    async function deleteQuestionTeacher(questionId) {
-        if (!confirm('Delete this question?')) return;
-        try {
-            const success = await deleteQuestionFromDB(questionId);
-            if (success) {
-                showToast('Question deleted', 'info');
-                await loadQuestionsForTeacher();
-                updateTeacherSubjects();
-                let totalQ = 0;
-                for (const subject of allSubjects) {
-                    const qs = await fetchQuestions(subject.id);
-                    totalQ += qs.length;
-                }
-                document.getElementById('statQuestions').textContent = totalQ;
-            }
-        } catch (error) {
-            showToast('Error deleting question', 'error');
-        }
-    }
-
-    function pickIcon() {
-        const icons = ['fa-atom', 'fa-flask', 'fa-calculator', 'fa-book-open', 'fa-globe-africa', 
-                       'fa-laptop-code', 'fa-church', 'fa-palette', 'fa-music', 'fa-robot',
-                       'fa-dna', 'fa-earth-africa', 'fa-microscope', 'fa-pencil', 'fa-ruler',
-                       'fa-vial', 'fa-gavel', 'fa-landmark', 'fa-running', 'fa-chart-line',
-                       'fa-coins', 'fa-pen-fancy', 'fa-language', 'fa-home'];
-        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-        document.getElementById('subjectIcon').value = randomIcon;
-        showToast(`🎨 Icon set to: ${randomIcon}`, 'info');
     }
 
     // ============ BULK UPLOAD FUNCTIONS ============
@@ -2967,9 +2821,9 @@
     window.showTeacherLogin = showTeacherLogin;
     window.teacherLogin = teacherLogin;
     window.logoutTeacher = logoutTeacher;
-    window.switchTeacherTab = switchTeacherTab;
-    window.showAddSubjectForm = showAddSubjectForm;
-    window.hideAddSubjectForm = hideAddSubjectForm;
+    window.switchAdminTab = switchAdminTab;
+    window.toggleAddStudent = toggleAddStudent;
+    window.toggleAddSubject = toggleAddSubject;
     window.addSubject = addSubject;
     window.deleteSubject = deleteSubject;
     window.updateTeacherSubjects = updateTeacherSubjects;
@@ -2978,8 +2832,6 @@
     window.deleteQuestionTeacher = deleteQuestionTeacher;
     window.updateQuestionSubjectSelect = updateQuestionSubjectSelect;
     window.updateUploadSubjectSelect = updateUploadSubjectSelect;
-    window.showAddStudentForm = showAddStudentForm;
-    window.hideAddStudentForm = hideAddStudentForm;
     window.addStudent = addStudent;
     window.renderStudents = renderStudents;
     window.deleteStudent = deleteStudent;
