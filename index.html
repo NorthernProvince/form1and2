@@ -837,9 +837,6 @@
     const QUESTIONS_TABLE = 'questions';
     const PROGRESS_TABLE = 'learner_progress';
 
-    // ============ SUBJECT SCORES ============
-    let subjectScores = {};
-
     // ============ SUBJECT ICON MAP ============
     const subjectIcons = {
         'mathematics': 'fa-calculator',
@@ -1732,14 +1729,6 @@
             };
             if (lastIndex !== null) payload.last_question_index = lastIndex;
 
-            // Save subject score for certificate
-            if (currentUser && currentUser.id === userId && status === 'completed') {
-                const subject = allSubjects.find(s => s.id === subjectId);
-                if (subject) {
-                    subjectScores[subjectId] = { score: score, total: total, name: subject.name };
-                }
-            }
-
             const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=id`, {
                 headers: {
                     'apikey': SUPABASE_KEY,
@@ -2056,7 +2045,8 @@
         document.getElementById('progressText').textContent = `${completed} of ${total} completed`;
         document.getElementById('progressBar').style.width = total > 0 ? `${(completed / total) * 100}%` : '0%';
         if (completed === total && total > 0) {
-            setTimeout(() => showCertificateWithScores(), 500);
+            // Show certificate with scores from learnerProgress
+            showCertificateWithScores();
         }
         updateProfile();
     }
@@ -2065,13 +2055,15 @@
     function showCertificateWithScores() {
         if (!currentUser) return;
         
-        // Load subject scores from progress
+        // Load subject scores from learnerProgress (already loaded)
         const progress = learnerProgress[currentUser.id] || [];
         let totalScore = 0;
         let totalQuestions = 0;
         let subjectDetails = [];
         let completedSubjectCount = 0;
         
+        // Only include subjects that are marked as completed in the 'completedSubjects' set
+        // but we can also use all subjects that have progress
         allSubjects.forEach(subject => {
             const subProgress = progress.find(p => p.subject_id === subject.id);
             if (subProgress) {
@@ -2086,6 +2078,16 @@
                 totalScore += subProgress.score;
                 totalQuestions += subProgress.total_questions;
                 completedSubjectCount++;
+            } else if (completedSubjects.has(subject.id)) {
+                // If marked complete but no score (e.g., by "Mark Complete" button), treat as 0%
+                subjectDetails.push({
+                    name: subject.name,
+                    score: 0,
+                    total: 0,
+                    percentage: 0,
+                    passed: false
+                });
+                completedSubjectCount++;
             }
         });
         
@@ -2094,7 +2096,7 @@
         // Update certificate
         document.getElementById('certUsername').textContent = currentUser.username;
         document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        document.getElementById('certTotalSubjects').textContent = completedSubjectCount;
+        document.getElementById('certTotalSubjects').textContent = completedSubjectCount || subjectDetails.length;
         document.getElementById('certAverageScore').textContent = averagePct + '%';
         
         // Grade
