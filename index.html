@@ -456,7 +456,7 @@
             </button>
         </div>
 
-        <!-- CERTIFICATE VIEW - Professional -->
+        <!-- CERTIFICATE VIEW -->
         <div class="view" id="certificateView">
             <div class="certificate-card">
                 <div class="text-center">
@@ -1717,6 +1717,24 @@
         renderProgress();
     }
 
+    // ============ FIXED: Fresh fetch for certificate ============
+    async function fetchFreshProgress(userId) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&select=*`, {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not fetch fresh progress:', error);
+        }
+        return [];
+    }
+
     async function saveProgress(userId, subjectId, score, total, lastIndex = null, status = 'completed') {
         try {
             const payload = {
@@ -2004,6 +2022,7 @@
         });
     }
 
+    // ============ FIXED: markSubjectComplete - No longer adds fake 0% scores ============
     function markSubjectComplete(subjectId) {
         if (!currentUser) {
             showToast('Please login first', 'error');
@@ -2016,16 +2035,22 @@
         const subject = allSubjects.find(s => s.id === subjectId);
         if (!subject) return;
         
+        // Check if there's actual progress for this subject (quiz attempted)
+        const progress = learnerProgress[currentUser.id] || [];
+        const hasRealProgress = progress.some(p => p.subject_id === subjectId && p.total_questions > 0);
+        
+        // Only mark as completed if there's actual quiz progress
+        if (!hasRealProgress) {
+            showToast('⚠️ Please complete the quiz first before marking as complete!', 'error');
+            return;
+        }
+        
         completedSubjects.add(subjectId);
         const key = `completed_${currentUser.id}`;
         const stored = JSON.parse(localStorage.getItem(key) || '[]');
         if (!stored.includes(subjectId)) {
             stored.push(subjectId);
             localStorage.setItem(key, JSON.stringify(stored));
-        }
-        
-        if (currentUser && currentUser.id) {
-            saveProgress(currentUser.id, subjectId, 0, 0, null, 'completed');
         }
         
         renderSubjects();
@@ -2044,28 +2069,37 @@
         const completed = completedSubjects.size;
         document.getElementById('progressText').textContent = `${completed} of ${total} completed`;
         document.getElementById('progressBar').style.width = total > 0 ? `${(completed / total) * 100}%` : '0%';
+        
+        // Check if all subjects are completed
         if (completed === total && total > 0) {
-            // Show certificate with scores from learnerProgress
+            // Show certificate with fresh data
             showCertificateWithScores();
         }
         updateProfile();
     }
 
-    // ============ CERTIFICATE WITH AVERAGE SCORES ============
-    function showCertificateWithScores() {
+    // ============ FIXED: Certificate with fresh data ============
+    async function showCertificateWithScores() {
         if (!currentUser) return;
         
-        // Load subject scores from learnerProgress (already loaded)
-        const progress = learnerProgress[currentUser.id] || [];
+        showToast('📊 Loading your scores...', 'info');
+        
+        // Fetch fresh progress directly from Supabase
+        const freshProgress = await fetchFreshProgress(currentUser.id);
+        
         let totalScore = 0;
         let totalQuestions = 0;
         let subjectDetails = [];
         let completedSubjectCount = 0;
         
-        // Only include subjects that are marked as completed in the 'completedSubjects' set
-        // but we can also use all subjects that have progress
+        // Only include subjects that have actual quiz attempts (total_questions > 0)
+        const validProgress = freshProgress.filter(p => p.total_questions > 0);
+        
+        // Get unique subject IDs from valid progress
+        const subjectIdsWithProgress = new Set(validProgress.map(p => p.subject_id));
+        
         allSubjects.forEach(subject => {
-            const subProgress = progress.find(p => p.subject_id === subject.id);
+            const subProgress = validProgress.find(p => p.subject_id === subject.id);
             if (subProgress) {
                 const pct = subProgress.total_questions > 0 ? Math.round((subProgress.score / subProgress.total_questions) * 100) : 0;
                 subjectDetails.push({
@@ -2073,20 +2107,11 @@
                     score: subProgress.score,
                     total: subProgress.total_questions,
                     percentage: pct,
-                    passed: pct >= 50
+                    passed: pct >= 50,
+                    status: subProgress.status || 'completed'
                 });
                 totalScore += subProgress.score;
                 totalQuestions += subProgress.total_questions;
-                completedSubjectCount++;
-            } else if (completedSubjects.has(subject.id)) {
-                // If marked complete but no score (e.g., by "Mark Complete" button), treat as 0%
-                subjectDetails.push({
-                    name: subject.name,
-                    score: 0,
-                    total: 0,
-                    percentage: 0,
-                    passed: false
-                });
                 completedSubjectCount++;
             }
         });
@@ -2096,7 +2121,7 @@
         // Update certificate
         document.getElementById('certUsername').textContent = currentUser.username;
         document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        document.getElementById('certTotalSubjects').textContent = completedSubjectCount || subjectDetails.length;
+        document.getElementById('certTotalSubjects').textContent = completedSubjectCount;
         document.getElementById('certAverageScore').textContent = averagePct + '%';
         
         // Grade
@@ -2112,7 +2137,7 @@
         // Subject breakdown
         let breakdownHTML = '';
         if (subjectDetails.length === 0) {
-            breakdownHTML = `<div style="text-align:center;color:#94a3b8;font-size:12px;">No subject scores available</div>`;
+            breakdownHTML = `<div style="text-align:center;color:#94a3b8;font-size:12px;padding:12px 0;">No completed subjects with scores yet.<br>Complete quizzes to earn your certificate!</div>`;
         } else {
             subjectDetails.forEach(s => {
                 const statusClass = s.passed ? 'pass' : 'fail';
@@ -2178,11 +2203,12 @@
             completedSubjects.add(currentSubject);
             totalQuestionsAnswered += currentQuestions.length;
             if (currentUser && currentUser.id) {
+                // Save with actual score
                 saveProgress(currentUser.id, currentSubject, score, currentQuestions.length, currentQuestions.length, 'completed');
             }
             updateProgress();
             const subjectName = document.getElementById('quizSubjectTitle').textContent;
-            showToast(`🎉 Completed ${subjectName}!`, 'success');
+            showToast(`🎉 Completed ${subjectName}! Score: ${score}/${currentQuestions.length}`, 'success');
             goToSubjects();
             return;
         }
@@ -2836,6 +2862,7 @@
     window.filterProgress = filterProgress;
     window.toggleProgressDetail = toggleProgressDetail;
     window.saveProgress = saveProgress;
+    window.fetchFreshProgress = fetchFreshProgress;
     window.getResumePoint = getResumePoint;
     window.markSubjectComplete = markSubjectComplete;
     window.getSubjectIcon = getSubjectIcon;
