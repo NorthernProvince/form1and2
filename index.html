@@ -1861,6 +1861,22 @@
                     }
                     learnerProgress[record.user_id].push(record);
                 });
+                
+                // Also update completed subjects for current user
+                if (currentUser && currentUser.id) {
+                    const userProgress = learnerProgress[currentUser.id] || [];
+                    userProgress.forEach(record => {
+                        if (record.status === 'completed' || record.status === 'done') {
+                            completedSubjects.add(record.subject_id);
+                        }
+                        if (record.score === record.total_questions && record.total_questions > 0) {
+                            completedSubjects.add(record.subject_id);
+                        }
+                    });
+                    // Save to localStorage
+                    const key = `completed_${currentUser.id}`;
+                    localStorage.setItem(key, JSON.stringify([...completedSubjects]));
+                }
             }
         } catch (error) {
             console.warn('⚠️ Could not load progress:', error);
@@ -1953,6 +1969,40 @@
         return null;
     }
 
+    // ============ SYNC COMPLETED SUBJECTS ============
+    async function syncCompletedSubjectsFromSupabase() {
+        if (!currentUser || !currentUser.id) return;
+        
+        try {
+            const freshProgress = await fetchFreshProgress(currentUser.id);
+            if (freshProgress && freshProgress.length > 0) {
+                // Clear existing completed subjects from Set
+                // Don't clear completely, merge with existing
+                freshProgress.forEach(record => {
+                    if (record.status === 'completed' || record.status === 'done') {
+                        completedSubjects.add(record.subject_id);
+                    }
+                    // Also mark as completed if all questions answered
+                    if (record.score === record.total_questions && record.total_questions > 0) {
+                        completedSubjects.add(record.subject_id);
+                    }
+                });
+                
+                // Save to localStorage for persistence
+                if (currentUser && currentUser.id) {
+                    const key = `completed_${currentUser.id}`;
+                    localStorage.setItem(key, JSON.stringify([...completedSubjects]));
+                }
+                
+                console.log(`✅ Synced ${completedSubjects.size} completed subjects from Supabase`);
+                return true;
+            }
+        } catch (error) {
+            console.warn('⚠️ Could not sync completed subjects:', error);
+        }
+        return false;
+    }
+
     function renderProgress() {
         const container = document.getElementById('progressList');
         if (!container) return;
@@ -1972,7 +2022,7 @@
         
         filtered.forEach(user => {
             const progress = learnerProgress[user.id] || [];
-            const completedSubjectIds = progress.map(p => p.subject_id);
+            const completedSubjectIds = progress.filter(p => p.status === 'completed' || p.status === 'done' || (p.score === p.total_questions && p.total_questions > 0)).map(p => p.subject_id);
             const totalSubjects = allSubjects.length;
             const completed = completedSubjectIds.length;
             const percentage = totalSubjects > 0 ? Math.round((completed / totalSubjects) * 100) : 0;
@@ -2180,7 +2230,12 @@
         
         allSubjects.forEach(subject => {
             const isSelected = selectedSubjects.has(subject.id);
-            const isCompleted = completedSubjects.has(subject.id);
+            // Check if subject is completed - from the Set or from progress data
+            const isCompleted = completedSubjects.has(subject.id) || 
+                (currentUser && learnerProgress[currentUser.id] && 
+                 learnerProgress[currentUser.id].some(p => p.subject_id === subject.id && 
+                     (p.status === 'completed' || p.status === 'done')));
+            
             const isSelectedAndCompleted = isSelected && isCompleted;
             
             const icon = subject.icon || getSubjectIcon(subject.name);
@@ -2468,7 +2523,6 @@
         for (let i = 0; i < total; i++) {
             let cls = 'progress-dot';
             if (i < currentIndex) {
-                // Check if this question was answered correctly (we track this separately)
                 cls += ' answered';
             }
             if (i === currentIndex) {
@@ -2863,6 +2917,130 @@
         document.getElementById('fileInput').value = '';
     }
 
+    // ============ ADMIN: ADD SUBJECT ============
+    async function addSubject() {
+        const name = document.getElementById('subjectName').value.trim();
+        const icon = document.getElementById('subjectIcon').value.trim() || getSubjectIcon(name);
+        const color = document.getElementById('subjectColor').value.trim() || getSubjectColor(name);
+        if (!name) {
+            showToast('Please enter a subject name', 'error');
+            return;
+        }
+        const result = await addSubjectToDB(name, icon, color);
+        if (result) {
+            showToast(`✅ Subject "${name}" added!`, 'success');
+            await loadSubjects();
+            updateTeacherSubjects();
+            updateQuestionSubjectSelect();
+            updateUploadSubjectSelect();
+            document.getElementById('subjectName').value = '';
+            document.getElementById('subjectIcon').value = '';
+            document.getElementById('subjectColor').value = '';
+            toggleAddSubject();
+        } else {
+            showToast('Error adding subject', 'error');
+        }
+    }
+
+    async function deleteSubject(subjectId) {
+        if (!confirm('Delete this subject and all its questions?')) return;
+        const success = await deleteSubjectFromDB(subjectId);
+        if (success) {
+            showToast('Subject deleted', 'info');
+            await loadSubjects();
+            updateTeacherSubjects();
+            updateQuestionSubjectSelect();
+            updateUploadSubjectSelect();
+        } else {
+            showToast('Error deleting subject', 'error');
+        }
+    }
+
+    // ============ ADMIN: ADD STUDENT ============
+    async function addStudent() {
+        const username = document.getElementById('studentUsername').value.trim();
+        const password = document.getElementById('studentPassword').value.trim();
+        if (!username || !password) {
+            showToast('Please enter username and password', 'error');
+            return;
+        }
+        const exists = await checkUserExists(username);
+        if (exists) {
+            showToast('Username already exists', 'error');
+            return;
+        }
+        const newUser = await createUser(username, password);
+        if (newUser) {
+            showToast(`✅ Student "${username}" created!`, 'success');
+            await loadUsers();
+            document.getElementById('studentUsername').value = '';
+            document.getElementById('studentPassword').value = '';
+            toggleAddStudent();
+        } else {
+            showToast('Error creating student', 'error');
+        }
+    }
+
+    async function deleteStudent(userId) {
+        if (!confirm('Delete this student account?')) return;
+        const success = await deleteUser(userId);
+        if (success) {
+            showToast('Student deleted', 'info');
+            await loadUsers();
+        } else {
+            showToast('Error deleting student', 'error');
+        }
+    }
+
+    // ============ ADMIN: ADD QUESTION ============
+    async function addQuestionTeacher() {
+        const subjectId = document.getElementById('questionSubjectSelect').value;
+        const question = document.getElementById('questionTextInput').value.trim();
+        const options = [
+            document.getElementById('optionA').value.trim(),
+            document.getElementById('optionB').value.trim(),
+            document.getElementById('optionC').value.trim(),
+            document.getElementById('optionD').value.trim()
+        ];
+        const correct = parseInt(document.getElementById('correctAnswer').value);
+        if (!subjectId || !question || options.some(o => !o)) {
+            showToast('Please fill all fields', 'error');
+            return;
+        }
+        const result = await addQuestionToDB(subjectId, question, options, correct);
+        if (result) {
+            showToast('✅ Question added!', 'success');
+            document.getElementById('questionTextInput').value = '';
+            ['optionA', 'optionB', 'optionC', 'optionD'].forEach(id => document.getElementById(id).value = '');
+            await loadQuestionsForTeacher();
+            let totalQ = 0;
+            for (const subject of allSubjects) {
+                const qs = await fetchQuestions(subject.id);
+                totalQ += qs.length;
+            }
+            document.getElementById('statQuestions').textContent = totalQ;
+        } else {
+            showToast('Error adding question', 'error');
+        }
+    }
+
+    async function deleteQuestionTeacher(questionId) {
+        if (!confirm('Delete this question?')) return;
+        const success = await deleteQuestionFromDB(questionId);
+        if (success) {
+            showToast('Question deleted', 'info');
+            await loadQuestionsForTeacher();
+            let totalQ = 0;
+            for (const subject of allSubjects) {
+                const qs = await fetchQuestions(subject.id);
+                totalQ += qs.length;
+            }
+            document.getElementById('statQuestions').textContent = totalQ;
+        } else {
+            showToast('Error deleting question', 'error');
+        }
+    }
+
     // ============ INIT ============
     async function init() {
         checkAuth();
@@ -2875,9 +3053,14 @@
                 fab.style.display = 'none';
             }
         });
+        
         await loadSubjects();
         await loadUsers();
         await loadProgress();
+        
+        // IMPORTANT: Sync completed subjects from Supabase after loading progress
+        await syncCompletedSubjectsFromSupabase();
+        
         loadSelectedSubjects();
         renderSubjects();
         updateProgress();
@@ -2941,7 +3124,6 @@
     window.renderStudents = renderStudents;
     window.deleteStudent = deleteStudent;
     window.filterStudents = filterStudents;
-    window.pickIcon = pickIcon;
     window.downloadTemplate = downloadTemplate;
     window.handleFileUpload = handleFileUpload;
     window.uploadQuestions = uploadQuestions;
@@ -2975,6 +3157,7 @@
     window.showCertificateWithScores = showCertificateWithScores;
     window.toggleSubjectSelection = toggleSubjectSelection;
     window.selectAllSubjects = selectAllSubjects;
+    window.syncCompletedSubjectsFromSupabase = syncCompletedSubjectsFromSupabase;
     window.startFreeTrial = function() {
         showToast('📚 Select your subjects in the Subjects tab, then go to Profile to start learning!', 'info');
     };
