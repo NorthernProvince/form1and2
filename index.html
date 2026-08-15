@@ -49,6 +49,12 @@
         .subject-card .mark-done-btn:active { transform:scale(0.95); }
         .subject-card.completed .mark-done-btn { display:none; }
         .subject-card .mark-done-btn i { margin-right:4px; }
+        .subject-card .select-subject-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:#22c55e; color:white; font-size:9px; font-weight:700; padding:4px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; border:none; box-shadow:0 2px 8px rgba(34,197,94,0.25); }
+        .subject-card .select-subject-btn:active { transform:scale(0.95); }
+        .subject-card.selected .select-subject-btn { background:#22c55e; }
+        .subject-card.selected { border-color:#22c55e; background:rgba(34,197,94,0.04); }
+        .subject-card .remove-subject-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:#ef4444; color:white; font-size:9px; font-weight:700; padding:4px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; border:none; box-shadow:0 2px 8px rgba(239,68,68,0.25); }
+        .subject-card .remove-subject-btn:active { transform:scale(0.95); }
         
         .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
         
@@ -86,7 +92,7 @@
         .bg-gold { background:#1a5276; }
         .divider { height:1px; background:#dce4ec; margin:10px 0; }
         
-        /* PROFESSIONAL CERTIFICATE CARD */
+        /* CERTIFICATE CARD */
         .certificate-card { background:linear-gradient(145deg,#f8fafc,#ffffff); border-radius:20px; padding:28px 20px; border:3px solid #d4af37; position:relative; overflow:hidden; }
         .certificate-card::before { content:''; position:absolute; inset:6px; border:2px dashed rgba(212,175,55,0.3); border-radius:16px; pointer-events:none; }
         .certificate-title { font-size:22px; font-weight:800; color:#1a2332; letter-spacing:1px; }
@@ -210,6 +216,12 @@
         .admin-stat-card .admin-stat-number { font-size:22px; font-weight:800; color:#1a5276; }
         .admin-stat-card .admin-stat-label { font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
         .admin-stat-card .admin-stat-icon { font-size:16px; color:#1a5276; opacity:0.3; margin-bottom:4px; }
+        
+        .subject-selection-banner { background:white; border-radius:12px; padding:12px 16px; border:1px solid #e8edf2; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; }
+        .subject-selection-banner .info { font-size:12px; color:#64748b; }
+        .subject-selection-banner .info strong { color:#1a5276; }
+        .subject-selection-banner .btn-select-all { background:#1a5276; color:white; border:none; padding:6px 14px; border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; }
+        .subject-selection-banner .btn-select-all:active { transform:scale(0.95); }
     </style>
 </head>
 <body>
@@ -330,8 +342,18 @@
         <div class="view" id="subjectsView">
             <div class="subjects-header">
                 <div class="subjects-title"><i class="fas fa-book-open"></i> My Subjects</div>
-                <div class="subjects-stats" id="progressText">0 of 0 completed</div>
+                <div class="subjects-stats" id="progressText">0 of 0 selected</div>
             </div>
+            
+            <!-- Subject Selection Banner -->
+            <div class="subject-selection-banner">
+                <div class="info">
+                    <i class="fas fa-info-circle" style="color:#1a5276;"></i>
+                    Select the subjects you want to study. Complete all selected to earn your certificate!
+                </div>
+                <button class="btn-select-all" onclick="selectAllSubjects()">Select All</button>
+            </div>
+            
             <div class="progress-track mb-3">
                 <div class="progress-fill" id="progressBar" style="width:0%"></div>
             </div>
@@ -354,12 +376,12 @@
                 <div class="divider" style="margin:12px 0;"></div>
                 <div class="profile-stats">
                     <div class="profile-stat">
-                        <div class="number" id="statSubjectsCompleted">0</div>
-                        <div class="label">Subjects Done</div>
+                        <div class="number" id="statSubjectsSelected">0</div>
+                        <div class="label">Selected</div>
                     </div>
                     <div class="profile-stat">
-                        <div class="number" id="statQuestionsAnswered">0</div>
-                        <div class="label">Questions</div>
+                        <div class="number" id="statSubjectsCompleted">0</div>
+                        <div class="label">Completed</div>
                     </div>
                     <div class="profile-stat">
                         <div class="number" id="statFriends">0</div>
@@ -465,10 +487,9 @@
                     <div class="divider"></div>
                     <p class="certificate-subtitle">This certifies that</p>
                     <p class="text-2xl font-bold text-blue-700 mt-2" id="certUsername">Student</p>
-                    <p class="certificate-subtitle mt-1">has successfully completed all subjects</p>
+                    <p class="certificate-subtitle mt-1" id="certCompletionText">has successfully completed all selected subjects</p>
                     <div class="divider"></div>
                     
-                    <!-- Average Score Display -->
                     <div class="mt-2">
                         <div class="certificate-score" id="certAverageScore">0%</div>
                         <div class="certificate-score-label">Overall Average Score</div>
@@ -477,7 +498,6 @@
                     
                     <div class="divider"></div>
                     
-                    <!-- Subject Breakdown -->
                     <div style="text-align:left; margin-top:8px;">
                         <p style="font-size:11px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Subject Breakdown</p>
                         <div id="certSubjectBreakdown"></div>
@@ -820,6 +840,7 @@
     let score = 0;
     let answered = false;
     let completedSubjects = new Set();
+    let selectedSubjects = new Set(); // Subjects the learner has chosen
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
     let isTeacherLoggedIn = false;
@@ -1043,7 +1064,7 @@
                 currentUser = { username: newUser.username, password: newUser.password, id: newUser.id, role: newUser.role || 'student', is_premium: true };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
-                showToast(`🎉 Welcome, ${username}! All subjects are FREE!`, 'success');
+                showToast(`🎉 Welcome, ${username}! Select your subjects to begin!`, 'success');
                 showView('subjectsView');
                 renderSubjects();
                 updateProgress();
@@ -1256,8 +1277,8 @@
         document.getElementById('profileName').textContent = currentUser.username;
         document.getElementById('profileUsername').textContent = '@' + currentUser.username.toLowerCase();
         document.getElementById('profileAvatar').innerHTML = '<i class="fas fa-user"></i>';
+        document.getElementById('statSubjectsSelected').textContent = selectedSubjects.size;
         document.getElementById('statSubjectsCompleted').textContent = completedSubjects.size;
-        document.getElementById('statQuestionsAnswered').textContent = totalQuestionsAnswered;
         document.getElementById('statFriends').textContent = friends.length;
     }
 
@@ -1536,7 +1557,7 @@
     }
 
     function showHelp() { 
-        showToast('❤️ NorthernQuiz is FREE! Support us with a donation if you can.', 'info'); 
+        showToast('📚 Select your subjects, complete them, and earn your certificate!', 'info'); 
     }
 
     function toggleUserMenu() {
@@ -1717,7 +1738,6 @@
         renderProgress();
     }
 
-    // ============ FIXED: Fresh fetch for certificate ============
     async function fetchFreshProgress(userId) {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&select=*`, {
@@ -1846,7 +1866,6 @@
             const date = new Date(user.created_at).toLocaleDateString();
             const hasProgress = progress.length > 0;
             
-            // Calculate average score for this user
             let avgScore = 0;
             if (hasProgress) {
                 let totalScore = 0;
@@ -1959,6 +1978,62 @@
         }
     }
 
+    // ============ SUBJECT SELECTION ============
+    function toggleSubjectSelection(subjectId) {
+        if (!currentUser) {
+            showToast('Please login first', 'error');
+            return;
+        }
+        
+        if (selectedSubjects.has(subjectId)) {
+            selectedSubjects.delete(subjectId);
+            showToast('Subject removed from your selection', 'info');
+        } else {
+            selectedSubjects.add(subjectId);
+            showToast('Subject added to your selection!', 'success');
+        }
+        
+        // Save selection to localStorage
+        const key = `selected_${currentUser.id}`;
+        localStorage.setItem(key, JSON.stringify([...selectedSubjects]));
+        
+        renderSubjects();
+        updateProgress();
+        updateProfile();
+    }
+
+    function selectAllSubjects() {
+        if (!currentUser) {
+            showToast('Please login first', 'error');
+            return;
+        }
+        
+        allSubjects.forEach(subject => {
+            selectedSubjects.add(subject.id);
+        });
+        
+        const key = `selected_${currentUser.id}`;
+        localStorage.setItem(key, JSON.stringify([...selectedSubjects]));
+        
+        renderSubjects();
+        updateProgress();
+        updateProfile();
+        showToast(`✅ All ${allSubjects.length} subjects selected!`, 'success');
+    }
+
+    function loadSelectedSubjects() {
+        if (currentUser) {
+            const key = `selected_${currentUser.id}`;
+            const stored = localStorage.getItem(key);
+            if (stored) {
+                try {
+                    const data = JSON.parse(stored);
+                    data.forEach(id => selectedSubjects.add(id));
+                } catch(e) {}
+            }
+        }
+    }
+
     // ============ RENDER SUBJECTS ============
     function renderSubjects() {
         const grid = document.getElementById('subjectGrid');
@@ -1969,39 +2044,68 @@
         }
         
         allSubjects.forEach(subject => {
+            const isSelected = selectedSubjects.has(subject.id);
             const isCompleted = completedSubjects.has(subject.id);
+            const isSelectedAndCompleted = isSelected && isCompleted;
             
             const icon = subject.icon || getSubjectIcon(subject.name);
             const color = subject.color || getSubjectColor(subject.name);
             
             const card = document.createElement('div');
-            let cardClass = `subject-card ${isCompleted ? 'completed border-green-500/30' : ''}`;
+            let cardClass = `subject-card`;
+            if (isSelectedAndCompleted) cardClass += ' completed border-green-500/30';
+            else if (isSelected) cardClass += ' selected';
             
-            let cardContent = `
+            let actionButton = '';
+            if (isSelectedAndCompleted) {
+                actionButton = `<div class="check-mark"><i class="fas fa-check"></i></div>`;
+            } else if (isSelected) {
+                actionButton = `
+                    <button class="remove-subject-btn" onclick="event.stopPropagation(); toggleSubjectSelection('${subject.id}')">
+                        <i class="fas fa-times"></i> Remove
+                    </button>
+                `;
+            } else {
+                actionButton = `
+                    <button class="select-subject-btn" onclick="event.stopPropagation(); toggleSubjectSelection('${subject.id}')">
+                        <i class="fas fa-plus"></i> Select
+                    </button>
+                `;
+            }
+            
+            let statusBadge = '';
+            if (isSelectedAndCompleted) {
+                statusBadge = `<div style="position:absolute;top:10px;right:10px;font-size:9px;background:rgba(34,197,94,0.1);color:#16a34a;padding:2px 10px;border-radius:10px;">✅ Done</div>`;
+            } else if (isSelected) {
+                statusBadge = `<div style="position:absolute;top:10px;right:10px;font-size:9px;background:rgba(26,82,118,0.08);color:#1a5276;padding:2px 10px;border-radius:10px;">📘 Selected</div>`;
+            }
+            
+            card.className = cardClass;
+            card.style.background = isSelectedAndCompleted ? 'rgba(34,197,94,0.04)' : 'white';
+            card.innerHTML = `
                 <div class="icon-wrapper" style="background:${color.includes('from') ? `linear-gradient(135deg, ${color.replace('from-', '').replace('to-', '').replace(/-/g, ' ')} )` : '#1a5276'}">
                     <i class="fas ${icon}"></i>
                 </div>
                 <div class="subject-name">${subject.name}</div>
                 <div class="subject-count">Loading...</div>
-                ${isCompleted ? `<div class="check-mark"><i class="fas fa-check"></i></div>` : ''}
-                ${!isCompleted ? `<button class="mark-done-btn" onclick="event.stopPropagation(); markSubjectComplete('${subject.id}')"><i class="fas fa-check-circle"></i> Mark Complete</button>` : ''}
+                ${statusBadge}
+                ${actionButton}
                 <span class="resume-badge"></span>
             `;
             
-            card.className = cardClass;
-            card.style.background = isCompleted ? 'rgba(34,197,94,0.04)' : 'white';
-            card.innerHTML = cardContent;
-            
-            if (currentUser && !isCompleted) {
-                getResumePoint(currentUser.id, subject.id).then(resume => {
-                    if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
-                        const badge = card.querySelector('.resume-badge');
-                        if (badge) {
-                            badge.textContent = `▶️ Q${resume.last_question_index + 1}`;
-                            badge.style.display = 'inline-block';
-                        }
-                    }
-                });
+            // If selected and completed, make it clickable to view certificate
+            if (isSelectedAndCompleted) {
+                card.onclick = () => {
+                    showCertificateWithScores();
+                };
+            } else if (isSelected && !isCompleted) {
+                card.onclick = async () => {
+                    await startQuiz(subject.id, subject.name);
+                };
+            } else {
+                card.onclick = () => {
+                    showToast('📚 Select this subject to start learning!', 'info');
+                };
             }
             
             fetchQuestions(subject.id).then(questions => {
@@ -2011,18 +2115,11 @@
                 }
             });
             
-            card.onclick = async () => {
-                if (isCompleted) {
-                    showToast('✅ You already completed this subject!', 'info');
-                    return;
-                }
-                await startQuiz(subject.id, subject.name);
-            };
             grid.appendChild(card);
         });
     }
 
-    // ============ FIXED: markSubjectComplete - No longer adds fake 0% scores ============
+    // ============ MARK SUBJECT COMPLETE ============
     function markSubjectComplete(subjectId) {
         if (!currentUser) {
             showToast('Please login first', 'error');
@@ -2039,7 +2136,6 @@
         const progress = learnerProgress[currentUser.id] || [];
         const hasRealProgress = progress.some(p => p.subject_id === subjectId && p.total_questions > 0);
         
-        // Only mark as completed if there's actual quiz progress
         if (!hasRealProgress) {
             showToast('⚠️ Please complete the quiz first before marking as complete!', 'error');
             return;
@@ -2065,40 +2161,40 @@
             const stored = JSON.parse(localStorage.getItem(key) || '[]');
             stored.forEach(id => completedSubjects.add(id));
         }
-        const total = allSubjects.length;
-        const completed = completedSubjects.size;
-        document.getElementById('progressText').textContent = `${completed} of ${total} completed`;
-        document.getElementById('progressBar').style.width = total > 0 ? `${(completed / total) * 100}%` : '0%';
         
-        // Check if all subjects are completed
-        if (completed === total && total > 0) {
-            // Show certificate with fresh data
-            showCertificateWithScores();
+        const selected = selectedSubjects.size;
+        const completed = [...selectedSubjects].filter(id => completedSubjects.has(id)).length;
+        
+        document.getElementById('progressText').textContent = `${completed} of ${selected} completed`;
+        document.getElementById('progressBar').style.width = selected > 0 ? `${(completed / selected) * 100}%` : '0%';
+        
+        // Check if all selected subjects are completed
+        if (selected > 0 && completed === selected) {
+            setTimeout(() => showCertificateWithScores(), 500);
         }
         updateProfile();
     }
 
-    // ============ FIXED: Certificate with fresh data ============
+    // ============ CERTIFICATE WITH FRESH DATA ============
     async function showCertificateWithScores() {
         if (!currentUser) return;
         
         showToast('📊 Loading your scores...', 'info');
         
-        // Fetch fresh progress directly from Supabase
         const freshProgress = await fetchFreshProgress(currentUser.id);
         
         let totalScore = 0;
         let totalQuestions = 0;
         let subjectDetails = [];
-        let completedSubjectCount = 0;
+        let completedCount = 0;
         
-        // Only include subjects that have actual quiz attempts (total_questions > 0)
-        const validProgress = freshProgress.filter(p => p.total_questions > 0);
-        
-        // Get unique subject IDs from valid progress
-        const subjectIdsWithProgress = new Set(validProgress.map(p => p.subject_id));
+        // Only include selected subjects that have actual quiz attempts
+        const selectedIds = new Set(selectedSubjects);
+        const validProgress = freshProgress.filter(p => selectedIds.has(p.subject_id) && p.total_questions > 0);
         
         allSubjects.forEach(subject => {
+            if (!selectedIds.has(subject.id)) return;
+            
             const subProgress = validProgress.find(p => p.subject_id === subject.id);
             if (subProgress) {
                 const pct = subProgress.total_questions > 0 ? Math.round((subProgress.score / subProgress.total_questions) * 100) : 0;
@@ -2112,19 +2208,29 @@
                 });
                 totalScore += subProgress.score;
                 totalQuestions += subProgress.total_questions;
-                completedSubjectCount++;
+                completedCount++;
+            } else if (completedSubjects.has(subject.id)) {
+                // Marked complete but no score - show as completed but no score
+                subjectDetails.push({
+                    name: subject.name,
+                    score: 0,
+                    total: 0,
+                    percentage: 0,
+                    passed: false,
+                    status: 'completed'
+                });
+                completedCount++;
             }
         });
         
         const averagePct = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
         
-        // Update certificate
         document.getElementById('certUsername').textContent = currentUser.username;
         document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        document.getElementById('certTotalSubjects').textContent = completedSubjectCount;
+        document.getElementById('certTotalSubjects').textContent = completedCount;
         document.getElementById('certAverageScore').textContent = averagePct + '%';
+        document.getElementById('certCompletionText').textContent = `has successfully completed ${completedCount} of ${selectedSubjects.size} selected subjects`;
         
-        // Grade
         let gradeClass = 'average';
         let gradeText = 'Average';
         if (averagePct >= 80) { gradeClass = 'excellent'; gradeText = 'Excellent! 🌟'; }
@@ -2134,19 +2240,19 @@
         
         document.getElementById('certGrade').innerHTML = `<span class="certificate-grade ${gradeClass}">${gradeText}</span>`;
         
-        // Subject breakdown
         let breakdownHTML = '';
         if (subjectDetails.length === 0) {
-            breakdownHTML = `<div style="text-align:center;color:#94a3b8;font-size:12px;padding:12px 0;">No completed subjects with scores yet.<br>Complete quizzes to earn your certificate!</div>`;
+            breakdownHTML = `<div style="text-align:center;color:#94a3b8;font-size:12px;padding:12px 0;">Complete quizzes to see your scores!</div>`;
         } else {
             subjectDetails.forEach(s => {
                 const statusClass = s.passed ? 'pass' : 'fail';
                 const statusText = s.passed ? '✅ Pass' : '❌ Fail';
+                const scoreDisplay = s.total > 0 ? `${s.percentage}%` : 'No score';
                 breakdownHTML += `
                     <div class="certificate-subject-item">
                         <span class="subject">${s.name}</span>
                         <span>
-                            <span class="subject-score">${s.percentage}%</span>
+                            <span class="subject-score">${scoreDisplay}</span>
                             <span class="subject-status ${statusClass}">${statusText}</span>
                         </span>
                     </div>
@@ -2157,7 +2263,6 @@
         
         showView('certificateView');
         
-        // Confetti
         if (typeof confetti !== 'undefined') {
             confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
             setTimeout(() => confetti({ particleCount: 100, spread: 60, origin: { y: 0.4 } }), 300);
@@ -2166,6 +2271,12 @@
 
     // ============ QUIZ FUNCTIONS ============
     async function startQuiz(subjectId, subjectName) {
+        // Check if subject is selected
+        if (!selectedSubjects.has(subjectId)) {
+            showToast('📚 Please select this subject first!', 'error');
+            return;
+        }
+        
         try {
             const questions = await fetchQuestions(subjectId);
             if (!questions || questions.length === 0) {
@@ -2203,7 +2314,6 @@
             completedSubjects.add(currentSubject);
             totalQuestionsAnswered += currentQuestions.length;
             if (currentUser && currentUser.id) {
-                // Save with actual score
                 saveProgress(currentUser.id, currentSubject, score, currentQuestions.length, currentQuestions.length, 'completed');
             }
             updateProgress();
@@ -2794,10 +2904,13 @@
         await loadSubjects();
         await loadUsers();
         await loadProgress();
+        loadSelectedSubjects();
+        renderSubjects();
+        updateProgress();
+        updateProfile();
         console.log('🇿🇲 NorthernQuiz loaded!');
-        console.log('❤️ NorthernQuiz is FREE! Support us with a donation if you can.');
+        console.log('📚 Learners can select their own subjects!');
         console.log('📱 WhatsApp: 0966 011 066 for support');
-        console.log('📊 Learner Progress tracking enabled with resume support!');
     }
 
     function checkAuth() {
@@ -2886,8 +2999,10 @@
     window.teacherGrantPremium = teacherGrantPremium;
     window.teacherRevokePremium = teacherRevokePremium;
     window.showCertificateWithScores = showCertificateWithScores;
+    window.toggleSubjectSelection = toggleSubjectSelection;
+    window.selectAllSubjects = selectAllSubjects;
     window.startFreeTrial = function() {
-        showToast('❤️ NorthernQuiz is FREE! Support us with a donation if you can.', 'info');
+        showToast('📚 Select your subjects and start learning!', 'info');
     };
 </script>
 </body>
