@@ -8,12 +8,334 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
-        /* ... (all previous styles remain the same, plus chatbot styles) ... */
-        
-        /* Chatbot Styles */
+        /* ===== RESET & BASE ===== */
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        body { font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background:#e8edf2; overflow:hidden; height:100vh; width:100vw; position:fixed; }
+        .app-container { max-width:430px; width:100%; height:100vh; height:100dvh; margin:0 auto; background:#f0f4f8; position:relative; overflow:hidden; display:flex; flex-direction:column; }
+
+        /* ===== HEADER ===== */
+        .app-header { background:#1a5276; padding:14px 16px 12px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; z-index:40; box-shadow:0 2px 10px rgba(26,82,118,0.3); }
+        .header-brand { display:flex; align-items:center; gap:10px; }
+        .brand-icon { width:38px; height:38px; background:white; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; box-shadow:0 2px 8px rgba(0,0,0,0.1); color:#1a5276; }
+        .brand-text { color:white; font-weight:700; font-size:20px; letter-spacing:-0.5px; }
+        .brand-text span { color:rgba(255,255,255,0.8); }
+        .header-actions { display:flex; align-items:center; gap:8px; }
+        .header-btn { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.15); border:none; color:white; font-size:15px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; cursor:pointer; }
+        .header-btn:active { transform:scale(0.92); background:rgba(255,255,255,0.25); }
+        .user-avatar { width:36px; height:36px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#1a5276; cursor:pointer; border:2px solid rgba(255,255,255,0.3); }
+        .teacher-login-btn { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2); color:white; padding:4px 10px; border-radius:6px; font-size:10px; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; gap:4px; }
+        .teacher-login-btn:active { transform:scale(0.95); background:rgba(255,255,255,0.25); }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content { flex:1; overflow-y:auto; overflow-x:hidden; padding:12px 12px 70px; -webkit-overflow-scrolling:touch; scroll-behavior:smooth; background:#f0f4f8; }
+        .main-content::-webkit-scrollbar { width:3px; }
+        .main-content::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav { position:fixed; bottom:0; left:0; right:0; max-width:430px; margin:0 auto; background:white; border-top:1px solid #dce4ec; padding:4px 0 env(safe-area-inset-bottom); display:flex; justify-content:space-around; align-items:center; z-index:100; box-shadow:0 -2px 10px rgba(0,0,0,0.04); }
+        .nav-item { display:flex; flex-direction:column; align-items:center; gap:1px; background:none; border:none; color:#94a3b8; font-size:9px; padding:4px 8px; cursor:pointer; transition:all 0.3s; position:relative; min-width:44px; }
+        .nav-item i { font-size:20px; transition:all 0.3s; }
+        .nav-item.active { color:#1a5276; }
+        .nav-item.active i { transform:translateY(-2px); }
+        .nav-item.active::before { content:''; position:absolute; top:-4px; left:50%; transform:translateX(-50%); width:20px; height:3px; background:#1a5276; border-radius:3px; }
+        .nav-item:active { transform:scale(0.9); }
+
+        /* ===== VIEWS ===== */
+        .view { display:none; animation:fadeSlideUp 0.3s cubic-bezier(0.16,1,0.3,1); }
+        .view.active { display:block; }
+        @keyframes fadeSlideUp { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ===== CARDS ===== */
+        .glass-card { background:white; border-radius:16px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); padding:20px; }
+
+        /* ===== SUBJECT CARDS ===== */
+        .subject-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+        .subject-card { background:white; border-radius:16px; padding:16px 14px 14px; transition:all 0.3s cubic-bezier(0.16,1,0.3,1); cursor:pointer; border:1px solid #e8edf2; position:relative; overflow:hidden; min-height:130px; display:flex; flex-direction:column; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+        .subject-card:active { transform:scale(0.96); }
+        .subject-card .icon-wrapper { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px; flex-shrink:0; box-shadow:0 4px 12px rgba(0,0,0,0.08); color:white; position:relative; transition:transform 0.3s; }
+        .subject-card:hover .icon-wrapper { transform:scale(1.05); }
+        .subject-card .icon-wrapper i { font-size:26px; color:white; }
+        .subject-card .subject-name { color:#1a2332; font-weight:700; font-size:14px; line-height:1.2; margin-bottom:2px; }
+        .subject-card .subject-count { color:#94a3b8; font-size:10px; font-weight:500; }
+        .subject-card .check-mark { position:absolute; top:10px; right:10px; width:24px; height:24px; background:#22c55e; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; color:white; box-shadow:0 4px 12px rgba(34,197,94,0.3); }
+        .subject-card .select-subject-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:#22c55e; color:white; font-size:9px; font-weight:700; padding:4px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; border:none; box-shadow:0 2px 8px rgba(34,197,94,0.25); }
+        .subject-card .select-subject-btn:active { transform:scale(0.95); }
+        .subject-card.selected { border-color:#22c55e; background:rgba(34,197,94,0.04); }
+        .subject-card .remove-subject-btn { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:#ef4444; color:white; font-size:9px; font-weight:700; padding:4px 14px; border-radius:20px; cursor:pointer; transition:all 0.3s; white-space:nowrap; z-index:10; border:none; box-shadow:0 2px 8px rgba(239,68,68,0.25); }
+        .subject-card .remove-subject-btn:active { transform:scale(0.95); }
+        .subject-card .completed-badge { position:absolute; top:10px; right:10px; font-size:9px; background:rgba(34,197,94,0.12); color:#16a34a; padding:2px 10px; border-radius:10px; font-weight:600; }
+        .subject-card .resume-badge { position:absolute; top:8px; left:8px; font-size:8px; background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 8px; border-radius:10px; z-index:6; }
+
+        /* ===== OPTIONS ===== */
+        .option-btn { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:13px; font-weight:500; transition:all 0.2s; cursor:pointer; width:100%; text-align:left; display:flex; align-items:center; gap:10px; }
+        .option-btn .option-letter { width:26px; height:26px; border-radius:50%; background:#e8edf2; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#64748b; flex-shrink:0; }
+        .option-btn:active:not(.disabled) { transform:scale(0.98); }
+        .option-btn.correct { background:rgba(34,197,94,0.08); border-color:#22c55e; }
+        .option-btn.correct .option-letter { background:#22c55e; color:white; }
+        .option-btn.wrong { background:rgba(239,68,68,0.08); border-color:#ef4444; }
+        .option-btn.wrong .option-letter { background:#ef4444; color:white; }
+        .option-btn.selected { border-color:#1a5276; }
+        .option-btn.selected .option-letter { background:#1a5276; color:white; }
+        .option-btn.disabled { cursor:default; opacity:0.7; }
+
+        /* ===== QUESTION CARD ===== */
+        .question-card { background:white; border-radius:16px; padding:16px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+        .question-number { color:#94a3b8; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; }
+        .question-text { color:#1a2332; font-size:16px; font-weight:600; line-height:1.5; margin-top:6px; }
+
+        /* ===== QUIZ PROGRESS ===== */
+        .quiz-progress-bar { display:flex; align-items:center; gap:8px; margin-bottom:8px; padding:6px 12px; background:#e8edf2; border-radius:8px; border:1px solid #dce4ec; }
+        .quiz-progress-bar .progress-text { font-size:11px; color:#94a3b8; }
+        .quiz-progress-bar .progress-dots { display:flex; gap:3px; flex:1; overflow:hidden; }
+        .quiz-progress-bar .progress-dot { width:12px; height:12px; border-radius:50%; background:#dce4ec; border:1px solid #dce4ec; flex-shrink:0; transition:all 0.3s; }
+        .quiz-progress-bar .progress-dot.answered { background:#22c55e; border-color:#22c55e; }
+        .quiz-progress-bar .progress-dot.correct { background:#22c55e; border-color:#22c55e; }
+        .quiz-progress-bar .progress-dot.wrong { background:#ef4444; border-color:#ef4444; }
+        .quiz-progress-bar .progress-dot.current { border-color:#1a5276; border-width:2px; transform:scale(1.2); }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary { background:#1a5276; color:white; font-weight:700; padding:14px; border-radius:12px; border:none; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(26,82,118,0.25); }
+        .btn-primary:active { transform:scale(0.96); }
+        .btn-primary:disabled { opacity:0.6; cursor:not-allowed; }
+        .btn-secondary { background:#e8edf2; color:#1a2332; font-weight:600; padding:14px; border-radius:12px; border:1px solid #dce4ec; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
+        .btn-secondary:active { transform:scale(0.96); }
+
+        /* ===== INPUTS ===== */
+        .input-field { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:14px; width:100%; transition:all 0.3s; outline:none; }
+        .input-field:focus { border-color:#1a5276; box-shadow:0 0 0 3px rgba(26,82,118,0.08); }
+        .input-field::placeholder { color:#94a3b8; }
+
+        /* ===== BADGES ===== */
+        .badge { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+        .badge-gold { background:rgba(26,82,118,0.1); color:#1a5276; }
+        .divider { height:1px; background:#dce4ec; margin:10px 0; }
+
+        /* ===== TOAST ===== */
+        .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:#1a2332; padding:12px 24px; border-radius:12px; color:white; font-size:13px; z-index:500; display:none; max-width:360px; text-align:center; font-weight:500; box-shadow:0 8px 30px rgba(0,0,0,0.2); }
+        .toast.show { display:block; animation:fadeSlideUp 0.3s ease; }
+
+        /* ===== FAB ===== */
+        .fab { position:fixed; bottom:72px; right:16px; max-width:430px; margin:0 auto; width:44px; height:44px; border-radius:50%; background:#1a5276; border:none; color:white; font-size:18px; cursor:pointer; box-shadow:0 8px 30px rgba(26,82,118,0.3); display:none; align-items:center; justify-content:center; z-index:50; transition:all 0.3s; }
+        .fab:active { transform:scale(0.9); }
+
+        /* ===== SPINNER ===== */
+        .spinner { display:inline-block; width:18px; height:18px; border:3px solid rgba(255,255,255,0.1); border-top-color:#1a5276; border-radius:50%; animation:spin 0.8s linear infinite; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
+        /* ===== SKELETON ===== */
+        .skeleton { background:linear-gradient(90deg,#dce4ec 25%,#e8edf2 50%,#dce4ec 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:16px; }
+        @keyframes shimmer { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
+
+        /* ===== PROFILE ===== */
+        .profile-card { background:white; border-radius:16px; padding:20px; border:1px solid #dce4ec; box-shadow:0 2px 8px rgba(0,0,0,0.04); text-align:center; }
+        .profile-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#1a5276,#2e86c1); display:flex; align-items:center; justify-content:center; font-size:32px; color:white; margin:0 auto 12px; box-shadow:0 4px 20px rgba(26,82,118,0.3); }
+        .profile-name { font-size:20px; font-weight:700; color:#1a2332; }
+        .profile-username { font-size:14px; color:#94a3b8; }
+        .profile-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px; }
+        .profile-stat { background:#e8edf2; border-radius:10px; padding:10px; text-align:center; }
+        .profile-stat .number { font-size:18px; font-weight:700; color:#1a5276; }
+        .profile-stat .label { font-size:9px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; }
+
+        /* ===== SELECTED SUBJECT ITEMS ===== */
+        .selected-subject-item { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:white; border-radius:10px; border:1px solid #e8edf2; margin-bottom:6px; }
+        .selected-subject-item .subject-info { display:flex; align-items:center; gap:10px; }
+        .selected-subject-item .subject-info .icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; color:white; }
+        .selected-subject-item .subject-info .name { font-weight:600; color:#1a2332; font-size:13px; }
+        .selected-subject-item .subject-info .status { font-size:10px; padding:1px 8px; border-radius:10px; }
+        .selected-subject-item .subject-info .status.done { background:rgba(34,197,94,0.1); color:#16a34a; }
+        .selected-subject-item .subject-info .status.pending { background:rgba(251,191,36,0.1); color:#d97706; }
+        .selected-subject-item .subject-info .status.resume { background:rgba(59,130,246,0.1); color:#2563eb; }
+
+        /* ===== FRIENDS ===== */
+        .friend-item { display:flex; align-items:center; gap:12px; padding:12px 14px; background:white; border-radius:12px; border:1px solid #dce4ec; margin-bottom:8px; cursor:pointer; transition:all 0.2s; }
+        .friend-item:active { transform:scale(0.97); background:#f0f4f8; }
+        .friend-avatar { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; color:white; flex-shrink:0; }
+        .friend-info { flex:1; }
+        .friend-name { font-weight:600; color:#1a2332; font-size:14px; }
+        .friend-status { font-size:11px; color:#94a3b8; }
+        .friend-status.online { color:#22c55e; }
+        .friend-status.offline { color:#94a3b8; }
+        .add-friend-btn { background:#1a5276; color:white; border:none; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+        .add-friend-btn:active { transform:scale(0.95); }
+        .add-friend-btn.added { background:#22c55e; }
+
+        /* ===== CHAT ===== */
+        .chat-container { display:flex; flex-direction:column; height:100%; }
+        .chat-header { background:white; padding:12px 16px; border-bottom:1px solid #dce4ec; display:flex; align-items:center; gap:12px; border-radius:16px 16px 0 0; }
+        .chat-back { background:none; border:none; font-size:18px; color:#64748b; cursor:pointer; padding:4px; }
+        .chat-back:active { transform:scale(0.9); }
+        .chat-messages { flex:1; overflow-y:auto; padding:12px 16px; background:#f0f4f8; min-height:300px; max-height:400px; }
+        .chat-messages::-webkit-scrollbar { width:3px; }
+        .chat-messages::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
+        .message { margin-bottom:8px; max-width:80%; padding:10px 14px; border-radius:12px; font-size:13px; line-height:1.4; animation:fadeSlideUp 0.2s ease; }
+        .message.sent { background:#1a5276; color:white; margin-left:auto; border-bottom-right-radius:4px; }
+        .message.received { background:white; color:#1a2332; border:1px solid #dce4ec; border-bottom-left-radius:4px; }
+        .message .time { font-size:9px; opacity:0.7; margin-top:4px; display:block; }
+        .message.sent .time { color:rgba(255,255,255,0.7); }
+        .message.received .time { color:#94a3b8; }
+        .chat-input-area { display:flex; gap:8px; padding:10px 16px; background:white; border-top:1px solid #dce4ec; border-radius:0 0 16px 16px; }
+        .chat-input { flex:1; border:1px solid #dce4ec; border-radius:20px; padding:10px 16px; font-size:13px; outline:none; transition:all 0.2s; }
+        .chat-input:focus { border-color:#1a5276; }
+        .chat-send { background:#1a5276; color:white; border:none; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; flex-shrink:0; }
+        .chat-send:active { transform:scale(0.9); }
+
+        /* ===== SUBJECT SELECTION BANNER ===== */
+        .subjects-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+        .subjects-title { font-size:18px; font-weight:700; color:#1a2332; }
+        .subjects-title i { color:#1a5276; margin-right:8px; }
+        .subjects-stats { font-size:11px; color:#94a3b8; }
+        .subject-selection-banner { background:white; border-radius:12px; padding:12px 16px; border:1px solid #e8edf2; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; }
+        .subject-selection-banner .info { font-size:12px; color:#64748b; }
+        .subject-selection-banner .info strong { color:#1a5276; }
+        .subject-selection-banner .btn-select-all { background:#1a5276; color:white; border:none; padding:6px 14px; border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; }
+        .subject-selection-banner .btn-select-all:active { transform:scale(0.95); }
+
+        /* ===== ADMIN DASHBOARD ===== */
+        .admin-dashboard { background:white; border-radius:16px; padding:16px; border:1px solid #e8edf2; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+        .admin-dashboard .admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+        .admin-dashboard .admin-header h2 { font-size:18px; font-weight:700; color:#1a2332; display:flex; align-items:center; gap:8px; }
+        .admin-dashboard .admin-header h2 i { color:#1a5276; font-size:20px; }
+        .admin-dashboard .admin-header .logout-btn { background:rgba(239,68,68,0.08); color:#ef4444; border:1px solid rgba(239,68,68,0.12); padding:6px 14px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; }
+        .admin-dashboard .admin-header .logout-btn:active { transform:scale(0.95); }
+        .admin-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:16px; }
+        .admin-stat { background:#f8fafc; border-radius:12px; padding:14px 10px; text-align:center; border:1px solid #e8edf2; }
+        .admin-stat .icon { font-size:22px; color:#1a5276; opacity:0.4; margin-bottom:4px; }
+        .admin-stat .number { font-size:24px; font-weight:800; color:#1a2332; }
+        .admin-stat .label { font-size:10px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px; margin-top:2px; }
+        .admin-tabs { display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; margin-bottom:16px; border-bottom:1px solid #e8edf2; }
+        .admin-tabs::-webkit-scrollbar { height:2px; }
+        .admin-tabs::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
+        .admin-tab { background:transparent; border:none; padding:8px 16px; border-radius:10px; font-size:12px; font-weight:600; color:#94a3b8; cursor:pointer; transition:all 0.3s; white-space:nowrap; display:flex; align-items:center; gap:6px; }
+        .admin-tab:hover { color:#1a2332; background:#e8edf2; }
+        .admin-tab.active { background:#1a5276; color:white; box-shadow:0 2px 10px rgba(26,82,118,0.2); }
+        .admin-tab i { font-size:14px; }
+        .admin-tab-content { display:none; animation:fadeSlideUp 0.3s ease; }
+        .admin-tab-content.active { display:block; }
+        .admin-tab-content h3 { font-size:14px; font-weight:600; color:#1a2332; display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+        .admin-tab-content h3 i { color:#1a5276; }
+        .admin-search { width:100%; padding:8px 12px; border:1px solid #e8edf2; border-radius:8px; font-size:12px; outline:none; margin-bottom:10px; background:white; }
+        .admin-search:focus { border-color:#1a5276; box-shadow:0 0 0 3px rgba(26,82,118,0.06); }
+        .admin-list { max-height:350px; overflow-y:auto; }
+        .admin-list::-webkit-scrollbar { width:3px; }
+        .admin-list::-webkit-scrollbar-thumb { background:#1a5276; border-radius:10px; }
+        .admin-item { background:#f8fafc; border-radius:8px; padding:10px 12px; margin-bottom:6px; border:1px solid #e8edf2; display:flex; justify-content:space-between; align-items:center; }
+        .admin-item .left { display:flex; align-items:center; gap:10px; min-width:0; }
+        .admin-item .left .info .name { font-size:13px; font-weight:600; color:#1a2332; }
+        .admin-item .left .info .details { font-size:11px; color:#94a3b8; margin-top:1px; }
+        .admin-item .left .avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; color:white; flex-shrink:0; }
+        .admin-item .actions { display:flex; gap:4px; align-items:center; }
+        .admin-item .actions .btn-delete { background:transparent; color:#94a3b8; border:none; font-size:14px; cursor:pointer; padding:4px; }
+        .admin-item .actions .btn-delete:active { color:#ef4444; }
+        .admin-add-form { background:#e8edf2; border-radius:10px; padding:12px; margin-bottom:10px; display:none; border:1px solid #dce4ec; }
+        .admin-add-form .form-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+        .admin-add-form .form-row input, .admin-add-form .form-row select { flex:1; min-width:100px; padding:8px 12px; border:1px solid #dce4ec; border-radius:8px; font-size:12px; outline:none; background:white; }
+        .admin-add-form .form-row input:focus, .admin-add-form .form-row select:focus { border-color:#1a5276; }
+        .admin-add-form .form-actions { display:flex; gap:8px; }
+        .admin-add-form .form-actions .btn-save { background:#1a5276; color:white; border:none; padding:6px 16px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px; }
+        .admin-add-form .form-actions .btn-save:active { transform:scale(0.95); }
+        .admin-add-form .form-actions .btn-cancel { background:#e8edf2; color:#64748b; border:1px solid #dce4ec; padding:6px 16px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; }
+        .admin-add-form .form-actions .btn-cancel:active { transform:scale(0.95); }
+
+        /* ===== PROGRESS ===== */
+        .progress-container { background:#e8edf2; border-radius:10px; padding:12px; margin-bottom:8px; border:1px solid #dce4ec; cursor:pointer; transition:all 0.3s; }
+        .progress-container:hover { background:#dce4ec; }
+        .progress-container .learner-name { color:#1a5276; font-weight:600; font-size:14px; }
+        .progress-container .progress-bar-bg { height:6px; background:#dce4ec; border-radius:4px; overflow:hidden; margin:6px 0; }
+        .progress-container .progress-bar-fill { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.6s ease; }
+        .progress-container .subject-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:8px; font-weight:600; margin:2px 3px 2px 0; background:#dce4ec; color:#64748b; }
+        .progress-container .subject-badge.done { background:rgba(34,197,94,0.1); color:#16a34a; }
+        .progress-container .subject-badge.pending { background:rgba(26,82,118,0.06); color:#1a5276; }
+        .progress-container .subject-badge.resume { background:rgba(59,130,246,0.1); color:#2563eb; }
+        .progress-container .last-active { color:#94a3b8; font-size:9px; }
+        .progress-container .score-badge { background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 10px; border-radius:10px; font-size:11px; font-weight:700; }
+        .progress-detail { background:white; border-radius:10px; padding:12px; border:1px solid #dce4ec; margin-top:8px; display:none; }
+        .progress-detail.show { display:block; animation:fadeSlideUp 0.3s ease; }
+        .progress-detail .detail-row { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #e8edf2; font-size:11px; }
+        .progress-detail .detail-row .label { color:#94a3b8; }
+        .progress-detail .detail-row .value { color:#1a2332; font-weight:600; }
+        .progress-detail .detail-row .value.gold { color:#1a5276; }
+        .progress-detail .detail-row .value.green { color:#16a34a; }
+
+        /* ===== UPLOAD ===== */
+        .upload-zone { border:2px dashed #dce4ec; border-radius:12px; padding:20px; text-align:center; transition:all 0.3s; cursor:pointer; background:#f8fafc; }
+        .upload-zone:hover { border-color:#1a5276; background:rgba(26,82,118,0.02); }
+        .upload-zone .upload-icon { font-size:36px; color:#94a3b8; margin-bottom:6px; }
+        .upload-zone .upload-text { color:#64748b; font-size:12px; }
+        .upload-zone .upload-text strong { color:#1a5276; }
+        .upload-preview { margin-top:12px; max-height:180px; overflow-y:auto; }
+        .upload-preview table { width:100%; font-size:11px; border-collapse:collapse; }
+        .upload-preview th { color:#94a3b8; text-align:left; padding:4px 6px; border-bottom:1px solid #dce4ec; font-weight:600; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; }
+        .upload-preview td { color:#64748b; padding:4px 6px; border-bottom:1px solid #e8edf2; font-size:11px; }
+        .upload-preview tr:hover td { background:#e8edf2; }
+        .upload-progress { margin-top:10px; height:4px; background:#dce4ec; border-radius:4px; overflow:hidden; display:none; }
+        .upload-progress .progress-bar { height:100%; background:linear-gradient(90deg,#1a5276,#2e86c1); border-radius:4px; transition:width 0.5s ease; width:0%; }
+        .upload-result { margin-top:10px; padding:10px; border-radius:8px; display:none; }
+        .upload-result.success { display:block; background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.15); }
+        .upload-result.error { display:block; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.15); }
+        .upload-result .result-text { color:#64748b; font-size:12px; }
+        .upload-result .result-text .count { color:#1a5276; font-weight:700; }
+        .form-group { margin-bottom:10px; }
+        .form-group label { color:#64748b; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:3px; }
+
+        /* ===== CERTIFICATE ===== */
+        .certificate-card { background:linear-gradient(145deg,#f8fafc,#ffffff); border-radius:20px; padding:28px 20px; border:3px solid #d4af37; position:relative; overflow:hidden; }
+        .certificate-card::before { content:''; position:absolute; inset:6px; border:2px dashed rgba(212,175,55,0.3); border-radius:16px; pointer-events:none; }
+        .certificate-title { font-size:22px; font-weight:800; color:#1a2332; letter-spacing:1px; }
+        .certificate-subtitle { font-size:11px; color:#64748b; }
+        .grade-badge { display:inline-block; padding:6px 28px; border-radius:30px; font-size:18px; font-weight:800; letter-spacing:1px; margin-top:4px; }
+        .grade-badge.distinction { background:linear-gradient(135deg,#d4af37,#f5d76e); color:#1a5276; box-shadow:0 4px 20px rgba(212,175,55,0.3); }
+        .grade-badge.merit { background:linear-gradient(135deg,#2e86c1,#3498db); color:white; box-shadow:0 4px 20px rgba(46,134,193,0.3); }
+        .grade-badge.credit { background:linear-gradient(135deg,#27ae60,#2ecc71); color:white; box-shadow:0 4px 20px rgba(39,174,96,0.3); }
+        .grade-badge.pass { background:linear-gradient(135deg,#f39c12,#f1c40f); color:#1a2332; box-shadow:0 4px 20px rgba(243,156,18,0.3); }
+        .grade-badge.fail { background:linear-gradient(135deg,#e74c3c,#c0392b); color:white; box-shadow:0 4px 20px rgba(231,76,60,0.3); }
+        .certificate-subject-item { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid #e8edf2; font-size:12px; }
+        .certificate-subject-item .subject { color:#1a2332; font-weight:500; }
+        .certificate-subject-item .subject-score { color:#1a5276; font-weight:700; }
+        .certificate-subject-item .subject-status { font-size:10px; padding:1px 8px; border-radius:10px; }
+        .certificate-subject-item .subject-status.pass { background:rgba(34,197,94,0.1); color:#16a34a; }
+        .certificate-subject-item .subject-status.fail { background:rgba(239,68,68,0.1); color:#dc2626; }
+
+        /* ===== DONATION ===== */
+        .donation-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:200; display:none; align-items:center; justify-content:center; max-width:430px; margin:0 auto; left:50%; transform:translateX(-50%); width:100%; height:100vh; height:100dvh; }
+        .donation-overlay.active { display:flex; }
+        .donation-card { background:white; border-radius:0; padding:20px 20px 30px; width:100%; height:100vh; height:100dvh; max-height:100vh; border:none; text-align:center; animation:popIn 0.3s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; box-shadow:none; display:flex; flex-direction:column; }
+        .donation-card::-webkit-scrollbar { width:3px; }
+        .donation-card::-webkit-scrollbar-thumb { background:rgba(26,82,118,0.3); border-radius:10px; }
+        @keyframes popIn { from { opacity:0; transform:scale(0.98) translateY(10px); } to { opacity:1; transform:scale(1) translateY(0); } }
+        .donation-header { background:linear-gradient(135deg,#1a5276,#2e86c1); margin:-20px -20px 16px; padding:30px 20px 24px; border-bottom-left-radius:30px; border-bottom-right-radius:30px; flex-shrink:0; }
+        .donation-icon-wrapper { width:70px; height:70px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); color:#1a5276; }
+        .donation-title { color:white; font-size:22px; font-weight:800; letter-spacing:-0.5px; }
+        .donation-subtitle { color:rgba(255,255,255,0.8); font-size:13px; margin-top:2px; }
+        .donation-amount-badge { display:inline-block; background:white; color:#1a5276; font-weight:800; font-size:16px; padding:4px 20px; border-radius:30px; margin:6px 0 12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); }
+        .donation-benefits { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#f8fafc; border-radius:12px; padding:10px 12px; margin-bottom:12px; flex-shrink:0; border:1px solid #e8edf2; }
+        .donation-benefit { display:flex; align-items:center; gap:6px; font-size:10px; color:#1a2332; text-align:left; }
+        .donation-benefit i { color:#22c55e; font-size:12px; width:16px; text-align:center; }
+        .donation-payment-label { color:#64748b; font-size:11px; font-weight:600; text-align:left; margin:0 0 6px; text-transform:uppercase; letter-spacing:0.5px; }
+        .donation-payment-grid { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; flex-shrink:0; }
+        .donation-payment-row { background:#f8fafc; border-radius:10px; padding:10px 14px; display:flex; align-items:center; justify-content:space-between; border:1px solid #e8edf2; transition:all 0.2s; cursor:pointer; }
+        .donation-payment-row:active { transform:scale(0.98); background:#e8edf2; }
+        .donation-payment-left { display:flex; align-items:center; gap:12px; min-width:0; }
+        .donation-payment-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+        .donation-payment-icon.mtn { background:rgba(26,82,118,0.08); color:#1a5276; }
+        .donation-payment-icon.airtel { background:rgba(52,211,153,0.08); color:#34d399; }
+        .donation-payment-icon.zamtel { background:rgba(251,146,60,0.08); color:#fb923c; }
+        .donation-payment-number { color:#1a2332; font-weight:700; font-size:14px; font-family:'Courier New',monospace; letter-spacing:0.5px; }
+        .donation-payment-provider { color:#94a3b8; font-size:9px; font-weight:500; }
+        .donation-account-box { background:rgba(26,82,118,0.04); border:1px solid rgba(26,82,118,0.08); border-radius:8px; padding:8px 12px; margin-bottom:10px; flex-shrink:0; }
+        .donation-account-box .label { color:#94a3b8; font-size:8px; text-transform:uppercase; letter-spacing:0.5px; }
+        .donation-account-box .name { color:#1a5276; font-weight:700; font-size:16px; }
+        .donation-instruction { color:#64748b; font-size:11px; text-align:center; margin:4px 0 8px; line-height:1.4; flex-shrink:0; }
+        .donation-instruction strong { color:#1a2332; font-weight:600; }
+        .btn-donation-whatsapp { background:#25D366; color:white; font-weight:700; padding:12px; border-radius:10px; border:none; font-size:14px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(37,211,102,0.25); flex-shrink:0; }
+        .btn-donation-whatsapp:active { transform:scale(0.96); }
+        .btn-donation-close { background:#f1f5f9; color:#64748b; font-weight:600; padding:10px; border-radius:10px; border:1px solid #e8edf2; font-size:13px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px; flex-shrink:0; }
+        .btn-donation-close:active { transform:scale(0.96); background:#e8edf2; }
+        .donation-spacer { flex:1; min-height:4px; }
+
+        /* ===== CHATBOT ===== */
         .chatbot-toggle {
             position: fixed;
-            bottom: 80px;
+            bottom: 75px;
             right: 16px;
             width: 56px;
             height: 56px;
@@ -30,9 +352,7 @@
             align-items: center;
             justify-content: center;
         }
-        .chatbot-toggle:active {
-            transform: scale(0.9);
-        }
+        .chatbot-toggle:active { transform: scale(0.9); }
         .chatbot-toggle .badge {
             position: absolute;
             top: -4px;
@@ -45,10 +365,9 @@
             min-width: 20px;
             text-align: center;
         }
-        
         .chatbot-window {
             position: fixed;
-            bottom: 145px;
+            bottom: 140px;
             right: 16px;
             width: 340px;
             max-width: calc(100vw - 32px);
@@ -64,12 +383,10 @@
             border: 1px solid #e8edf2;
             animation: fadeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .chatbot-window.active {
-            display: flex;
-        }
+        .chatbot-window.active { display: flex; }
         .chatbot-header {
             background: linear-gradient(135deg, #1a5276, #2e86c1);
-            padding: 14px 16px;
+            padding: 12px 16px;
             color: white;
             display: flex;
             align-items: center;
@@ -83,11 +400,9 @@
             align-items: center;
             gap: 8px;
         }
-        .chatbot-header .title i {
-            font-size: 18px;
-        }
+        .chatbot-header .title i { font-size: 18px; }
         .chatbot-header .close-btn {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255,255,255,0.15);
             border: none;
             color: white;
             width: 30px;
@@ -100,10 +415,7 @@
             align-items: center;
             justify-content: center;
         }
-        .chatbot-header .close-btn:active {
-            transform: scale(0.9);
-            background: rgba(255, 255, 255, 0.25);
-        }
+        .chatbot-header .close-btn:active { transform: scale(0.9); background: rgba(255,255,255,0.25); }
         .chatbot-status {
             font-size: 10px;
             opacity: 0.8;
@@ -128,13 +440,8 @@
             padding: 12px 14px;
             background: #f8fafc;
         }
-        .chatbot-messages::-webkit-scrollbar {
-            width: 3px;
-        }
-        .chatbot-messages::-webkit-scrollbar-thumb {
-            background: #1a5276;
-            border-radius: 10px;
-        }
+        .chatbot-messages::-webkit-scrollbar { width: 3px; }
+        .chatbot-messages::-webkit-scrollbar-thumb { background: #1a5276; border-radius: 10px; }
         .chatbot-message {
             margin-bottom: 8px;
             max-width: 85%;
@@ -166,7 +473,7 @@
         }
         .chatbot-message.user .time {
             font-size: 9px;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255,255,255,0.7);
             margin-top: 4px;
             display: block;
         }
@@ -182,12 +489,8 @@
             background: #94a3b8;
             animation: typing 1.4s infinite;
         }
-        .chatbot-message .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .chatbot-message .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .chatbot-message .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .chatbot-message .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes typing {
             0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
             30% { transform: translateY(-6px); opacity: 1; }
@@ -211,11 +514,9 @@
         }
         .chatbot-input:focus {
             border-color: #1a5276;
-            box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.06);
+            box-shadow: 0 0 0 3px rgba(26,82,118,0.06);
         }
-        .chatbot-input::placeholder {
-            color: #94a3b8;
-        }
+        .chatbot-input::placeholder { color: #94a3b8; }
         .chatbot-send {
             background: #1a5276;
             color: white;
@@ -230,13 +531,8 @@
             transition: all 0.2s;
             flex-shrink: 0;
         }
-        .chatbot-send:active {
-            transform: scale(0.9);
-        }
-        .chatbot-send:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .chatbot-send:active { transform: scale(0.9); }
+        .chatbot-send:disabled { opacity: 0.5; cursor: not-allowed; }
         .chatbot-quick-replies {
             display: flex;
             gap: 6px;
@@ -257,12 +553,19 @@
             transition: all 0.2s;
             font-weight: 500;
         }
-        .chatbot-quick-reply:active {
-            transform: scale(0.95);
-            background: #e8edf2;
-        }
-        
+        .chatbot-quick-reply:active { transform: scale(0.95); background: #e8edf2; }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 430px) {
+            .subject-grid { gap: 8px; }
+            .subject-card { padding: 12px 10px 10px; min-height: 120px; }
+            .subject-card .icon-wrapper { width: 48px; height: 48px; font-size: 22px; }
+            .subject-card .icon-wrapper i { font-size: 22px; }
+            .subject-card .subject-name { font-size: 13px; }
+            .question-text { font-size: 15px; }
+            .option-btn { padding: 10px 12px; font-size: 12px; }
+            .certificate-score { font-size: 36px; }
+            .grade-badge { font-size: 15px; padding: 4px 20px; }
             .chatbot-window {
                 bottom: 130px;
                 right: 8px;
@@ -271,17 +574,21 @@
                 max-height: calc(100vh - 160px);
             }
             .chatbot-toggle {
-                bottom: 75px;
+                bottom: 70px;
                 right: 10px;
                 width: 50px;
                 height: 50px;
                 font-size: 20px;
             }
         }
+        @media (min-width: 431px) {
+            .app-container { border-left: 1px solid #dce4ec; border-right: 1px solid #dce4ec; box-shadow: 0 0 60px rgba(0,0,0,0.06); }
+        }
     </style>
 </head>
 <body>
 
+<!-- ===== APP CONTAINER ===== -->
 <div class="app-container" id="app">
     <!-- Header -->
     <div class="app-header">
@@ -300,10 +607,11 @@
         </div>
     </div>
 
+    <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <!-- LOGIN VIEW -->
         <div class="view active" id="loginView">
-            <div class="glass-card p-5" style="margin-top:16px;">
+            <div class="glass-card" style="margin-top:16px;">
                 <div class="text-center mb-6">
                     <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
                         <i class="fas fa-user-graduate text-2xl text-white"></i>
@@ -335,7 +643,7 @@
 
         <!-- REGISTER VIEW -->
         <div class="view" id="registerView">
-            <div class="glass-card p-5" style="margin-top:16px;">
+            <div class="glass-card" style="margin-top:16px;">
                 <div class="text-center mb-6">
                     <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
                         <i class="fas fa-user-plus text-2xl text-white"></i>
@@ -367,7 +675,7 @@
 
         <!-- TEACHER/ADMIN LOGIN VIEW -->
         <div class="view" id="teacherLoginView">
-            <div class="glass-card p-5" style="margin-top:16px;">
+            <div class="glass-card" style="margin-top:16px;">
                 <div class="text-center mb-6">
                     <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-blue-900/20">
                         <i class="fas fa-chalkboard-teacher text-2xl text-white"></i>
@@ -521,7 +829,6 @@
                 <span class="text-gray-500 text-xs" id="quizSubjectTitle">ICT</span>
                 <span class="text-gray-500 text-xs" id="questionCounter">1/1</span>
             </div>
-            <!-- Quiz Progress Bar -->
             <div class="quiz-progress-bar" id="quizProgressBar">
                 <span class="progress-text" id="quizProgressText">0/0</span>
                 <div class="progress-dots" id="progressDots"></div>
@@ -534,7 +841,7 @@
                 <p class="question-text" id="questionText">Loading question...</p>
             </div>
             <div class="mt-3 space-y-2" id="optionsContainer"></div>
-            <button id="nextBtn" onclick="nextQuestion()" class="btn-primary mt-3 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            <button id="nextBtn" onclick="nextQuestion()" class="btn-primary mt-3" disabled>
                 <i class="fas fa-arrow-right"></i> Next Question
             </button>
         </div>
@@ -741,7 +1048,7 @@
                         <div class="progress-bar" id="progressBarUpload"></div>
                     </div>
                     <div class="upload-result" id="uploadResult"></div>
-                    <button onclick="uploadQuestions()" id="uploadBtn" class="btn-teacher" style="margin-top:10px;display:none;width:100%;padding:10px;background:#1a5276;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:none;align-items:center;justify-content:center;gap:6px;">
+                    <button onclick="uploadQuestions()" id="uploadBtn" style="margin-top:10px;display:none;width:100%;padding:10px;background:#1a5276;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;align-items:center;justify-content:center;gap:6px;">
                         <i class="fas fa-upload"></i> Upload Questions
                     </button>
                 </div>
@@ -859,11 +1166,11 @@
                 <span class="time">Just now</span>
             </div>
             <div class="chatbot-message bot">
-                I can help you with:
-                • How to use NorthernQuiz
-                • Subject selection
-                • Quiz questions
-                • Certificates & grades
+                I can help you with:<br>
+                • How to use NorthernQuiz<br>
+                • Subject selection<br>
+                • Quiz questions<br>
+                • Certificates & grades<br>
                 • Technical support
                 <span class="time">Just now</span>
             </div>
@@ -906,20 +1213,82 @@
     let totalQuestionsAnswered = 0;
     let isTeacherLoggedIn = false;
     let currentAdminTab = 'progress';
-    let selectedSubjectId = null;
     let allUsers = [];
     let uploadedData = [];
     let learnerProgress = {};
     let chatMessages = {};
     let friends = [];
     let currentChatFriend = null;
-    let isPremium = false;
     let isChatbotOpen = false;
-    let chatbotConversation = [];
     const USERS_TABLE = 'app_users';
     const SUBJECTS_TABLE = 'subjects';
     const QUESTIONS_TABLE = 'questions';
     const PROGRESS_TABLE = 'learner_progress';
+
+    // ============ SUBJECT ICON MAP ============
+    const subjectIcons = {
+        'mathematics': 'fa-calculator',
+        'math': 'fa-calculator',
+        'english': 'fa-book-open',
+        'language': 'fa-language',
+        'science': 'fa-flask',
+        'biology': 'fa-dna',
+        'physics': 'fa-atom',
+        'chemistry': 'fa-vial',
+        'history': 'fa-landmark',
+        'geography': 'fa-globe-africa',
+        'civic': 'fa-gavel',
+        'civics': 'fa-gavel',
+        'social': 'fa-users',
+        'social studies': 'fa-users',
+        'ict': 'fa-laptop-code',
+        'computer': 'fa-desktop',
+        'technology': 'fa-microchip',
+        'arts': 'fa-palette',
+        'creative arts': 'fa-paint-brush',
+        'music': 'fa-music',
+        'pe': 'fa-running',
+        'physical': 'fa-running',
+        'religion': 'fa-church',
+        'religious': 'fa-pray',
+        'business': 'fa-chart-line',
+        'economics': 'fa-coins',
+        'accounting': 'fa-calculator',
+        'literature': 'fa-book',
+        'writing': 'fa-pen-fancy',
+        'grammar': 'fa-spell-check',
+        'home': 'fa-home',
+        'home management': 'fa-home',
+        'bemba': 'fa-language',
+        'icibemba': 'fa-language',
+        'chibemba': 'fa-language'
+    };
+
+    function getSubjectIcon(name) {
+        const lower = name.toLowerCase().trim();
+        for (const [key, icon] of Object.entries(subjectIcons)) {
+            if (lower.includes(key)) return icon;
+        }
+        return 'fa-book';
+    }
+
+    function getSubjectColor(name) {
+        const colors = [
+            'from-blue-500 to-blue-700',
+            'from-blue-400 to-blue-600',
+            'from-indigo-500 to-indigo-700',
+            'from-cyan-500 to-cyan-700',
+            'from-sky-500 to-sky-700',
+            'from-blue-600 to-blue-800',
+            'from-indigo-400 to-indigo-600',
+            'from-cyan-400 to-cyan-600'
+        ];
+        let hash = 0;
+        for (let i = 0; i < name.length; i++) {
+            hash = (hash + name.charCodeAt(i) * 31) % colors.length;
+        }
+        return colors[hash];
+    }
 
     // ============ CHATBOT FUNCTIONS ============
     function toggleChatbot() {
@@ -945,15 +1314,12 @@
         const text = input.value.trim();
         if (!text) return;
         
-        // Add user message
         addChatbotMessage(text, 'user');
         input.value = '';
         document.getElementById('chatbotSendBtn').disabled = true;
         
-        // Show typing indicator
         addTypingIndicator();
         
-        // Get bot response after delay
         setTimeout(() => {
             removeTypingIndicator();
             const response = getBotResponse(text);
@@ -978,13 +1344,7 @@
         const div = document.createElement('div');
         div.className = 'chatbot-message bot';
         div.id = 'typingIndicator';
-        div.innerHTML = `
-            <div class="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        `;
+        div.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
         container.appendChild(div);
         container.scrollTop = container.scrollHeight;
     }
@@ -1067,21 +1427,12 @@
             return "💰 NorthernQuiz is COMPLETELY FREE!\n\n🎯 What's free:\n• All subjects\n• All quizzes\n• Progress tracking\n• Certificates\n• Friends and chat\n• Everything!\n\nWe believe education should be accessible to everyone. Your support through donations helps us keep it free for all! ❤️";
         }
         
-        // Subjects list
-        if (lower.match(/what subjects|subjects available|list subjects|show subjects/i)) {
-            if (allSubjects.length === 0) {
-                return "📚 No subjects are currently available. Please contact your teacher to add subjects to the platform.";
-            }
-            const subjectList = allSubjects.map(s => `• ${s.name} ${completedSubjects.has(s.id) ? '✅' : ''}`).join('\n');
-            return `📚 Subjects Available:\n\n${subjectList}\n\n${completedSubjects.size > 0 ? `\n✅ You've completed ${completedSubjects.size} subject${completedSubjects.size > 1 ? 's' : ''}` : '\nSelect subjects to start learning!'}`;
-        }
-        
         // Help menu
         if (lower.match(/help|menu|options|what can you do|commands/i)) {
             return "🤖 I can help you with:\n\n• How to get started\n• Selecting subjects\n• Taking quizzes\n• Certificates & grades\n• Progress tracking\n• Friends & chat\n• Donations & support\n• Technical issues\n\nJust ask me anything! 😊";
         }
         
-        // Thanks / Appreciation
+        // Thanks
         if (lower.match(/thank|thanks|appreciate|grateful|awesome|great/i)) {
             return "🙏 You're welcome! I'm glad I could help. Keep learning and achieving great things! \n\nRemember: Every expert was once a beginner. Keep going! 💪";
         }
@@ -1093,71 +1444,6 @@
             "💡 I'm still learning too! For now, I can help you with:\n\n• Getting started with NorthernQuiz\n• Subject selection\n• Quiz help\n• Certificates\n• Friends & chat\n\nWhat would you like to know?"
         ];
         return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-    }
-
-    // ============ SUBJECT ICON MAP ============
-    const subjectIcons = {
-        'mathematics': 'fa-calculator',
-        'math': 'fa-calculator',
-        'english': 'fa-book-open',
-        'language': 'fa-language',
-        'science': 'fa-flask',
-        'biology': 'fa-dna',
-        'physics': 'fa-atom',
-        'chemistry': 'fa-vial',
-        'history': 'fa-landmark',
-        'geography': 'fa-globe-africa',
-        'civic': 'fa-gavel',
-        'civics': 'fa-gavel',
-        'social': 'fa-users',
-        'social studies': 'fa-users',
-        'ict': 'fa-laptop-code',
-        'computer': 'fa-desktop',
-        'technology': 'fa-microchip',
-        'arts': 'fa-palette',
-        'creative arts': 'fa-paint-brush',
-        'music': 'fa-music',
-        'pe': 'fa-running',
-        'physical': 'fa-running',
-        'religion': 'fa-church',
-        'religious': 'fa-pray',
-        'business': 'fa-chart-line',
-        'economics': 'fa-coins',
-        'accounting': 'fa-calculator',
-        'literature': 'fa-book',
-        'writing': 'fa-pen-fancy',
-        'grammar': 'fa-spell-check',
-        'home': 'fa-home',
-        'home management': 'fa-home',
-        'bemba': 'fa-language',
-        'icibemba': 'fa-language',
-        'chibemba': 'fa-language'
-    };
-
-    function getSubjectIcon(name) {
-        const lower = name.toLowerCase().trim();
-        for (const [key, icon] of Object.entries(subjectIcons)) {
-            if (lower.includes(key)) return icon;
-        }
-        return 'fa-book';
-    }
-
-    function getSubjectColor(name) {
-        const colors = [
-            'from-blue-500 to-blue-700',
-            'from-blue-400 to-blue-600',
-            'from-indigo-500 to-indigo-700',
-            'from-cyan-500 to-cyan-700',
-            'from-sky-500 to-sky-700',
-            'from-blue-600 to-blue-800',
-            'from-indigo-400 to-indigo-600',
-            'from-cyan-400 to-cyan-600'
-        ];
-        let hash = 0;
-        for (let i = 0; i < name.length; i++) {
-            hash = (hash + name.charCodeAt(i) * 31) % colors.length;
-        }
-        return colors[hash];
     }
 
     // ============ DONATION FUNCTIONS ============
@@ -1193,14 +1479,60 @@
         });
     }
 
-    // ============ AUTH FUNCTIONS ============
-    function showLogin() {
-        showView('loginView');
+    // ============ TOAST ============
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
+                               type === 'success' ? 'rgba(34,197,94,0.95)' : 
+                               '#1a2332';
+        toast.classList.add('show');
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
     }
 
-    function showRegister() {
-        showView('registerView');
+    // ============ VIEW MANAGEMENT ============
+    function showView(viewId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelector(`.nav-item[data-view="${viewId}"]`)?.classList.add('active');
+        if (viewId === 'profileView') {
+            updateProfile();
+            renderSelectedSubjects();
+        }
+        if (viewId === 'friendsView') renderFriends();
     }
+
+    function navigateTo(viewId) {
+        if (viewId === 'profileView' && !currentUser) {
+            showToast('Please login first', 'error');
+            return;
+        }
+        if (viewId === 'friendsView' && !currentUser) {
+            showToast('Please login first', 'error');
+            return;
+        }
+        showView(viewId);
+    }
+
+    function scrollToTop() {
+        document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showHelp() { 
+        showToast('🤖 Click the robot icon at the bottom right to chat with NorthernBot!', 'info'); 
+    }
+
+    function toggleUserMenu() {
+        if (currentUser) {
+            showToast(`👤 ${currentUser.username} - Free`, 'info');
+        }
+    }
+
+    // ============ AUTH FUNCTIONS ============
+    function showLogin() { showView('loginView'); }
+    function showRegister() { showView('registerView'); }
 
     async function register() {
         const username = document.getElementById('registerUsername').value.trim();
@@ -1240,9 +1572,7 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                setTimeout(() => {
-                    showDonationPopup();
-                }, 2000);
+                setTimeout(() => showDonationPopup(), 2000);
             } else {
                 showToast('Error creating account. Please try again.', 'error');
             }
@@ -1282,9 +1612,7 @@
                 updateProfile();
                 loadFriends();
                 loadChats();
-                setTimeout(() => {
-                    showDonationPopup();
-                }, 3000);
+                setTimeout(() => showDonationPopup(), 3000);
             } else {
                 const exists = await checkUserExists(username);
                 if (exists) {
@@ -1365,7 +1693,6 @@
     function logout() {
         localStorage.removeItem('quizUser');
         currentUser = null;
-        isPremium = false;
         document.getElementById('userAvatar').style.display = 'none';
         document.getElementById('navLogout').style.display = 'none';
         if (isTeacherLoggedIn) {
@@ -1440,14 +1767,12 @@
         showToast('Logged out of admin mode', 'info');
     }
 
-    // ============ ADMIN TAB MANAGEMENT ============
     function switchAdminTab(tab) {
         currentAdminTab = tab;
         document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
         document.querySelector(`.admin-tab[data-tab="${tab}"]`)?.classList.add('active');
         document.getElementById(`tab-${tab}`)?.classList.add('active');
-        
         if (tab === 'subjects') updateTeacherSubjects();
         if (tab === 'questions') loadQuestionsForTeacher();
         if (tab === 'students') renderStudents();
@@ -1458,17 +1783,11 @@
     function toggleAddStudent() {
         const form = document.getElementById('addStudentForm');
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        if (form.style.display === 'block') {
-            document.getElementById('studentUsername').focus();
-        }
     }
 
     function toggleAddSubject() {
         const form = document.getElementById('addSubjectForm');
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        if (form.style.display === 'block') {
-            document.getElementById('subjectName').focus();
-        }
     }
 
     // ============ PROFILE FUNCTIONS ============
@@ -1486,24 +1805,20 @@
     function renderSelectedSubjects() {
         const container = document.getElementById('selectedSubjectsList');
         if (!container) return;
-        
         if (selectedSubjects.size === 0) {
             container.innerHTML = `<div style="text-align:center; color:#94a3b8; font-size:12px; padding:12px 0;">No subjects selected. Go to Subjects tab to choose.</div>`;
             return;
         }
-        
         let html = '';
         const selectedList = allSubjects.filter(s => selectedSubjects.has(s.id));
         selectedList.forEach(subject => {
             const isCompleted = completedSubjects.has(subject.id);
             const icon = subject.icon || getSubjectIcon(subject.name);
             const color = subject.color || getSubjectColor(subject.name);
-            
             let statusClass = isCompleted ? 'done' : 'pending';
             let statusText = isCompleted ? '✅ Done' : '⏳ Pending';
             let extraIcon = isCompleted ? '<i class="fas fa-check-circle" style="color:#22c55e;"></i>' : '<i class="fas fa-chevron-right" style="color:#94a3b8;"></i>';
             let clickHandler = isCompleted ? `showCertificateWithScores()` : `startQuiz('${subject.id}', '${subject.name}')`;
-            
             if (!isCompleted && currentUser) {
                 const progress = learnerProgress[currentUser.id] || [];
                 const subProgress = progress.find(p => p.subject_id === subject.id);
@@ -1514,7 +1829,6 @@
                     clickHandler = `startQuiz('${subject.id}', '${subject.name}')`;
                 }
             }
-            
             html += `
                 <div class="selected-subject-item" onclick="${clickHandler}" style="cursor:pointer;">
                     <div class="subject-info">
@@ -1526,9 +1840,7 @@
                             <span class="status ${statusClass}">${statusText}</span>
                         </div>
                     </div>
-                    <div>
-                        ${extraIcon}
-                    </div>
+                    <div>${extraIcon}</div>
                 </div>
             `;
         });
@@ -1564,7 +1876,6 @@
         let html = '';
         friends.forEach(friend => {
             const status = friend.online ? 'online' : 'offline';
-            const statusText = friend.online ? 'Online' : 'Offline';
             html += `
                 <div class="friend-item" onclick="openChat('${friend.id}')">
                     <div class="friend-avatar" style="background:${friend.color || '#1a5276'}">
@@ -1572,7 +1883,7 @@
                     </div>
                     <div class="friend-info">
                         <div class="friend-name">${friend.username}</div>
-                        <div class="friend-status ${status}">${statusText}</div>
+                        <div class="friend-status ${status}">${friend.online ? 'Online' : 'Offline'}</div>
                     </div>
                     <button class="add-friend-btn added" onclick="event.stopPropagation(); removeFriend('${friend.id}')">
                         <i class="fas fa-check"></i> Friends
@@ -1586,44 +1897,36 @@
     function searchMembers() {
         const searchTerm = document.getElementById('searchMembersInput').value.trim().toLowerCase();
         const resultsContainer = document.getElementById('memberSearchResults');
-        
         if (!searchTerm) {
             resultsContainer.innerHTML = '<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">Enter a name to search</div>';
             return;
         }
-        
         const availableUsers = allUsers.filter(u => 
             u.id !== currentUser.id && 
             u.role !== 'teacher' &&
             u.username.toLowerCase().includes(searchTerm) &&
             !friends.find(f => f.id === u.id)
         );
-        
         if (availableUsers.length === 0) {
             resultsContainer.innerHTML = `
-                <div class="no-members">
+                <div style="text-align:center;padding:20px;color:#94a3b8;">
                     <i class="fas fa-search"></i>
-                    <h3>No Results Found</h3>
+                    <h3 style="margin-top:4px;font-size:14px;">No Results Found</h3>
                     <p style="font-size:13px;">No learners found matching "${searchTerm}"</p>
                 </div>
             `;
             return;
         }
-        
         let html = `<div style="margin-top:8px;"><h3 style="color:#1a2332;font-size:14px;font-weight:600;margin-bottom:8px;">Found ${availableUsers.length} learner${availableUsers.length > 1 ? 's' : ''}</h3></div>`;
         availableUsers.forEach(user => {
-            const isFriend = friends.find(f => f.id === user.id);
-            const status = user.online ? 'online' : 'offline';
-            const statusText = user.online ? 'Online' : 'Offline';
-            
             html += `
-                <div class="member-result">
-                    <div class="member-avatar" style="background:#1a5276;">
+                <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:white;border-radius:12px;border:1px solid #dce4ec;margin-bottom:8px;">
+                    <div style="width:40px;height:40px;border-radius:50%;background:#1a5276;display:flex;align-items:center;justify-content:center;color:white;font-size:16px;flex-shrink:0;">
                         <i class="fas fa-user"></i>
                     </div>
-                    <div class="member-info">
-                        <div class="member-name">${user.username}</div>
-                        <div class="member-status ${status}">${statusText}</div>
+                    <div style="flex:1;">
+                        <div style="font-weight:600;color:#1a2332;font-size:14px;">${user.username}</div>
+                        <div style="font-size:11px;color:${user.online ? '#22c55e' : '#94a3b8'};">${user.online ? 'Online' : 'Offline'}</div>
                     </div>
                     <button class="add-friend-btn" onclick="addFriend('${user.id}', '${user.username}')">
                         <i class="fas fa-user-plus"></i> Add Friend
@@ -1639,13 +1942,7 @@
             showToast('Already friends with ' + username, 'info');
             return;
         }
-        
-        const newFriend = {
-            id: userId,
-            username: username,
-            online: true,
-            color: '#1a5276'
-        };
+        const newFriend = { id: userId, username: username, online: true, color: '#1a5276' };
         friends.push(newFriend);
         localStorage.setItem(`friends_${currentUser.id}`, JSON.stringify(friends));
         renderFriends();
@@ -1667,9 +1964,7 @@
         if (currentUser) {
             const stored = localStorage.getItem(`friends_${currentUser.id}`);
             if (stored) {
-                try {
-                    friends = JSON.parse(stored);
-                } catch(e) { friends = []; }
+                try { friends = JSON.parse(stored); } catch(e) { friends = []; }
             }
         }
     }
@@ -1727,12 +2022,7 @@
         if (!chatMessages[chatId]) chatMessages[chatId] = [];
         const now = new Date();
         const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        chatMessages[chatId].push({
-            sender: currentUser.id,
-            text: text,
-            time: time,
-            timestamp: now.getTime()
-        });
+        chatMessages[chatId].push({ sender: currentUser.id, text: text, time: time, timestamp: now.getTime() });
         localStorage.setItem(`chat_${chatId}`, JSON.stringify(chatMessages[chatId]));
         input.value = '';
         renderChatMessages();
@@ -1770,80 +2060,14 @@
         }
     }
 
-    // ============ VIEW MANAGEMENT ============
-    function showView(viewId) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.querySelector(`.nav-item[data-view="${viewId}"]`)?.classList.add('active');
-        if (viewId === 'profileView') {
-            updateProfile();
-            renderSelectedSubjects();
-        }
-        if (viewId === 'friendsView') renderFriends();
-    }
-
-    function navigateTo(viewId) {
-        if (viewId === 'profileView' && !currentUser) {
-            showToast('Please login first', 'error');
-            return;
-        }
-        if (viewId === 'friendsView' && !currentUser) {
-            showToast('Please login first', 'error');
-            return;
-        }
-        showView(viewId);
-    }
-
-    function goToSubjects() {
-        closeDonationPopup();
-        showView('subjectsView');
-        renderSubjects();
-        updateProgress();
-    }
-
-    function scrollToTop() {
-        document.getElementById('mainContent').scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // ============ TOAST & HELP ============
-    function showToast(message, type = 'info') {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.style.background = type === 'error' ? 'rgba(239,68,68,0.95)' : 
-                               type === 'success' ? 'rgba(34,197,94,0.95)' : 
-                               '#1a2332';
-        toast.classList.add('show');
-        clearTimeout(toast._timeout);
-        toast._timeout = setTimeout(() => toast.classList.remove('show'), 4000);
-    }
-
-    function showHelp() { 
-        showToast('🤖 Click the robot icon at the bottom right to chat with NorthernBot!', 'info'); 
-    }
-
-    function toggleUserMenu() {
-        if (currentUser) {
-            const status = '❤️ Free';
-            showToast(`👤 ${currentUser.username} - ${status}`, 'info');
-        }
-    }
-
     // ============ SUPABASE FUNCTIONS ============
     async function fetchAllUsers() {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?select=*&order=created_at.desc`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (error) {
-            console.error('Fetch users error:', error);
-        }
+            if (response.ok) return await response.json();
+        } catch (error) { console.error('Fetch users error:', error); }
         return [];
     }
 
@@ -1851,32 +2075,19 @@
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?id=eq.${userId}`, {
                 method: 'DELETE',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
             return response.ok;
-        } catch (error) {
-            console.error('Delete user error:', error);
-            return false;
-        }
+        } catch (error) { return false; }
     }
 
     async function fetchSubjects() {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?select=*&order=name.asc`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (error) {
-            console.error('Fetch subjects error:', error);
-        }
+            if (response.ok) return await response.json();
+        } catch (error) { console.error('Fetch subjects error:', error); }
         return [];
     }
 
@@ -1897,9 +2108,7 @@
                 const data = await response.json();
                 return data[0];
             }
-        } catch (error) {
-            console.error('Add subject error:', error);
-        }
+        } catch (error) { console.error('Add subject error:', error); }
         return null;
     }
 
@@ -1907,32 +2116,19 @@
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?id=eq.${subjectId}`, {
                 method: 'DELETE',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
             return response.ok;
-        } catch (error) {
-            console.error('Delete subject error:', error);
-            return false;
-        }
+        } catch (error) { return false; }
     }
 
     async function fetchQuestions(subjectId) {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?subject_id=eq.${subjectId}&select=*`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (error) {
-            console.error('Fetch questions error:', error);
-        }
+            if (response.ok) return await response.json();
+        } catch (error) { console.error('Fetch questions error:', error); }
         return [];
     }
 
@@ -1953,9 +2149,7 @@
                 const data = await response.json();
                 return data[0];
             }
-        } catch (error) {
-            console.error('Add question error:', error);
-        }
+        } catch (error) { console.error('Add question error:', error); }
         return null;
     }
 
@@ -1963,37 +2157,25 @@
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}?id=eq.${questionId}`, {
                 method: 'DELETE',
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
             return response.ok;
-        } catch (error) {
-            console.error('Delete question error:', error);
-            return false;
-        }
+        } catch (error) { return false; }
     }
 
     // ============ PROGRESS FUNCTIONS ============
     async function loadProgress() {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?select=*`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
             if (response.ok) {
                 const data = await response.json();
                 learnerProgress = {};
                 data.forEach(record => {
-                    if (!learnerProgress[record.user_id]) {
-                        learnerProgress[record.user_id] = [];
-                    }
+                    if (!learnerProgress[record.user_id]) learnerProgress[record.user_id] = [];
                     learnerProgress[record.user_id].push(record);
                 });
-                
                 if (currentUser && currentUser.id) {
                     const userProgress = learnerProgress[currentUser.id] || [];
                     userProgress.forEach(record => {
@@ -2008,26 +2190,17 @@
                     localStorage.setItem(key, JSON.stringify([...completedSubjects]));
                 }
             }
-        } catch (error) {
-            console.warn('⚠️ Could not load progress:', error);
-        }
+        } catch (error) { console.warn('⚠️ Could not load progress:', error); }
         renderProgress();
     }
 
     async function fetchFreshProgress(userId) {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&select=*`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
-            if (response.ok) {
-                return await response.json();
-            }
-        } catch (error) {
-            console.warn('⚠️ Could not fetch fresh progress:', error);
-        }
+            if (response.ok) return await response.json();
+        } catch (error) { console.warn('⚠️ Could not fetch fresh progress:', error); }
         return [];
     }
 
@@ -2044,10 +2217,7 @@
             if (lastIndex !== null) payload.last_question_index = lastIndex;
 
             const checkResponse = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=id`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
 
             if (checkResponse.ok) {
@@ -2076,32 +2246,24 @@
                 }
                 await loadProgress();
             }
-        } catch (error) {
-            console.warn('⚠️ Could not save progress:', error);
-        }
+        } catch (error) { console.warn('⚠️ Could not save progress:', error); }
     }
 
     async function getResumePoint(userId, subjectId) {
         try {
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${PROGRESS_TABLE}?user_id=eq.${userId}&subject_id=eq.${subjectId}&select=last_question_index,score,status`, {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`
-                }
+                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
             if (response.ok) {
                 const data = await response.json();
                 return data && data.length > 0 ? data[0] : null;
             }
-        } catch (error) {
-            console.warn('⚠️ Could not fetch resume point:', error);
-        }
+        } catch (error) { console.warn('⚠️ Could not fetch resume point:', error); }
         return null;
     }
 
     async function syncCompletedSubjectsFromSupabase() {
         if (!currentUser || !currentUser.id) return;
-        
         try {
             const freshProgress = await fetchFreshProgress(currentUser.id);
             if (freshProgress && freshProgress.length > 0) {
@@ -2113,51 +2275,40 @@
                         completedSubjects.add(record.subject_id);
                     }
                 });
-                
                 if (currentUser && currentUser.id) {
                     const key = `completed_${currentUser.id}`;
                     localStorage.setItem(key, JSON.stringify([...completedSubjects]));
                 }
-                
                 console.log(`✅ Synced ${completedSubjects.size} completed subjects from Supabase`);
                 return true;
             }
-        } catch (error) {
-            console.warn('⚠️ Could not sync completed subjects:', error);
-        }
+        } catch (error) { console.warn('⚠️ Could not sync completed subjects:', error); }
         return false;
     }
 
     function renderProgress() {
         const container = document.getElementById('progressList');
         if (!container) return;
-        
         const searchTerm = document.getElementById('progressSearch')?.value?.toLowerCase() || '';
         const students = allUsers.filter(u => u.role !== 'teacher');
         const filtered = students.filter(u => u.username.toLowerCase().includes(searchTerm));
-        
         if (filtered.length === 0) {
             container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
             document.getElementById('statCompleted').textContent = '0';
             return;
         }
-        
         let totalCompleted = 0;
         container.innerHTML = '';
-        
         filtered.forEach(user => {
             const progress = learnerProgress[user.id] || [];
             const completedSubjectIds = progress.filter(p => p.status === 'completed' || p.status === 'done' || (p.score === p.total_questions && p.total_questions > 0)).map(p => p.subject_id);
             const totalSubjects = allSubjects.length;
             const completed = completedSubjectIds.length;
             const percentage = totalSubjects > 0 ? Math.round((completed / totalSubjects) * 100) : 0;
-            
             if (completed === totalSubjects && totalSubjects > 0) totalCompleted++;
-            
             const div = document.createElement('div');
             div.className = 'progress-container';
             div.onclick = () => toggleProgressDetail(user.id);
-            
             let badgesHTML = '';
             if (allSubjects.length === 0) {
                 badgesHTML = `<span class="no-progress">No subjects available</span>`;
@@ -2171,21 +2322,14 @@
                     badgesHTML += `<span class="subject-badge ${badgeClass}">${badgeText} ${subject.name}</span>`;
                 });
             }
-            
             const date = new Date(user.created_at).toLocaleDateString();
             const hasProgress = progress.length > 0;
-            
             let avgScore = 0;
             if (hasProgress) {
-                let totalScore = 0;
-                let totalQuestions = 0;
-                progress.forEach(p => {
-                    totalScore += p.score;
-                    totalQuestions += p.total_questions;
-                });
+                let totalScore = 0, totalQuestions = 0;
+                progress.forEach(p => { totalScore += p.score; totalQuestions += p.total_questions; });
                 avgScore = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
             }
-            
             div.innerHTML = `
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div>
@@ -2195,13 +2339,7 @@
                     </div>
                     <span class="score-badge">${hasProgress ? `${avgScore}%` : '⏳ No progress yet'}</span>
                 </div>
-                ${hasProgress ? `
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="width:${percentage}%"></div>
-                    </div>
-                ` : `
-                    <div style="height:6px;background:#dce4ec;border-radius:4px;margin:6px 0;"></div>
-                `}
+                ${hasProgress ? `<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${percentage}%"></div></div>` : `<div style="height:6px;background:#dce4ec;border-radius:4px;margin:6px 0;"></div>`}
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div style="display:flex;flex-wrap:wrap;gap:2px;">${badgesHTML}</div>
                     <span style="color:#94a3b8;font-size:10px;">${hasProgress ? `${completed}/${totalSubjects}` : '0/0'}</span>
@@ -2215,29 +2353,20 @@
                         const statusText = p.status === 'in_progress' ? ' (in progress)' : '';
                         const pct = p.total_questions > 0 ? Math.round((p.score / p.total_questions) * 100) : 0;
                         return `<div class="detail-row"><span class="label">${subject ? subject.name : 'Unknown'}${statusText}</span><span class="value green">${pct}% (${p.score}/${p.total_questions})</span></div>`;
-                    }).join('') : `
-                        <div class="detail-row" style="border-bottom:none;">
-                            <span class="label" style="color:#94a3b8;font-style:italic;">No subjects completed yet</span>
-                        </div>
-                    `}
+                    }).join('') : `<div class="detail-row" style="border-bottom:none;"><span class="label" style="color:#94a3b8;font-style:italic;">No subjects completed yet</span></div>`}
                 </div>
             `;
             container.appendChild(div);
         });
-        
         document.getElementById('statCompleted').textContent = totalCompleted;
     }
 
     function toggleProgressDetail(userId) {
         const detail = document.getElementById(`detail-${userId}`);
-        if (detail) {
-            detail.classList.toggle('show');
-        }
+        if (detail) detail.classList.toggle('show');
     }
 
-    function filterProgress() {
-        renderProgress();
-    }
+    function filterProgress() { renderProgress(); }
 
     // ============ LOAD SUBJECTS & USERS ============
     async function loadSubjects() {
@@ -2293,7 +2422,6 @@
             showToast('Please login first', 'error');
             return;
         }
-        
         if (selectedSubjects.has(subjectId)) {
             selectedSubjects.delete(subjectId);
             showToast('Subject removed from your selection', 'info');
@@ -2301,10 +2429,8 @@
             selectedSubjects.add(subjectId);
             showToast('Subject added to your selection! Go to Profile to start learning.', 'success');
         }
-        
         const key = `selected_${currentUser.id}`;
         localStorage.setItem(key, JSON.stringify([...selectedSubjects]));
-        
         renderSubjects();
         updateProgress();
         updateProfile();
@@ -2316,14 +2442,9 @@
             showToast('Please login first', 'error');
             return;
         }
-        
-        allSubjects.forEach(subject => {
-            selectedSubjects.add(subject.id);
-        });
-        
+        allSubjects.forEach(subject => { selectedSubjects.add(subject.id); });
         const key = `selected_${currentUser.id}`;
         localStorage.setItem(key, JSON.stringify([...selectedSubjects]));
-        
         renderSubjects();
         updateProgress();
         updateProfile();
@@ -2336,10 +2457,7 @@
             const key = `selected_${currentUser.id}`;
             const stored = localStorage.getItem(key);
             if (stored) {
-                try {
-                    const data = JSON.parse(stored);
-                    data.forEach(id => selectedSubjects.add(id));
-                } catch(e) {}
+                try { JSON.parse(stored).forEach(id => selectedSubjects.add(id)); } catch(e) {}
             }
         }
     }
@@ -2352,28 +2470,19 @@
             grid.innerHTML = `<div class="glass-card p-4 col-span-2 text-center text-gray-500 text-sm">No subjects available. Contact your teacher.</div>`;
             return;
         }
-        
         allSubjects.forEach(subject => {
             const isSelected = selectedSubjects.has(subject.id);
             const isCompleted = completedSubjects.has(subject.id) || 
                 (currentUser && learnerProgress[currentUser.id] && 
-                 learnerProgress[currentUser.id].some(p => p.subject_id === subject.id && 
-                     (p.status === 'completed' || p.status === 'done')));
-            
+                 learnerProgress[currentUser.id].some(p => p.subject_id === subject.id && (p.status === 'completed' || p.status === 'done')));
             const isSelectedAndCompleted = isSelected && isCompleted;
-            
             const icon = subject.icon || getSubjectIcon(subject.name);
             const color = subject.color || getSubjectColor(subject.name);
-            
             const card = document.createElement('div');
             let cardClass = `subject-card`;
             if (isSelectedAndCompleted) cardClass += ' completed border-green-500/30';
             else if (isSelected) cardClass += ' selected';
-            
-            let actionButton = '';
-            let statusBadge = '';
-            
-            let resumeText = '';
+            let actionButton = '', statusBadge = '', resumeText = '';
             if (isSelected && !isCompleted && currentUser) {
                 const progress = learnerProgress[currentUser.id] || [];
                 const subProgress = progress.find(p => p.subject_id === subject.id);
@@ -2381,25 +2490,15 @@
                     resumeText = `<span class="resume-badge" style="display:inline-block;">▶️ Q${subProgress.last_question_index + 1}</span>`;
                 }
             }
-            
             if (isSelectedAndCompleted) {
                 statusBadge = `<div class="completed-badge">✅ Done</div>`;
                 actionButton = `<div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:8px;color:#16a34a;font-weight:600;white-space:nowrap;">View Certificate</div>`;
             } else if (isSelected) {
                 statusBadge = `<div class="completed-badge" style="background:rgba(26,82,118,0.08);color:#1a5276;">📘 Selected</div>`;
-                actionButton = `
-                    <button class="remove-subject-btn" onclick="event.stopPropagation(); toggleSubjectSelection('${subject.id}')">
-                        <i class="fas fa-times"></i> Remove
-                    </button>
-                `;
+                actionButton = `<button class="remove-subject-btn" onclick="event.stopPropagation(); toggleSubjectSelection('${subject.id}')"><i class="fas fa-times"></i> Remove</button>`;
             } else {
-                actionButton = `
-                    <button class="select-subject-btn" onclick="event.stopPropagation(); toggleSubjectSelection('${subject.id}')">
-                        <i class="fas fa-plus"></i> Select
-                    </button>
-                `;
+                actionButton = `<button class="select-subject-btn" onclick="event.stopPropagation(); toggleSubjectSelection('${subject.id}')"><i class="fas fa-plus"></i> Select</button>`;
             }
-            
             card.className = cardClass;
             card.style.background = isSelectedAndCompleted ? 'rgba(34,197,94,0.04)' : 'white';
             card.innerHTML = `
@@ -2408,16 +2507,10 @@
                 </div>
                 <div class="subject-name">${subject.name}</div>
                 <div class="subject-count">Loading...</div>
-                ${statusBadge}
-                ${resumeText}
-                ${actionButton}
-                <span class="resume-badge"></span>
+                ${statusBadge} ${resumeText} ${actionButton}
             `;
-            
             if (isSelectedAndCompleted) {
-                card.onclick = () => {
-                    showCertificateWithScores();
-                };
+                card.onclick = () => showCertificateWithScores();
             } else if (isSelected && !isCompleted) {
                 card.onclick = () => {
                     showToast('📚 Go to Profile to start learning!', 'info');
@@ -2426,18 +2519,12 @@
                     renderSelectedSubjects();
                 };
             } else {
-                card.onclick = () => {
-                    showToast('📚 Select this subject to add it to your learning list!', 'info');
-                };
+                card.onclick = () => showToast('📚 Select this subject to add it to your learning list!', 'info');
             }
-            
             fetchQuestions(subject.id).then(questions => {
                 const countEl = card.querySelector('.subject-count');
-                if (countEl) {
-                    countEl.textContent = `${questions.length} questions`;
-                }
+                if (countEl) countEl.textContent = `${questions.length} questions`;
             });
-            
             grid.appendChild(card);
         });
     }
@@ -2448,12 +2535,9 @@
             const stored = JSON.parse(localStorage.getItem(key) || '[]');
             stored.forEach(id => completedSubjects.add(id));
         }
-        
         const selected = selectedSubjects.size;
         const completed = [...selectedSubjects].filter(id => completedSubjects.has(id)).length;
-        
         document.getElementById('progressText').textContent = `${selected} selected`;
-        
         if (selected > 0 && completed === selected) {
             setTimeout(() => showCertificateWithScores(), 500);
         }
@@ -2463,87 +2547,37 @@
     // ============ CERTIFICATE WITH GRADES ============
     async function showCertificateWithScores() {
         if (!currentUser) return;
-        
         showToast('📊 Loading your scores...', 'info');
-        
         const freshProgress = await fetchFreshProgress(currentUser.id);
-        
-        let totalScore = 0;
-        let totalQuestions = 0;
-        let subjectDetails = [];
-        let completedCount = 0;
-        
+        let totalScore = 0, totalQuestions = 0, subjectDetails = [], completedCount = 0;
         const selectedIds = new Set(selectedSubjects);
         const validProgress = freshProgress.filter(p => selectedIds.has(p.subject_id) && p.total_questions > 0);
-        
         allSubjects.forEach(subject => {
             if (!selectedIds.has(subject.id)) return;
-            
             const subProgress = validProgress.find(p => p.subject_id === subject.id);
             if (subProgress) {
                 const pct = subProgress.total_questions > 0 ? Math.round((subProgress.score / subProgress.total_questions) * 100) : 0;
-                subjectDetails.push({
-                    name: subject.name,
-                    score: subProgress.score,
-                    total: subProgress.total_questions,
-                    percentage: pct,
-                    passed: pct >= 40,
-                    status: subProgress.status || 'completed'
-                });
+                subjectDetails.push({ name: subject.name, score: subProgress.score, total: subProgress.total_questions, percentage: pct, passed: pct >= 40, status: subProgress.status || 'completed' });
                 totalScore += subProgress.score;
                 totalQuestions += subProgress.total_questions;
                 completedCount++;
             } else if (completedSubjects.has(subject.id)) {
-                subjectDetails.push({
-                    name: subject.name,
-                    score: 0,
-                    total: 0,
-                    percentage: 0,
-                    passed: false,
-                    status: 'completed'
-                });
+                subjectDetails.push({ name: subject.name, score: 0, total: 0, percentage: 0, passed: false, status: 'completed' });
                 completedCount++;
             }
         });
-        
         const averagePct = totalQuestions > 0 ? Math.round((totalScore / totalQuestions) * 100) : 0;
-        
-        let grade = '';
-        let gradeClass = '';
-        let gradeEmoji = '';
-        
-        if (averagePct >= 80) {
-            grade = 'DISTINCTION';
-            gradeClass = 'distinction';
-            gradeEmoji = '🌟';
-        } else if (averagePct >= 70) {
-            grade = 'MERIT';
-            gradeClass = 'merit';
-            gradeEmoji = '⭐';
-        } else if (averagePct >= 60) {
-            grade = 'CREDIT';
-            gradeClass = 'credit';
-            gradeEmoji = '📘';
-        } else if (averagePct >= 40) {
-            grade = 'PASS';
-            gradeClass = 'pass';
-            gradeEmoji = '✅';
-        } else {
-            grade = 'FAIL';
-            gradeClass = 'fail';
-            gradeEmoji = '❌';
-        }
-        
+        let grade = '', gradeClass = '', gradeEmoji = '';
+        if (averagePct >= 80) { grade = 'DISTINCTION'; gradeClass = 'distinction'; gradeEmoji = '🌟'; }
+        else if (averagePct >= 70) { grade = 'MERIT'; gradeClass = 'merit'; gradeEmoji = '⭐'; }
+        else if (averagePct >= 60) { grade = 'CREDIT'; gradeClass = 'credit'; gradeEmoji = '📘'; }
+        else if (averagePct >= 40) { grade = 'PASS'; gradeClass = 'pass'; gradeEmoji = '✅'; }
+        else { grade = 'FAIL'; gradeClass = 'fail'; gradeEmoji = '❌'; }
         document.getElementById('certUsername').textContent = currentUser.username;
         document.getElementById('certDate').textContent = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         document.getElementById('certTotalSubjects').textContent = completedCount;
         document.getElementById('certCompletionText').textContent = `has successfully completed ${completedCount} of ${selectedSubjects.size} selected subjects`;
-        
-        document.getElementById('certGradeBadge').innerHTML = `
-            <div class="grade-badge ${gradeClass}">${gradeEmoji} ${grade}</div>
-            <div style="font-size:12px; color:#64748b; margin-top:2px;">Score: ${averagePct}%</div>
-        `;
-        
+        document.getElementById('certGradeBadge').innerHTML = `<div class="grade-badge ${gradeClass}">${gradeEmoji} ${grade}</div><div style="font-size:12px; color:#64748b; margin-top:2px;">Score: ${averagePct}%</div>`;
         let breakdownHTML = '';
         if (subjectDetails.length === 0) {
             breakdownHTML = `<div style="text-align:center;color:#94a3b8;font-size:12px;padding:12px 0;">Complete quizzes to see your scores!</div>`;
@@ -2552,21 +2586,11 @@
                 const statusClass = s.passed ? 'pass' : 'fail';
                 const statusText = s.passed ? '✅ Pass' : '❌ Fail';
                 const scoreDisplay = s.total > 0 ? `${s.percentage}%` : 'No score';
-                breakdownHTML += `
-                    <div class="certificate-subject-item">
-                        <span class="subject">${s.name}</span>
-                        <span>
-                            <span class="subject-score">${scoreDisplay}</span>
-                            <span class="subject-status ${statusClass}">${statusText}</span>
-                        </span>
-                    </div>
-                `;
+                breakdownHTML += `<div class="certificate-subject-item"><span class="subject">${s.name}</span><span><span class="subject-score">${scoreDisplay}</span><span class="subject-status ${statusClass}">${statusText}</span></span></div>`;
             });
         }
         document.getElementById('certSubjectBreakdown').innerHTML = breakdownHTML;
-        
         showView('certificateView');
-        
         if (typeof confetti !== 'undefined') {
             confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
             setTimeout(() => confetti({ particleCount: 100, spread: 60, origin: { y: 0.4 } }), 300);
@@ -2579,21 +2603,15 @@
             showToast('📚 Please select this subject first in the Subjects tab!', 'error');
             return;
         }
-        
         try {
             const questions = await fetchQuestions(subjectId);
             if (!questions || questions.length === 0) {
                 showToast('No questions available for this subject.', 'error');
                 return;
             }
-            
             currentSubject = subjectId;
             currentQuestions = questions;
-            
-            let resumeIndex = 0;
-            let resumeScore = 0;
-            let hasResume = false;
-            
+            let resumeIndex = 0, resumeScore = 0, hasResume = false;
             if (currentUser && currentUser.id) {
                 const resume = await getResumePoint(currentUser.id, subjectId);
                 if (resume && resume.status === 'in_progress' && resume.last_question_index > 0) {
@@ -2602,7 +2620,6 @@
                     hasResume = true;
                 }
             }
-            
             if (!completedSubjects.has(subjectId) && hasResume) {
                 currentIndex = resumeIndex;
                 score = resumeScore;
@@ -2614,14 +2631,11 @@
                 currentIndex = 0;
                 score = 0;
             }
-            
             answered = false;
             document.getElementById('quizSubjectTitle').textContent = subjectName;
             document.getElementById('questionCounter').textContent = `${currentIndex+1}/${currentQuestions.length}`;
             document.getElementById('scoreDisplay').textContent = score;
-            
             renderProgressDots();
-            
             showView('quizView');
             renderQuestion();
         } catch (error) {
@@ -2629,20 +2643,15 @@
             showToast('Error loading questions. Please try again.', 'error');
         }
     }
-    
+
     function renderProgressDots() {
         const container = document.getElementById('progressDots');
         const total = currentQuestions.length;
         let html = '';
-        
         for (let i = 0; i < total; i++) {
             let cls = 'progress-dot';
-            if (i < currentIndex) {
-                cls += ' answered';
-            }
-            if (i === currentIndex) {
-                cls += ' current';
-            }
+            if (i < currentIndex) cls += ' answered';
+            if (i === currentIndex) cls += ' current';
             html += `<span class="${cls}"></span>`;
         }
         container.innerHTML = html;
@@ -2668,9 +2677,7 @@
         document.getElementById('qNum').textContent = qNum;
         document.getElementById('questionCounter').textContent = `${qNum}/${currentQuestions.length}`;
         document.getElementById('scoreDisplay').textContent = score;
-        
         renderProgressDots();
-        
         const container = document.getElementById('optionsContainer');
         container.innerHTML = '';
         answered = false;
@@ -2692,13 +2699,11 @@
         const q = currentQuestions[currentIndex];
         const options = document.querySelectorAll('.option-btn');
         const isCorrect = index === q.correct_answer;
-        
         const dots = document.querySelectorAll('.progress-dot');
         if (dots[currentIndex]) {
             dots[currentIndex].classList.remove('current');
             dots[currentIndex].classList.add(isCorrect ? 'correct' : 'wrong');
         }
-        
         if (isCorrect) {
             score++;
             document.getElementById('scoreDisplay').textContent = score;
@@ -2712,7 +2717,6 @@
         totalQuestionsAnswered++;
         document.getElementById('nextBtn').disabled = false;
         updateProfile();
-
         if (currentUser && currentUser.id) {
             saveProgress(currentUser.id, currentSubject, score, currentQuestions.length, currentIndex + 1, 'in_progress');
         }
@@ -2846,6 +2850,7 @@
         }
     }
 
+    // ============ BULK UPLOAD FUNCTIONS ============
     function downloadTemplate() {
         const headers = ['question', 'option_a', 'option_b', 'option_c', 'option_d', 'correct_answer'];
         const sampleData = [
@@ -2854,9 +2859,7 @@
             ['What is the chemical symbol for water?', 'H2O', 'CO2', 'NaCl', 'HCl', 'A']
         ];
         let csv = headers.join(',') + '\n';
-        sampleData.forEach(row => {
-            csv += row.join(',') + '\n';
-        });
+        sampleData.forEach(row => { csv += row.join(',') + '\n'; });
         const blob = new Blob([csv], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -2892,9 +2895,7 @@
                 const values = lines[i].split(',').map(v => v.trim());
                 if (values.length >= 6) {
                     const row = {};
-                    headers.forEach((h, idx) => {
-                        row[h] = values[idx] || '';
-                    });
+                    headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
                     const correct = row.correct_answer.toUpperCase();
                     if (['A', 'B', 'C', 'D'].includes(correct)) {
                         row.correct_answer = correct;
@@ -2907,29 +2908,15 @@
                 return;
             }
             const preview = document.getElementById('uploadPreview');
-            let html = `<table>
-                <thead><tr>
-                    <th>#</th>
-                    <th>Question</th>
-                    <th>Options</th>
-                    <th>Answer</th>
-                </tr></thead><tbody>`;
+            let html = `<table><thead><tr><th>#</th><th>Question</th><th>Options</th><th>Answer</th></tr></thead><tbody>`;
             uploadedData.slice(0, 10).forEach((row, idx) => {
                 const options = [row.option_a, row.option_b, row.option_c, row.option_d].join(' | ');
-                html += `<tr>
-                    <td>${idx + 1}</td>
-                    <td>${row.question.substring(0, 30)}${row.question.length > 30 ? '...' : ''}</td>
-                    <td style="font-size:10px;color:#94a3b8;">${options}</td>
-                    <td style="color:#1a5276;font-weight:700;">${row.correct_answer}</td>
-                </tr>`;
+                html += `<tr><td>${idx + 1}</td><td>${row.question.substring(0, 30)}${row.question.length > 30 ? '...' : ''}</td><td style="font-size:10px;color:#94a3b8;">${options}</td><td style="color:#1a5276;font-weight:700;">${row.correct_answer}</td></tr>`;
             });
             if (uploadedData.length > 10) {
                 html += `<tr><td colspan="4" style="text-align:center;color:#94a3b8;font-size:11px;">... and ${uploadedData.length - 10} more</td></tr>`;
             }
-            html += `</tbody></table>
-                <div style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
-                    Found <strong style="color:#1a5276;">${uploadedData.length}</strong> questions ready to upload
-                </div>`;
+            html += `</tbody></table><div style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">Found <strong style="color:#1a5276;">${uploadedData.length}</strong> questions ready to upload</div>`;
             preview.innerHTML = html;
             preview.style.display = 'block';
             document.getElementById('uploadBtn').style.display = 'block';
@@ -2957,8 +2944,7 @@
         btn.innerHTML = '<span class="spinner"></span> Uploading...';
         progress.style.display = 'block';
         result.style.display = 'none';
-        let successCount = 0;
-        let errorCount = 0;
+        let successCount = 0, errorCount = 0;
         const total = uploadedData.length;
         const correctMap = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
         for (let i = 0; i < uploadedData.length; i++) {
@@ -2966,12 +2952,7 @@
             const options = [row.option_a, row.option_b, row.option_c, row.option_d];
             const correctIndex = correctMap[row.correct_answer] || 0;
             try {
-                const payload = {
-                    subject_id: subjectId,
-                    question: row.question,
-                    options: options,
-                    correct_answer: correctIndex
-                };
+                const payload = { subject_id: subjectId, question: row.question, options: options, correct_answer: correctIndex };
                 const response = await fetch(`${SUPABASE_URL}/rest/v1/${QUESTIONS_TABLE}`, {
                     method: 'POST',
                     headers: {
@@ -2982,26 +2963,13 @@
                     },
                     body: JSON.stringify(payload)
                 });
-                if (response.ok) {
-                    successCount++;
-                } else {
-                    errorCount++;
-                }
-            } catch (error) {
-                errorCount++;
-            }
+                if (response.ok) successCount++; else errorCount++;
+            } catch (error) { errorCount++; }
             const progressPercent = ((i + 1) / total) * 100;
             bar.style.width = `${progressPercent}%`;
         }
         result.className = 'upload-result ' + (errorCount === 0 ? 'success' : 'error');
-        result.innerHTML = `
-            <div class="result-text">
-                ${errorCount === 0 ? '✅' : '⚠️'} Upload complete!
-                <br/>
-                <span class="count">${successCount}</span> questions uploaded successfully
-                ${errorCount > 0 ? `<br/><span style="color:#ef4444;">${errorCount}</span> failed` : ''}
-            </div>
-        `;
+        result.innerHTML = `<div class="result-text">${errorCount === 0 ? '✅' : '⚠️'} Upload complete!<br/><span class="count">${successCount}</span> questions uploaded successfully${errorCount > 0 ? `<br/><span style="color:#ef4444;">${errorCount}</span> failed` : ''}</div>`;
         result.style.display = 'block';
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-upload"></i> Upload Questions';
@@ -3025,15 +2993,12 @@
         document.getElementById('fileInput').value = '';
     }
 
-    // ============ ADMIN: ADD SUBJECT ============
+    // ============ ADMIN FUNCTIONS ============
     async function addSubject() {
         const name = document.getElementById('subjectName').value.trim();
         const icon = document.getElementById('subjectIcon').value.trim() || getSubjectIcon(name);
         const color = document.getElementById('subjectColor').value.trim() || getSubjectColor(name);
-        if (!name) {
-            showToast('Please enter a subject name', 'error');
-            return;
-        }
+        if (!name) { showToast('Please enter a subject name', 'error'); return; }
         const result = await addSubjectToDB(name, icon, color);
         if (result) {
             showToast(`✅ Subject "${name}" added!`, 'success');
@@ -3064,7 +3029,6 @@
         }
     }
 
-    // ============ ADMIN: ADD STUDENT ============
     async function addStudent() {
         const username = document.getElementById('studentUsername').value.trim();
         const password = document.getElementById('studentPassword').value.trim();
@@ -3073,10 +3037,7 @@
             return;
         }
         const exists = await checkUserExists(username);
-        if (exists) {
-            showToast('Username already exists', 'error');
-            return;
-        }
+        if (exists) { showToast('Username already exists', 'error'); return; }
         const newUser = await createUser(username, password);
         if (newUser) {
             showToast(`✅ Student "${username}" created!`, 'success');
@@ -3100,7 +3061,6 @@
         }
     }
 
-    // ============ ADMIN: ADD QUESTION ============
     async function addQuestionTeacher() {
         const subjectId = document.getElementById('questionSubjectSelect').value;
         const question = document.getElementById('questionTextInput').value.trim();
@@ -3161,28 +3121,17 @@
                 fab.style.display = 'none';
             }
         });
-        
         await loadSubjects();
         await loadUsers();
         await loadProgress();
         await syncCompletedSubjectsFromSupabase();
-        
         loadSelectedSubjects();
         renderSubjects();
         updateProgress();
         updateProfile();
         renderSelectedSubjects();
-        
-        // Show chatbot welcome after a moment
-        setTimeout(() => {
-            if (!isChatbotOpen && !currentUser) {
-                // Don't auto-open, just show the badge
-            }
-        }, 3000);
-        
         console.log('🇿🇲 NorthernQuiz loaded with Chatbot!');
         console.log('🤖 Click the robot icon to chat with NorthernBot!');
-        console.log('📱 WhatsApp: 0966 011 066 for support');
     }
 
     function checkAuth() {
@@ -3192,9 +3141,7 @@
                 currentUser = JSON.parse(userData);
                 updateUserUI();
                 showView('subjectsView');
-                setTimeout(() => {
-                    showDonationPopup();
-                }, 2000);
+                setTimeout(() => showDonationPopup(), 2000);
             } catch (e) {
                 localStorage.removeItem('quizUser');
                 showView('loginView');
@@ -3212,7 +3159,7 @@
     window.showLogin = showLogin;
     window.showRegister = showRegister;
     window.logout = logout;
-    window.goToSubjects = goToSubjects;
+    window.goToSubjects = () => { closeDonationPopup(); showView('subjectsView'); renderSubjects(); updateProgress(); };
     window.goToProfile = goToProfile;
     window.startQuiz = startQuiz;
     window.nextQuestion = nextQuestion;
@@ -3263,11 +3210,7 @@
     window.showDonationPopup = showDonationPopup;
     window.closeDonationPopup = closeDonationPopup;
     window.openWhatsAppDonation = openWhatsAppDonation;
-    window.openWhatsApp = openWhatsApp;
     window.copyNumber = copyNumber;
-    window.checkMembership = checkMembership;
-    window.teacherGrantPremium = teacherGrantPremium;
-    window.teacherRevokePremium = teacherRevokePremium;
     window.showCertificateWithScores = showCertificateWithScores;
     window.toggleSubjectSelection = toggleSubjectSelection;
     window.selectAllSubjects = selectAllSubjects;
@@ -3275,9 +3218,6 @@
     window.toggleChatbot = toggleChatbot;
     window.sendChatbotMessage = sendChatbotMessage;
     window.sendQuickReply = sendQuickReply;
-    window.startFreeTrial = function() {
-        showToast('📚 Select your subjects in the Subjects tab, then go to Profile to start learning!', 'info');
-    };
 </script>
 </body>
 </html>
