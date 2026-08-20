@@ -65,6 +65,7 @@
         .subject-card .remove-subject-btn:active { transform:scale(0.95); }
         .subject-card .completed-badge { position:absolute; top:10px; right:10px; font-size:9px; background:rgba(34,197,94,0.12); color:#16a34a; padding:2px 10px; border-radius:10px; font-weight:600; }
         .subject-card .resume-badge { position:absolute; top:8px; left:8px; font-size:8px; background:rgba(26,82,118,0.08); color:#1a5276; padding:2px 8px; border-radius:10px; z-index:6; }
+        .subject-card .pending-badge { position:absolute; top:10px; right:10px; font-size:8px; background:rgba(251,191,36,0.12); color:#d97706; padding:2px 8px; border-radius:10px; font-weight:600; }
 
         /* ===== OPTIONS ===== */
         .option-btn { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:13px; font-weight:500; transition:all 0.2s; cursor:pointer; width:100%; text-align:left; display:flex; align-items:center; gap:10px; }
@@ -99,6 +100,12 @@
         .btn-primary:disabled { opacity:0.6; cursor:not-allowed; }
         .btn-secondary { background:#e8edf2; color:#1a2332; font-weight:600; padding:14px; border-radius:12px; border:1px solid #dce4ec; font-size:15px; cursor:pointer; transition:all 0.3s; width:100%; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:8px; }
         .btn-secondary:active { transform:scale(0.96); }
+        .btn-success { background:#22c55e; color:white; font-weight:600; padding:6px 12px; border-radius:8px; border:none; font-size:11px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; }
+        .btn-success:active { transform:scale(0.95); }
+        .btn-danger { background:#ef4444; color:white; font-weight:600; padding:6px 12px; border-radius:8px; border:none; font-size:11px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; }
+        .btn-danger:active { transform:scale(0.95); }
+        .btn-warning { background:#f59e0b; color:white; font-weight:600; padding:6px 12px; border-radius:8px; border:none; font-size:11px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; }
+        .btn-warning:active { transform:scale(0.95); }
 
         /* ===== INPUTS ===== */
         .input-field { background:white; border:2px solid #dce4ec; border-radius:12px; padding:12px 14px; color:#1a2332; font-size:14px; width:100%; transition:all 0.3s; outline:none; }
@@ -108,6 +115,9 @@
         /* ===== BADGES ===== */
         .badge { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
         .badge-gold { background:rgba(26,82,118,0.1); color:#1a5276; }
+        .badge-pending { background:rgba(251,191,36,0.12); color:#d97706; }
+        .badge-approved { background:rgba(34,197,94,0.12); color:#16a34a; }
+        .badge-rejected { background:rgba(239,68,68,0.12); color:#dc2626; }
         .divider { height:1px; background:#dce4ec; margin:10px 0; }
 
         /* ===== TOAST ===== */
@@ -223,9 +233,13 @@
         .admin-item .left .info .name { font-size:13px; font-weight:600; color:#1a2332; }
         .admin-item .left .info .details { font-size:11px; color:#94a3b8; margin-top:1px; }
         .admin-item .left .avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; color:white; flex-shrink:0; }
-        .admin-item .actions { display:flex; gap:4px; align-items:center; }
+        .admin-item .actions { display:flex; gap:4px; align-items:center; flex-wrap:wrap; }
         .admin-item .actions .btn-delete { background:transparent; color:#94a3b8; border:none; font-size:14px; cursor:pointer; padding:4px; }
         .admin-item .actions .btn-delete:active { color:#ef4444; }
+        .admin-item .status-badge { font-size:9px; padding:2px 10px; border-radius:12px; font-weight:600; }
+        .admin-item .status-badge.pending { background:rgba(251,191,36,0.12); color:#d97706; }
+        .admin-item .status-badge.approved { background:rgba(34,197,94,0.12); color:#16a34a; }
+        .admin-item .status-badge.rejected { background:rgba(239,68,68,0.12); color:#dc2626; }
         .admin-add-form { background:#e8edf2; border-radius:10px; padding:12px; margin-bottom:10px; display:none; border:1px solid #dce4ec; }
         .admin-add-form .form-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
         .admin-add-form .form-row input, .admin-add-form .form-row select { flex:1; min-width:100px; padding:8px 12px; border:1px solid #dce4ec; border-radius:8px; font-size:12px; outline:none; background:white; }
@@ -756,6 +770,8 @@
             .certificate-card .cert-title { font-size: 20px; }
             .certificate-card .cert-footer .signature-name { font-size: 18px; }
             .certificate-card .cert-footer .cert-seal { width: 44px; height: 44px; font-size: 16px; }
+            .admin-item { flex-wrap: wrap; gap: 6px; }
+            .admin-item .actions { width: 100%; justify-content: flex-end; }
         }
         @media print {
             body { overflow: visible; background: white; }
@@ -846,6 +862,9 @@
                     </div>
                     <h2 class="text-2xl font-bold text-[#1a2332]">Create Account</h2>
                     <p class="text-gray-500 text-xs mt-1">Join NorthernQuiz - Free Learning Platform</p>
+                    <div class="mt-2 p-2 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <p class="text-xs text-yellow-700"><i class="fas fa-info-circle"></i> Your account needs teacher approval before you can start learning</p>
+                    </div>
                 </div>
                 <div class="space-y-3">
                     <div>
@@ -895,6 +914,29 @@
                         <i class="fas fa-arrow-left"></i> Back
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- PENDING APPROVAL VIEW -->
+        <div class="view" id="pendingView">
+            <div class="glass-card" style="margin-top:16px; text-align:center; padding:30px 20px;">
+                <div style="font-size:64px; margin-bottom:16px;">⏳</div>
+                <h2 class="text-2xl font-bold text-[#1a2332]">Account Pending Approval</h2>
+                <p class="text-gray-500 text-sm mt-2">Your account is waiting for teacher approval.</p>
+                <div class="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <p class="text-xs text-yellow-700"><i class="fas fa-info-circle"></i> You will receive access once the teacher approves your account.</p>
+                </div>
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <p class="text-xs text-blue-700"><i class="fas fa-lightbulb"></i> While you wait, you can:</p>
+                    <ul class="text-xs text-blue-700 mt-2 text-left list-disc list-inside">
+                        <li>Explore the subjects available</li>
+                        <li>Prepare for your upcoming quizzes</li>
+                        <li>Contact your teacher on WhatsApp: +260 966 011 066</li>
+                    </ul>
+                </div>
+                <button onclick="logout()" class="btn-secondary mt-6">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
         </div>
 
@@ -1128,14 +1170,14 @@
                         <div class="label">Students</div>
                     </div>
                     <div class="admin-stat">
-                        <div class="icon"><i class="fas fa-book"></i></div>
-                        <div class="number" id="statSubjects">0</div>
-                        <div class="label">Subjects</div>
+                        <div class="icon"><i class="fas fa-user-check"></i></div>
+                        <div class="number" id="statApproved">0</div>
+                        <div class="label">Approved</div>
                     </div>
                     <div class="admin-stat">
-                        <div class="icon"><i class="fas fa-question-circle"></i></div>
-                        <div class="number" id="statQuestions">0</div>
-                        <div class="label">Questions</div>
+                        <div class="icon"><i class="fas fa-clock"></i></div>
+                        <div class="number" id="statPending">0</div>
+                        <div class="label">Pending</div>
                     </div>
                     <div class="admin-stat">
                         <div class="icon"><i class="fas fa-check-circle"></i></div>
@@ -1144,7 +1186,10 @@
                     </div>
                 </div>
                 <div class="admin-tabs">
-                    <button class="admin-tab active" data-tab="progress" onclick="switchAdminTab('progress')">
+                    <button class="admin-tab active" data-tab="approvals" onclick="switchAdminTab('approvals')">
+                        <i class="fas fa-user-check"></i> Approvals
+                    </button>
+                    <button class="admin-tab" data-tab="progress" onclick="switchAdminTab('progress')">
                         <i class="fas fa-chart-line"></i> Progress
                     </button>
                     <button class="admin-tab" data-tab="students" onclick="switchAdminTab('students')">
@@ -1161,7 +1206,14 @@
                     </button>
                 </div>
 
-                <div class="admin-tab-content active" id="tab-progress">
+                <!-- APPROVALS TAB -->
+                <div class="admin-tab-content active" id="tab-approvals">
+                    <h3><i class="fas fa-user-check"></i> Pending Approvals</h3>
+                    <input id="approvalSearch" type="text" placeholder="🔍 Search learners..." oninput="filterApprovals()" class="admin-search" />
+                    <div id="approvalList" class="admin-list"></div>
+                </div>
+
+                <div class="admin-tab-content" id="tab-progress">
                     <h3><i class="fas fa-chart-line"></i> Learner Progress</h3>
                     <input id="progressSearch" type="text" placeholder="🔍 Search learners..." oninput="filterProgress()" class="admin-search" />
                     <div id="progressList" class="admin-list"></div>
@@ -1438,7 +1490,7 @@
     let allSubjects = [];
     let totalQuestionsAnswered = 0;
     let isTeacherLoggedIn = false;
-    let currentAdminTab = 'progress';
+    let currentAdminTab = 'approvals';
     let allUsers = [];
     let uploadedData = [];
     let learnerProgress = {};
@@ -1556,6 +1608,112 @@
     }
     window.downloadCertificate = downloadCertificate;
 
+    // ============ APPROVAL FUNCTIONS ============
+    async function approveUser(userId, username) {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?id=eq.${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: 'approved' })
+            });
+            if (response.ok) {
+                showToast(`✅ ${username} has been approved!`, 'success');
+                await loadUsers();
+                renderApprovals();
+                updateAdminStats();
+                // Check if the current user was approved
+                if (currentUser && currentUser.id === userId) {
+                    currentUser.status = 'approved';
+                    localStorage.setItem('quizUser', JSON.stringify(currentUser));
+                    showToast('🎉 Your account has been approved! You can now start learning.', 'success');
+                    showView('subjectsView');
+                }
+            } else {
+                showToast('Error approving user', 'error');
+            }
+        } catch (error) {
+            showToast('Error approving user', 'error');
+        }
+    }
+
+    async function rejectUser(userId, username) {
+        if (!confirm(`Reject ${username}'s account? This will delete the account.`)) return;
+        try {
+            const success = await deleteUser(userId);
+            if (success) {
+                showToast(`❌ ${username} has been rejected and removed.`, 'info');
+                await loadUsers();
+                renderApprovals();
+                updateAdminStats();
+            } else {
+                showToast('Error rejecting user', 'error');
+            }
+        } catch (error) {
+            showToast('Error rejecting user', 'error');
+        }
+    }
+
+    function renderApprovals() {
+        const container = document.getElementById('approvalList');
+        if (!container) return;
+        
+        const searchTerm = document.getElementById('approvalSearch')?.value?.toLowerCase() || '';
+        const pendingUsers = allUsers.filter(u => 
+            u.role !== 'teacher' && 
+            (!u.status || u.status === 'pending') &&
+            u.username.toLowerCase().includes(searchTerm)
+        );
+        
+        if (pendingUsers.length === 0) {
+            container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${allUsers.filter(u => u.role !== 'teacher').length === 0 ? 'No students registered yet.' : 'No pending approvals. All students are approved!'}</div>`;
+            return;
+        }
+        
+        container.innerHTML = '';
+        pendingUsers.forEach(user => {
+            const date = new Date(user.created_at).toLocaleDateString();
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            div.innerHTML = `
+                <div class="left">
+                    <div class="avatar" style="background:#f59e0b;"><i class="fas fa-clock"></i></div>
+                    <div class="info">
+                        <div class="name">${user.username}</div>
+                        <div class="details">📅 ${date} · 🔑 ${user.password}</div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <span class="status-badge pending">⏳ Pending</span>
+                    <button class="btn-success" onclick="approveUser('${user.id}', '${user.username}')">
+                        <i class="fas fa-check"></i> Approve
+                    </button>
+                    <button class="btn-danger" onclick="rejectUser('${user.id}', '${user.username}')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function filterApprovals() {
+        renderApprovals();
+    }
+
+    function updateAdminStats() {
+        const students = allUsers.filter(u => u.role !== 'teacher');
+        const pending = students.filter(u => !u.status || u.status === 'pending');
+        const approved = students.filter(u => u.status === 'approved');
+        
+        document.getElementById('statStudents').textContent = students.length;
+        document.getElementById('statApproved').textContent = approved.length;
+        document.getElementById('statPending').textContent = pending.length;
+    }
+
     // ============ CHATBOT FUNCTIONS ============
     function toggleChatbot() {
         isChatbotOpen = !isChatbotOpen;
@@ -1630,7 +1788,10 @@
             return "📚 NorthernQuiz is a free learning platform designed for Form 1 and Form 2 students. You can:\n\n• Select subjects to study\n• Take interactive quizzes\n• Track your progress\n• Earn certificates\n• Connect with friends\n\nIt's completely FREE for all learners!";
         }
         if (lower.match(/how to start|getting started|begin|start learning|first time/i)) {
-            return "🚀 To get started with NorthernQuiz:\n\n1️⃣ Create an account (or login)\n2️⃣ Go to the Subjects tab\n3️⃣ Select the subjects you want to study\n4️⃣ Go to Profile and click on a subject to start the quiz\n5️⃣ Complete all questions to earn your certificate!\n\nIt's that simple!";
+            return "🚀 To get started with NorthernQuiz:\n\n1️⃣ Create an account (wait for teacher approval)\n2️⃣ Once approved, go to the Subjects tab\n3️⃣ Select the subjects you want to study\n4️⃣ Go to Profile and click on a subject to start the quiz\n5️⃣ Complete all questions to earn your certificate!\n\nIt's that simple!";
+        }
+        if (lower.match(/approval|pending|waiting|teacher approve/i)) {
+            return "⏳ Account Approval:\n\n• When you create an account, it goes to 'Pending' status\n• Your teacher needs to approve your account\n• You'll get a notification when approved\n• Check your status by logging in\n\nIf you're waiting, contact your teacher on WhatsApp: +260 966 011 066";
         }
         if (lower.match(/select subjects|choose subjects|subjects|subject/i)) {
             if (allSubjects.length === 0) {
@@ -1670,15 +1831,15 @@
             return "💰 NorthernQuiz is COMPLETELY FREE!\n\n🎯 What's free:\n• All subjects\n• All quizzes\n• Progress tracking\n• Certificates\n• Friends and chat\n• Everything!\n\nWe believe education should be accessible to everyone. Your support through donations helps us keep it free for all! ❤️";
         }
         if (lower.match(/help|menu|options|what can you do|commands/i)) {
-            return "🤖 I can help you with:\n\n• How to get started\n• Selecting subjects\n• Taking quizzes\n• Certificates & grades\n• Progress tracking\n• Friends & chat\n• Donations & support\n• Technical issues\n\nJust ask me anything! 😊";
+            return "🤖 I can help you with:\n\n• How to get started\n• Account approval process\n• Selecting subjects\n• Taking quizzes\n• Certificates & grades\n• Progress tracking\n• Friends & chat\n• Donations & support\n• Technical issues\n\nJust ask me anything! 😊";
         }
         if (lower.match(/thank|thanks|appreciate|grateful|awesome|great/i)) {
             return "🙏 You're welcome! I'm glad I could help. Keep learning and achieving great things! \n\nRemember: Every expert was once a beginner. Keep going! 💪";
         }
         const defaultResponses = [
-            "🤔 I'm not sure about that yet. Try asking me about:\n\n• How to start learning\n• Selecting subjects\n• Taking quizzes\n• Certificates & grades\n• Friends & chat\n• Technical support\n\nOr ask for help to see all options!",
+            "🤔 I'm not sure about that yet. Try asking me about:\n\n• How to get started\n• Account approval\n• Selecting subjects\n• Taking quizzes\n• Certificates & grades\n• Friends & chat\n• Technical support\n\nOr ask for help to see all options!",
             "📚 That's a great question! However, I don't have enough information about that specific topic. Try asking me about how to use NorthernQuiz, subjects, quizzes, or certificates!",
-            "💡 I'm still learning too! For now, I can help you with:\n\n• Getting started with NorthernQuiz\n• Subject selection\n• Quiz help\n• Certificates\n• Friends & chat\n\nWhat would you like to know?"
+            "💡 I'm still learning too! For now, I can help you with:\n\n• Getting started with NorthernQuiz\n• Account approval\n• Subject selection\n• Quiz help\n• Certificates\n• Friends & chat\n\nWhat would you like to know?"
         ];
         return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
     }
@@ -1763,7 +1924,8 @@
 
     function toggleUserMenu() {
         if (currentUser) {
-            showToast(`👤 ${currentUser.username} - Free`, 'info');
+            const status = currentUser.status === 'approved' ? '✅ Approved' : '⏳ Pending';
+            showToast(`👤 ${currentUser.username} - ${status}`, 'info');
         }
     }
 
@@ -1799,17 +1961,18 @@
             
             const newUser = await createUser(username, password);
             if (newUser) {
-                currentUser = { username: newUser.username, password: newUser.password, id: newUser.id, role: newUser.role || 'student', is_premium: true };
+                currentUser = { 
+                    username: newUser.username, 
+                    password: newUser.password, 
+                    id: newUser.id, 
+                    role: newUser.role || 'student', 
+                    is_premium: true,
+                    status: newUser.status || 'pending'
+                };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
-                showToast(`🎉 Welcome, ${username}! Select your subjects to begin!`, 'success');
-                showView('subjectsView');
-                renderSubjects();
-                updateProgress();
-                updateProfile();
-                loadFriends();
-                loadChats();
-                setTimeout(() => showDonationPopup(), 2000);
+                showToast(`🎉 Account created! Waiting for teacher approval...`, 'success');
+                showView('pendingView');
             } else {
                 showToast('Error creating account. Please try again.', 'error');
             }
@@ -1839,17 +2002,34 @@
             const user = await authenticateUser(username, password);
             if (user) {
                 const isUserPremium = user.is_premium || true;
-                currentUser = { username: user.username, password: user.password, id: user.id, role: user.role || 'student', is_premium: isUserPremium };
+                const userStatus = user.status || 'pending';
+                currentUser = { 
+                    username: user.username, 
+                    password: user.password, 
+                    id: user.id, 
+                    role: user.role || 'student', 
+                    is_premium: isUserPremium,
+                    status: userStatus
+                };
                 localStorage.setItem('quizUser', JSON.stringify(currentUser));
                 updateUserUI();
-                showToast(`Welcome back, ${username}!`, 'success');
-                showView('subjectsView');
-                renderSubjects();
-                updateProgress();
-                updateProfile();
-                loadFriends();
-                loadChats();
-                setTimeout(() => showDonationPopup(), 3000);
+                
+                if (userStatus === 'approved') {
+                    showToast(`Welcome back, ${username}!`, 'success');
+                    showView('subjectsView');
+                    renderSubjects();
+                    updateProgress();
+                    updateProfile();
+                    loadFriends();
+                    loadChats();
+                    setTimeout(() => showDonationPopup(), 3000);
+                } else if (userStatus === 'pending' || !userStatus) {
+                    showToast('⏳ Your account is pending approval.', 'info');
+                    showView('pendingView');
+                } else {
+                    showToast('Account status unknown. Contact support.', 'error');
+                    showView('loginView');
+                }
             } else {
                 const exists = await checkUserExists(username);
                 if (exists) {
@@ -1868,7 +2048,7 @@
 
     async function createUser(username, password) {
         try {
-            const payload = { username, password, role: 'student', is_premium: true };
+            const payload = { username, password, role: 'student', is_premium: true, status: 'pending' };
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}`, {
                 method: 'POST',
                 headers: {
@@ -2010,6 +2190,7 @@
         document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
         document.querySelector(`.admin-tab[data-tab="${tab}"]`)?.classList.add('active');
         document.getElementById(`tab-${tab}`)?.classList.add('active');
+        if (tab === 'approvals') renderApprovals();
         if (tab === 'subjects') updateTeacherSubjects();
         if (tab === 'questions') loadQuestionsForTeacher();
         if (tab === 'students') renderStudents();
@@ -2141,6 +2322,7 @@
         const availableUsers = allUsers.filter(u => 
             u.id !== currentUser.id && 
             u.role !== 'teacher' &&
+            u.status === 'approved' &&
             u.username.toLowerCase().includes(searchTerm) &&
             !friends.find(f => f.id === u.id)
         );
@@ -2149,7 +2331,7 @@
                 <div style="text-align:center;padding:20px;color:#94a3b8;">
                     <i class="fas fa-search"></i>
                     <h3 style="margin-top:4px;font-size:14px;">No Results Found</h3>
-                    <p style="font-size:13px;">No learners found matching "${searchTerm}"</p>
+                    <p style="font-size:13px;">No approved learners found matching "${searchTerm}"</p>
                 </div>
             `;
             return;
@@ -2163,7 +2345,7 @@
                     </div>
                     <div style="flex:1;">
                         <div style="font-weight:600;color:#1a2332;font-size:14px;">${user.username}</div>
-                        <div style="font-size:11px;color:${user.online ? '#22c55e' : '#94a3b8'};">${user.online ? 'Online' : 'Offline'}</div>
+                        <div style="font-size:11px;color:#22c55e;">✅ Approved</div>
                     </div>
                     <button class="add-friend-btn" onclick="addFriend('${user.id}', '${user.username}')">
                         <i class="fas fa-user-plus"></i> Add Friend
@@ -2527,10 +2709,10 @@
         const container = document.getElementById('progressList');
         if (!container) return;
         const searchTerm = document.getElementById('progressSearch')?.value?.toLowerCase() || '';
-        const students = allUsers.filter(u => u.role !== 'teacher');
+        const students = allUsers.filter(u => u.role !== 'teacher' && u.status === 'approved');
         const filtered = students.filter(u => u.username.toLowerCase().includes(searchTerm));
         if (filtered.length === 0) {
-            container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No learners yet. Create one above!' : 'No learners match your search.'}</div>`;
+            container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${students.length === 0 ? 'No approved learners yet.' : 'No learners match your search.'}</div>`;
             document.getElementById('statCompleted').textContent = '0';
             return;
         }
@@ -2646,8 +2828,10 @@
             const users = await fetchAllUsers();
             allUsers = users.filter(u => u.role !== 'teacher');
             document.getElementById('statStudents').textContent = allUsers.length;
+            updateAdminStats();
             renderStudents();
             renderProgress();
+            renderApprovals();
         } catch (error) {
             console.error('Error loading users:', error);
         }
@@ -2657,6 +2841,10 @@
     function toggleSubjectSelection(subjectId) {
         if (!currentUser) {
             showToast('Please login first', 'error');
+            return;
+        }
+        if (currentUser.status !== 'approved') {
+            showToast('⏳ Your account must be approved first!', 'error');
             return;
         }
         if (selectedSubjects.has(subjectId)) {
@@ -2677,6 +2865,10 @@
     function selectAllSubjects() {
         if (!currentUser) {
             showToast('Please login first', 'error');
+            return;
+        }
+        if (currentUser.status !== 'approved') {
+            showToast('⏳ Your account must be approved first!', 'error');
             return;
         }
         allSubjects.forEach(subject => { selectedSubjects.add(subject.id); });
@@ -2840,6 +3032,10 @@
             showToast('📚 Please select this subject first in the Subjects tab!', 'error');
             return;
         }
+        if (currentUser.status !== 'approved') {
+            showToast('⏳ Your account must be approved to take quizzes!', 'error');
+            return;
+        }
         try {
             const questions = await fetchQuestions(subjectId);
             if (!questions || questions.length === 0) {
@@ -2972,6 +3168,8 @@
         updateUploadSubjectSelect();
         renderStudents();
         renderProgress();
+        renderApprovals();
+        updateAdminStats();
         document.getElementById('statStudents').textContent = allUsers.length;
         document.getElementById('statSubjects').textContent = allSubjects.length;
     }
@@ -3014,6 +3212,9 @@
         list.innerHTML = '';
         filtered.forEach(user => {
             const date = new Date(user.created_at).toLocaleDateString();
+            const status = user.status || 'pending';
+            const statusClass = status === 'approved' ? 'approved' : 'pending';
+            const statusText = status === 'approved' ? '✅ Approved' : '⏳ Pending';
             const div = document.createElement('div');
             div.className = 'admin-item';
             div.innerHTML = `
@@ -3025,7 +3226,12 @@
                     </div>
                 </div>
                 <div class="actions">
-                    <span style="font-size:10px;font-weight:600;color:#16a34a;background:rgba(34,197,94,0.08);padding:2px 8px;border-radius:10px;margin-right:4px;">Free</span>
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                    ${status !== 'approved' ? `
+                        <button class="btn-success" onclick="approveUser('${user.id}', '${user.username}')">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    ` : ''}
                     <button class="btn-delete" onclick="deleteStudent('${user.id}')"><i class="fas fa-trash"></i></button>
                 </div>
             `;
@@ -3367,9 +3573,11 @@
         updateProgress();
         updateProfile();
         renderSelectedSubjects();
-        console.log('🇿🇲 NorthernQuiz loaded with A4 Certificate!');
+        renderApprovals();
+        updateAdminStats();
+        console.log('🇿🇲 NorthernQuiz loaded with Teacher Approval System!');
+        console.log('👨‍🏫 Teachers must approve students before they can learn');
         console.log('🤖 Click the robot icon to chat with NorthernBot!');
-        console.log('📄 Certificate is A4 size (210mm x 297mm)');
     }
 
     function checkAuth() {
@@ -3378,8 +3586,14 @@
             try {
                 currentUser = JSON.parse(userData);
                 updateUserUI();
-                showView('subjectsView');
-                setTimeout(() => showDonationPopup(), 2000);
+                if (currentUser.status === 'approved') {
+                    showView('subjectsView');
+                    setTimeout(() => showDonationPopup(), 2000);
+                } else if (currentUser.status === 'pending' || !currentUser.status) {
+                    showView('pendingView');
+                } else {
+                    showView('loginView');
+                }
             } catch (e) {
                 localStorage.removeItem('quizUser');
                 showView('loginView');
@@ -3456,6 +3670,11 @@
     window.toggleChatbot = toggleChatbot;
     window.sendChatbotMessage = sendChatbotMessage;
     window.sendQuickReply = sendQuickReply;
+    window.approveUser = approveUser;
+    window.rejectUser = rejectUser;
+    window.renderApprovals = renderApprovals;
+    window.filterApprovals = filterApprovals;
+    window.updateAdminStats = updateAdminStats;
 </script>
 </body>
 </html>
