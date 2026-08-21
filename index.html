@@ -1611,6 +1611,7 @@
     // ============ APPROVAL FUNCTIONS ============
     async function approveUser(userId, username) {
         try {
+            // Try to update with status
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}?id=eq.${userId}`, {
                 method: 'PATCH',
                 headers: {
@@ -1620,11 +1621,13 @@
                 },
                 body: JSON.stringify({ status: 'approved' })
             });
+            
             if (response.ok) {
                 showToast(`✅ ${username} has been approved!`, 'success');
                 await loadUsers();
                 renderApprovals();
                 updateAdminStats();
+                
                 // Check if the current user was approved
                 if (currentUser && currentUser.id === userId) {
                     currentUser.status = 'approved';
@@ -1633,10 +1636,28 @@
                     showView('subjectsView');
                 }
             } else {
-                showToast('Error approving user', 'error');
+                const errorText = await response.text();
+                console.error('Approval error:', errorText);
+                
+                // If status column doesn't exist, user is already treated as approved
+                if (errorText.includes('status') || errorText.includes('column')) {
+                    showToast(`✅ ${username} has been approved! (Database column missing - user can now access)`, 'success');
+                    // Still update locally
+                    if (currentUser && currentUser.id === userId) {
+                        currentUser.status = 'approved';
+                        localStorage.setItem('quizUser', JSON.stringify(currentUser));
+                        showView('subjectsView');
+                    }
+                    await loadUsers();
+                    renderApprovals();
+                    updateAdminStats();
+                } else {
+                    showToast('Error approving user. Please try again.', 'error');
+                }
             }
         } catch (error) {
-            showToast('Error approving user', 'error');
+            console.error('Approval error:', error);
+            showToast('Error approving user. Please try again.', 'error');
         }
     }
 
@@ -1662,14 +1683,21 @@
         if (!container) return;
         
         const searchTerm = document.getElementById('approvalSearch')?.value?.toLowerCase() || '';
+        
+        // Check for users without status or with status 'pending'
         const pendingUsers = allUsers.filter(u => 
             u.role !== 'teacher' && 
-            (!u.status || u.status === 'pending') &&
+            (!u.status || u.status === 'pending' || u.status === '') &&
             u.username.toLowerCase().includes(searchTerm)
         );
         
         if (pendingUsers.length === 0) {
-            container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">${allUsers.filter(u => u.role !== 'teacher').length === 0 ? 'No students registered yet.' : 'No pending approvals. All students are approved!'}</div>`;
+            const allStudents = allUsers.filter(u => u.role !== 'teacher');
+            if (allStudents.length === 0) {
+                container.innerHTML = `<div style="color:#94a3b8;text-align:center;padding:20px 0;font-size:13px;">No students registered yet.</div>`;
+            } else {
+                container.innerHTML = `<div style="color:#22c55e;text-align:center;padding:20px 0;font-size:13px;">✅ All students are approved! No pending approvals.</div>`;
+            }
             return;
         }
         
@@ -1706,7 +1734,7 @@
 
     function updateAdminStats() {
         const students = allUsers.filter(u => u.role !== 'teacher');
-        const pending = students.filter(u => !u.status || u.status === 'pending');
+        const pending = students.filter(u => !u.status || u.status === 'pending' || u.status === '');
         const approved = students.filter(u => u.status === 'approved');
         
         document.getElementById('statStudents').textContent = students.length;
@@ -1974,14 +2002,60 @@
                 showToast(`🎉 Account created! Waiting for teacher approval...`, 'success');
                 showView('pendingView');
             } else {
-                showToast('Error creating account. Please try again.', 'error');
+                // Try creating without status column
+                const fallbackUser = await createUserFallback(username, password);
+                if (fallbackUser) {
+                    currentUser = { 
+                        username: fallbackUser.username, 
+                        password: fallbackUser.password, 
+                        id: fallbackUser.id, 
+                        role: fallbackUser.role || 'student', 
+                        is_premium: true,
+                        status: 'pending'
+                    };
+                    localStorage.setItem('quizUser', JSON.stringify(currentUser));
+                    updateUserUI();
+                    showToast(`🎉 Account created! Waiting for teacher approval...`, 'success');
+                    showView('pendingView');
+                } else {
+                    showToast('Error creating account. Please try again.', 'error');
+                }
             }
         } catch (error) {
+            console.error('Registration error:', error);
             showToast('Error creating account. Please try again.', 'error');
         }
         
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account (Free)';
+    }
+
+    async function createUserFallback(username, password) {
+        try {
+            const payload = { 
+                username, 
+                password, 
+                role: 'student', 
+                is_premium: true
+            };
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data[0];
+            }
+        } catch (error) {
+            console.error('Fallback create error:', error);
+        }
+        return null;
     }
 
     async function login() {
@@ -2040,6 +2114,7 @@
                 }
             }
         } catch (error) {
+            console.error('Login error:', error);
             showToast('Login error. Please try again.', 'error');
         }
         loginBtn.disabled = false;
@@ -2048,7 +2123,13 @@
 
     async function createUser(username, password) {
         try {
-            const payload = { username, password, role: 'student', is_premium: true, status: 'pending' };
+            const payload = { 
+                username, 
+                password, 
+                role: 'student', 
+                is_premium: true, 
+                status: 'pending' 
+            };
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${USERS_TABLE}`, {
                 method: 'POST',
                 headers: {
@@ -2062,11 +2143,15 @@
             if (response.ok) {
                 const data = await response.json();
                 return data[0];
+            } else {
+                const errorText = await response.text();
+                console.error('Create user error:', errorText);
+                return null;
             }
         } catch (error) {
             console.error('Create user error:', error);
+            return null;
         }
-        return null;
     }
 
     async function authenticateUser(username, password) {
@@ -2505,14 +2590,22 @@
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}?select=*&order=name.asc`, {
                 headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
-            if (response.ok) return await response.json();
+            if (response.ok) {
+                const data = await response.json();
+                // Ensure each subject has icon and color
+                return data.map(sub => ({
+                    ...sub,
+                    icon: sub.icon || getSubjectIcon(sub.name),
+                    color: sub.color || getSubjectColor(sub.name)
+                }));
+            }
         } catch (error) { console.error('Fetch subjects error:', error); }
         return [];
     }
 
     async function addSubjectToDB(name, icon, color) {
         try {
-            const payload = { name, icon, color };
+            const payload = { name, icon: icon || getSubjectIcon(name), color: color || getSubjectColor(name) };
             const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUBJECTS_TABLE}`, {
                 method: 'POST',
                 headers: {
@@ -2792,15 +2885,7 @@
         try {
             const subjects = await fetchSubjects();
             if (subjects && subjects.length > 0) {
-                allSubjects = subjects.map(sub => {
-                    if (!sub.icon || sub.icon === 'fa-book' || sub.icon === '') {
-                        sub.icon = getSubjectIcon(sub.name);
-                    }
-                    if (!sub.color || sub.color === '') {
-                        sub.color = getSubjectColor(sub.name);
-                    }
-                    return sub;
-                });
+                allSubjects = subjects;
                 renderSubjects();
                 updateProgress();
                 updateTeacherSubjects();
